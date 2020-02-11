@@ -10,6 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <name>Eagle :: Core</name>
     <artifactId>eagle-core</artifactId>
 
     <dependencies>
