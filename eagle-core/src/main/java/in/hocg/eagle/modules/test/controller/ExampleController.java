@@ -26,12 +26,12 @@ public class ExampleController {
     private final ExampleService service;
     
     @DeleteMapping("/{id}")
-    public Result<Void> deleteById(@PathVariable String id) {
+    public Result<Void> deleteById(@PathVariable Long id) {
         return Result.success();
     }
     
     @GetMapping("/{id}")
-    public Result<Void> selectById(@PathVariable String id) {
+    public Result<Void> selectById(@PathVariable Long id) {
         return Result.success();
     }
     
