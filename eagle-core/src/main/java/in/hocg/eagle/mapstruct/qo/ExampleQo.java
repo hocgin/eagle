@@ -1,5 +1,6 @@
-package in.hocg.eagle.service.vo;
+package in.hocg.eagle.mapstruct.qo;
 
+import in.hocg.eagle.basic.qo.BaseQo;
 import lombok.Data;
 
 /**
@@ -9,5 +10,6 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class ExampleVo {
+public class ExampleQo extends BaseQo {
+
 }

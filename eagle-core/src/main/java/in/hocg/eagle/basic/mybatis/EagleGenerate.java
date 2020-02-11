@@ -28,6 +28,7 @@ public class EagleGenerate {
     List<String> tablePrefix = Lists.newArrayList("T_");
     
     public void generateByTables(String packageName,
+                                 String moduleName,
                                  String outputDir,
                                  String... tableNames) {
         GlobalConfig config = new GlobalConfig();
@@ -75,6 +76,7 @@ public class EagleGenerate {
                 )
                 .setPackageInfo(
                         new PackageConfig()
+                                .setModuleName(moduleName)
                                 .setParent(packageName)
                                 .setController("controller")
                                 .setEntity("entity")

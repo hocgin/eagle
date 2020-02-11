@@ -1,4 +1,4 @@
-package in.hocg.eagle.controller.qo;
+package in.hocg.eagle.mapstruct.vo;
 
 import lombok.Data;
 
@@ -9,5 +9,5 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class ExampleQo {
+public class ExampleVo {
 }

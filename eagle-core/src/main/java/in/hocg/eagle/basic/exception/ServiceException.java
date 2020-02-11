@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.exception;
 
-import in.hocg.java.basic.utils.TextBlock;
+import in.hocg.eagle.utils.TextBlock;
 
 /**
  * Created by hocgin on 2019-09-24.
