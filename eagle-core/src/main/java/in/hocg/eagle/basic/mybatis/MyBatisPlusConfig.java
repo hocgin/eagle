@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @author hocgin
  */
 @Configuration
-@MapperScan(basePackages = "in.hocg.*.mapper", annotationClass = Mapper.class)
+@MapperScan(basePackages = "in.hocg.**", annotationClass = Mapper.class)
 public class MyBatisPlusConfig {
     
     @Bean

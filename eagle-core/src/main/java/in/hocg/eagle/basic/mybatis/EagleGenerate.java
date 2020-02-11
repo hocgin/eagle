@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.google.common.collect.Lists;
+import in.hocg.eagle.basic.AbstractEntity;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.AbstractEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Lazy;
@@ -68,11 +68,10 @@ public class EagleGenerate {
                 .setDataSource(dataSourceConfig)
                 .setStrategy(strategyConfig)
                 .setTemplate(new TemplateConfig()
-//                        .setService("/template/zhifou/service.java")
-//                        .setServiceImpl("/template/zhifou/serviceImpl.java")
-//                                .setXml("/template/zhifou/mapper.xml")
-                                .setMapper("/template/mybatis/mapper.java")
-//                        .setEntity("/template/zhifou/entity.java")
+                        .setController("/template/mybatis/controller.java")
+                        .setServiceImpl("/template/mybatis/serviceImpl.java")
+                        .setMapper("/template/mybatis/mapper.java")
+                        .setEntity("/template/mybatis/entity.java")
                 )
                 .setPackageInfo(
                         new PackageConfig()
