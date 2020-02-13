@@ -5,8 +5,6 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-
 /**
  * Created by hocgin on 2020/2/13.
  * email: hocgin@gmail.com
@@ -24,8 +22,8 @@ public class NamedService {
      * @param id
      * @return
      */
-    public Object selectOneByTypeAndId(String type, Integer id) {
-        if (Strings.isBlank(type) || Objects.isNull(id)) {
+    public Object selectOneByTypeAndId(String type, String id) {
+        if (Strings.isBlank(type) || Strings.isBlank(id)) {
             return null;
         }
         // TODO: 等待枚举

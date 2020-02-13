@@ -12,6 +12,18 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Named {
+    
+    /**
+     * 字典标识
+     *
+     * @return
+     */
     String type() default "";
+    
+    /**
+     * 字典项标识
+     *
+     * @return
+     */
     String idField() default "";
 }

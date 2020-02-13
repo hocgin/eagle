@@ -47,8 +47,8 @@ public class NamedAspect {
                     final Named named = field.getAnnotation(Named.class);
                     final Field idField = fieldMap.get(named.idField());
                     if (Objects.nonNull(idField)) {
-                        Integer idValue = ClassUtils.getObjectValue(result, idField, null);
-                        Object val = namedService.selectOneByTypeAndId(named.type(), idValue);
+                        String codeValue = ClassUtils.getObjectValue(result, idField, null);
+                        Object val = namedService.selectOneByTypeAndId(named.type(), codeValue);
                         ClassUtils.setFieldValue(result, field, val);
                     }
                 });
