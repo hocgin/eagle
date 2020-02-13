@@ -15,7 +15,7 @@ import java.util.Objects;
  * @author hocgin
  */
 @UtilityClass
-public class DateUtility {
+public class DateUtils {
     
     public static Date getDate(LocalDateTime localDateTime) {
         if (Objects.isNull(localDateTime)) {

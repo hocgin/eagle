@@ -1,0 +1,28 @@
+### 查看所有
+POST {{host}}/api/all
+Content-Type: application/json
+
+{
+}
+
+### 文件(夹)详情
+POST {{host}}/api/detail?path=today/ID-activity-timestamp.json
+
+### 获取轮播图
+GET {{host}}/api/carousel
+
+### 获取推荐
+GET {{host}}/api/recommend
+
+### 投稿接口
+POST {{host}}/api/post
+Content-Type: application/json
+
+{
+  "title": "标题",
+  "username": "hocgin",
+  "desc": "简要描述"
+}
+
+###
+

@@ -1,0 +1,43 @@
+### 登录
+POST {{host}}/api/account/login
+Content-Type: application/json
+
+{
+  "username": "hocgin",
+  "password": "hocgin"
+}
+
+### 账号详情
+GET {{host}}/api/account/{id}
+Content-Type: application/json
+
+{
+}
+
+### 给账号授权角色
+POST {{host}}/api/account/{id}/grant/role
+Content-Type: application/json
+
+{
+}
+
+### 给账号授权权限
+POST {{host}}/api/account/{id}/grant/authority
+Content-Type: application/json
+
+{
+}
+
+### 注册会员
+POST {{host}}/api/member
+Content-Type: application/json
+
+{
+}
+
+### 添加员工
+POST {{host}}/api/staff
+Content-Type: application/json
+
+{
+}

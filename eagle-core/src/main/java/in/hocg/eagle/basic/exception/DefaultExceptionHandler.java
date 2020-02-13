@@ -2,7 +2,7 @@ package in.hocg.eagle.basic.exception;
 
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.basic.result.ResultCode;
-import in.hocg.eagle.utils.LangUtility;
+import in.hocg.eagle.utils.LangUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.validation.BindException;
@@ -54,7 +54,7 @@ public class DefaultExceptionHandler implements GlobalExceptionHandler {
     public Result<Void> handleServiceException(ServiceException e) {
         final ResultCode resultCode = ResultCode.SERVICE_ERROR;
         return Result.error(resultCode.getCode(),
-                LangUtility.getOrDefault(e.getMessage(), resultCode.getMessage()));
+                LangUtils.getOrDefault(e.getMessage(), resultCode.getMessage()));
     }
     
     /**

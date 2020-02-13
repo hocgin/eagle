@@ -1,7 +1,7 @@
 package in.hocg.eagle.basic.qo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import in.hocg.eagle.utils.DateUtility;
+import in.hocg.eagle.utils.DateUtils;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -24,6 +24,6 @@ public abstract class BaseQo implements Serializable {
     private LocalDateTime createdAt = LocalDateTime.now();
     
     public Date getCreatedAtAsDate() {
-        return DateUtility.getDate(createdAt);
+        return DateUtils.getDate(createdAt);
     }
 }
