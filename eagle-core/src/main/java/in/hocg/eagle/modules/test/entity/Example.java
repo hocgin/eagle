@@ -1,6 +1,5 @@
 package in.hocg.eagle.modules.test.entity;
 
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -11,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -19,7 +18,7 @@ import java.util.Date;
  * </p>
  *
  * @author hocgin
- * @since 2020-02-11
+ * @since 2020-02-15
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -34,7 +33,7 @@ public class Example extends AbstractEntity<Example> {
     @TableField("name")
     private String name;
     @TableField("created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
 
     @Override

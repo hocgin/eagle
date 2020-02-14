@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -77,7 +77,7 @@ public class Authority extends AbstractEntity<Authority> {
      * 创建时间
      */
     @TableField("created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
     /**
      * 创建者
      */
@@ -87,7 +87,7 @@ public class Authority extends AbstractEntity<Authority> {
      * 更新时间
      */
     @TableField("last_updated_at")
-    private Date lastUpdatedAt;
+    private LocalDateTime lastUpdatedAt;
     /**
      * 更新者
      */
