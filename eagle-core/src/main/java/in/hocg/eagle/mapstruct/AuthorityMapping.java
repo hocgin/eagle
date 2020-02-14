@@ -13,6 +13,11 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface AuthorityMapping {
     
+    
+    /**
+     * @param qo
+     * @return
+     */
     Authority asAuthority(AuthorityPostQo qo);
     
 }

@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.base.mapper;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import in.hocg.eagle.modules.base.entity.DataDict;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import org.apache.ibatis.annotations.Mapper;

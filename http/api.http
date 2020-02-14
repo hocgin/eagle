@@ -1,28 +1,28 @@
-### 查看所有
-POST {{host}}/api/all
+### 登录
+POST {{host}}/api/account/authenticate
 Content-Type: application/json
 
 {
+  "username": "admin",
+  "password": "hocgin"
 }
 
-### 文件(夹)详情
-POST {{host}}/api/detail?path=today/ID-activity-timestamp.json
+> {% client.global.set("auth_token", response.body.data); %}
 
-### 获取轮播图
-GET {{host}}/api/carousel
 
-### 获取推荐
-GET {{host}}/api/recommend
-
-### 投稿接口
-POST {{host}}/api/post
+### 新增权限
+POST {{host}}/api/authority
 Content-Type: application/json
+Token: Bearer {{auth_token}}
 
 {
-  "title": "标题",
-  "username": "hocgin",
-  "desc": "简要描述"
+  "title": "新增角色",
+  "type": 1,
+  "authorityCode": "权限授权码",
+  "method": "GET",
+  "uri": "/*",
+  "enabled": 1,
+  "sort": 1000
 }
 
 ###
-

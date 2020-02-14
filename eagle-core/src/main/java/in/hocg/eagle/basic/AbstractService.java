@@ -1,7 +1,7 @@
 package in.hocg.eagle.basic;
 
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * Created by hocgin on 2020/2/11.

@@ -42,7 +42,7 @@ public class AuthorityController {
         return Result.success();
     }
     
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation("新增权限")
     public Result<Void> insert(@Validated @RequestBody AuthorityPostQo qo) {
         service.insertOne(qo);

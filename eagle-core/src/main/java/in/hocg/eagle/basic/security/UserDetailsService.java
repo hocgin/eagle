@@ -5,7 +5,6 @@ import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -28,7 +27,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         final Optional<Account> accountOptional = accountService.selectOneByUsername(username);
         if (accountOptional.isPresent()) {
             final Account account = accountOptional.get();
-            return new User(username, account.getPassword(), Lists.newArrayList());
+            return new User(account.getId(), username, account.getPassword(), Lists.newArrayList());
         }
         throw new UsernameNotFoundException("用户名或密码错误");
     }

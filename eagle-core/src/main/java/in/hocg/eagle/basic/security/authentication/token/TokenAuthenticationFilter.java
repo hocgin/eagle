@@ -1,6 +1,7 @@
 package in.hocg.eagle.basic.security.authentication.token;
 
 import in.hocg.eagle.basic.SpringContext;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
@@ -22,9 +23,10 @@ import java.io.IOException;
  *
  * @author hocgin
  */
+@Slf4j
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private static final String BEARER = "Bearer ";
-    private static final String TOKEN_HEADER = "Token";
+    private static final String TOKEN_HEADER = "token";
     
     @Override
     protected void doFilterInternal(HttpServletRequest request,

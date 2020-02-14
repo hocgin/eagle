@@ -3,9 +3,11 @@ POST {{host}}/api/account/authenticate
 Content-Type: application/json
 
 {
-  "username": "hocgin",
+  "username": "admin",
   "password": "hocgin"
 }
+
+> {% client.global.set("auth_token", response.body.data); %}
 
 ### 账号详情
 GET {{host}}/api/account/{id}

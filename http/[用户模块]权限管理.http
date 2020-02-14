@@ -1,5 +1,17 @@
 ### 新增权限
 POST {{host}}/api/authority
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "title": "新增角色",
+  "type": 1,
+  "authorityCode": "权限授权码",
+  "method": "GET",
+  "uri": "/*",
+  "enabled": 1,
+  "sort": 1000
+}
 
 ### 修改权限
 PUT {{host}}/api/authority/{id}
@@ -24,3 +36,5 @@ POST {{host}}/api/role/_search
 
 ### 给角色授权权限
 POST {{host}}/api/role/{id}/grant/authority
+
+###

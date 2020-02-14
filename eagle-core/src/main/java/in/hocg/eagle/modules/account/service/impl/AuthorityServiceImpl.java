@@ -29,6 +29,8 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     public void insertOne(AuthorityPostQo qo) {
         final Authority authority = mapping.asAuthority(qo);
         authority.setCreatedAt(qo.getCreatedAtAsDate());
+        authority.setCreator(qo.getUserId());
+        baseMapper.insert(authority);
     }
     
     @Override

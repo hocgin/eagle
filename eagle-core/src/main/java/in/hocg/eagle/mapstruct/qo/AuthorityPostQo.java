@@ -18,31 +18,31 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = true)
 public class AuthorityPostQo extends BaseQo {
     
-    @NotBlank
+    @NotBlank(message = "权限名称")
     @ApiModelProperty("权限名称")
     private String title;
     
-    @NotNull
+    @NotNull(message = "权限类型")
     @ApiModelProperty("权限类型")
     private Integer type;
     
-    @NotBlank
+    @NotBlank(message = "权限授权码")
     @ApiModelProperty("权限授权码")
     private String authorityCode;
     
-    @NotBlank
+    @NotBlank(message = "请求方式")
     @ApiModelProperty("请求方式")
     private String method;
     
-    @NotBlank
+    @NotBlank(message = "请求URL")
     @ApiModelProperty("请求URL")
     private String uri;
     
-    @NotNull
+    @NotNull(message = "启用状态")
     @ApiModelProperty("启用状态")
     private Integer enabled;
     
-    @NotNull
+    @NotNull(message = "排序")
     @ApiModelProperty("排序")
     private Integer sort;
     

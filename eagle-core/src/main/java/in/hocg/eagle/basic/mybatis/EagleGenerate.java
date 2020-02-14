@@ -1,8 +1,8 @@
 package in.hocg.eagle.basic.mybatis;
 
+import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
-import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractEntity;
@@ -41,7 +41,7 @@ public class EagleGenerate {
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig
                 .setEntityLombokModel(true)
-                .entityTableFieldAnnotationEnable(true)
+                .setEntityTableFieldAnnotationEnable(true)
                 .setCapitalMode(true)
                 .setEntityColumnConstant(false)
                 .setControllerMappingHyphenStyle(true)
