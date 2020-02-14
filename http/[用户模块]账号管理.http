@@ -1,5 +1,5 @@
 ### 登录
-POST {{host}}/api/account/login
+POST {{host}}/api/account/authenticate
 Content-Type: application/json
 
 {
@@ -41,3 +41,5 @@ Content-Type: application/json
 
 {
 }
+
+###

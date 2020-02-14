@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * <p>
@@ -26,5 +27,10 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     @Override
     public IdAccountComplexVo selectOneComplex(Serializable id) {
         return null;
+    }
+    
+    @Override
+    public Optional<Account> selectOneByUsername(String username) {
+        return baseMapper.selectOneByUsername(username);
     }
 }

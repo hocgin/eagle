@@ -5,6 +5,7 @@ import in.hocg.eagle.mapstruct.vo.IdAccountComplexVo;
 import in.hocg.eagle.modules.account.entity.Account;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * <p>
@@ -23,4 +24,6 @@ public interface AccountService extends AbstractService<Account> {
      * @return
      */
     IdAccountComplexVo selectOneComplex(Serializable id);
+    
+    Optional<Account> selectOneByUsername(String username);
 }

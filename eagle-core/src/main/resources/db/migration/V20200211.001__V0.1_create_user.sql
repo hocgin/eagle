@@ -41,7 +41,7 @@ CREATE TABLE `t_account`
     DEFAULT CHARSET = utf8mb4
     COMMENT = '[用户模块] 账号表';
 INSERT INTO `t_account`(`id`, `nickname`, `username`, `email`, `phone`, `password`, `avatar`, `gender`, `created_ip`, `created_at`, `creator`)
-    VALUE (0, 'admin', 'admin', 'admin@example.com', '13600747016', 'pwd', 'https://example.com/avatar', 1, '127.0.0.1',
+    VALUE (0, 'admin', 'admin', 'admin@example.com', '13600747016', '{noop}hocgin', 'https://example.com/avatar', 1, '127.0.0.1',
            NOW(), 0);
 
 DROP TABLE IF EXISTS `t_staff`;

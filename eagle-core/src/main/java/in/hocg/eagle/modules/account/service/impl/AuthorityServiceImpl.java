@@ -1,14 +1,15 @@
 package in.hocg.eagle.modules.account.service.impl;
 
+import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.qo.AuthorityPostQo;
 import in.hocg.eagle.mapstruct.qo.AuthorityPutQo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.mapper.AuthorityMapper;
 import in.hocg.eagle.modules.account.service.AuthorityService;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import org.springframework.stereotype.Service;
-import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 
 /**
  * <p>
@@ -22,9 +23,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, Authority> implements AuthorityService {
     
+    private final AuthorityMapping mapping;
+    
     @Override
     public void insertOne(AuthorityPostQo qo) {
-    
+        final Authority authority = mapping.asAuthority(qo);
+        authority.setCreatedAt(qo.getCreatedAtAsDate());
     }
     
     @Override

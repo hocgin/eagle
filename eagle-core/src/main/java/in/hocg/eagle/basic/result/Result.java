@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.result;
 
+import in.hocg.eagle.utils.JSONUtility;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.http.ResponseEntity;
@@ -69,4 +70,7 @@ public class Result<T> implements Serializable {
         return ResponseEntity.ok(this);
     }
     
+    public String json() {
+        return JSONUtility.toJSONString(this);
+    }
 }
