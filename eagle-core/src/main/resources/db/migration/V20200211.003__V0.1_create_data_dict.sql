@@ -40,6 +40,8 @@ CREATE TABLE `t_data_dict_item`
         COMMENT '字典标识',
     `remark`          varchar(255)
         COMMENT '备注',
+    `sort`            INT(10)          NOT NULL DEFAULT 1000
+        COMMENT '排序, 从大到小降序',
     `enabled`         tinyint(2)       NOT NULL DEFAULT 1
         COMMENT '启用状态[0:为禁用状态;1:为正常状态]',
     --

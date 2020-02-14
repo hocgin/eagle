@@ -19,6 +19,13 @@ import java.util.Optional;
 @Mapper
 public interface DataDictMapper extends BaseMapper<DataDict> {
     
+    /**
+     * 查询数据项
+     *
+     * @param typeCode
+     * @param itemCode
+     * @return
+     */
     Optional<DataDictItem> selectOneByDictIdAndCode(@Param("typeCode") String typeCode,
                                                     @Param("itemCode") String itemCode);
 }

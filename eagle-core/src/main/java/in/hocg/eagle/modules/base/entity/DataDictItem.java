@@ -1,21 +1,16 @@
 package in.hocg.eagle.modules.base.entity;
 
-import com.baomidou.mybatisplus.enums.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 import in.hocg.eagle.basic.AbstractEntity;
-
-import com.baomidou.mybatisplus.annotations.Version;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -30,9 +25,9 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @TableName("t_data_dict_item")
 public class DataDictItem extends AbstractEntity<DataDictItem> {
-
+    
     private static final long serialVersionUID = 1L;
-
+    
     /**
      * ID
      */
@@ -59,6 +54,11 @@ public class DataDictItem extends AbstractEntity<DataDictItem> {
     @TableField("remark")
     private String remark;
     /**
+     * 排序, 从大到小降序
+     */
+    @TableField("sort")
+    private Integer sort;
+    /**
      * 启用状态[0:为禁用状态;1:为正常状态]
      */
     @TableField("enabled")
@@ -83,11 +83,11 @@ public class DataDictItem extends AbstractEntity<DataDictItem> {
      */
     @TableField("last_updater")
     private Integer lastUpdater;
-
-
+    
+    
     @Override
     protected Serializable pkVal() {
         return this.id;
     }
-
+    
 }

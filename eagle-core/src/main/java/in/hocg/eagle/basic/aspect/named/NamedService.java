@@ -1,10 +1,13 @@
 package in.hocg.eagle.basic.aspect.named;
 
+import in.hocg.eagle.modules.base.entity.DataDictItem;
 import in.hocg.eagle.modules.base.service.DataDictService;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * Created by hocgin on 2020/2/13.
@@ -29,6 +32,7 @@ public class NamedService {
         if (Strings.isBlank(type) || Strings.isBlank(item)) {
             return null;
         }
-        return service.selectOneByDictIdAndCode(type, item).orElse(null);
+        final Optional<DataDictItem> dataDictItemOptional = service.selectOneByDictIdAndCode(type, item);
+        return dataDictItemOptional.<Object>map(DataDictItem::getTitle).orElse(null);
     }
 }
