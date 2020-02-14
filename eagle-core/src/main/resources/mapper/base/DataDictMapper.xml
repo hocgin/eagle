@@ -9,5 +9,6 @@
             tdd.code = #{typeCode}
             AND tddi.code = #{itemCode}
         </where>
+        LIMIT 1
     </select>
 </mapper>

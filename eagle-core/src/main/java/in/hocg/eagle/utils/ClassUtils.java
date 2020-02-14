@@ -32,10 +32,14 @@ public class ClassUtils {
             return def;
         }
         
+        boolean accessible = field.isAccessible();
         try {
+            field.setAccessible(true);
             return field.get(fieldObject);
         } catch (IllegalAccessException ignored) {
             return def;
+        } finally {
+            field.setAccessible(accessible);
         }
     }
     

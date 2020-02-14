@@ -30,7 +30,7 @@ import java.util.Objects;
 public class NamedAspect {
     private final NamedService namedService;
     
-    @Pointcut("execution(* in.hocg.*.service.*(..))")
+    @Pointcut("@annotation(in.hocg.eagle.basic.aspect.named.InjectNamed)")
     public void pointcut() {
     }
     
