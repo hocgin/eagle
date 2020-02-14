@@ -57,7 +57,7 @@ public class EagleGenerate {
                 .setActiveRecord(true)
                 .setAuthor(System.getProperty("user.name"))
                 .setOutputDir(outputDir)
-                .setFileOverride(true)
+                .setFileOverride(false)
                 .setEnableCache(false)
                 .setBaseColumnList(false)
                 .setBaseResultMap(false)

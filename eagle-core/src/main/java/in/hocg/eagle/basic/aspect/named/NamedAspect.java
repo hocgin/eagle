@@ -28,12 +28,12 @@ import java.util.Objects;
 public class NamedAspect {
     private final NamedService namedService;
     
-    @Pointcut("execution(* *(..))")
+    @Pointcut("execution(* in.hocg.*.service.*(..))")
     public void pointcut() {
     }
     
     @Around("pointcut()")
-    public Object logHandler(ProceedingJoinPoint point) throws Throwable {
+    public Object around(ProceedingJoinPoint point) throws Throwable {
         Object result = point.proceed();
         if (Objects.isNull(result)) {
             return null;

@@ -1,9 +1,7 @@
 package in.hocg.eagle.basic.security;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
@@ -13,8 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @author hocgin
  */
 @Slf4j
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override

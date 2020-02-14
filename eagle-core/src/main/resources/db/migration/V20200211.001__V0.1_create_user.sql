@@ -3,7 +3,7 @@ CREATE TABLE `t_account`
 (
     `id`              INT(10) UNSIGNED AUTO_INCREMENT
         COMMENT 'ID',
-    `nick_name`       VARCHAR(10)         NOT NULL
+    `nickname`        VARCHAR(10)         NOT NULL
         COMMENT '昵称;显示使用',
     `username`        VARCHAR(20)         NOT NULL UNIQUE
         COMMENT '用户名;唯一,登录使用',
@@ -40,6 +40,9 @@ CREATE TABLE `t_account`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     COMMENT = '[用户模块] 账号表';
+INSERT INTO `t_account`(`id`, `nickname`, `username`, `email`, `phone`, `password`, `avatar`, `gender`, `created_ip`, `created_at`, `creator`)
+    VALUE (0, 'admin', 'admin', 'admin@example.com', '13600747016', 'pwd', 'https://example.com/avatar', 1, '127.0.0.1',
+           NOW(), 0);
 
 DROP TABLE IF EXISTS `t_staff`;
 CREATE TABLE `t_staff`
