@@ -1,5 +1,7 @@
 package in.hocg.eagle.modules.account.service.impl;
 
+import in.hocg.eagle.mapstruct.qo.AuthorityPostQo;
+import in.hocg.eagle.mapstruct.qo.AuthorityPutQo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.mapper.AuthorityMapper;
 import in.hocg.eagle.modules.account.service.AuthorityService;
@@ -19,5 +21,14 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, Authority> implements AuthorityService {
-
+    
+    @Override
+    public void insertOne(AuthorityPostQo qo) {
+    
+    }
+    
+    @Override
+    public void updateOne(AuthorityPutQo qo) {
+    
+    }
 }

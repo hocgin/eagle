@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.aspect.named;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.eagle.utils.ClassUtils;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
@@ -38,6 +40,36 @@ public class NamedAspect {
         if (Objects.isNull(result)) {
             return null;
         }
+        if (result instanceof Page) {
+            handlePageResult((Page) result);
+        } else if (result instanceof Collection) {
+            handleCollectionResult((Collection) result);
+        } else if (result instanceof Object[]) {
+            handleArrayResult((Object[]) result);
+        } else {
+            handleObjectResult(result);
+        }
+        return result;
+    }
+    
+    private void handlePageResult(Page result) {
+        this.handleCollectionResult(result.getRecords());
+    }
+    
+    private void handleArrayResult(Object[] result) {
+        for (Object item : result) {
+            handleObjectResult(item);
+        }
+    }
+    
+    private void handleCollectionResult(Collection result) {
+        result.forEach(this::handleObjectResult);
+    }
+    
+    private void handleObjectResult(Object result) {
+        if (Objects.isNull(result)) {
+            return;
+        }
         final Class<?> aClass = result.getClass();
         
         Map<String, Field> fieldMap = LangUtils.toMap(ClassUtils.getAllField(aClass), Field::getName);
@@ -52,8 +84,6 @@ public class NamedAspect {
                         ClassUtils.setFieldValue(result, field, val);
                     }
                 });
-        return result;
     }
-    
     
 }

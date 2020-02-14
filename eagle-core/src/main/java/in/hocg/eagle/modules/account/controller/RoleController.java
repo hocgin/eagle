@@ -1,11 +1,19 @@
 package in.hocg.eagle.modules.account.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.context.annotation.Lazy;
+import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.mapstruct.qo.GrantAuthorityQo;
+import in.hocg.eagle.mapstruct.qo.RolePostQo;
+import in.hocg.eagle.mapstruct.qo.RolePutQo;
+import in.hocg.eagle.mapstruct.qo.RoleSearchQo;
+import in.hocg.eagle.modules.account.service.RoleService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -17,8 +25,49 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/account/role")
+@RequestMapping("/api/role")
 public class RoleController {
-
+    
+    private final RoleService service;
+    
+    @DeleteMapping("/{id}")
+    @ApiOperation("删除角色")
+    public Result<Void> deleteById(@PathVariable Serializable id) {
+        return Result.success();
+    }
+    
+    @GetMapping("/{id}")
+    @ApiOperation("角色详情")
+    public Result<Void> selectById(@PathVariable Serializable id) {
+        return Result.success();
+    }
+    
+    @PostMapping("/")
+    @ApiOperation("新增角色")
+    public Result<Void> insert(@Validated @RequestBody RolePostQo qo) {
+        return Result.success();
+    }
+    
+    @PutMapping("/{id}")
+    @ApiOperation("修改角色")
+    public Result<Void> update(@PathVariable Serializable id,
+                               @Validated @RequestBody RolePutQo qo) {
+        qo.setId(id);
+        return Result.success();
+    }
+    
+    @PostMapping("/_search")
+    @ApiOperation("分页查询角色列表")
+    public Result<Void> search(@Validated @RequestBody RoleSearchQo qo) {
+        return Result.success();
+    }
+    
+    @PutMapping("/{id}/grant/authority")
+    @ApiOperation("给角色授权权限")
+    public Result<Void> grantAuthority(@PathVariable Serializable id,
+                                       @Validated @RequestBody GrantAuthorityQo qo) {
+        qo.setId(id);
+        return Result.success();
+    }
 }
 

@@ -1,11 +1,15 @@
 package in.hocg.eagle.modules.account.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.context.annotation.Lazy;
+import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.mapstruct.vo.IdAccountComplexVo;
+import in.hocg.eagle.modules.account.service.AccountService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -17,8 +21,26 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/account/account")
+@RequestMapping("/api/account")
 public class AccountController {
-
+    private final AccountService service;
+    
+    @GetMapping("/{id}")
+    @ApiOperation("给账号信息")
+    public Result<IdAccountComplexVo> id(@PathVariable Serializable id) {
+        return Result.success(service.selectOneComplex(id));
+    }
+    
+    @PostMapping("/{id}/grant/role")
+    @ApiOperation("给账号授权角色")
+    public Result<Void> grantRole(@PathVariable Serializable id) {
+        return Result.success();
+    }
+    
+    @PostMapping("/{id}/grant/authority")
+    @ApiOperation("给账号授权权限")
+    public Result<Void> grantAuthority(@PathVariable Serializable id) {
+        return Result.success();
+    }
 }
 
