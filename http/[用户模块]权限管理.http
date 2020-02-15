@@ -53,5 +53,7 @@ Content-Type: application/json
 Token: Bearer {{auth_token}}
 
 {
-  "roles": [1]
+  "roles": [
+    1
+  ]
 }
