@@ -7,6 +7,7 @@ import in.hocg.eagle.mapstruct.qo.GrantAuthorityQo;
 import in.hocg.eagle.mapstruct.qo.RolePostQo;
 import in.hocg.eagle.mapstruct.qo.RolePutQo;
 import in.hocg.eagle.mapstruct.qo.RoleSearchQo;
+import in.hocg.eagle.mapstruct.vo.RoleComplexVo;
 import in.hocg.eagle.mapstruct.vo.RoleSearchVo;
 import in.hocg.eagle.modules.account.service.RoleService;
 import io.swagger.annotations.ApiOperation;
@@ -14,8 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.Serializable;
 
 /**
  * <p>
@@ -41,11 +40,11 @@ public class RoleController {
     
     @GetMapping("/{id}")
     @ApiOperation("角色详情")
-    public Result<Void> selectById(@PathVariable Serializable id) {
-        return Result.success();
+    public Result<RoleComplexVo> selectById(@PathVariable Integer id) {
+        return Result.success(service.selectOne(id));
     }
     
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation("新增角色")
     public Result<Void> insert(@Validated @RequestBody RolePostQo qo) {
         service.insertOne(qo);
@@ -67,7 +66,7 @@ public class RoleController {
         return Result.success(service.search(qo));
     }
     
-    @PutMapping("/{id}/grant/authority")
+    @PostMapping("/{id}/grant/authority")
     @ApiOperation("给角色授权权限")
     public Result<Void> grantAuthority(@PathVariable Integer id,
                                        @Validated @RequestBody GrantAuthorityQo qo) {

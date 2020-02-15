@@ -6,6 +6,7 @@ import in.hocg.eagle.mapstruct.qo.GrantAuthorityQo;
 import in.hocg.eagle.mapstruct.qo.RolePostQo;
 import in.hocg.eagle.mapstruct.qo.RolePutQo;
 import in.hocg.eagle.mapstruct.qo.RoleSearchQo;
+import in.hocg.eagle.mapstruct.vo.RoleComplexVo;
 import in.hocg.eagle.mapstruct.vo.RoleSearchVo;
 import in.hocg.eagle.modules.account.entity.Role;
 
@@ -50,7 +51,16 @@ public interface RoleService extends AbstractService<Role> {
     
     /**
      * 删除角色
+     *
      * @param id
      */
     void deleteOne(Integer id);
+    
+    /**
+     * 查询角色详情
+     *
+     * @param id
+     * @return
+     */
+    RoleComplexVo selectOne(Integer id);
 }

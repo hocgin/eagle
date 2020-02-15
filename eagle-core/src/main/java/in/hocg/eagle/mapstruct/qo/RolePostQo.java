@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by hocgin on 2020/2/14.
@@ -24,7 +25,7 @@ public class RolePostQo extends BaseQo {
     private String roleCode;
     @ApiModelProperty("角色描述")
     private String remark;
-    @NotBlank(message = "启用状态不能为空")
+    @NotNull(message = "启用状态不能为空")
     @ApiModelProperty("启用状态[0:为禁用状态;1:为正常状态]")
     private Integer enabled;
 }

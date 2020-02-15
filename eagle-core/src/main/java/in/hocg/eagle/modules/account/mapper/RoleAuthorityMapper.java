@@ -1,9 +1,12 @@
 package in.hocg.eagle.modules.account.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.RoleAuthority;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -31,4 +34,21 @@ public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
      * @return
      */
     Integer deleteByRoleId(@Param("roleId") Integer roleId);
+    
+    /**
+     * 查询角色关联的权限列表
+     *
+     * @param roleId
+     * @param enabled
+     * @return
+     */
+    List<Authority> selectListAuthorityByRoleIdAndEnabled(@Param("roleId") Integer roleId, @Param("enabled") Integer enabled);
+    
+    /**
+     * 查询 role_id 与 authority_id 符合条件的数量
+     * @param roleId
+     * @param authorityId
+     * @return
+     */
+    Integer countByRoleIdAndAuthorityId(@Param("roleId") Integer roleId, @Param("authorityId") Integer authorityId);
 }

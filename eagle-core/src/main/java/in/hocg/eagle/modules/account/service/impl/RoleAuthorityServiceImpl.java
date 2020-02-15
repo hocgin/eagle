@@ -44,6 +44,10 @@ public class RoleAuthorityServiceImpl extends AbstractServiceImpl<RoleAuthorityM
         VerifyUtils.notNull(role, "角色不存在");
         RoleAuthority roleAuthority;
         for (Integer authorityId : authorities) {
+            // 已经具备权限
+            if (isHasAuthority(roleId, authorityId)) {
+                continue;
+            }
             Authority authority = authorityService.getById(authorityId);
             VerifyUtils.notNull(authority, "授权失败");
             roleAuthority = new RoleAuthority()
@@ -53,8 +57,19 @@ public class RoleAuthorityServiceImpl extends AbstractServiceImpl<RoleAuthorityM
         }
     }
     
+    private boolean isHasAuthority(Integer roleId, Integer authorityId) {
+        return baseMapper.countByRoleIdAndAuthorityId(roleId, authorityId) > 0;
+    }
+    
     @Override
     public void deleteByRoleId(Integer roleId) {
         baseMapper.deleteByRoleId(roleId);
     }
+    
+    @Override
+    public List<Authority> selectListAuthorityByRoleIdAndEnabled(Integer roleId, Integer enabled) {
+        return baseMapper.selectListAuthorityByRoleIdAndEnabled(roleId, enabled);
+    }
+    
+    
 }

@@ -10,7 +10,7 @@ Token: Bearer {{auth_token}}
   "method": "GET",
   "uri": "/*x",
   "enabled": 0,
-  "parentId": 3,
+  "parentId": null,
   "sort": 1000
 }
 

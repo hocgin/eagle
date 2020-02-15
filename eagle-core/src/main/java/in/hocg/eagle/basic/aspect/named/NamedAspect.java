@@ -37,8 +37,13 @@ public class NamedAspect {
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         Object result = point.proceed();
+        handleResult(result);
+        return result;
+    }
+    
+    private void handleResult(Object result) {
         if (Objects.isNull(result)) {
-            return null;
+            return;
         }
         if (result instanceof Page) {
             handlePageResult((Page) result);
@@ -49,7 +54,6 @@ public class NamedAspect {
         } else {
             handleObjectResult(result);
         }
-        return result;
     }
     
     private void handlePageResult(Page result) {
@@ -74,6 +78,10 @@ public class NamedAspect {
         
         Map<String, Field> fieldMap = LangUtils.toMap(ClassUtils.getAllField(aClass), Field::getName);
         fieldMap.values().stream()
+                .peek(field -> {
+                    final Object object = ClassUtils.getObjectValue(result, field, null);
+                    handleResult(object);
+                })
                 .filter(field -> field.isAnnotationPresent(Named.class))
                 .forEach(field -> {
                     final Named named = field.getAnnotation(Named.class);

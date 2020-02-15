@@ -1,14 +1,40 @@
 ### 新增角色
 POST {{host}}/api/role
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "title": "新增角色",
+  "roleCode": "权限授权x码",
+  "remark": "GET",
+  "enabled": 1
+}
 
 ### 修改角色
-PUT {{host}}/api/role
+PUT {{host}}/api/role/1
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "title": "新增角色",
+  "roleCode": "权限授权x码",
+  "remark": "{{$uuid}}",
+  "enabled": 1
+}
 
 ### 角色详情
-GET {{host}}/api/role/{id}
+GET {{host}}/api/role/1
 
 ### 角色列表
 POST {{host}}/api/role/_search
 
 ### 给角色授权权限
-POST {{host}}/api/role/{id}/grant/authority
+POST {{host}}/api/role/1/grant/authority
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "authorities": [1]
+}
+
+###

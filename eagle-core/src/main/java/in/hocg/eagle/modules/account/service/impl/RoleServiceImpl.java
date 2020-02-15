@@ -8,16 +8,21 @@ import in.hocg.eagle.mapstruct.qo.GrantAuthorityQo;
 import in.hocg.eagle.mapstruct.qo.RolePostQo;
 import in.hocg.eagle.mapstruct.qo.RolePutQo;
 import in.hocg.eagle.mapstruct.qo.RoleSearchQo;
+import in.hocg.eagle.mapstruct.vo.RoleComplexVo;
 import in.hocg.eagle.mapstruct.vo.RoleSearchVo;
+import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
 import in.hocg.eagle.modules.account.mapper.RoleMapper;
 import in.hocg.eagle.modules.account.service.RoleAccountService;
 import in.hocg.eagle.modules.account.service.RoleAuthorityService;
 import in.hocg.eagle.modules.account.service.RoleService;
+import in.hocg.eagle.utils.VerifyUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * <p>
@@ -72,5 +77,14 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
         }
         baseMapper.deleteById(id);
         roleAuthorityService.deleteByRoleId(id);
+    }
+    
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public RoleComplexVo selectOne(Integer id) {
+        final Role role = baseMapper.selectById(id);
+        VerifyUtils.notNull(role, "角色不存在");
+        List<Authority> authorities = roleAuthorityService.selectListAuthorityByRoleIdAndEnabled(id, 1);
+        return mapping.asRoleComplexVo(role, authorities);
     }
 }

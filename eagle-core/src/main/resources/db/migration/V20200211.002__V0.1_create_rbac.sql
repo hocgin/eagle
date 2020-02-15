@@ -46,7 +46,7 @@ CREATE TABLE `t_role`
         COMMENT '角色名称',
     `role_code`       varchar(20)      NOT NULL UNIQUE
         COMMENT '角色授权码',
-    `description`     varchar(255)
+    `remark`     varchar(255)
         COMMENT '角色描述',
     `enabled`         TINYINT(1) UNSIGNED DEFAULT 1
         COMMENT '启用状态[0:为禁用状态;1:为正常状态]',
