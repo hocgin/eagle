@@ -33,7 +33,8 @@ public class AuthorityController {
     
     @DeleteMapping("/{id}")
     @ApiOperation("删除权限")
-    public Result<Void> deleteById(@PathVariable Serializable id) {
+    public Result<Void> deleteById(@PathVariable Integer id, @RequestParam(required = false, defaultValue = "false") boolean force) {
+        service.deleteById(id, force);
         return Result.success();
     }
     

@@ -23,7 +23,7 @@ public interface AuthorityMapper extends BaseMapper<Authority> {
      *
      * @param regexTreePath
      */
-    void updateOffStatusByRegexTreePath(@Param("regexTreePath") String regexTreePath);
+    int updateOffStatusByRegexTreePath(@Param("regexTreePath") String regexTreePath);
     
     /**
      * 指定新的 tree_path 并根据 regex 替换旧的 tree_path
@@ -32,14 +32,31 @@ public interface AuthorityMapper extends BaseMapper<Authority> {
      * @param oldTreePath
      * @param newTreePath
      */
-    void updateTreePathByRegexTreePath(@Param("regexTreePath") String regexTreePath,
+    int updateTreePathByRegexTreePath(@Param("regexTreePath") String regexTreePath,
                                        @Param("oldTreePath") String oldTreePath,
                                        @Param("newTreePath") String newTreePath);
     
     /**
      * 查找 parent_id 符合的数据
+     *
      * @param parentId
      * @return
      */
     List<Authority> selectListByParentId(@Param("parentId") Integer parentId);
+    
+    /**
+     * 获取 tree_path 匹配的数据
+     *
+     * @param regexTreePath
+     * @return
+     */
+    List<Authority> selectListChildrenByRegexTreePath(@Param("regexTreePath") String regexTreePath);
+    
+    /**
+     * 删除 tree_path 匹配的数据
+     *
+     * @param regexTreePath
+     * @return
+     */
+    int deleteListByRegexTreePath(String regexTreePath);
 }

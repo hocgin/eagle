@@ -44,4 +44,11 @@ public interface AuthorityService extends AbstractService<Authority> {
      * @return
      */
     List<AuthorityTreeNodeVo> search(AuthoritySearchQo qo);
+    
+    /**
+     * 删除权限
+     *
+     * @param id
+     */
+    void deleteById(Integer id, boolean force);
 }

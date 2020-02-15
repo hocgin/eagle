@@ -1,8 +1,10 @@
 package in.hocg.eagle.modules.account.service.impl;
 
+import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.Tree;
 import in.hocg.eagle.basic.constant.Enabled;
+import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.security.SecurityContext;
 import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.qo.AuthorityPostQo;
@@ -95,6 +97,44 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         return Tree.getChild(null, all.stream()
                 .map(mapping::asAuthorityTreeNodeVo)
                 .collect(Collectors.toList()));
+    }
+    
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteById(Integer id, boolean force) {
+        if (force) {
+            deleteCurrentAndChildren(id);
+        } else if (selectListChildrenById(id).isEmpty()) {
+            baseMapper.deleteById(id);
+        } else {
+            throw ServiceException.wrap("该节点下含有子节点不能被删除");
+        }
+    }
+    
+    private void deleteCurrentAndChildren(Integer id) {
+        final Authority authority = baseMapper.selectById(id);
+        if (Objects.isNull(authority)) {
+            return;
+        }
+    
+        final String regexTreePath = String.format("%s.*?", authority.getTreePath());
+        baseMapper.deleteListByRegexTreePath(regexTreePath);
+    }
+    
+    /**
+     * 获取该ID下所有孩子节点
+     *
+     * @param id
+     * @return
+     */
+    private List<Authority> selectListChildrenById(Integer id) {
+        final Authority authority = baseMapper.selectById(id);
+        if (Objects.isNull(authority)) {
+            return Lists.newArrayList();
+        }
+        
+        final String regexTreePath = String.format("%s.*?", authority.getTreePath());
+        return baseMapper.selectListChildrenByRegexTreePath(regexTreePath);
     }
     
     /**

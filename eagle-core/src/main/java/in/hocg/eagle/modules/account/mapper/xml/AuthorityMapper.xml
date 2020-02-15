@@ -22,4 +22,13 @@
         </where>
         ORDER BY sort DESC, created_at DESC
     </select>
+    <select id="selectListChildrenByRegexTreePath" resultType="in.hocg.eagle.modules.account.entity.Authority">
+        SELECT ta.*
+        FROM t_authority ta
+        WHERE ta.tree_path REGEXP #{regexTreePath}
+    </select>
+    <delete id="deleteListByRegexTreePath">
+        DELETE FROM t_authority ta
+        WHERE ta.tree_path REGEXP #{regexTreePath}
+    </delete>
 </mapper>
