@@ -12,5 +12,11 @@ import in.hocg.eagle.basic.AbstractService;
  * @since 2020-02-11
  */
 public interface RoleAuthorityService extends AbstractService<RoleAuthority> {
-
+    
+    /**
+     * 检查 authority 是否正在被角色使用
+     * @param regexTreePath
+     * @return
+     */
+    boolean isUsedAuthority(String regexTreePath);
 }

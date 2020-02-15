@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.eagle.modules.account.mapper.AuthorityAccountMapper">
 
+    <select id="selectListByAuthorityRegexTreePath" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM t_authority_account taa
+                 LEFT JOIN t_authority ta ON ta.id = taa.authority_id
+        WHERE ta.tree_path REGEXP #{regexTreePath}
+    </select>
 </mapper>

@@ -22,7 +22,7 @@
         </where>
         ORDER BY sort DESC, created_at DESC
     </select>
-    <select id="selectListChildrenByRegexTreePath" resultType="in.hocg.eagle.modules.account.entity.Authority">
+    <select id="selectListByRegexTreePath" resultType="in.hocg.eagle.modules.account.entity.Authority">
         SELECT ta.*
         FROM t_authority ta
         WHERE ta.tree_path REGEXP #{regexTreePath}

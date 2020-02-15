@@ -19,5 +19,9 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class AuthorityAccountServiceImpl extends AbstractServiceImpl<AuthorityAccountMapper, AuthorityAccount> implements AuthorityAccountService {
-
+    
+    @Override
+    public boolean isUsedAuthority(String regexTreePath) {
+        return baseMapper.selectListByAuthorityRegexTreePath(regexTreePath) > 0;
+    }
 }

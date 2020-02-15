@@ -13,7 +13,9 @@ import in.hocg.eagle.mapstruct.qo.AuthoritySearchQo;
 import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.mapper.AuthorityMapper;
+import in.hocg.eagle.modules.account.service.AuthorityAccountService;
 import in.hocg.eagle.modules.account.service.AuthorityService;
+import in.hocg.eagle.modules.account.service.RoleAuthorityService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.VerifyUtils;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +42,8 @@ import java.util.stream.Collectors;
 public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, Authority> implements AuthorityService {
     
     private final AuthorityMapping mapping;
+    private final RoleAuthorityService roleAuthorityService;
+    private final AuthorityAccountService authorityAccountService;
     
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -106,12 +110,17 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         if (force) {
             deleteCurrentAndChildren(id);
         } else if (selectListChildrenById(id).isEmpty()) {
-            baseMapper.deleteById(id);
+            deleteCurrentAndChildren(id);
         } else {
             throw ServiceException.wrap("该节点下含有子节点不能被删除");
         }
     }
     
+    /**
+     * 删除当前节点及其子节点
+     *
+     * @param id
+     */
     private void deleteCurrentAndChildren(Integer id) {
         final Authority authority = baseMapper.selectById(id);
         if (Objects.isNull(authority)) {
@@ -119,6 +128,12 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         }
         
         final String regexTreePath = String.format("%s.*?", authority.getTreePath());
+        if (roleAuthorityService.isUsedAuthority(regexTreePath)) {
+            throw ServiceException.wrap("所选节点正在被某些角色使用");
+        }
+        if (authorityAccountService.isUsedAuthority(regexTreePath)) {
+            throw ServiceException.wrap("所选节点正在被某些账号使用");
+        }
         baseMapper.deleteListByRegexTreePath(regexTreePath);
     }
     
@@ -135,7 +150,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         }
         
         final String regexTreePath = String.format("%s.*?", authority.getTreePath());
-        return baseMapper.selectListChildrenByRegexTreePath(regexTreePath);
+        return baseMapper.selectListByRegexTreePath(regexTreePath);
     }
     
     /**

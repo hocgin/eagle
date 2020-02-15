@@ -12,5 +12,6 @@ import in.hocg.eagle.basic.AbstractService;
  * @since 2020-02-11
  */
 public interface AuthorityAccountService extends AbstractService<AuthorityAccount> {
-
+    
+    boolean isUsedAuthority(String regexTreePath);
 }

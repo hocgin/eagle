@@ -50,7 +50,7 @@ public interface AuthorityMapper extends BaseMapper<Authority> {
      * @param regexTreePath
      * @return
      */
-    List<Authority> selectListChildrenByRegexTreePath(@Param("regexTreePath") String regexTreePath);
+    List<Authority> selectListByRegexTreePath(@Param("regexTreePath") String regexTreePath);
     
     /**
      * 删除 tree_path 匹配的数据

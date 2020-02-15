@@ -3,6 +3,7 @@ package in.hocg.eagle.modules.account.mapper;
 import in.hocg.eagle.modules.account.entity.RoleAuthority;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -14,5 +15,11 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
-
+    
+    /**
+     * 查询有符合 tree_path 的关联关系
+     * @param regexTreePath
+     * @return
+     */
+    Integer selectListByAuthorityRegexTreePath(@Param("regexTreePath") String regexTreePath);
 }
