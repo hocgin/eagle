@@ -1,8 +1,11 @@
 package in.hocg.eagle.modules.account.mapper;
 
-import in.hocg.eagle.modules.account.entity.Authority;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.eagle.modules.account.entity.Authority;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +17,29 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface AuthorityMapper extends BaseMapper<Authority> {
-
+    
+    /**
+     * 根据 regex 匹配 tree_path 来更新节点的状态
+     *
+     * @param regexTreePath
+     */
+    void updateOffStatusByRegexTreePath(@Param("regexTreePath") String regexTreePath);
+    
+    /**
+     * 指定新的 tree_path 并根据 regex 替换旧的 tree_path
+     *
+     * @param regexTreePath
+     * @param oldTreePath
+     * @param newTreePath
+     */
+    void updateTreePathByRegexTreePath(@Param("regexTreePath") String regexTreePath,
+                                       @Param("oldTreePath") String oldTreePath,
+                                       @Param("newTreePath") String newTreePath);
+    
+    /**
+     * 查找 parent_id 符合的数据
+     * @param parentId
+     * @return
+     */
+    List<Authority> selectListByParentId(@Param("parentId") Integer parentId);
 }

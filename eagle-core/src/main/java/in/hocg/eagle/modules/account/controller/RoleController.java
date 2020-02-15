@@ -50,7 +50,7 @@ public class RoleController {
     
     @PutMapping("/{id}")
     @ApiOperation("修改角色")
-    public Result<Void> update(@PathVariable Serializable id,
+    public Result<Void> update(@PathVariable Integer id,
                                @Validated @RequestBody RolePutQo qo) {
         qo.setId(id);
         return Result.success();

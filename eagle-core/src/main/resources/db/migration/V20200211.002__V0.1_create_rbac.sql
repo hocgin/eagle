@@ -13,8 +13,10 @@ CREATE TABLE `t_authority`
         COMMENT '请求方式 [*, GET, POST..]',
     `uri`             varchar(255)     NOT NULL
         COMMENT '请求URL',
+    `parent_id`        INT(10)
+        COMMENT '父级ID, 顶级为 NULL',
     `tree_path`       varchar(255)     NOT NULL
-        COMMENT '树路径，组成方式: 父路径.当前ID',
+        COMMENT '树路径，组成方式: /父路径/当前ID',
     `enabled`         TINYINT(1) UNSIGNED       DEFAULT 1
         COMMENT '启用状态[0:为禁用状态;1:为正常状态]',
     `sort`            INT(10)          NOT NULL DEFAULT 1000

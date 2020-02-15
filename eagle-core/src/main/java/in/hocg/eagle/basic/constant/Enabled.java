@@ -15,6 +15,6 @@ import lombok.RequiredArgsConstructor;
 public enum Enabled {
     Off(0, "禁用"),
     On(1, "启用");
-    private final int code;
+    private final Integer code;
     private final String name;
 }

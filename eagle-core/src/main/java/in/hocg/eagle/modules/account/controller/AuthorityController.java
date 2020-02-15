@@ -1,11 +1,11 @@
 package in.hocg.eagle.modules.account.controller;
 
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.mapstruct.qo.AuthorityPostQo;
 import in.hocg.eagle.mapstruct.qo.AuthorityPutQo;
 import in.hocg.eagle.mapstruct.qo.AuthoritySearchQo;
+import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.service.AuthorityService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -51,7 +52,7 @@ public class AuthorityController {
     
     @PutMapping("/{id}")
     @ApiOperation("更新权限")
-    public Result<Void> update(@PathVariable Serializable id,
+    public Result<Void> update(@PathVariable Integer id,
                                @Validated @RequestBody AuthorityPutQo qo) {
         qo.setId(id);
         service.updateOne(qo);
@@ -59,9 +60,9 @@ public class AuthorityController {
     }
     
     @PostMapping("/_search")
-    @ApiOperation("分页查询权限")
-    public Result<Page> search(@Validated @RequestBody AuthoritySearchQo qo) {
-        return Result.success();
+    @ApiOperation("分页查询权限(目前仅支持树格式)")
+    public Result<List<AuthorityTreeNodeVo>> search(@Validated @RequestBody AuthoritySearchQo qo) {
+        return Result.success(service.search(qo));
     }
 }
 

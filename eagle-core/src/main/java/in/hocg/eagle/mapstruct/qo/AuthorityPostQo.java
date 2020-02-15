@@ -46,4 +46,7 @@ public class AuthorityPostQo extends BaseQo {
     @ApiModelProperty("排序")
     private Integer sort;
     
+    @ApiModelProperty("父级")
+    private Integer parentId;
+    
 }

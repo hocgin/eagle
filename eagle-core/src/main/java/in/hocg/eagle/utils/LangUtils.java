@@ -83,4 +83,19 @@ public class LangUtils {
         }
         return result;
     }
+    
+    /**
+     * Integer 的比较
+     *
+     * @param s1
+     * @param s2
+     * @return
+     */
+    public static boolean equals(Integer s1, Integer s2) {
+        if (s1 == null || s2 == null) {
+            return Objects.equals(s1, s2);
+        }
+        
+        return s1.compareTo(s2) == 0;
+    }
 }

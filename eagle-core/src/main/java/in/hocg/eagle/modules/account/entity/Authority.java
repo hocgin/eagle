@@ -58,8 +58,14 @@ public class Authority extends AbstractEntity<Authority> {
      */
     @TableField("uri")
     private String uri;
+    
     /**
-     * 树路径，组成方式: 父路径.当前ID
+     * 父级ID, 顶级为 NULL
+     */
+    @TableField("parent_id")
+    private Integer parentId;
+    /**
+     * 树路径，组成方式: /父路径/当前ID
      */
     @TableField("tree_path")
     private String treePath;

@@ -1,6 +1,8 @@
 package in.hocg.eagle.basic.security;
 
 import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.basic.result.ResultCode;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -54,6 +56,20 @@ public class SecurityContext {
             return Optional.of(((User) userDetailsService.loadUserByUsername(username)));
         }
         return Optional.empty();
+    }
+    
+    /**
+     * User Id
+     * @param <T>
+     * @return
+     */
+    public <T> T getCurrentUserId() {
+        final Optional<User> userOptional = getCurrentUser();
+        if (userOptional.isPresent()) {
+            return (T) userOptional.get().getId();
+        } else {
+            throw ServiceException.wrap(ResultCode.ACCESS_DENIED_ERROR.getMessage());
+        }
     }
     
 }

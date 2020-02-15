@@ -1,7 +1,7 @@
 package in.hocg.eagle.mapstruct.qo;
 
-import in.hocg.eagle.basic.qo.BaseQo;
 import in.hocg.eagle.basic.qo.PageQo;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,4 +14,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class AuthoritySearchQo extends PageQo {
+    @ApiModelProperty("父ID")
+    private Integer parentId;
 }
