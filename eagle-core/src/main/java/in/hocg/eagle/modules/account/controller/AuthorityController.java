@@ -33,7 +33,8 @@ public class AuthorityController {
     
     @DeleteMapping("/{id}")
     @ApiOperation("删除权限")
-    public Result<Void> deleteById(@PathVariable Integer id, @RequestParam(required = false, defaultValue = "false") boolean force) {
+    public Result<Void> deleteById(@PathVariable Integer id,
+                                   @RequestParam(name = "force", required = false, defaultValue = "false") boolean force) {
         service.deleteById(id, force);
         return Result.success();
     }
@@ -61,7 +62,7 @@ public class AuthorityController {
     }
     
     @PostMapping("/_search")
-    @ApiOperation("分页查询权限(目前仅支持树格式)")
+    @ApiOperation("查询权限列表(目前仅支持树格式)")
     public Result<List<AuthorityTreeNodeVo>> search(@Validated @RequestBody AuthoritySearchQo qo) {
         return Result.success(service.search(qo));
     }

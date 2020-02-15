@@ -1,0 +1,14 @@
+### 新增角色
+POST {{host}}/api/role
+
+### 修改角色
+PUT {{host}}/api/role
+
+### 角色详情
+GET {{host}}/api/role/{id}
+
+### 角色列表
+POST {{host}}/api/role/_search
+
+### 给角色授权权限
+POST {{host}}/api/role/{id}/grant/authority

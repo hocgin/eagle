@@ -28,7 +28,7 @@
         WHERE ta.tree_path REGEXP #{regexTreePath}
     </select>
     <delete id="deleteListByRegexTreePath">
-        DELETE FROM t_authority ta
-        WHERE ta.tree_path REGEXP #{regexTreePath}
+        DELETE FROM t_authority
+        WHERE tree_path REGEXP #{regexTreePath}
     </delete>
 </mapper>

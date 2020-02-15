@@ -1,5 +1,6 @@
 package in.hocg.eagle.utils;
 
+import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.result.ResultCode;
 import io.jsonwebtoken.lang.Assert;
 import lombok.experimental.UtilityClass;
@@ -14,7 +15,11 @@ import lombok.experimental.UtilityClass;
 public class VerifyUtils {
     
     public static void notNull(Object object, String message) {
-        Assert.notNull(object, message);
+        try {
+            Assert.notNull(object, message);
+        } catch (Exception e) {
+            throw ServiceException.wrap(e.getMessage());
+        }
     }
     
     public static void notNull(Object object) {
@@ -22,7 +27,11 @@ public class VerifyUtils {
     }
     
     public static void isNull(Object object, String message) {
-        Assert.isNull(object, message);
+        try {
+            Assert.isNull(object, message);
+        } catch (Exception e) {
+            throw ServiceException.wrap(e.getMessage());
+        }
     }
     
     public static void isNull(Object object) {
@@ -30,11 +39,27 @@ public class VerifyUtils {
     }
     
     public static void isTrue(boolean expression, String message) {
-        Assert.isTrue(expression, message);
+        try {
+            Assert.isTrue(expression, message);
+        } catch (Exception e) {
+            throw ServiceException.wrap(e.getMessage());
+        }
     }
     
     public static void isTrue(boolean expression) {
         isTrue(expression, ResultCode.SERVICE_ERROR.getMessage());
+    }
+    
+    public static void isFalse(boolean expression, String message) {
+        try {
+            Assert.isTrue(!expression, message);
+        } catch (Exception e) {
+            throw ServiceException.wrap(e.getMessage());
+        }
+    }
+    
+    public static void isFalse(boolean expression) {
+        isFalse(expression, ResultCode.SERVICE_ERROR.getMessage());
     }
     
 }

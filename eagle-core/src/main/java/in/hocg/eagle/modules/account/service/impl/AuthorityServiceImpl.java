@@ -50,11 +50,11 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         // 如果存在父级别菜单
         if (Objects.nonNull(parentId)) {
             Authority parentAuthority = baseMapper.selectById(parentId);
-            VerifyUtils.notNull(parentAuthority, "父级标签不存在");
+            VerifyUtils.notNull(parentAuthority, "父级不存在");
             path.append(parentAuthority.getTreePath());
             boolean parentIsOff = LangUtils.equals(Enabled.Off.getCode(), parentAuthority.getEnabled());
             boolean nowIsOn = LangUtils.equals(Enabled.On.getCode(), qo.getEnabled());
-            VerifyUtils.isTrue(parentIsOff && nowIsOn, "父级为禁用状态，子级不能为开启状态");
+            VerifyUtils.isFalse(parentIsOff && nowIsOn, "父级为禁用状态，子级不能为开启状态");
         }
         
         final Authority authority = mapping.asAuthority(qo);
@@ -93,8 +93,9 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     
     @Override
     public List<AuthorityTreeNodeVo> search(AuthoritySearchQo qo) {
-        List<Authority> all = baseMapper.selectListByParentId(qo.getParentId());
-        return Tree.getChild(null, all.stream()
+        final Integer parentId = qo.getParentId();
+        List<Authority> all = baseMapper.selectListByParentId(parentId);
+        return Tree.getChild(parentId, all.stream()
                 .map(mapping::asAuthorityTreeNodeVo)
                 .collect(Collectors.toList()));
     }
@@ -116,7 +117,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         if (Objects.isNull(authority)) {
             return;
         }
-    
+        
         final String regexTreePath = String.format("%s.*?", authority.getTreePath());
         baseMapper.deleteListByRegexTreePath(regexTreePath);
     }
@@ -151,6 +152,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         String newParentTreePath = "";
         if (Objects.nonNull(parentId)) {
             final Authority parentAuthority = baseMapper.selectById(parentId);
+            VerifyUtils.notNull(parentAuthority, "父级不存在");
             newParentTreePath = parentAuthority.getTreePath();
         }
         String newTreePath = String.format("%s/%d", newParentTreePath, id);
@@ -184,6 +186,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         final Integer parentId = authority.getParentId();
         if (Objects.nonNull(parentId)) {
             Authority parentAuthority = baseMapper.selectById(parentId);
+            VerifyUtils.notNull(parentAuthority, "父级不存在");
             boolean parentIsOff = LangUtils.equals(Enabled.Off.getCode(), parentAuthority.getEnabled());
             boolean nowIsOn = LangUtils.equals(Enabled.On.getCode(), enabled);
             VerifyUtils.isTrue(parentIsOff && nowIsOn, "父级为禁用状态，子级不能为开启状态");

@@ -17,4 +17,5 @@ public class ServiceException extends RuntimeException {
     public static ServiceException wrap(String message, Object... args) {
         return new ServiceException(TextBlock.format(message, args));
     }
+    
 }

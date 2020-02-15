@@ -6,35 +6,45 @@ Token: Bearer {{auth_token}}
 {
   "title": "新增角色",
   "type": 1,
-  "authorityCode": "权限授权码",
+  "authorityCode": "权限授权x码",
   "method": "GET",
-  "uri": "/*",
-  "enabled": 1,
+  "uri": "/*x",
+  "enabled": 0,
+  "parentId": 3,
   "sort": 1000
 }
 
 ### 修改权限
-PUT {{host}}/api/authority/{id}
+PUT {{host}}/api/authority/3
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "title": "新增角色",
+  "type": 1,
+  "authorityCode": "权限授权码",
+  "method": "GET",
+  "uri": "/*",
+  "enabled": 1,
+  "parentId": 1,
+  "sort": 1000
+}
 
 ### 权限详情
-GET {{host}}/api/authority/{id}
+GET {{host}}/api/authority/1
 
-### 权限列表
+### 删除权限
+### force?bool=false 是否强制删除
+DELETE {{host}}/api/authority/1?force=true
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+### 查询权限列表(目前仅支持树格式)
 POST {{host}}/api/authority/_search
+Content-Type: application/json
+Token: Bearer {{auth_token}}
 
-### 新增角色
-POST {{host}}/api/role
-
-### 修改角色
-PUT {{host}}/api/role
-
-### 角色详情
-GET {{host}}/api/role/{id}
-
-### 角色列表
-POST {{host}}/api/role/_search
-
-### 给角色授权权限
-POST {{host}}/api/role/{id}/grant/authority
+{
+}
 
 ###
