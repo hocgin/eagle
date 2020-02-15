@@ -1,8 +1,9 @@
 package in.hocg.eagle.modules.account.mapper;
 
-import in.hocg.eagle.modules.account.entity.RoleAccount;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.eagle.modules.account.entity.RoleAccount;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -14,5 +15,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface RoleAccountMapper extends BaseMapper<RoleAccount> {
-
+    
+    Integer countByRoleId(@Param("roleId") Integer roleId);
 }

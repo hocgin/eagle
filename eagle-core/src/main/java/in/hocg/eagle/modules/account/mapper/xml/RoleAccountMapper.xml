@@ -2,4 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.eagle.modules.account.mapper.RoleAccountMapper">
 
+    <select id="countByRoleId" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_role_account tra
+        WHERE tra.role_id = #{roleId}
+    </select>
 </mapper>

@@ -1,5 +1,7 @@
 package in.hocg.eagle.basic.qo;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,6 +14,11 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PageQo extends BaseQo {
-    private int limit = 10;
     private int page = 1;
+    private int size = 10;
+    
+    @JsonIgnore
+    public Page page() {
+        return new Page<>(page, size);
+    }
 }

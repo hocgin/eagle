@@ -47,8 +47,8 @@ public class Role extends AbstractEntity<Role> {
     /**
      * 角色描述
      */
-    @TableField("description")
-    private String description;
+    @TableField("remark")
+    private String remark;
     /**
      * 启用状态[0:为禁用状态;1:为正常状态]
      */

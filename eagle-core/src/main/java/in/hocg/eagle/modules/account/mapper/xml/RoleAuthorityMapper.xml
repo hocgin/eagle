@@ -8,4 +8,8 @@
             LEFT JOIN t_authority ta ON ta.id = tra.authority_id
         WHERE ta.tree_path REGEXP #{regexTreePath}
     </select>
+    <delete id="deleteByRoleId">
+        DELETE FROM t_role_authority
+        WHERE role_id = #{roleId}
+    </delete>
 </mapper>

@@ -1,12 +1,12 @@
 package in.hocg.eagle.modules.account.service.impl;
 
+import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.modules.account.entity.RoleAccount;
 import in.hocg.eagle.modules.account.mapper.RoleAccountMapper;
 import in.hocg.eagle.modules.account.service.RoleAccountService;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import org.springframework.stereotype.Service;
-import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 
 /**
  * <p>
@@ -19,5 +19,10 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMapper, RoleAccount> implements RoleAccountService {
-
+    
+    @Override
+    public boolean isUsedRole(Integer roleId) {
+        return baseMapper.countByRoleId(roleId) > 0;
+    }
+    
 }

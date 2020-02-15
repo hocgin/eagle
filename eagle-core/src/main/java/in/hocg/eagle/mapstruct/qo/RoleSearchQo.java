@@ -9,4 +9,5 @@ import in.hocg.eagle.basic.qo.PageQo;
  * @author hocgin
  */
 public class RoleSearchQo extends PageQo {
+
 }

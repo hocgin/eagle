@@ -28,6 +28,7 @@ public interface AuthorityMapping {
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creator", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     Authority asAuthority(AuthorityPostQo qo);
     
     /**
@@ -41,6 +42,7 @@ public interface AuthorityMapping {
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creator", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     Authority asAuthority(AuthorityPutQo qo);
     
     /**

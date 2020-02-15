@@ -1,7 +1,9 @@
 package in.hocg.eagle.modules.account.service;
 
-import in.hocg.eagle.modules.account.entity.RoleAuthority;
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.modules.account.entity.RoleAuthority;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,8 +17,23 @@ public interface RoleAuthorityService extends AbstractService<RoleAuthority> {
     
     /**
      * 检查 authority 是否正在被角色使用
+     *
      * @param regexTreePath
      * @return
      */
     boolean isUsedAuthority(String regexTreePath);
+    
+    /**
+     * 给角色授权
+     *
+     * @param id
+     * @param authorities
+     */
+    void grantAuthority(Integer roleId, List<Integer> authorities);
+    
+    /**
+     * 删除角色相关的权限绑定
+     * @param roleId
+     */
+    void deleteByRoleId(Integer roleId);
 }
