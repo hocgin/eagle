@@ -27,6 +27,12 @@ GET {{host}}/api/role/1
 
 ### 角色列表
 POST {{host}}/api/role/_search
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "authorities": [1]
+}
 
 ### 给角色授权权限
 POST {{host}}/api/role/1/grant/authority

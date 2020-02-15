@@ -47,4 +47,11 @@ Token: Bearer {{auth_token}}
 {
 }
 
-###
+### 给角色授权权限
+POST {{host}}/api/authority/1/grant/role
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "roles": [1]
+}

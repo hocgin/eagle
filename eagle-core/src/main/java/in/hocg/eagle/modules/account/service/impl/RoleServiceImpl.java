@@ -66,7 +66,7 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     @Transactional(rollbackFor = Exception.class)
     public void grantAuthority(GrantAuthorityQo qo) {
         final Integer id = qo.getId();
-        roleAuthorityService.grantAuthority(id, qo.getAuthorities());
+        qo.getAuthorities().forEach(authorityId -> roleAuthorityService.grantAuthority(id, authorityId));
     }
     
     @Override

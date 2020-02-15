@@ -10,6 +10,7 @@ import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.qo.AuthorityPostQo;
 import in.hocg.eagle.mapstruct.qo.AuthorityPutQo;
 import in.hocg.eagle.mapstruct.qo.AuthoritySearchQo;
+import in.hocg.eagle.mapstruct.qo.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.mapper.AuthorityMapper;
@@ -114,6 +115,14 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         } else {
             throw ServiceException.wrap("该节点下含有子节点不能被删除");
         }
+    }
+    
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void grantRole(GrantRoleQo qo) {
+        Integer authorityId = qo.getId();
+        List<Integer> roles = qo.getRoles();
+        roles.forEach(roleId -> roleAuthorityService.grantAuthority(roleId, authorityId));
     }
     
     /**

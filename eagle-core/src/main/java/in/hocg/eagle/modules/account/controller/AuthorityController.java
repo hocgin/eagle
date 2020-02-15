@@ -5,6 +5,7 @@ import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.mapstruct.qo.AuthorityPostQo;
 import in.hocg.eagle.mapstruct.qo.AuthorityPutQo;
 import in.hocg.eagle.mapstruct.qo.AuthoritySearchQo;
+import in.hocg.eagle.mapstruct.qo.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.service.AuthorityService;
 import io.swagger.annotations.ApiOperation;
@@ -65,6 +66,15 @@ public class AuthorityController {
     @ApiOperation("查询权限列表(目前仅支持树格式)")
     public Result<List<AuthorityTreeNodeVo>> search(@Validated @RequestBody AuthoritySearchQo qo) {
         return Result.success(service.search(qo));
+    }
+    
+    @PostMapping("/{id}/grant/role")
+    @ApiOperation("给角色授权权限")
+    public Result<Void> grantRole(@PathVariable Integer id,
+                                  @Validated @RequestBody GrantRoleQo qo) {
+        qo.setId(id);
+        service.grantRole(qo);
+        return Result.success();
     }
 }
 

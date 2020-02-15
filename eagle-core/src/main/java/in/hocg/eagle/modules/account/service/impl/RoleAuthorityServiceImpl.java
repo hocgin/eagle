@@ -39,22 +39,19 @@ public class RoleAuthorityServiceImpl extends AbstractServiceImpl<RoleAuthorityM
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void grantAuthority(Integer roleId, List<Integer> authorities) {
+    public void grantAuthority(Integer roleId, Integer authorityId) {
         final Role role = roleService.getById(roleId);
-        VerifyUtils.notNull(role, "角色不存在");
-        RoleAuthority roleAuthority;
-        for (Integer authorityId : authorities) {
-            // 已经具备权限
-            if (isHasAuthority(roleId, authorityId)) {
-                continue;
-            }
-            Authority authority = authorityService.getById(authorityId);
-            VerifyUtils.notNull(authority, "授权失败");
-            roleAuthority = new RoleAuthority()
-                    .setAuthorityId(authorityId)
-                    .setRoleId(roleId);
-            baseMapper.insert(roleAuthority);
+        VerifyUtils.notNull(role, "授权失败");
+        Authority authority = authorityService.getById(authorityId);
+        VerifyUtils.notNull(authority, "授权失败");
+        // 已经具备权限
+        if (isHasAuthority(roleId, authorityId)) {
+            return;
         }
+        RoleAuthority roleAuthority = new RoleAuthority()
+                .setAuthorityId(authorityId)
+                .setRoleId(roleId);
+        baseMapper.insert(roleAuthority);
     }
     
     private boolean isHasAuthority(Integer roleId, Integer authorityId) {

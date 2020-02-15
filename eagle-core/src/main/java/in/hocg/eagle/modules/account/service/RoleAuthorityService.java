@@ -3,6 +3,7 @@ package in.hocg.eagle.modules.account.service;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.RoleAuthority;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,9 +29,10 @@ public interface RoleAuthorityService extends AbstractService<RoleAuthority> {
      * 给角色授权
      *
      * @param roleId
-     * @param authorities
+     * @param authorityId
      */
-    void grantAuthority(Integer roleId, List<Integer> authorities);
+    @Transactional(rollbackFor = Exception.class)
+    void grantAuthority(Integer roleId, Integer authorityId);
     
     /**
      * 删除角色相关的权限绑定

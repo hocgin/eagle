@@ -4,6 +4,7 @@ import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.mapstruct.qo.AuthorityPostQo;
 import in.hocg.eagle.mapstruct.qo.AuthorityPutQo;
 import in.hocg.eagle.mapstruct.qo.AuthoritySearchQo;
+import in.hocg.eagle.mapstruct.qo.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 
@@ -51,4 +52,10 @@ public interface AuthorityService extends AbstractService<Authority> {
      * @param id
      */
     void deleteById(Integer id, boolean force);
+    
+    /**
+     * 给角色授权权限
+     * @param qo
+     */
+    void grantRole(GrantRoleQo qo);
 }
