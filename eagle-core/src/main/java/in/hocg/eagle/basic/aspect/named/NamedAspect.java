@@ -22,7 +22,7 @@ import java.util.Objects;
  * @author hocgin
  * @date 2017/11/17
  * email: hocgin@gmail.com
- * <p>
+ * 自动填充类型对应的名称
  */
 @Slf4j
 @Aspect

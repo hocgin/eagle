@@ -118,6 +118,12 @@ public class LangUtils {
         return s1.compareTo(s2) == 0;
     }
     
+    /**
+     * toString
+     *
+     * @param object
+     * @return
+     */
     public static String toString(Object object) {
         if (Objects.isNull(object)) {
             return null;
