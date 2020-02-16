@@ -20,4 +20,12 @@ public interface RoleAccountService extends AbstractService<RoleAccount> {
      * @return
      */
     boolean isUsedRole(Integer roleId);
+    
+    /**
+     * 授权角色给账号
+     *
+     * @param accountId
+     * @param roleId
+     */
+    void grantRole(Integer accountId, Integer roleId);
 }

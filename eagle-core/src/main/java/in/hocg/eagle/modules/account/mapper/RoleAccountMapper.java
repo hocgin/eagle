@@ -16,5 +16,20 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface RoleAccountMapper extends BaseMapper<RoleAccount> {
     
+    /**
+     * 查找正在使用该角色的数量
+     *
+     * @param roleId
+     * @return
+     */
     Integer countByRoleId(@Param("roleId") Integer roleId);
+    
+    /**
+     * 查找该账号正在使用该角色的数量
+     *
+     * @param accountId
+     * @param roleId
+     * @return
+     */
+    Integer countByAccountIdAndRoleId(@Param("accountId") Integer accountId, @Param("roleId") Integer roleId);
 }

@@ -6,4 +6,8 @@
         SELECT COUNT(1) FROM t_role_account tra
         WHERE tra.role_id = #{roleId}
     </select>
+    <select id="countByAccountIdAndRoleId" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_role_account tra
+        WHERE tra.account_id = #{accountId} AND tra.role_id = #{roleId}
+    </select>
 </mapper>

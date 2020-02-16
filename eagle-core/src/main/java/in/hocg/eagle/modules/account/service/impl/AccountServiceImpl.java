@@ -1,13 +1,18 @@
 package in.hocg.eagle.modules.account.service.impl;
 
 import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.mapstruct.qo.account.GrantAuthorityQo;
+import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.IdAccountComplexVo;
 import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.mapper.AccountMapper;
 import in.hocg.eagle.modules.account.service.AccountService;
+import in.hocg.eagle.modules.account.service.AuthorityAccountService;
+import in.hocg.eagle.modules.account.service.RoleAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -24,6 +29,9 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Account> implements AccountService {
     
+    private final RoleAccountService roleAccountService;
+    private final AuthorityAccountService authorityAccountService;
+    
     @Override
     public IdAccountComplexVo selectOneComplex(Serializable id) {
         return null;
@@ -32,5 +40,19 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     @Override
     public Optional<Account> selectOneByUsername(String username) {
         return baseMapper.selectOneByUsername(username);
+    }
+    
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void grantRole(GrantRoleQo qo) {
+        final Integer accountId = qo.getId();
+        qo.getRoles().forEach(roleId -> roleAccountService.grantRole(accountId, roleId));
+    }
+    
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void grantAuthority(GrantAuthorityQo qo) {
+        final Integer accountId = qo.getId();
+        qo.getAuthorities().forEach(authorityId -> authorityAccountService.grantAuthority(accountId, authorityId));
     }
 }
