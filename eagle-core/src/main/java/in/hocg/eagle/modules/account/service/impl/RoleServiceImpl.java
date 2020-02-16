@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.account.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.constant.Enabled;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.mapstruct.RoleMapping;
 import in.hocg.eagle.mapstruct.qo.GrantAuthorityQo;
@@ -84,7 +85,12 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     public RoleComplexVo selectOne(Integer id) {
         final Role role = baseMapper.selectById(id);
         VerifyUtils.notNull(role, "角色不存在");
-        List<Authority> authorities = roleAuthorityService.selectListAuthorityByRoleIdAndEnabled(id, 1);
+        List<Authority> authorities = roleAuthorityService.selectListAuthorityByRoleIdAndEnabled(id, Enabled.On.getCode());
         return mapping.asRoleComplexVo(role, authorities);
+    }
+    
+    @Override
+    public List<Authority> selectListAuthorityByIds(List<Integer> roleIds) {
+        return roleAuthorityService.selectListAuthorityByRoleIds(roleIds);
     }
 }

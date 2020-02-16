@@ -8,6 +8,7 @@ import in.hocg.eagle.mapstruct.qo.ExampleSearchQo;
 import in.hocg.eagle.modules.test.service.ExampleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,7 @@ public class ExampleController {
     }
     
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('nice')")
     public Result<Void> selectById(@PathVariable Serializable id) {
         return Result.success();
     }

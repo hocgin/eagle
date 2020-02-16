@@ -59,13 +59,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/*").permitAll()
                 .anyRequest().authenticated()
         ;
         http.exceptionHandling()
                 .defaultAuthenticationEntryPointFor(new AjaxAuthenticationEntryPoint(), new IsAjaxRequestMatcher())
                 .defaultAccessDeniedHandlerFor(new AjaxAccessDeniedHandler(), new IsAjaxRequestMatcher());
         
+        // http.addFilterAfter(new AccessInterceptor(), FilterSecurityInterceptor.class);
         // ==== Token 登录方式 ====
         {
             http.addFilterBefore(new TokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

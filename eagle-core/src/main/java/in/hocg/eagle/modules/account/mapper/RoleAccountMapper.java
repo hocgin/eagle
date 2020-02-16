@@ -1,9 +1,12 @@
 package in.hocg.eagle.modules.account.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.eagle.modules.account.entity.Role;
 import in.hocg.eagle.modules.account.entity.RoleAccount;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -32,4 +35,14 @@ public interface RoleAccountMapper extends BaseMapper<RoleAccount> {
      * @return
      */
     Integer countByAccountIdAndRoleId(@Param("accountId") Integer accountId, @Param("roleId") Integer roleId);
+    
+    /**
+     * 查找账号所具备的角色
+     *
+     * @param accountId
+     * @param enabled
+     * @return
+     */
+    List<Role> selectListRoleByAccountIdAndEnabled(@Param("accountId") Integer accountId,
+                                                   @Param("enabled") Integer enabled);
 }

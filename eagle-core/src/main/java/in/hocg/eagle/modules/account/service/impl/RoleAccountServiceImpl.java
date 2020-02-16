@@ -1,17 +1,23 @@
 package in.hocg.eagle.modules.account.service.impl;
 
+import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.constant.Enabled;
 import in.hocg.eagle.modules.account.entity.Account;
+import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
 import in.hocg.eagle.modules.account.entity.RoleAccount;
 import in.hocg.eagle.modules.account.mapper.RoleAccountMapper;
 import in.hocg.eagle.modules.account.service.AccountService;
 import in.hocg.eagle.modules.account.service.RoleAccountService;
 import in.hocg.eagle.modules.account.service.RoleService;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.VerifyUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -46,6 +52,16 @@ public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMappe
                 .setAccountId(accountId)
                 .setRoleId(roleId);
         baseMapper.insert(insert);
+    }
+    
+    @Override
+    public List<Authority> selectListAuthorityByAccountId(Integer accountId) {
+        final List<Role> roles = baseMapper.selectListRoleByAccountIdAndEnabled(accountId, Enabled.On.getCode());
+        final List<Integer> roleIds = LangUtils.toList(roles, Role::getId);
+        if (roleIds.isEmpty()) {
+            return Lists.newArrayList();
+        }
+        return roleService.selectListAuthorityByIds(roleIds);
     }
     
     private boolean isHasRole(Integer accountId, Integer roleId) {

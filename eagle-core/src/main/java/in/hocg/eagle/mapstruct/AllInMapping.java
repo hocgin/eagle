@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
  *
  * @author hocgin
  */
-//@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring")
 public interface AllInMapping
         extends RoleMapping,
         AuthorityMapping {

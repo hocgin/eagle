@@ -10,4 +10,16 @@
         SELECT COUNT(1) FROM t_role_account tra
         WHERE tra.account_id = #{accountId} AND tra.role_id = #{roleId}
     </select>
+    <select id="selectListRoleByAccountIdAndEnabled" resultType="in.hocg.eagle.modules.account.entity.Role">
+        SELECT tr.* FROM t_role_account tra
+            LEFT JOIN t_role tr ON tr.id = tra.role_id
+        <where>
+            <if test="accountId != null">
+                AND tra.account_id = #{accountId}
+            </if>
+            <if test="enabled != null">
+                AND tr.enabled = #{enabled}
+            </if>
+        </where>
+    </select>
 </mapper>

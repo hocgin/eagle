@@ -31,6 +31,16 @@ public class SecurityContext {
     }
     
     /**
+     * 获取授权方式
+     *
+     * @return
+     */
+    public static Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
+    
+    
+    /**
      * 当前登录的用户
      *
      * @return
@@ -60,6 +70,7 @@ public class SecurityContext {
     
     /**
      * User Id
+     *
      * @param <T>
      * @return
      */

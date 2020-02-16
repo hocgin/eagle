@@ -15,7 +15,8 @@
     </delete>
     <select id="selectListAuthorityByRoleIdAndEnabled"
             resultType="in.hocg.eagle.modules.account.entity.Authority">
-        SELECT ta.*
+        SELECT
+        ta.*
         FROM t_role_authority tra
         LEFT JOIN t_authority ta ON ta.id = tra.authority_id
         <where>
@@ -30,5 +31,22 @@
         FROM t_role_authority tra
         WHERE tra.role_id = #{roleId}
           AND tra.authority_id = #{authorityId}
+    </select>
+    <select id="selectListAuthorityByRoleIdsAndEnabled" resultType="in.hocg.eagle.modules.account.entity.Authority">
+        SELECT
+        ta.*
+        FROM t_role_authority tra
+        LEFT JOIN t_authority ta ON ta.id = tra.authority_id
+        <where>
+            <if test="roleIds != null">
+                <foreach collection="roleIds" item="item"
+                         open="tra.role_id IN(" close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="enabled != null">
+                AND ta.enabled = 1
+            </if>
+        </where>
     </select>
 </mapper>

@@ -8,7 +8,10 @@ import in.hocg.eagle.mapstruct.qo.RolePutQo;
 import in.hocg.eagle.mapstruct.qo.RoleSearchQo;
 import in.hocg.eagle.mapstruct.vo.RoleComplexVo;
 import in.hocg.eagle.mapstruct.vo.RoleSearchVo;
+import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
+
+import java.util.List;
 
 /**
  * <p>
@@ -63,4 +66,6 @@ public interface RoleService extends AbstractService<Role> {
      * @return
      */
     RoleComplexVo selectOne(Integer id);
+    
+    List<Authority> selectListAuthorityByIds(List<Integer> roleIds);
 }

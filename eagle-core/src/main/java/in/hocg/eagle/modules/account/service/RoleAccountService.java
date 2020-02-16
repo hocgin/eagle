@@ -1,7 +1,10 @@
 package in.hocg.eagle.modules.account.service;
 
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.RoleAccount;
+
+import java.util.List;
 
 /**
  * <p>
@@ -28,4 +31,12 @@ public interface RoleAccountService extends AbstractService<RoleAccount> {
      * @param roleId
      */
     void grantRole(Integer accountId, Integer roleId);
+    
+    /**
+     * 查找账号所具备的权限
+     *
+     * @param accountId
+     * @return
+     */
+    List<Authority> selectListAuthorityByAccountId(Integer accountId);
 }

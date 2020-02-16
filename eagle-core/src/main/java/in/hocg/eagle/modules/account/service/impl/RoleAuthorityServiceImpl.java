@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.account.service.impl;
 
 import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.constant.Enabled;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
 import in.hocg.eagle.modules.account.entity.RoleAuthority;
@@ -66,6 +67,11 @@ public class RoleAuthorityServiceImpl extends AbstractServiceImpl<RoleAuthorityM
     @Override
     public List<Authority> selectListAuthorityByRoleIdAndEnabled(Integer roleId, Integer enabled) {
         return baseMapper.selectListAuthorityByRoleIdAndEnabled(roleId, enabled);
+    }
+    
+    @Override
+    public List<Authority> selectListAuthorityByRoleIds(List<Integer> roleIds) {
+        return baseMapper.selectListAuthorityByRoleIdsAndEnabled(roleIds, Enabled.On.getCode());
     }
     
     

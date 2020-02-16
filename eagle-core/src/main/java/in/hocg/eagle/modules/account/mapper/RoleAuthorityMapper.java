@@ -46,9 +46,18 @@ public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
     
     /**
      * 查询 role_id 与 authority_id 符合条件的数量
+     *
      * @param roleId
      * @param authorityId
      * @return
      */
     Integer countByRoleIdAndAuthorityId(@Param("roleId") Integer roleId, @Param("authorityId") Integer authorityId);
+    
+    /**
+     * 查找角色所具备的权限列表
+     *
+     * @param roleIds
+     * @return
+     */
+    List<Authority> selectListAuthorityByRoleIdsAndEnabled(@Param("roleIds") List<Integer> roleIds, @Param("enabled") Integer enabled);
 }

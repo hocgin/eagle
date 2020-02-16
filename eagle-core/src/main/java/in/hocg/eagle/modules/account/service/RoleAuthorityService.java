@@ -49,4 +49,12 @@ public interface RoleAuthorityService extends AbstractService<RoleAuthority> {
      * @return
      */
     List<Authority> selectListAuthorityByRoleIdAndEnabled(Integer roleId, Integer enabled);
+    
+    /**
+     * 查找角色所具备的权限列表
+     *
+     * @param roleIds
+     * @return
+     */
+    List<Authority> selectListAuthorityByRoleIds(List<Integer> roleIds);
 }

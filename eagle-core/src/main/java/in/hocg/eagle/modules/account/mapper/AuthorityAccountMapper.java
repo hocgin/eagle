@@ -1,9 +1,12 @@
 package in.hocg.eagle.modules.account.mapper;
 
-import in.hocg.eagle.modules.account.entity.AuthorityAccount;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.eagle.modules.account.entity.Authority;
+import in.hocg.eagle.modules.account.entity.AuthorityAccount;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,12 @@ import org.apache.ibatis.annotations.Param;
 public interface AuthorityAccountMapper extends BaseMapper<AuthorityAccount> {
     
     Integer selectListByAuthorityRegexTreePath(@Param("regexTreePath") String regexTreePath);
+    
+    /**
+     * 查找账号所具备的权限
+     *
+     * @param accountId
+     * @return
+     */
+    List<Authority> selectListAuthorityByAccountId(@Param("accountId") Integer accountId);
 }

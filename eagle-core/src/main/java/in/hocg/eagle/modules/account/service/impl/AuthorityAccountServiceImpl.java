@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 /**
  * <p>
  * [用户模块] 权限-账号表 服务实现类
@@ -46,6 +48,11 @@ public class AuthorityAccountServiceImpl extends AbstractServiceImpl<AuthorityAc
                 .setAccountId(accountId)
                 .setAuthorityId(authorityId);
         baseMapper.insert(insert);
+    }
+    
+    @Override
+    public Collection<? extends Authority> selectListAuthorityByAccountId(Integer accountId) {
+        return baseMapper.selectListAuthorityByAccountId(accountId);
     }
     
     /**

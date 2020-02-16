@@ -1,11 +1,14 @@
 package in.hocg.eagle.mapstruct;
 
+import in.hocg.eagle.basic.security.GrantedAuthority;
 import in.hocg.eagle.mapstruct.qo.AuthorityPostQo;
 import in.hocg.eagle.mapstruct.qo.AuthorityPutQo;
 import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 /**
  * Created by hocgin on 2020/2/14.
@@ -53,4 +56,8 @@ public interface AuthorityMapping {
      */
     @Mapping(target = "children", ignore = true)
     AuthorityTreeNodeVo asAuthorityTreeNodeVo(Authority authority);
+    
+    GrantedAuthority asGrantedAuthority(Authority authorities);
+    
+    List<GrantedAuthority> asGrantedAuthority(List<Authority> authorities);
 }

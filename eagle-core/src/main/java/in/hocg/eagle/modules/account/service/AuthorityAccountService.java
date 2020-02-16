@@ -1,7 +1,10 @@
 package in.hocg.eagle.modules.account.service;
 
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.AuthorityAccount;
+
+import java.util.Collection;
 
 /**
  * <p>
@@ -15,6 +18,7 @@ public interface AuthorityAccountService extends AbstractService<AuthorityAccoun
     
     /**
      * 查询权限是否正在使用
+     *
      * @param regexTreePath
      * @return
      */
@@ -22,8 +26,17 @@ public interface AuthorityAccountService extends AbstractService<AuthorityAccoun
     
     /**
      * 授权权限给账号
-     * @param accountId 账号ID
+     *
+     * @param accountId   账号ID
      * @param authorityId 权限ID
      */
     void grantAuthority(Integer accountId, Integer authorityId);
+    
+    /**
+     * 查找账号所具备的权限
+     *
+     * @param accountId
+     * @return
+     */
+    Collection<? extends Authority> selectListAuthorityByAccountId(Integer accountId);
 }
