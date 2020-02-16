@@ -1,6 +1,8 @@
 package in.hocg.eagle.mapstruct.qo;
 
+import in.hocg.eagle.basic.constant.Enabled;
 import in.hocg.eagle.basic.qo.BaseQo;
+import in.hocg.eagle.basic.valid.RangeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,6 +28,7 @@ public class RolePostQo extends BaseQo {
     @ApiModelProperty("角色描述")
     private String remark;
     @NotNull(message = "启用状态不能为空")
+    @RangeEnum(enumClass = Enabled.class)
     @ApiModelProperty("启用状态[0:为禁用状态;1:为正常状态]")
     private Integer enabled;
 }

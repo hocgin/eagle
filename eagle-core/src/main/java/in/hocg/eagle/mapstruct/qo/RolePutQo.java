@@ -1,6 +1,8 @@
 package in.hocg.eagle.mapstruct.qo;
 
+import in.hocg.eagle.basic.constant.Enabled;
 import in.hocg.eagle.basic.qo.IdQo;
+import in.hocg.eagle.basic.valid.RangeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +22,7 @@ public class RolePutQo extends IdQo {
     private String roleCode;
     @ApiModelProperty("角色描述")
     private String remark;
+    @RangeEnum(enumClass = Enabled.class)
     @ApiModelProperty("启用状态[0:为禁用状态;1:为正常状态]")
     private Integer enabled;
 }
