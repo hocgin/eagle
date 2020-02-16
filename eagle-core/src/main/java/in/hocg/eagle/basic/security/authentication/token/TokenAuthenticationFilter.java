@@ -26,7 +26,7 @@ import java.io.IOException;
 @Slf4j
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private static final String BEARER = "Bearer ";
-    private static final String TOKEN_HEADER = "token";
+    private static final String TOKEN_HEADER = "Token";
     
     @Override
     protected void doFilterInternal(HttpServletRequest request,

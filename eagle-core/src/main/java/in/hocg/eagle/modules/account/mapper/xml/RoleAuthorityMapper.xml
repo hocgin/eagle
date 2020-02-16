@@ -34,9 +34,9 @@
     </select>
     <select id="selectListAuthorityByRoleIdsAndEnabled" resultType="in.hocg.eagle.modules.account.entity.Authority">
         SELECT
-        ta.*
+            ta.*
         FROM t_role_authority tra
-        LEFT JOIN t_authority ta ON ta.id = tra.authority_id
+            LEFT JOIN t_authority ta ON ta.id = tra.authority_id
         <where>
             <if test="roleIds != null">
                 <foreach collection="roleIds" item="item"

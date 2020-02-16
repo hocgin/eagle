@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.security;
 
+import in.hocg.eagle.basic.security.authentication.token.TokenAuthenticationEndpoint;
 import in.hocg.eagle.basic.security.authentication.token.TokenAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,17 +57,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .antMatcher("/**")
-                .exceptionHandling()
-                .and()
                 .authorizeRequests()
-                .antMatchers("/*").permitAll()
+                .antMatchers(TokenAuthenticationEndpoint.ACCOUNT_TOKEN_URI)
+                .permitAll()
                 .anyRequest().authenticated()
         ;
         http.exceptionHandling()
                 .defaultAuthenticationEntryPointFor(new AjaxAuthenticationEntryPoint(), new IsAjaxRequestMatcher())
                 .defaultAccessDeniedHandlerFor(new AjaxAccessDeniedHandler(), new IsAjaxRequestMatcher());
         
-        // http.addFilterAfter(new AccessInterceptor(), FilterSecurityInterceptor.class);
         // ==== Token 登录方式 ====
         {
             http.addFilterBefore(new TokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

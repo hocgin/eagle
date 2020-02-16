@@ -12,6 +12,6 @@
         SELECT ta.*
         FROM t_authority_account taa
                  LEFT JOIN t_authority ta ON ta.id = taa.authority_id
-        WHERE ta.account_id = #{accountId}
+        WHERE taa.account_id = #{accountId}
     </select>
 </mapper>

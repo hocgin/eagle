@@ -1,8 +1,10 @@
 package in.hocg.eagle.utils;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.experimental.UtilityClass;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -80,6 +82,23 @@ public class LangUtils {
         for (V val : values) {
             K key = keyFunction.apply(val);
             result.put(key, val);
+        }
+        return result;
+    }
+    
+    /**
+     * 提取 List 项的值
+     *
+     * @param values
+     * @param keyFunction
+     * @param <V>
+     * @param <R>
+     * @return
+     */
+    public static <V, R> List<R> toList(Iterable<V> values, Function<? super V, R> keyFunction) {
+        List<R> result = Lists.newArrayList();
+        for (V val : values) {
+            result.add(keyFunction.apply(val));
         }
         return result;
     }

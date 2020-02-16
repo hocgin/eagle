@@ -79,7 +79,7 @@ public class SecurityContext {
         if (userOptional.isPresent()) {
             return (T) userOptional.get().getId();
         } else {
-            throw ServiceException.wrap(ResultCode.ACCESS_DENIED_ERROR.getMessage());
+            throw ServiceException.wrap(ResultCode.AUTHENTICATION_ERROR.getMessage());
         }
     }
     

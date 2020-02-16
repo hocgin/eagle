@@ -1,0 +1,18 @@
+### 登录
+GET {{host}}/test/example/1
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+lele
+###
+### 登录
+POST {{host}}/api/account/authenticate
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "hocgin"
+}
+
+> {% client.global.set("auth_token", response.body.data); %}
+
+###
