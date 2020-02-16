@@ -9,7 +9,6 @@ import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
 
@@ -77,11 +76,24 @@ public interface RoleMapping {
         return result;
     }
     
-    
+    /**
+     * List<Role> -> List<GrantedAuthority>
+     *
+     * @param roles
+     * @return
+     */
     List<GrantedAuthority> asGrantedAuthority(List<Role> roles);
     
-    default SimpleGrantedAuthority asGrantedAuthority(Role role) {
-        return new SimpleGrantedAuthority("ROLE_" + role.getRoleCode());
+    
+    /**
+     * Role -> SimpleGrantedAuthority
+     *
+     * @param role
+     * @return
+     */
+    default GrantedAuthority asGrantedAuthority(Role role) {
+        return new GrantedAuthority()
+                .setAuthority("ROLE_" + role.getRoleCode());
     }
     
 }

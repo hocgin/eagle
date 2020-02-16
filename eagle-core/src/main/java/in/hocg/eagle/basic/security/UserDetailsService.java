@@ -1,7 +1,8 @@
 package in.hocg.eagle.basic.security;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.mapstruct.AllInMapping;
+import in.hocg.eagle.mapstruct.AuthorityMapping;
+import in.hocg.eagle.mapstruct.RoleMapping;
 import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
@@ -26,7 +27,8 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     private final AccountService accountService;
-    private final AllInMapping mapping;
+    private final RoleMapping roleMapping;
+    private final AuthorityMapping authorityMapping;
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -50,8 +52,8 @@ public class UserDetailsService implements org.springframework.security.core.use
      * @return
      */
     private List<GrantedAuthority> buildAuthorities(List<Role> roles, List<Authority> authorities) {
-        final List<GrantedAuthority> roleAuthorities = mapping.asGrantedAuthority(roles);
-        final List<GrantedAuthority> grantedAuthorities = mapping.asGrantedAuthority(authorities);
+        final List<GrantedAuthority> roleAuthorities = roleMapping.asGrantedAuthority(roles);
+        final List<GrantedAuthority> grantedAuthorities = authorityMapping.asGrantedAuthority(authorities);
         final ArrayList<GrantedAuthority> result = Lists.newArrayList();
         result.addAll(roleAuthorities);
         result.addAll(grantedAuthorities);

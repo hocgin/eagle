@@ -2,9 +2,13 @@ package in.hocg.eagle.modules.account.service.impl;
 
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.constant.Enabled;
+import in.hocg.eagle.mapstruct.AccountMapping;
+import in.hocg.eagle.mapstruct.RoleMapping;
 import in.hocg.eagle.mapstruct.qo.account.GrantAuthorityQo;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.IdAccountComplexVo;
+import in.hocg.eagle.mapstruct.vo.RoleComplexVo;
 import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
@@ -12,12 +16,13 @@ import in.hocg.eagle.modules.account.mapper.AccountMapper;
 import in.hocg.eagle.modules.account.service.AccountService;
 import in.hocg.eagle.modules.account.service.AuthorityAccountService;
 import in.hocg.eagle.modules.account.service.RoleAccountService;
+import in.hocg.eagle.modules.account.service.RoleAuthorityService;
+import in.hocg.eagle.utils.VerifyUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,11 +40,24 @@ import java.util.stream.Collectors;
 public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Account> implements AccountService {
     
     private final RoleAccountService roleAccountService;
+    private final RoleAuthorityService roleAuthorityService;
     private final AuthorityAccountService authorityAccountService;
+    private final AccountMapping mapping;
+    private final RoleMapping roleMapping;
     
     @Override
-    public IdAccountComplexVo selectOneComplex(Serializable id) {
-        return null;
+    @Transactional(rollbackFor = Exception.class)
+    public IdAccountComplexVo selectOneComplex(Integer id) {
+        final Account account = baseMapper.selectById(id);
+        VerifyUtils.notNull(account, "账号不存在");
+        final List<Role> roles = roleAccountService.selectListRoleByAccountId(id);
+        List<Authority> authorities;
+        List<RoleComplexVo> roleComplexes = Lists.newArrayList();
+        for (Role role : roles) {
+            authorities = roleAuthorityService.selectListAuthorityByRoleIdAndEnabled(role.getId(), Enabled.On.getCode());
+            roleComplexes.add(roleMapping.asRoleComplexVo(role, authorities));
+        }
+        return mapping.asIdAccountComplexVo(account, roleComplexes);
     }
     
     @Override

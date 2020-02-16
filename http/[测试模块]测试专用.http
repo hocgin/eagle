@@ -1,8 +1,8 @@
 ### 登录
-GET {{host}}/test/example/1
+GET {{host}}/api/account/current
 Content-Type: application/json
 Token: Bearer {{auth_token}}
-lele
+
 ###
 ### 登录
 POST {{host}}/api/account/authenticate

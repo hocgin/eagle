@@ -1,6 +1,7 @@
 package in.hocg.eagle.basic.security;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * Created by hocgin on 2020/2/16.
@@ -9,10 +10,8 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
+@Accessors(chain = true)
 public class GrantedAuthority implements org.springframework.security.core.GrantedAuthority {
-    
-    private String method;
-    private String uri;
     private String authority;
     
     @Override

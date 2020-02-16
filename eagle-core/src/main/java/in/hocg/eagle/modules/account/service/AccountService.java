@@ -8,7 +8,6 @@ import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +27,7 @@ public interface AccountService extends AbstractService<Account> {
      * @param id
      * @return
      */
-    IdAccountComplexVo selectOneComplex(Serializable id);
+    IdAccountComplexVo selectOneComplex(Integer id);
     
     /**
      * 根据 username 查找账号

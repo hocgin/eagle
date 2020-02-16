@@ -8,6 +8,7 @@ import in.hocg.eagle.modules.account.entity.Authority;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -57,11 +58,23 @@ public interface AuthorityMapping {
     @Mapping(target = "children", ignore = true)
     AuthorityTreeNodeVo asAuthorityTreeNodeVo(Authority authority);
     
+    /**
+     * Authority -> GrantedAuthority
+     *
+     * @param authority
+     * @return
+     */
     default GrantedAuthority asGrantedAuthority(Authority authority) {
         final GrantedAuthority grantedAuthority = new GrantedAuthority();
         grantedAuthority.setAuthority(authority.getAuthorityCode());
         return grantedAuthority;
     }
     
-    List<GrantedAuthority> asGrantedAuthority(List<Authority> authorities);
+    /**
+     * Collection<Authority> -> List<GrantedAuthority>
+     *
+     * @param authorities
+     * @return
+     */
+    List<GrantedAuthority> asGrantedAuthority(Collection<Authority> authorities);
 }
