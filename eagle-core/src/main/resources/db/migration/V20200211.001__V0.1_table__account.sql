@@ -40,12 +40,9 @@ CREATE TABLE `t_account`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     COMMENT = '[用户模块] 账号表';
-INSERT INTO `t_account`(`id`, `nickname`, `username`, `email`, `phone`, `password`, `avatar`, `gender`, `created_ip`, `created_at`, `creator`)
-    VALUE (0, 'admin', 'admin', 'admin@example.com', '13600747016', '{noop}hocgin', 'https://example.com/avatar', 1, '127.0.0.1',
-           NOW(), 0);
 
-DROP TABLE IF EXISTS `t_staff`;
-CREATE TABLE `t_staff`
+DROP TABLE IF EXISTS `t_employee`;
+CREATE TABLE `t_employee`
 (
     `id` INT(10) UNSIGNED
         COMMENT 'ID, 同 t_account ID',
@@ -65,3 +62,12 @@ CREATE TABLE `t_member`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     COMMENT = '[用户模块] 会员表';
+
+/**
+ * === 基础数据 ===
+ */
+INSERT INTO `t_account`(`id`, `nickname`, `username`, `email`, `phone`, `password`, `avatar`, `gender`, `created_ip`,
+                        `created_at`, `creator`)
+    VALUE (1, 'admin', 'admin', 'admin@example.com', '13600747016', '{noop}hocgin', 'https://example.com/avatar', 1,
+           '127.0.0.1',
+           NOW(), 1);

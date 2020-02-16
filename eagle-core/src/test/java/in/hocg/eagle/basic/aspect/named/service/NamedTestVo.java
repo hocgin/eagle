@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.aspect.named.service;
 
+import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -11,6 +12,7 @@ import lombok.experimental.Accessors;
  * @author hocgin
  */
 @Data
+@InjectNamed
 @Accessors(chain = true)
 public class NamedTestVo {
     

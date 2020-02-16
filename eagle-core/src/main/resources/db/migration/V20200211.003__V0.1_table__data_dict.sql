@@ -36,7 +36,7 @@ CREATE TABLE `t_data_dict_item`
         COMMENT 't_data_dict ID',
     `title`           varchar(25)      NOT NULL
         COMMENT '字典项名称',
-    `code`            varchar(25)      NOT NULL UNIQUE
+    `code`            varchar(25)      NOT NULL
         COMMENT '字典标识',
     `remark`          varchar(255)
         COMMENT '备注',
@@ -54,9 +54,42 @@ CREATE TABLE `t_data_dict_item`
     `last_updater`    INT(10) UNSIGNED
         COMMENT '更新者',
     --
+    UNIQUE (`dict_id`, `code`),
     FOREIGN KEY (`dict_id`) REFERENCES t_data_dict (`id`),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     COMMENT = '[基础模块] 数据字典项表';
+
+/**
+ * === 基础数据 ===
+ */
+#  启用状态
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (1, '启用状态', 'enabled', '启用状态', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (1, '开启', '1', '启用状态:开启', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (1, '禁用', '0', '启用状态:禁用', 1,
+           NOW(), 1);
+
+
+#  性别
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (2, '性别', 'gender', '性别', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (2, '男', '1', '性别:男', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (2, '女', '0', '性别:女', 1,
+           NOW(), 1);

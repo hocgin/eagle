@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 public @interface Named {
     
     /**
-     * 字典标识
+     * 字典标识(默认取: idField 的值)
      *
      * @return
      */

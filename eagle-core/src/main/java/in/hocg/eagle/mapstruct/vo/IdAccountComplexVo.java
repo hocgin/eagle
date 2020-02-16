@@ -1,6 +1,8 @@
 package in.hocg.eagle.mapstruct.vo;
 
 import com.google.common.collect.Lists;
+import in.hocg.eagle.basic.aspect.named.InjectNamed;
+import in.hocg.eagle.basic.aspect.named.Named;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -14,6 +16,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@InjectNamed
 public class IdAccountComplexVo implements Serializable {
     private Integer id;
     @ApiModelProperty("昵称;显示使用")
@@ -28,6 +31,8 @@ public class IdAccountComplexVo implements Serializable {
     private String avatar;
     @ApiModelProperty("性别(0:女, 1:男)")
     private Integer gender;
+    @Named(idField = "gender")
+    private String genderName;
     
     @ApiModelProperty("角色及其权限")
     private List<RoleComplexVo> roles = Lists.newArrayList();

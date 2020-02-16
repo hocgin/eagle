@@ -1,6 +1,7 @@
 package in.hocg.eagle.basic.aspect.named;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.base.Strings;
 import in.hocg.eagle.utils.ClassUtils;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ import java.util.Objects;
 public class NamedAspect {
     private final NamedService namedService;
     
-    @Pointcut("@annotation(in.hocg.eagle.basic.aspect.named.InjectNamed)")
+    @Pointcut("execution((@in.hocg.eagle.basic.aspect.named.InjectNamed *) *(..))")
     public void pointcut() {
     }
     
@@ -45,6 +46,9 @@ public class NamedAspect {
         if (Objects.isNull(result)) {
             return;
         }
+        if (!result.getClass().isAnnotationPresent(InjectNamed.class)) {
+            return;
+        }
         if (result instanceof Page) {
             handlePageResult((Page) result);
         } else if (result instanceof Collection) {
@@ -57,23 +61,20 @@ public class NamedAspect {
     }
     
     private void handlePageResult(Page result) {
-        this.handleCollectionResult(result.getRecords());
+        this.handleResult(result.getRecords());
     }
     
     private void handleArrayResult(Object[] result) {
         for (Object item : result) {
-            handleObjectResult(item);
+            handleResult(item);
         }
     }
     
     private void handleCollectionResult(Collection result) {
-        result.forEach(this::handleObjectResult);
+        result.forEach(this::handleResult);
     }
     
     private void handleObjectResult(Object result) {
-        if (Objects.isNull(result)) {
-            return;
-        }
         final Class<?> aClass = result.getClass();
         
         Map<String, Field> fieldMap = LangUtils.toMap(ClassUtils.getAllField(aClass), Field::getName);
@@ -86,9 +87,10 @@ public class NamedAspect {
                 .forEach(field -> {
                     final Named named = field.getAnnotation(Named.class);
                     final Field idField = fieldMap.get(named.idField());
+                    final String type = Strings.isNullOrEmpty(named.type()) ? named.idField() : named.type();
                     if (Objects.nonNull(idField)) {
-                        String codeValue = ClassUtils.getObjectValue(result, idField, null);
-                        Object val = namedService.selectOneByTypeAndId(named.type(), codeValue);
+                        String codeValue = LangUtils.toString(ClassUtils.getObjectValue(result, idField, null));
+                        Object val = namedService.selectOneByTypeAndId(type, codeValue);
                         ClassUtils.setFieldValue(result, field, val);
                     }
                 });

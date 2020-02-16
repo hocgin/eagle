@@ -117,4 +117,17 @@ public class LangUtils {
         
         return s1.compareTo(s2) == 0;
     }
+    
+    public static String toString(Object object) {
+        if (Objects.isNull(object)) {
+            return null;
+        }
+        if (object instanceof Integer) {
+            return Integer.toString((Integer) object);
+        } else if (object instanceof String) {
+            return ((String) object);
+        } else {
+            return object.toString();
+        }
+    }
 }
