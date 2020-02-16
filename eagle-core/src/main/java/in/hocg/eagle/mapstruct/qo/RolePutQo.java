@@ -1,11 +1,14 @@
 package in.hocg.eagle.mapstruct.qo;
 
 import in.hocg.eagle.basic.constant.Enabled;
+import in.hocg.eagle.basic.constant.PatternConstant;
 import in.hocg.eagle.basic.qo.IdQo;
 import in.hocg.eagle.basic.valid.RangeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import javax.validation.constraints.Pattern;
 
 /**
  * Created by hocgin on 2020/2/14.
@@ -18,6 +21,7 @@ import lombok.EqualsAndHashCode;
 public class RolePutQo extends IdQo {
     @ApiModelProperty("角色名称")
     private String title;
+    @Pattern(regexp = PatternConstant.ONLY_NUMBER_OR_WORD, message = "仅支持数字和字母组合")
     @ApiModelProperty("角色授权码")
     private String roleCode;
     @ApiModelProperty("角色描述")

@@ -1,6 +1,7 @@
 package in.hocg.eagle.mapstruct;
 
 
+import in.hocg.eagle.basic.security.GrantedAuthority;
 import in.hocg.eagle.mapstruct.qo.RolePostQo;
 import in.hocg.eagle.mapstruct.qo.RolePutQo;
 import in.hocg.eagle.mapstruct.vo.RoleComplexVo;
@@ -8,6 +9,7 @@ import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
 
@@ -75,5 +77,11 @@ public interface RoleMapping {
         return result;
     }
     
+    
+    List<GrantedAuthority> asGrantedAuthority(List<Role> roles);
+    
+    default SimpleGrantedAuthority asGrantedAuthority(Role role) {
+        return new SimpleGrantedAuthority("ROLE_" + role.getRoleCode());
+    }
     
 }

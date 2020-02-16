@@ -34,7 +34,7 @@ public class ExampleController {
     }
     
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('nice')")
+    @PreAuthorize("hasAuthority('example')")
     public Result<Void> selectById(@PathVariable Serializable id) {
         return Result.success();
     }

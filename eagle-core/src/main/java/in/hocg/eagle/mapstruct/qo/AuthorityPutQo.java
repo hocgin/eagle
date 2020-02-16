@@ -1,11 +1,14 @@
 package in.hocg.eagle.mapstruct.qo;
 
 import in.hocg.eagle.basic.constant.Enabled;
+import in.hocg.eagle.basic.constant.PatternConstant;
 import in.hocg.eagle.basic.qo.IdQo;
 import in.hocg.eagle.basic.valid.RangeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import javax.validation.constraints.Pattern;
 
 /**
  * Created by hocgin on 2020/2/14.
@@ -24,6 +27,7 @@ public class AuthorityPutQo extends IdQo {
     private Integer type;
     
     @ApiModelProperty("权限授权码")
+    @Pattern(regexp = PatternConstant.ONLY_NUMBER_OR_WORD, message = "仅支持数字和字母组合")
     private String authorityCode;
     
     @ApiModelProperty("请求方式")

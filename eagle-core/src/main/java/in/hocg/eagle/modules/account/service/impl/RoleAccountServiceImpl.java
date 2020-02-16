@@ -64,6 +64,11 @@ public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMappe
         return roleService.selectListAuthorityByIds(roleIds);
     }
     
+    @Override
+    public List<Role> selectListRoleByAccountId(Integer accountId) {
+        return baseMapper.selectListRoleByAccountIdAndEnabled(accountId, Enabled.On.getCode());
+    }
+    
     private boolean isHasRole(Integer accountId, Integer roleId) {
         return baseMapper.countByAccountIdAndRoleId(accountId, roleId) > 0;
     }

@@ -7,6 +7,7 @@ import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.IdAccountComplexVo;
 import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.entity.Authority;
+import in.hocg.eagle.modules.account.entity.Role;
 import in.hocg.eagle.modules.account.mapper.AccountMapper;
 import in.hocg.eagle.modules.account.service.AccountService;
 import in.hocg.eagle.modules.account.service.AuthorityAccountService;
@@ -67,5 +68,10 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         authorities.addAll(roleAccountService.selectListAuthorityByAccountId(accountId));
         authorities.addAll(authorityAccountService.selectListAuthorityByAccountId(accountId));
         return authorities.stream().distinct().collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<Role> selectListRoleById(Integer accountId) {
+        return roleAccountService.selectListRoleByAccountId(accountId);
     }
 }

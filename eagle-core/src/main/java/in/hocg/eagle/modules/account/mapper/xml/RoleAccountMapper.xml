@@ -22,4 +22,13 @@
             </if>
         </where>
     </select>
+    <select id="selectListRoleByAccountId" resultType="in.hocg.eagle.modules.account.entity.Role">
+        SELECT tr.* FROM t_role_account tra
+            LEFT JOIN t_role tr ON tr.id = tra.role_id
+        <where>
+            <if test="accountId != null">
+                AND tra.account_id = #{accountId}
+            </if>
+        </where>
+    </select>
 </mapper>

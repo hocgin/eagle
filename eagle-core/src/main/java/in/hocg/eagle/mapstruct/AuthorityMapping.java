@@ -57,7 +57,11 @@ public interface AuthorityMapping {
     @Mapping(target = "children", ignore = true)
     AuthorityTreeNodeVo asAuthorityTreeNodeVo(Authority authority);
     
-    GrantedAuthority asGrantedAuthority(Authority authorities);
+    default GrantedAuthority asGrantedAuthority(Authority authority) {
+        final GrantedAuthority grantedAuthority = new GrantedAuthority();
+        grantedAuthority.setAuthority(authority.getAuthorityCode());
+        return grantedAuthority;
+    }
     
     List<GrantedAuthority> asGrantedAuthority(List<Authority> authorities);
 }

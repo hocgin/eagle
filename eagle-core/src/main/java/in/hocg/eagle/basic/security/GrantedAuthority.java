@@ -13,10 +13,10 @@ public class GrantedAuthority implements org.springframework.security.core.Grant
     
     private String method;
     private String uri;
-    private String authorityCode;
+    private String authority;
     
     @Override
     public String getAuthority() {
-        return this.authorityCode;
+        return this.authority;
     }
 }

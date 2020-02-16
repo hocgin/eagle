@@ -6,6 +6,7 @@ import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.IdAccountComplexVo;
 import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.entity.Authority;
+import in.hocg.eagle.modules.account.entity.Role;
 
 import java.io.Serializable;
 import java.util.List;
@@ -58,4 +59,12 @@ public interface AccountService extends AbstractService<Account> {
      * @return
      */
     List<Authority> selectListAuthorityById(Integer accountId);
+    
+    /**
+     * 查找账号具备的所有角色
+     *
+     * @param accountId
+     * @return
+     */
+    List<Role> selectListRoleById(Integer accountId);
 }
