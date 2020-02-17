@@ -18,6 +18,6 @@ public class NamedTestVo {
     
     private String code;
     
-    @Named(type = "type", idField = "code")
+    @Named(idFor = "code")
     private String codeName;
 }

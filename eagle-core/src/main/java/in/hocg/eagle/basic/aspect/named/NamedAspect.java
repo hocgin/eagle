@@ -1,7 +1,6 @@
 package in.hocg.eagle.basic.aspect.named;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.base.Strings;
 import in.hocg.eagle.utils.ClassUtils;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +13,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
@@ -84,16 +85,31 @@ public class NamedAspect {
                     handleResult(object);
                 })
                 .filter(field -> field.isAnnotationPresent(Named.class))
-                .forEach(field -> {
-                    final Named named = field.getAnnotation(Named.class);
-                    final Field idField = fieldMap.get(named.idField());
-                    final String type = Strings.isNullOrEmpty(named.type()) ? named.idField() : named.type();
-                    if (Objects.nonNull(idField)) {
-                        String codeValue = LangUtils.toString(ClassUtils.getObjectValue(result, idField, null));
-                        Object val = namedService.selectOneByTypeAndId(type, codeValue);
-                        ClassUtils.setFieldValue(result, field, val);
-                    }
-                });
+                .forEach(field -> injectValue(result, fieldMap, field));
+    }
+    
+    private void injectValue(Object result, Map<String, Field> fieldMap, Field field) {
+        final Named named = field.getAnnotation(Named.class);
+        final Field idField = fieldMap.get(named.idFor());
+        if (Objects.isNull(idField)) {
+            return;
+        }
+        String[] argsValue = named.args();
+        if (argsValue.length == 0) {
+            argsValue = new String[]{named.idFor()};
+        }
+        final NamedType namedType = named.type();
+        final Object id = ClassUtils.getObjectValue(result, idField, null);
+        
+        try {
+            Class<?>[] args = {Object.class, String[].class};
+    
+            final Method method = NamedService.class.getDeclaredMethod(namedType.getMethod(), args);
+            Object val = method.invoke(namedService, id, argsValue);
+            ClassUtils.setFieldValue(result, field, val);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            log.warn("Use @Named Error:", e);
+        }
     }
     
 }

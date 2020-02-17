@@ -31,7 +31,7 @@ public class IdAccountComplexVo implements Serializable {
     private String avatar;
     @ApiModelProperty("性别(0:女, 1:男)")
     private Integer gender;
-    @Named(idField = "gender")
+    @Named(idFor = "gender")
     private String genderName;
     
     @ApiModelProperty("角色及其权限")

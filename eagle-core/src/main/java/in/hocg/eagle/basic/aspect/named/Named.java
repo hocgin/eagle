@@ -13,17 +13,26 @@ import java.lang.annotation.*;
 @Documented
 public @interface Named {
     
-    /**
-     * 字典标识(默认取: idField 的值)
-     *
-     * @return
-     */
-    String type() default "";
     
     /**
      * 字典项标识
      *
      * @return
      */
-    String idField() default "";
+    String idFor();
+    
+    /**
+     * 注入类型
+     *
+     * @return
+     */
+    NamedType type() default NamedType.DataDict;
+    
+    /**
+     * 参数(默认为: {named.idFor()})
+     *
+     * @return
+     */
+    String[] args() default {};
+    
 }

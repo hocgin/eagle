@@ -25,7 +25,7 @@ public class NamedAspectTest extends AbstractSpringBootTest {
     
     @Test
     public void testAround() {
-        when(namedService.selectOneByTypeAndId("type", "code")).thenReturn("codeName");
+        when(namedService.selectOneByDataDict("code", new String[]{"code"})).thenReturn("codeName");
         
         final NamedTestVo namedVo = service.selectOneNamedVo("code");
         Assert.notNull(namedVo.getCode(), "code");
