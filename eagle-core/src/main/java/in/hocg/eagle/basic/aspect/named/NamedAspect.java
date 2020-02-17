@@ -13,8 +13,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
@@ -100,16 +98,8 @@ public class NamedAspect {
         }
         final NamedType namedType = named.type();
         final Object id = ClassUtils.getObjectValue(result, idField, null);
-        
-        try {
-            Class<?>[] args = {Object.class, String[].class};
-    
-            final Method method = NamedService.class.getDeclaredMethod(namedType.getMethod(), args);
-            Object val = method.invoke(namedService, id, argsValue);
-            ClassUtils.setFieldValue(result, field, val);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            log.warn("Use @Named Error:", e);
-        }
+        final Object val = namedType.getFunction().apply(id, argsValue);
+        ClassUtils.setFieldValue(result, field, val);
     }
     
 }
