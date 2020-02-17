@@ -16,7 +16,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author hocgin
@@ -39,7 +39,7 @@ public class ExampleController {
         return Result.success();
     }
     
-    @PostMapping("/")
+    @PostMapping
     public Result<Void> insert(@Validated @RequestBody ExamplePostQo qo) {
         return Result.success();
     }
