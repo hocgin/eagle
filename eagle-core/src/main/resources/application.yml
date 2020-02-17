@@ -1,5 +1,5 @@
 spring:
-  swagger2:
-    enabled: false
   profiles:
     active: local
+  swagger2:
+    enabled: false
