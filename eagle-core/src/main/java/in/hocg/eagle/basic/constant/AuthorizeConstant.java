@@ -11,5 +11,5 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class AuthorizeConstant {
     public static final String IS_ANONYMOUS = "isAnonymous()";
-    public static final String IS_NOT_ANONYMOUS = "!isAnonymous()";
+    public static final String IS_AUTHENTICATED = "isAuthenticated()";
 }

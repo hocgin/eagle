@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.security.authentication.token;
 
+import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.result.Result;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class TokenAuthenticationEndpoint {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     
+    @UseLogger("获取Token")
     @PostMapping(TokenAuthenticationEndpoint.ACCOUNT_TOKEN_URI)
     public Result<String> authenticate(@Validated @RequestBody TokenQo qo) {
         final String username = qo.getUsername();

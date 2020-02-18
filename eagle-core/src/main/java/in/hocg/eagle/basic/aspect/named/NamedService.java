@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.aspect.named;
 
+import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import in.hocg.eagle.modules.base.service.DataDictService;
 import in.hocg.eagle.utils.LangUtils;

@@ -16,3 +16,14 @@ Content-Type: application/json
 > {% client.global.set("auth_token", response.body.data); %}
 
 ###
+
+GET {{host}}/test/example/1
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+###
+POST {{host}}/api/example/_search
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+###

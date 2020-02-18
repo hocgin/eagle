@@ -31,7 +31,7 @@ public class AccountController {
     
     @GetMapping("/current")
     @ApiOperation("当前账号信息")
-    @PreAuthorize(AuthorizeConstant.IS_NOT_ANONYMOUS)
+    @PreAuthorize(AuthorizeConstant.IS_AUTHENTICATED)
     public Result<IdAccountComplexVo> current() {
         final Integer accountId = SecurityContext.getCurrentUserId();
         return Result.success(service.selectOneComplex(accountId));

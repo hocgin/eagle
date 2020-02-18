@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.qo;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.result.ResultCode;
@@ -24,14 +25,19 @@ public abstract class BaseQo implements Serializable {
     /**
      * 创建时间
      */
-    @JsonIgnore
     @Getter
+    @JsonIgnore
+    @JSONField(serialize = false)
     private LocalDateTime createdAt = LocalDateTime.now();
     
+    @JsonIgnore
+    @JSONField(serialize = false)
     public Date getCreatedAtAsDate() {
         return DateUtils.getDate(createdAt);
     }
     
+    @JsonIgnore
+    @JSONField(serialize = false)
     public <T> T getUserId() {
         final Optional<User> userOptional = getUser();
         if (userOptional.isPresent()) {
@@ -41,6 +47,8 @@ public abstract class BaseQo implements Serializable {
         }
     }
     
+    @JsonIgnore
+    @JSONField(serialize = false)
     public Optional<User> getUser() {
         return SecurityContext.getCurrentUser();
     }
