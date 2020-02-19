@@ -52,13 +52,5 @@ public class AccountController {
         return Result.success();
     }
     
-    @PostMapping("/{id}/grant/authority")
-    @ApiOperation("给账号授权权限")
-    public Result<Void> grantAuthority(@PathVariable Long id,
-                                       @Validated @RequestBody GrantAuthorityQo qo) {
-        qo.setId(id);
-        service.grantAuthority(qo);
-        return Result.success();
-    }
 }
 

@@ -97,19 +97,3 @@ CREATE TABLE `t_role_account`
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     COMMENT = '[用户模块] 角色-账号表';
-
-DROP TABLE IF EXISTS `t_authority_account`;
-CREATE TABLE `t_authority_account`
-(
-    `id`           BIGINT AUTO_INCREMENT
-        COMMENT 'ID',
-    `authority_id` BIGINT NOT NULL
-        COMMENT 't_authority ID',
-    `account_id`   BIGINT NOT NULL
-        COMMENT 't_account ID',
-    UNIQUE (`authority_id`, `account_id`),
-    PRIMARY KEY (`id`)
-)
-    ENGINE = InnoDB
-    DEFAULT CHARSET = utf8mb4
-    COMMENT = '[用户模块] 权限-账号表';

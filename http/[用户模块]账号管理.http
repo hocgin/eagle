@@ -23,12 +23,6 @@ Content-Type: application/json
 {
 }
 
-### 给账号授权权限
-POST {{host}}/api/account/{id}/grant/authority
-Content-Type: application/json
-
-{
-}
 
 ### 注册会员
 POST {{host}}/api/member

@@ -1,7 +1,6 @@
 package in.hocg.eagle.modules.account.service;
 
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.mapstruct.qo.account.GrantAuthorityQo;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.IdAccountComplexVo;
 import in.hocg.eagle.modules.account.entity.Account;
@@ -43,13 +42,6 @@ public interface AccountService extends AbstractService<Account> {
      * @param qo
      */
     void grantRole(GrantRoleQo qo);
-    
-    /**
-     * 授权权限
-     *
-     * @param qo
-     */
-    void grantAuthority(GrantAuthorityQo qo);
     
     /**
      * 查找账号具备的所有权限

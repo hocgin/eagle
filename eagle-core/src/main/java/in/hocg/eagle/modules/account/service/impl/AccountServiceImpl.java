@@ -5,7 +5,6 @@ import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.Enabled;
 import in.hocg.eagle.mapstruct.AccountMapping;
 import in.hocg.eagle.mapstruct.RoleMapping;
-import in.hocg.eagle.mapstruct.qo.account.GrantAuthorityQo;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.IdAccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.RoleComplexVo;
@@ -14,7 +13,6 @@ import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
 import in.hocg.eagle.modules.account.mapper.AccountMapper;
 import in.hocg.eagle.modules.account.service.AccountService;
-import in.hocg.eagle.modules.account.service.AuthorityAccountService;
 import in.hocg.eagle.modules.account.service.RoleAccountService;
 import in.hocg.eagle.modules.account.service.RoleAuthorityService;
 import in.hocg.eagle.utils.VerifyUtils;
@@ -41,7 +39,6 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     
     private final RoleAccountService roleAccountService;
     private final RoleAuthorityService roleAuthorityService;
-    private final AuthorityAccountService authorityAccountService;
     private final AccountMapping mapping;
     private final RoleMapping roleMapping;
     
@@ -74,17 +71,8 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void grantAuthority(GrantAuthorityQo qo) {
-        final Long accountId = qo.getId();
-        qo.getAuthorities().forEach(authorityId -> authorityAccountService.grantAuthority(accountId, authorityId));
-    }
-    
-    @Override
-    @Transactional(rollbackFor = Exception.class)
     public List<Authority> selectListAuthorityById(Long accountId) {
-        List<Authority> authorities = Lists.newArrayList();
-        authorities.addAll(roleAccountService.selectListAuthorityByAccountId(accountId));
-        authorities.addAll(authorityAccountService.selectListAuthorityByAccountId(accountId));
+        List<Authority> authorities = roleAccountService.selectListAuthorityByAccountId(accountId);
         return authorities.stream().distinct().collect(Collectors.toList());
     }
     
