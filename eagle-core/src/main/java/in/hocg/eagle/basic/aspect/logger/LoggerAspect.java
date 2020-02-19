@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.StringJoiner;
 
@@ -62,8 +63,12 @@ public class LoggerAspect {
             Object[] args = point.getArgs();
             
             HttpServletRequest request = SpringContext.getRequest();
-            String uri = request.getRequestURI();
-            String requestMethod = request.getMethod();
+            String uri = "Unknown";
+            String requestMethod = "Unknown";
+            if (Objects.nonNull(request)) {
+                uri = request.getRequestURI();
+                requestMethod = request.getMethod();
+            }
             
             StringJoiner stringJoiner = new StringJoiner("\n")
                     .add("")
@@ -78,7 +83,7 @@ public class LoggerAspect {
                     .add("");
             log.info(stringJoiner.toString(),
                     DateUtils.format(LocalDateTime.now(), DateUtils.SIMPLE_FORMATTER),
-                    getUserString(),
+                    getUserStringThrow(),
                     String.format("%s %s", requestMethod, uri),
                     annotation.value(),
                     mapping,
@@ -88,6 +93,15 @@ public class LoggerAspect {
         }
         
         return ret;
+    }
+    
+    private String getUserStringThrow() {
+        try {
+            return getUserString();
+        } catch (Exception e) {
+           log.error("", e);
+            return "";
+        }
     }
     
     private String getUserString() {
