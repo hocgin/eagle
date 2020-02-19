@@ -14,7 +14,8 @@ import java.util.function.BiFunction;
  */
 @RequiredArgsConstructor
 public enum NamedType {
-    DataDict(SpringContext.getBean(NamedService.class)::selectOneByDataDict);
+    DataDict(SpringContext.getBean(NamedService.class)::selectOneByDataDict),
+    Username(SpringContext.getBean(NamedService.class)::selectOneByUsername);
     
     @Getter
     private final BiFunction<Object, String[], Object> function;

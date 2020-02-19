@@ -1,6 +1,7 @@
 package in.hocg.eagle.basic.aspect.named;
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.eagle.modules.account.entity.Account;
+import in.hocg.eagle.modules.account.service.AccountService;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import in.hocg.eagle.modules.base.service.DataDictService;
 import in.hocg.eagle.utils.LangUtils;
@@ -9,6 +10,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -22,6 +24,7 @@ import java.util.Optional;
 public class NamedService {
     
     private final DataDictService service;
+    private final AccountService accountService;
     
     
     /**
@@ -39,5 +42,21 @@ public class NamedService {
         }
         final Optional<DataDictItem> dataDictItemOptional = service.selectOneByDictIdAndCode(type, item);
         return dataDictItemOptional.<Object>map(DataDictItem::getTitle).orElse(null);
+    }
+    
+    /**
+     * 查询用户昵称
+     *
+     * @param id
+     * @param args
+     * @return
+     */
+    public Object selectOneByUsername(Object id, String[] args) {
+        final Long accountId = (Long) id;
+        final Account account = accountService.getById(accountId);
+        if (Objects.isNull(account)) {
+            return null;
+        }
+        return account.getNickname();
     }
 }
