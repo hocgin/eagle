@@ -18,4 +18,4 @@ CREATE TABLE `t_file`
         COMMENT '创建人',
 
     PRIMARY KEY (id)
-) COMMENT '文件引用表';
+) COMMENT '[基础模块] 文件引用表';
