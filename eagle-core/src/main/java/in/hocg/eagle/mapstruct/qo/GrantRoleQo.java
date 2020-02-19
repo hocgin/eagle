@@ -18,5 +18,5 @@ import java.util.List;
 @Data
 public class GrantRoleQo extends IdQo {
     @Size(min = 1, message = "请先选择角色")
-    private List<Integer> roles = Lists.newArrayList();
+    private List<Long> roles = Lists.newArrayList();
 }

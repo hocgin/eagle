@@ -1,24 +1,24 @@
 DROP TABLE IF EXISTS `t_data_dict`;
 CREATE TABLE `t_data_dict`
 (
-    `id`              INT(10) UNSIGNED AUTO_INCREMENT
+    `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `title`           varchar(25)      NOT NULL
+    `title`           VARCHAR(25) NOT NULL
         COMMENT '字典名称',
-    `code`            varchar(25)      NOT NULL UNIQUE
+    `code`            VARCHAR(25) NOT NULL UNIQUE
         COMMENT '字典标识',
-    `remark`          varchar(255)
+    `remark`          VARCHAR(255)
         COMMENT '备注',
-    `enabled`         tinyint(2)       NOT NULL DEFAULT 1
+    `enabled`         TINYINT(2)  NOT NULL DEFAULT 1
         COMMENT '启用状态[0:为禁用状态;1:为正常状态]',
     --
-    `created_at`      DATETIME(6)      NOT NULL
+    `created_at`      DATETIME(6) NOT NULL
         COMMENT '创建时间',
-    `creator`         INT(10) UNSIGNED NOT NULL
+    `creator`         BIGINT      NOT NULL
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
-    `last_updater`    INT(10) UNSIGNED
+    `last_updater`    BIGINT
         COMMENT '更新者',
     --
     PRIMARY KEY (`id`)
@@ -30,28 +30,28 @@ CREATE TABLE `t_data_dict`
 DROP TABLE IF EXISTS `t_data_dict_item`;
 CREATE TABLE `t_data_dict_item`
 (
-    `id`              INT(10) UNSIGNED AUTO_INCREMENT
+    `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `dict_id`         INT(10) UNSIGNED NOT NULL
+    `dict_id`         BIGINT      NOT NULL
         COMMENT 't_data_dict ID',
-    `title`           varchar(25)      NOT NULL
+    `title`           varchar(25) NOT NULL
         COMMENT '字典项名称',
-    `code`            varchar(25)      NOT NULL
+    `code`            varchar(25) NOT NULL
         COMMENT '字典标识',
     `remark`          varchar(255)
         COMMENT '备注',
-    `sort`            INT(10)          NOT NULL DEFAULT 1000
+    `sort`            INT(10)     NOT NULL DEFAULT 1000
         COMMENT '排序, 从大到小降序',
-    `enabled`         tinyint(2)       NOT NULL DEFAULT 1
+    `enabled`         tinyint(2)  NOT NULL DEFAULT 1
         COMMENT '启用状态[0:为禁用状态;1:为正常状态]',
     --
-    `created_at`      DATETIME(6)      NOT NULL
+    `created_at`      DATETIME(6) NOT NULL
         COMMENT '创建时间',
-    `creator`         INT(10) UNSIGNED NOT NULL
+    `creator`         BIGINT      NOT NULL
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
-    `last_updater`    INT(10) UNSIGNED
+    `last_updater`    BIGINT
         COMMENT '更新者',
     --
     UNIQUE (`dict_id`, `code`),

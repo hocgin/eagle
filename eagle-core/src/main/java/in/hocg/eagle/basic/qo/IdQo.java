@@ -14,5 +14,5 @@ public class IdQo extends BaseQo {
     @Getter
     @Setter
     @ApiModelProperty("Id")
-    private Integer id;
+    private Long id;
 }

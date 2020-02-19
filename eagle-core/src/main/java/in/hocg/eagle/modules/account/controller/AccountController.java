@@ -33,19 +33,19 @@ public class AccountController {
     @ApiOperation("当前账号信息")
     @PreAuthorize(AuthorizeConstant.IS_AUTHENTICATED)
     public Result<IdAccountComplexVo> current() {
-        final Integer accountId = SecurityContext.getCurrentUserId();
+        final Long accountId = SecurityContext.getCurrentUserId();
         return Result.success(service.selectOneComplex(accountId));
     }
     
     @GetMapping("/{id}")
     @ApiOperation("账号信息")
-    public Result<IdAccountComplexVo> id(@PathVariable Integer id) {
+    public Result<IdAccountComplexVo> id(@PathVariable Long id) {
         return Result.success(service.selectOneComplex(id));
     }
     
     @PostMapping("/{id}/grant/role")
     @ApiOperation("给账号授权角色")
-    public Result<Void> grantRole(@PathVariable Integer id,
+    public Result<Void> grantRole(@PathVariable Long id,
                                   @Validated @RequestBody GrantRoleQo qo) {
         qo.setId(id);
         service.grantRole(qo);
@@ -54,7 +54,7 @@ public class AccountController {
     
     @PostMapping("/{id}/grant/authority")
     @ApiOperation("给账号授权权限")
-    public Result<Void> grantAuthority(@PathVariable Integer id,
+    public Result<Void> grantAuthority(@PathVariable Long id,
                                        @Validated @RequestBody GrantAuthorityQo qo) {
         qo.setId(id);
         service.grantAuthority(qo);

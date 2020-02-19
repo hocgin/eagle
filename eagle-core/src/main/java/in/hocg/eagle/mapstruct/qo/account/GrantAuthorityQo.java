@@ -18,5 +18,5 @@ import java.util.List;
 @Data
 public class GrantAuthorityQo extends IdQo {
     @Size(min = 1, message = "请先选择权限")
-    private List<Integer> authorities = Lists.newArrayList();
+    private List<Long> authorities = Lists.newArrayList();
 }

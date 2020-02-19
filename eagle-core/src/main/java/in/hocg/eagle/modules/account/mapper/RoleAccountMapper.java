@@ -25,7 +25,7 @@ public interface RoleAccountMapper extends BaseMapper<RoleAccount> {
      * @param roleId
      * @return
      */
-    Integer countByRoleId(@Param("roleId") Integer roleId);
+    Integer countByRoleId(@Param("roleId") Long roleId);
     
     /**
      * 查找该账号正在使用该角色的数量
@@ -34,7 +34,7 @@ public interface RoleAccountMapper extends BaseMapper<RoleAccount> {
      * @param roleId
      * @return
      */
-    Integer countByAccountIdAndRoleId(@Param("accountId") Integer accountId, @Param("roleId") Integer roleId);
+    Integer countByAccountIdAndRoleId(@Param("accountId") Long accountId, @Param("roleId") Long roleId);
     
     /**
      * 查找账号所具备的角色
@@ -43,6 +43,6 @@ public interface RoleAccountMapper extends BaseMapper<RoleAccount> {
      * @param enabled
      * @return
      */
-    List<Role> selectListRoleByAccountIdAndEnabled(@Param("accountId") Integer accountId,
+    List<Role> selectListRoleByAccountIdAndEnabled(@Param("accountId") Long accountId,
                                                    @Param("enabled") Integer enabled);
 }

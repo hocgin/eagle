@@ -51,7 +51,7 @@ public interface AuthorityService extends AbstractService<Authority> {
      *
      * @param id
      */
-    void deleteById(Integer id, boolean force);
+    void deleteById(Long id, boolean force);
     
     /**
      * 给角色授权权限

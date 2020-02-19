@@ -31,17 +31,17 @@ public class AuthorityAccount extends AbstractEntity<AuthorityAccount> {
      * ID
      */
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
     /**
      * t_authority ID
      */
     @TableField("authority_id")
-    private Integer authorityId;
+    private Long authorityId;
     /**
      * t_account ID
      */
     @TableField("account_id")
-    private Integer accountId;
+    private Long accountId;
 
 
     @Override

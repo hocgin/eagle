@@ -36,7 +36,7 @@ public class AuthorityAccountServiceImpl extends AbstractServiceImpl<AuthorityAc
     }
     
     @Override
-    public void grantAuthority(Integer accountId, Integer authorityId) {
+    public void grantAuthority(Long accountId, Long authorityId) {
         final Account account = accountService.getById(accountId);
         VerifyUtils.notNull(account, "授权失败");
         final Authority authority = authorityService.getById(authorityId);
@@ -51,7 +51,7 @@ public class AuthorityAccountServiceImpl extends AbstractServiceImpl<AuthorityAc
     }
     
     @Override
-    public Collection<? extends Authority> selectListAuthorityByAccountId(Integer accountId) {
+    public Collection<? extends Authority> selectListAuthorityByAccountId(Long accountId) {
         return baseMapper.selectListAuthorityByAccountId(accountId);
     }
     
@@ -62,7 +62,7 @@ public class AuthorityAccountServiceImpl extends AbstractServiceImpl<AuthorityAc
      * @param authorityId
      * @return
      */
-    private boolean isHasAuthority(Integer accountId, Integer authorityId) {
+    private boolean isHasAuthority(Long accountId, Long authorityId) {
         final LambdaQueryChainWrapper<AuthorityAccount> where = lambdaQuery()
                 .eq(AuthorityAccount::getAccountId, accountId)
                 .eq(AuthorityAccount::getAuthorityId, authorityId);

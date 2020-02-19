@@ -32,14 +32,14 @@ public interface RoleAuthorityService extends AbstractService<RoleAuthority> {
      * @param authorityId
      */
     @Transactional(rollbackFor = Exception.class)
-    void grantAuthority(Integer roleId, Integer authorityId);
+    void grantAuthority(Long roleId, Long authorityId);
     
     /**
      * 删除角色相关的权限绑定
      *
      * @param roleId
      */
-    void deleteByRoleId(Integer roleId);
+    void deleteByRoleId(Long roleId);
     
     /**
      * 查询角色关联的权限
@@ -48,7 +48,7 @@ public interface RoleAuthorityService extends AbstractService<RoleAuthority> {
      * @param enabled
      * @return
      */
-    List<Authority> selectListAuthorityByRoleIdAndEnabled(Integer roleId, Integer enabled);
+    List<Authority> selectListAuthorityByRoleIdAndEnabled(Long roleId, Integer enabled);
     
     /**
      * 查找角色所具备的权限列表
@@ -56,5 +56,5 @@ public interface RoleAuthorityService extends AbstractService<RoleAuthority> {
      * @param roleIds
      * @return
      */
-    List<Authority> selectListAuthorityByRoleIds(List<Integer> roleIds);
+    List<Authority> selectListAuthorityByRoleIds(List<Long> roleIds);
 }

@@ -35,12 +35,12 @@ public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMappe
     private final RoleService roleService;
     
     @Override
-    public boolean isUsedRole(Integer roleId) {
+    public boolean isUsedRole(Long roleId) {
         return baseMapper.countByRoleId(roleId) > 0;
     }
     
     @Override
-    public void grantRole(Integer accountId, Integer roleId) {
+    public void grantRole(Long accountId, Long roleId) {
         final Account account = accountService.getById(accountId);
         VerifyUtils.notNull(account, "授权失败");
         final Role role = roleService.getById(roleId);
@@ -55,9 +55,9 @@ public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMappe
     }
     
     @Override
-    public List<Authority> selectListAuthorityByAccountId(Integer accountId) {
+    public List<Authority> selectListAuthorityByAccountId(Long accountId) {
         final List<Role> roles = baseMapper.selectListRoleByAccountIdAndEnabled(accountId, Enabled.On.getCode());
-        final List<Integer> roleIds = LangUtils.toList(roles, Role::getId);
+        final List<Long> roleIds = LangUtils.toList(roles, Role::getId);
         if (roleIds.isEmpty()) {
             return Lists.newArrayList();
         }
@@ -65,11 +65,11 @@ public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMappe
     }
     
     @Override
-    public List<Role> selectListRoleByAccountId(Integer accountId) {
+    public List<Role> selectListRoleByAccountId(Long accountId) {
         return baseMapper.selectListRoleByAccountIdAndEnabled(accountId, Enabled.On.getCode());
     }
     
-    private boolean isHasRole(Integer accountId, Integer roleId) {
+    private boolean isHasRole(Long accountId, Long roleId) {
         return baseMapper.countByAccountIdAndRoleId(accountId, roleId) > 0;
     }
     

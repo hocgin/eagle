@@ -114,6 +114,14 @@ public class LangUtils {
         if (s1 == null || s2 == null) {
             return Objects.equals(s1, s2);
         }
+    
+        return s1.compareTo(s2) == 0;
+    }
+    
+    public static boolean equals(Long s1, Long s2) {
+        if (s1 == null || s2 == null) {
+            return Objects.equals(s1, s2);
+        }
         
         return s1.compareTo(s2) == 0;
     }

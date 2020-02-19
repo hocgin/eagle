@@ -34,7 +34,7 @@ public class AuthorityController {
     
     @DeleteMapping("/{id}")
     @ApiOperation("删除权限")
-    public Result<Void> deleteById(@PathVariable Integer id,
+    public Result<Void> deleteById(@PathVariable Long id,
                                    @RequestParam(name = "force", required = false, defaultValue = "false") boolean force) {
         service.deleteById(id, force);
         return Result.success();
@@ -55,7 +55,7 @@ public class AuthorityController {
     
     @PutMapping("/{id}")
     @ApiOperation("更新权限")
-    public Result<Void> update(@PathVariable Integer id,
+    public Result<Void> update(@PathVariable Long id,
                                @Validated @RequestBody AuthorityPutQo qo) {
         qo.setId(id);
         service.updateOne(qo);
@@ -70,7 +70,7 @@ public class AuthorityController {
     
     @PostMapping("/{id}/grant/role")
     @ApiOperation("给角色授权权限")
-    public Result<Void> grantRole(@PathVariable Integer id,
+    public Result<Void> grantRole(@PathVariable Long id,
                                   @Validated @RequestBody GrantRoleQo qo) {
         qo.setId(id);
         service.grantRole(qo);

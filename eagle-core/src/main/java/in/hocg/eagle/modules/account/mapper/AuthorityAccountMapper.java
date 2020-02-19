@@ -27,5 +27,5 @@ public interface AuthorityAccountMapper extends BaseMapper<AuthorityAccount> {
      * @param accountId
      * @return
      */
-    List<Authority> selectListAuthorityByAccountId(@Param("accountId") Integer accountId);
+    List<Authority> selectListAuthorityByAccountId(@Param("accountId") Long accountId);
 }

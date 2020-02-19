@@ -21,9 +21,9 @@ public final class Tree {
      * @param <T>
      */
     public interface Node<T extends Tree.Node> {
-        Integer getId();
-        
-        Integer getParentId();
+        Long getId();
+    
+        Long getParentId();
         
         void setChildren(List<T> children);
     }
@@ -37,11 +37,11 @@ public final class Tree {
      * @param <T>
      * @return
      */
-    public static <T extends Tree.Node> List<T> getChild(Integer id, Collection<T> rootMenu) {
+    public static <T extends Tree.Node> List<T> getChild(Long id, Collection<T> rootMenu) {
         // 子菜单
         List<T> childList = new ArrayList<>();
         for (T menu : rootMenu) {
-            final Integer parentId = menu.getParentId();
+            final Long parentId = menu.getParentId();
             // 遍历所有节点，将父菜单id与传过来的id比较
             if (LangUtils.equals(id, parentId)) {
                 childList.add(menu);

@@ -27,7 +27,7 @@ public interface AccountService extends AbstractService<Account> {
      * @param id
      * @return
      */
-    IdAccountComplexVo selectOneComplex(Integer id);
+    IdAccountComplexVo selectOneComplex(Long id);
     
     /**
      * 根据 username 查找账号
@@ -57,7 +57,7 @@ public interface AccountService extends AbstractService<Account> {
      * @param accountId
      * @return
      */
-    List<Authority> selectListAuthorityById(Integer accountId);
+    List<Authority> selectListAuthorityById(Long accountId);
     
     /**
      * 查找账号具备的所有角色
@@ -65,5 +65,5 @@ public interface AccountService extends AbstractService<Account> {
      * @param accountId
      * @return
      */
-    List<Role> selectListRoleById(Integer accountId);
+    List<Role> selectListRoleById(Long accountId);
 }

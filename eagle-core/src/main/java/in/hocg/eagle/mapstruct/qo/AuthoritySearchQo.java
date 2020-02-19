@@ -15,5 +15,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class AuthoritySearchQo extends PageQo {
     @ApiModelProperty("父ID")
-    private Integer parentId;
+    private Long parentId;
 }

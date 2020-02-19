@@ -33,14 +33,14 @@ public class RoleController {
     
     @DeleteMapping("/{id}")
     @ApiOperation("删除角色")
-    public Result<Void> deleteById(@PathVariable Integer id) {
+    public Result<Void> deleteById(@PathVariable Long id) {
         service.deleteOne(id);
         return Result.success();
     }
     
     @GetMapping("/{id}")
     @ApiOperation("角色详情")
-    public Result<RoleComplexVo> selectById(@PathVariable Integer id) {
+    public Result<RoleComplexVo> selectById(@PathVariable Long id) {
         return Result.success(service.selectOne(id));
     }
     
@@ -53,7 +53,7 @@ public class RoleController {
     
     @PutMapping("/{id}")
     @ApiOperation("修改角色")
-    public Result<Void> update(@PathVariable Integer id,
+    public Result<Void> update(@PathVariable Long id,
                                @Validated @RequestBody RolePutQo qo) {
         qo.setId(id);
         service.updateOne(qo);
@@ -68,7 +68,7 @@ public class RoleController {
     
     @PostMapping("/{id}/grant/authority")
     @ApiOperation("给角色授权权限")
-    public Result<Void> grantAuthority(@PathVariable Integer id,
+    public Result<Void> grantAuthority(@PathVariable Long id,
                                        @Validated @RequestBody GrantAuthorityQo qo) {
         qo.setId(id);
         service.grantAuthority(qo);

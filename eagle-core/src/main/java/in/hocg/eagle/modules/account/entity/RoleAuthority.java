@@ -31,17 +31,17 @@ public class RoleAuthority extends AbstractEntity<RoleAuthority> {
      * ID
      */
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
     /**
      * t_role ID
      */
     @TableField("role_id")
-    private Integer roleId;
+    private Long roleId;
     /**
      * t_authority ID
      */
     @TableField("authority_id")
-    private Integer authorityId;
+    private Long authorityId;
 
 
     @Override

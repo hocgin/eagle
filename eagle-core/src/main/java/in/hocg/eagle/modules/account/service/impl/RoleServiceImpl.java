@@ -66,13 +66,13 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void grantAuthority(GrantAuthorityQo qo) {
-        final Integer id = qo.getId();
+        final Long id = qo.getId();
         qo.getAuthorities().forEach(authorityId -> roleAuthorityService.grantAuthority(id, authorityId));
     }
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteOne(Integer id) {
+    public void deleteOne(Long id) {
         if (roleAccountService.isUsedRole(id)) {
             throw ServiceException.wrap("角色正在被账号使用");
         }
@@ -82,7 +82,7 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public RoleComplexVo selectOne(Integer id) {
+    public RoleComplexVo selectOne(Long id) {
         final Role role = baseMapper.selectById(id);
         VerifyUtils.notNull(role, "角色不存在");
         List<Authority> authorities = roleAuthorityService.selectListAuthorityByRoleIdAndEnabled(id, Enabled.On.getCode());
@@ -90,7 +90,7 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     }
     
     @Override
-    public List<Authority> selectListAuthorityByIds(List<Integer> roleIds) {
+    public List<Authority> selectListAuthorityByIds(List<Long> roleIds) {
         return roleAuthorityService.selectListAuthorityByRoleIds(roleIds);
     }
 }

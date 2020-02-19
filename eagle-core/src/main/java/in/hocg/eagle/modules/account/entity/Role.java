@@ -33,7 +33,7 @@ public class Role extends AbstractEntity<Role> {
      * ID
      */
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
     /**
      * 角色名称
      */
@@ -63,7 +63,7 @@ public class Role extends AbstractEntity<Role> {
      * 创建者
      */
     @TableField("creator")
-    private Integer creator;
+    private Long creator;
     /**
      * 更新时间
      */
@@ -73,7 +73,7 @@ public class Role extends AbstractEntity<Role> {
      * 更新者
      */
     @TableField("last_updater")
-    private Integer lastUpdater;
+    private Long lastUpdater;
 
 
     @Override

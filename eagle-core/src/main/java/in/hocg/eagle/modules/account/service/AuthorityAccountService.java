@@ -30,7 +30,7 @@ public interface AuthorityAccountService extends AbstractService<AuthorityAccoun
      * @param accountId   账号ID
      * @param authorityId 权限ID
      */
-    void grantAuthority(Integer accountId, Integer authorityId);
+    void grantAuthority(Long accountId, Long authorityId);
     
     /**
      * 查找账号所具备的权限
@@ -38,5 +38,5 @@ public interface AuthorityAccountService extends AbstractService<AuthorityAccoun
      * @param accountId
      * @return
      */
-    Collection<? extends Authority> selectListAuthorityByAccountId(Integer accountId);
+    Collection<? extends Authority> selectListAuthorityByAccountId(Long accountId);
 }

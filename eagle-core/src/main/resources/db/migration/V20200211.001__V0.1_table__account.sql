@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS `t_account`;
 CREATE TABLE `t_account`
 (
-    `id`              INT(10) UNSIGNED AUTO_INCREMENT
+    `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
     `nickname`        VARCHAR(10)         NOT NULL
         COMMENT '昵称;显示使用',
@@ -28,11 +28,11 @@ CREATE TABLE `t_account`
     --
     `created_at`      DATETIME(6)         NOT NULL
         COMMENT '创建时间',
-    `creator`         INT(10) UNSIGNED    NOT NULL
+    `creator`         BIGINT UNSIGNED     NOT NULL
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
-    `last_updater`    INT(10) UNSIGNED
+    `last_updater`    BIGINT UNSIGNED
         COMMENT '更新者',
 
     PRIMARY KEY (`id`)
@@ -44,7 +44,7 @@ CREATE TABLE `t_account`
 DROP TABLE IF EXISTS `t_employee`;
 CREATE TABLE `t_employee`
 (
-    `id` INT(10) UNSIGNED
+    `id` BIGINT
         COMMENT 'ID, 同 t_account ID',
     PRIMARY KEY (`id`)
 )
@@ -55,7 +55,7 @@ CREATE TABLE `t_employee`
 DROP TABLE IF EXISTS `t_member`;
 CREATE TABLE `t_member`
 (
-    `id` INT(10) UNSIGNED
+    `id` BIGINT
         COMMENT 'ID, 同 t_account ID',
     PRIMARY KEY (`id`)
 )

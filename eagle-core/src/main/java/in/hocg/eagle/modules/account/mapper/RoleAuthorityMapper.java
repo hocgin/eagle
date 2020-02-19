@@ -33,7 +33,7 @@ public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
      * @param roleId
      * @return
      */
-    Integer deleteByRoleId(@Param("roleId") Integer roleId);
+    Integer deleteByRoleId(@Param("roleId") Long roleId);
     
     /**
      * 查询角色关联的权限列表
@@ -42,7 +42,7 @@ public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
      * @param enabled
      * @return
      */
-    List<Authority> selectListAuthorityByRoleIdAndEnabled(@Param("roleId") Integer roleId, @Param("enabled") Integer enabled);
+    List<Authority> selectListAuthorityByRoleIdAndEnabled(@Param("roleId") Long roleId, @Param("enabled") Integer enabled);
     
     /**
      * 查询 role_id 与 authority_id 符合条件的数量
@@ -51,7 +51,7 @@ public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
      * @param authorityId
      * @return
      */
-    Integer countByRoleIdAndAuthorityId(@Param("roleId") Integer roleId, @Param("authorityId") Integer authorityId);
+    Integer countByRoleIdAndAuthorityId(@Param("roleId") Long roleId, @Param("authorityId") Long authorityId);
     
     /**
      * 查找角色所具备的权限列表
@@ -59,5 +59,5 @@ public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
      * @param roleIds
      * @return
      */
-    List<Authority> selectListAuthorityByRoleIdsAndEnabled(@Param("roleIds") List<Integer> roleIds, @Param("enabled") Integer enabled);
+    List<Authority> selectListAuthorityByRoleIdsAndEnabled(@Param("roleIds") List<Long> roleIds, @Param("enabled") Integer enabled);
 }

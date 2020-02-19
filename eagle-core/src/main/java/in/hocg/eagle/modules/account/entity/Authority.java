@@ -32,7 +32,7 @@ public class Authority extends AbstractEntity<Authority> {
      * ID
      */
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
     /**
      * 权限名称
      */
@@ -63,7 +63,7 @@ public class Authority extends AbstractEntity<Authority> {
      * 父级ID, 顶级为 NULL
      */
     @TableField("parent_id")
-    private Integer parentId;
+    private Long parentId;
     /**
      * 树路径，组成方式: /父路径/当前ID
      */
@@ -78,7 +78,7 @@ public class Authority extends AbstractEntity<Authority> {
      * 排序, 从大到小降序
      */
     @TableField("sort")
-    private Integer sort;
+    private Long sort;
     /**
      * 创建时间
      */
@@ -88,7 +88,7 @@ public class Authority extends AbstractEntity<Authority> {
      * 创建者
      */
     @TableField("creator")
-    private Integer creator;
+    private Long creator;
     /**
      * 更新时间
      */
@@ -98,7 +98,7 @@ public class Authority extends AbstractEntity<Authority> {
      * 更新者
      */
     @TableField("last_updater")
-    private Integer lastUpdater;
+    private Long lastUpdater;
     
     
     @Override

@@ -47,7 +47,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public IdAccountComplexVo selectOneComplex(Integer id) {
+    public IdAccountComplexVo selectOneComplex(Long id) {
         final Account account = baseMapper.selectById(id);
         VerifyUtils.notNull(account, "账号不存在");
         final List<Role> roles = roleAccountService.selectListRoleByAccountId(id);
@@ -68,20 +68,20 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void grantRole(GrantRoleQo qo) {
-        final Integer accountId = qo.getId();
+        final Long accountId = qo.getId();
         qo.getRoles().forEach(roleId -> roleAccountService.grantRole(accountId, roleId));
     }
     
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void grantAuthority(GrantAuthorityQo qo) {
-        final Integer accountId = qo.getId();
+        final Long accountId = qo.getId();
         qo.getAuthorities().forEach(authorityId -> authorityAccountService.grantAuthority(accountId, authorityId));
     }
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<Authority> selectListAuthorityById(Integer accountId) {
+    public List<Authority> selectListAuthorityById(Long accountId) {
         List<Authority> authorities = Lists.newArrayList();
         authorities.addAll(roleAccountService.selectListAuthorityByAccountId(accountId));
         authorities.addAll(authorityAccountService.selectListAuthorityByAccountId(accountId));
@@ -89,7 +89,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     }
     
     @Override
-    public List<Role> selectListRoleById(Integer accountId) {
+    public List<Role> selectListRoleById(Long accountId) {
         return roleAccountService.selectListRoleByAccountId(accountId);
     }
 }

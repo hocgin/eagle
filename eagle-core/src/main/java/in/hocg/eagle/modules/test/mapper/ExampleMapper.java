@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author hocgin
- * @since 2020-02-15
+ * @since 2020-02-19
  */
 @Mapper
 public interface ExampleMapper extends BaseMapper<Example> {

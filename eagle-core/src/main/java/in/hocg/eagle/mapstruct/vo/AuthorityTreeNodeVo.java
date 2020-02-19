@@ -21,17 +21,17 @@ public class AuthorityTreeNodeVo
         implements Serializable, Tree.Node<AuthorityTreeNodeVo> {
     
     @ApiModelProperty("ID")
-    private Integer id;
+    private Long id;
     @ApiModelProperty("名称")
     private String title;
     @ApiModelProperty("父ID")
-    private Integer parentId;
+    private Long parentId;
     
     @ApiModelProperty("树节点")
     private List<AuthorityTreeNodeVo> children = Lists.newArrayList();
     
     @Override
-    public Integer getParentId() {
+    public Long getParentId() {
         return this.parentId;
     }
     

@@ -1,6 +1,5 @@
 package in.hocg.eagle.modules.base.entity;
 
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -8,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.eagle.basic.AbstractEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -15,75 +16,57 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * [基础模块] 数据字典项表
+ * 文件引用表
  * </p>
  *
  * @author hocgin
- * @since 2020-02-14
+ * @since 2020-02-19
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("t_data_dict_item")
-public class DataDictItem extends AbstractEntity<DataDictItem> {
+@TableName("t_file")
+public class File extends AbstractEntity<File> {
     
     private static final long serialVersionUID = 1L;
     
-    /**
-     * ID
-     */
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
     /**
-     * t_data_dict ID
+     * 文件名
      */
-    @TableField("dict_id")
-    private Integer dictId;
+    @TableField("filename")
+    private String filename;
     /**
-     * 字典项名称
+     * 链接地址
      */
-    @TableField("title")
-    private String title;
+    @TableField("file_url")
+    private String fileUrl;
     /**
-     * 字典标识
+     * 业务ID
      */
-    @TableField("code")
-    private String code;
+    @TableField("rel_id")
+    private Long relId;
     /**
-     * 备注
+     * 业务类型
      */
-    @TableField("remark")
-    private String remark;
+    @TableField("rel_type")
+    private Integer relType;
     /**
-     * 排序, 从大到小降序
+     * 排序,默认:1000
      */
     @TableField("sort")
     private Integer sort;
-    /**
-     * 启用状态[0:为禁用状态;1:为正常状态]
-     */
-    @TableField("enabled")
-    private Integer enabled;
     /**
      * 创建时间
      */
     @TableField("created_at")
     private LocalDateTime createdAt;
     /**
-     * 创建者
+     * 创建人
      */
     @TableField("creator")
     private Long creator;
-    /**
-     * 更新时间
-     */
-    @TableField("last_updated_at")
-    private LocalDateTime lastUpdatedAt;
-    /**
-     * 更新者
-     */
-    @TableField("last_updater")
-    private Long lastUpdater;
     
     
     @Override
@@ -91,4 +74,11 @@ public class DataDictItem extends AbstractEntity<DataDictItem> {
         return this.id;
     }
     
+    
+    @RequiredArgsConstructor
+    @Getter
+    public enum RelType {
+        Unknown(0);
+        private final Integer code;
+    }
 }

@@ -13,9 +13,9 @@ import java.util.Collection;
  */
 public class User extends org.springframework.security.core.userdetails.User {
     @Getter
-    private final Integer id;
+    private final Long id;
     
-    public User(Integer id,
+    public User(Long id,
                 String username,
                 String password,
                 Collection<? extends GrantedAuthority> authorities) {

@@ -23,7 +23,7 @@ public interface RoleAccountService extends AbstractService<RoleAccount> {
      * @param roleId
      * @return
      */
-    boolean isUsedRole(Integer roleId);
+    boolean isUsedRole(Long roleId);
     
     /**
      * 授权角色给账号
@@ -31,7 +31,7 @@ public interface RoleAccountService extends AbstractService<RoleAccount> {
      * @param accountId
      * @param roleId
      */
-    void grantRole(Integer accountId, Integer roleId);
+    void grantRole(Long accountId, Long roleId);
     
     /**
      * 查找账号所具备的权限
@@ -39,7 +39,7 @@ public interface RoleAccountService extends AbstractService<RoleAccount> {
      * @param accountId
      * @return
      */
-    List<Authority> selectListAuthorityByAccountId(Integer accountId);
+    List<Authority> selectListAuthorityByAccountId(Long accountId);
     
     /**
      * 查找账号所具备的角色
@@ -47,6 +47,6 @@ public interface RoleAccountService extends AbstractService<RoleAccount> {
      * @param accountId
      * @return
      */
-    List<Role> selectListRoleByAccountId(Integer accountId);
+    List<Role> selectListRoleByAccountId(Long accountId);
     
 }

@@ -53,6 +53,6 @@ public class AuthorityPostQo extends BaseQo {
     private Integer sort;
     
     @ApiModelProperty("父级")
-    private Integer parentId;
+    private Long parentId;
     
 }

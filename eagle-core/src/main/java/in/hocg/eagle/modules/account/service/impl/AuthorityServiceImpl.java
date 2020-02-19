@@ -49,7 +49,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertOne(AuthorityPostQo qo) {
-        final Integer parentId = qo.getParentId();
+        final Long parentId = qo.getParentId();
         StringBuilder path = new StringBuilder();
         
         // 如果存在父级别菜单
@@ -77,9 +77,9 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     @Transactional(rollbackFor = Exception.class)
     public void updateOne(AuthorityPutQo qo) {
         final Authority authority = mapping.asAuthority(qo);
-        final Integer parentId = authority.getParentId();
+        final Long parentId = authority.getParentId();
         final Integer enabled = qo.getEnabled();
-        final Integer id = qo.getId();
+        final Long id = qo.getId();
         
         // 如果需要更新父级
         if (Objects.nonNull(parentId)) {
@@ -98,7 +98,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     
     @Override
     public List<AuthorityTreeNodeVo> search(AuthoritySearchQo qo) {
-        final Integer parentId = qo.getParentId();
+        final Long parentId = qo.getParentId();
         List<Authority> all = baseMapper.selectListByParentId(parentId);
         return Tree.getChild(parentId, all.stream()
                 .map(mapping::asAuthorityTreeNodeVo)
@@ -107,7 +107,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteById(Integer id, boolean force) {
+    public void deleteById(Long id, boolean force) {
         if (force) {
             deleteCurrentAndChildren(id);
         } else if (selectListChildrenById(id).isEmpty()) {
@@ -120,8 +120,8 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void grantRole(GrantRoleQo qo) {
-        Integer authorityId = qo.getId();
-        List<Integer> roles = qo.getRoles();
+        Long authorityId = qo.getId();
+        List<Long> roles = qo.getRoles();
         roles.forEach(roleId -> roleAuthorityService.grantAuthority(roleId, authorityId));
     }
     
@@ -130,7 +130,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
      *
      * @param id
      */
-    private void deleteCurrentAndChildren(Integer id) {
+    private void deleteCurrentAndChildren(Long id) {
         final Authority authority = baseMapper.selectById(id);
         if (Objects.isNull(authority)) {
             return;
@@ -152,7 +152,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
      * @param id
      * @return
      */
-    private List<Authority> selectListChildrenById(Integer id) {
+    private List<Authority> selectListChildrenById(Long id) {
         final Authority authority = baseMapper.selectById(id);
         if (Objects.isNull(authority)) {
             return Lists.newArrayList();
@@ -165,8 +165,8 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     /**
      * - 父级更换，如果父级的父级发生更换，则其子级随着父级发生更换。
      */
-    private void updateAuthorityTreePath(@NotNull Integer id,
-                                         Integer parentId) {
+    private void updateAuthorityTreePath(@NotNull Long id,
+                                         Long parentId) {
         final Authority authority = baseMapper.selectById(id);
         if (LangUtils.equals(authority.getParentId(), parentId)) {
             return;
@@ -199,7 +199,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
      * @param id
      * @param enabled
      */
-    private void updateAuthorityEnabledStatus(@NotNull Integer id,
+    private void updateAuthorityEnabledStatus(@NotNull Long id,
                                               @NotNull Integer enabled) {
         final Authority authority = baseMapper.selectById(id);
         if (LangUtils.equals(authority.getEnabled(), enabled)) {
@@ -207,7 +207,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         }
         
         // 该权限的父节点
-        final Integer parentId = authority.getParentId();
+        final Long parentId = authority.getParentId();
         if (Objects.nonNull(parentId)) {
             Authority parentAuthority = baseMapper.selectById(parentId);
             VerifyUtils.notNull(parentAuthority, "父级不存在");

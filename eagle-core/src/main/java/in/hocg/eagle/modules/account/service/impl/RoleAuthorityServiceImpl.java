@@ -40,7 +40,7 @@ public class RoleAuthorityServiceImpl extends AbstractServiceImpl<RoleAuthorityM
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void grantAuthority(Integer roleId, Integer authorityId) {
+    public void grantAuthority(Long roleId, Long authorityId) {
         final Role role = roleService.getById(roleId);
         VerifyUtils.notNull(role, "授权失败");
         Authority authority = authorityService.getById(authorityId);
@@ -55,22 +55,22 @@ public class RoleAuthorityServiceImpl extends AbstractServiceImpl<RoleAuthorityM
         baseMapper.insert(roleAuthority);
     }
     
-    private boolean isHasAuthority(Integer roleId, Integer authorityId) {
+    private boolean isHasAuthority(Long roleId, Long authorityId) {
         return baseMapper.countByRoleIdAndAuthorityId(roleId, authorityId) > 0;
     }
     
     @Override
-    public void deleteByRoleId(Integer roleId) {
+    public void deleteByRoleId(Long roleId) {
         baseMapper.deleteByRoleId(roleId);
     }
     
     @Override
-    public List<Authority> selectListAuthorityByRoleIdAndEnabled(Integer roleId, Integer enabled) {
+    public List<Authority> selectListAuthorityByRoleIdAndEnabled(Long roleId, Integer enabled) {
         return baseMapper.selectListAuthorityByRoleIdAndEnabled(roleId, enabled);
     }
     
     @Override
-    public List<Authority> selectListAuthorityByRoleIds(List<Integer> roleIds) {
+    public List<Authority> selectListAuthorityByRoleIds(List<Long> roleIds) {
         return baseMapper.selectListAuthorityByRoleIdsAndEnabled(roleIds, Enabled.On.getCode());
     }
     

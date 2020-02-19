@@ -42,7 +42,7 @@ public interface AuthorityMapper extends BaseMapper<Authority> {
      * @param parentId
      * @return
      */
-    List<Authority> selectListByParentId(@Param("parentId") Integer parentId);
+    List<Authority> selectListByParentId(@Param("parentId") Long parentId);
     
     /**
      * 获取 tree_path 匹配的数据

@@ -35,7 +35,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         final Optional<Account> accountOptional = accountService.selectOneByUsername(username);
         if (accountOptional.isPresent()) {
             final Account account = accountOptional.get();
-            final Integer id = account.getId();
+            final Long id = account.getId();
             final String password = account.getPassword();
             final List<Role> roles = accountService.selectListRoleById(id);
             final List<Authority> authorities = accountService.selectListAuthorityById(id);

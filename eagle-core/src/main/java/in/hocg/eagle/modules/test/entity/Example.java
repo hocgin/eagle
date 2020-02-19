@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author hocgin
- * @since 2020-02-15
+ * @since 2020-02-19
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -29,7 +29,7 @@ public class Example extends AbstractEntity<Example> {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
     @TableField("name")
     private String name;
     @TableField("created_at")

@@ -57,7 +57,7 @@ public interface RoleService extends AbstractService<Role> {
      *
      * @param id
      */
-    void deleteOne(Integer id);
+    void deleteOne(Long id);
     
     /**
      * 查询角色详情
@@ -65,7 +65,7 @@ public interface RoleService extends AbstractService<Role> {
      * @param id
      * @return
      */
-    RoleComplexVo selectOne(Integer id);
+    RoleComplexVo selectOne(Long id);
     
-    List<Authority> selectListAuthorityByIds(List<Integer> roleIds);
+    List<Authority> selectListAuthorityByIds(List<Long> roleIds);
 }
