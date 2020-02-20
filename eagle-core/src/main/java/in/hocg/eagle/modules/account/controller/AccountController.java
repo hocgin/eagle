@@ -4,8 +4,8 @@ package in.hocg.eagle.modules.account.controller;
 import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.basic.security.SecurityContext;
-import in.hocg.eagle.mapstruct.qo.account.GrantAuthorityQo;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
+import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
 import in.hocg.eagle.mapstruct.vo.IdAccountComplexVo;
 import in.hocg.eagle.modules.account.service.AccountService;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -29,12 +31,19 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
     private final AccountService service;
     
-    @GetMapping("/current")
+    @GetMapping
     @ApiOperation("当前账号信息")
     @PreAuthorize(AuthorizeConstant.IS_AUTHENTICATED)
     public Result<IdAccountComplexVo> current() {
         final Long accountId = SecurityContext.getCurrentUserId();
         return Result.success(service.selectOneComplex(accountId));
+    }
+    
+    @GetMapping("/authority")
+    @ApiOperation("获取权限树(当前用户)")
+    public Result<List<AuthorityTreeNodeVo>> selectAuthorityTreeByCurrentAccount() {
+        final Long accountId = SecurityContext.getCurrentUserId();
+        return Result.success(service.selectAuthorityTreeByCurrentAccount(accountId));
     }
     
     @GetMapping("/{id}")

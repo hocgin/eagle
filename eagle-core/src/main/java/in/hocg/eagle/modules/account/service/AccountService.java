@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.account.service;
 
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
+import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
 import in.hocg.eagle.mapstruct.vo.IdAccountComplexVo;
 import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.entity.Authority;
@@ -58,4 +59,11 @@ public interface AccountService extends AbstractService<Account> {
      * @return
      */
     List<Role> selectListRoleById(Long accountId);
+    
+    /**
+     * 获取权限树(当前用户)
+     *
+     * @param accountId
+     */
+    List<AuthorityTreeNodeVo> selectAuthorityTreeByCurrentAccount(Long accountId);
 }
