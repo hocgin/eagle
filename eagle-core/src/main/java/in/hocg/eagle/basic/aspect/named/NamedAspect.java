@@ -28,7 +28,6 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class NamedAspect {
-    private final NamedService namedService;
     
     @Pointcut("execution((@in.hocg.eagle.basic.aspect.named.InjectNamed *) *(..))")
     public void pointcut() {
@@ -83,6 +82,10 @@ public class NamedAspect {
                     handleResult(object);
                 })
                 .filter(field -> field.isAnnotationPresent(Named.class))
+                .filter(field -> {
+                    final Object value = ClassUtils.getObjectValue(result, field, null);
+                    return Objects.isNull(value);
+                })
                 .forEach(field -> injectValue(result, fieldMap, field));
     }
     

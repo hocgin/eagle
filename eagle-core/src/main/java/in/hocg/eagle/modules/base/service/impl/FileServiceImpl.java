@@ -38,7 +38,7 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File>
         final Long relId = dto.getRelId();
         VerifyUtils.notNull(relId, "上传失败，ID 错误");
         final File.RelType relType = dto.getRelType();
-        VerifyUtils.notNull(relType, "上传失败，类型 错误");
+        VerifyUtils.notNull(relType, "上传失败，类型错误");
         final List<UploadFileDto.FileDto> files = dto.getFiles();
         deleteAllByRelTypeAndRelId(relType, relId);
         final LocalDateTime now = LocalDateTime.now();
