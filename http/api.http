@@ -1,0 +1,28 @@
+### 登录
+POST {{host}}/api/account/authenticate
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "hocgin"
+}
+
+> {% client.global.set("auth_token", response.body.data); %}
+
+
+### 新增权限
+POST {{host}}/api/authority
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "title": "新增角色",
+  "type": 1,
+  "authorityCode": "权限授权码",
+  "method": "GET",
+  "uri": "/*",
+  "enabled": 1,
+  "sort": 1000
+}
+
+###

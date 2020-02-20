@@ -27,7 +27,11 @@ public enum ResultCode {
     /**
      * 拒绝访问(未登录)
      */
-    ACCESS_DENIED_ERROR(503, "拒绝访问"),
+    AUTHENTICATION_ERROR(503, "拒绝访问"),
+    /**
+     * 无权访问
+     */
+    ACCESS_DENIED_ERROR(504, "无权访问"),
     /**
      * 默认错误码
      */

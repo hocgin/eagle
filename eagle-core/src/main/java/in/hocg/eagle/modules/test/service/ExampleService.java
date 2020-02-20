@@ -9,7 +9,7 @@ import in.hocg.eagle.basic.AbstractService;
  * </p>
  *
  * @author hocgin
- * @since 2020-02-11
+ * @since 2020-02-19
  */
 public interface ExampleService extends AbstractService<Example> {
 

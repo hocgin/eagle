@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.eagle.modules.account.mapper.RoleAccountMapper">
+
+    <select id="countByRoleId" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_role_account tra
+        WHERE tra.role_id = #{roleId}
+    </select>
+    <select id="countByAccountIdAndRoleId" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_role_account tra
+        WHERE tra.account_id = #{accountId} AND tra.role_id = #{roleId}
+    </select>
+    <select id="selectListRoleByAccountIdAndEnabled" resultType="in.hocg.eagle.modules.account.entity.Role">
+        SELECT tr.* FROM t_role_account tra
+            LEFT JOIN t_role tr ON tr.id = tra.role_id
+        <where>
+            <if test="accountId != null">
+                AND tra.account_id = #{accountId}
+            </if>
+            <if test="enabled != null">
+                AND tr.enabled = #{enabled}
+            </if>
+        </where>
+    </select>
+    <select id="selectListRoleByAccountId" resultType="in.hocg.eagle.modules.account.entity.Role">
+        SELECT tr.* FROM t_role_account tra
+            LEFT JOIN t_role tr ON tr.id = tra.role_id
+        <where>
+            <if test="accountId != null">
+                AND tra.account_id = #{accountId}
+            </if>
+        </where>
+    </select>
+</mapper>

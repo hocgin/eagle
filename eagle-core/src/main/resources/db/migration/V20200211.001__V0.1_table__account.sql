@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS `t_account`;
 CREATE TABLE `t_account`
 (
-    `id`              INT(10) UNSIGNED AUTO_INCREMENT
+    `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `nick_name`       VARCHAR(10)         NOT NULL
+    `nickname`        VARCHAR(10)         NOT NULL
         COMMENT '昵称;显示使用',
     `username`        VARCHAR(20)         NOT NULL UNIQUE
         COMMENT '用户名;唯一,登录使用',
@@ -28,11 +28,11 @@ CREATE TABLE `t_account`
     --
     `created_at`      DATETIME(6)         NOT NULL
         COMMENT '创建时间',
-    `creator`         INT(10) UNSIGNED    NOT NULL
+    `creator`         BIGINT              NOT NULL
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
-    `last_updater`    INT(10) UNSIGNED
+    `last_updater`    BIGINT
         COMMENT '更新者',
 
     PRIMARY KEY (`id`)
@@ -41,10 +41,10 @@ CREATE TABLE `t_account`
     DEFAULT CHARSET = utf8mb4
     COMMENT = '[用户模块] 账号表';
 
-DROP TABLE IF EXISTS `t_staff`;
-CREATE TABLE `t_staff`
+DROP TABLE IF EXISTS `t_employee`;
+CREATE TABLE `t_employee`
 (
-    `id` INT(10) UNSIGNED
+    `id` BIGINT
         COMMENT 'ID, 同 t_account ID',
     PRIMARY KEY (`id`)
 )
@@ -55,10 +55,19 @@ CREATE TABLE `t_staff`
 DROP TABLE IF EXISTS `t_member`;
 CREATE TABLE `t_member`
 (
-    `id` INT(10) UNSIGNED
+    `id` BIGINT
         COMMENT 'ID, 同 t_account ID',
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     COMMENT = '[用户模块] 会员表';
+
+/**
+ * === 基础数据 ===
+ */
+INSERT INTO `t_account`(`id`, `nickname`, `username`, `email`, `phone`, `password`, `avatar`, `gender`, `created_ip`,
+                        `created_at`, `creator`)
+    VALUE (1, 'admin', 'admin', 'admin@example.com', '13600747016', '{noop}hocgin', 'https://example.com/avatar', 1,
+           '127.0.0.1',
+           NOW(), 1);

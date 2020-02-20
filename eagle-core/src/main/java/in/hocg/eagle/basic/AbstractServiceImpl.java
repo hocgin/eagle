@@ -1,7 +1,7 @@
 package in.hocg.eagle.basic;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
  * Created by hocgin on 2020/1/5.

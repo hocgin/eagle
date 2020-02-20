@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author hocgin
  * @date 2019/7/19
  */
+@Slf4j
 @Component
 public class SpringContext implements ApplicationContextAware {
     
@@ -54,10 +56,20 @@ public class SpringContext implements ApplicationContextAware {
     }
     
     public static HttpServletResponse getResponse() {
-        return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+        try {
+            return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+        } catch (Exception e) {
+            log.error("", e);
+            return null;
+        }
     }
     
     public static HttpServletRequest getRequest() {
-        return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        try {
+            return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        } catch (Exception e) {
+            log.error("", e);
+            return null;
+        }
     }
 }

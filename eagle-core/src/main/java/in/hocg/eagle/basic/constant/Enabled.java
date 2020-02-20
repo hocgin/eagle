@@ -12,9 +12,9 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum Enabled {
+public enum Enabled implements IntEnum {
     Off(0, "禁用"),
     On(1, "启用");
-    private final int code;
+    private final Integer code;
     private final String name;
 }
