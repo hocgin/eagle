@@ -71,7 +71,7 @@ public class NamedAspect {
     
     private void handleObjectResult(Object result) {
         final Class<?> aClass = result.getClass();
-        if (!result.getClass().isAnnotationPresent(InjectNamed.class)) {
+        if (!aClass.isAnnotationPresent(InjectNamed.class)) {
             return;
         }
         
