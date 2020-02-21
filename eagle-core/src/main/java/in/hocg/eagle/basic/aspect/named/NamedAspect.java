@@ -44,9 +44,6 @@ public class NamedAspect {
         if (Objects.isNull(result)) {
             return;
         }
-        if (!result.getClass().isAnnotationPresent(InjectNamed.class)) {
-            return;
-        }
         if (result instanceof Page) {
             handlePageResult((Page) result);
         } else if (result instanceof Collection) {
@@ -74,6 +71,9 @@ public class NamedAspect {
     
     private void handleObjectResult(Object result) {
         final Class<?> aClass = result.getClass();
+        if (!result.getClass().isAnnotationPresent(InjectNamed.class)) {
+            return;
+        }
         
         Map<String, Field> fieldMap = LangUtils.toMap(ClassUtils.getAllField(aClass), Field::getName);
         fieldMap.values().stream()

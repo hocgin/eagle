@@ -75,6 +75,11 @@ public class Authority extends AbstractEntity<Authority> {
     @TableField("enabled")
     private Integer enabled;
     /**
+     * 平台编号
+     */
+    @TableField("platform")
+    private Integer platform;
+    /**
      * 排序, 从大到小降序
      */
     @TableField("sort")

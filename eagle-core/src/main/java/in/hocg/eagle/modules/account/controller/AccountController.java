@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.account.controller;
 
 
 import in.hocg.eagle.basic.constant.AuthorizeConstant;
+import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.basic.security.SecurityContext;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
@@ -43,7 +44,7 @@ public class AccountController {
     @ApiOperation("获取权限树(当前用户)")
     public Result<List<AuthorityTreeNodeVo>> selectAuthorityTreeByCurrentAccount() {
         final Long accountId = SecurityContext.getCurrentUserId();
-        return Result.success(service.selectAuthorityTreeByCurrentAccount(accountId));
+        return Result.success(service.selectAuthorityTreeByCurrentAccount(accountId, GlobalConstant.CURRENT_PLATFORM.getCode()));
     }
     
     @GetMapping("/{id}")

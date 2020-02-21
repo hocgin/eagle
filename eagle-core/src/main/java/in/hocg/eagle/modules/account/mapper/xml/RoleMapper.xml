@@ -5,5 +5,10 @@
     <select id="search" resultType="in.hocg.eagle.mapstruct.vo.RoleSearchVo">
         SELECT tr.*
         FROM t_role tr
+        <where>
+            <if test="qo.platform != null">
+                AND tr.platform = #{qo.platform}
+            </if>
+        </where>
     </select>
 </mapper>

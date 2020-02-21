@@ -50,7 +50,7 @@ public interface AccountService extends AbstractService<Account> {
      * @param accountId
      * @return
      */
-    List<Authority> selectListAuthorityById(Long accountId);
+    List<Authority> selectListAuthorityById(Long accountId, Integer platform);
     
     /**
      * 查找账号具备的所有角色
@@ -58,12 +58,12 @@ public interface AccountService extends AbstractService<Account> {
      * @param accountId
      * @return
      */
-    List<Role> selectListRoleById(Long accountId);
+    List<Role> selectListRoleById(Long accountId, Integer platform);
     
     /**
      * 获取权限树(当前用户)
      *
      * @param accountId
      */
-    List<AuthorityTreeNodeVo> selectAuthorityTreeByCurrentAccount(Long accountId);
+    List<AuthorityTreeNodeVo> selectAuthorityTreeByCurrentAccount(Long accountId, Integer platform);
 }

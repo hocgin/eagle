@@ -19,4 +19,9 @@ public class GlobalConstant {
      * 超级管理员用户ID
      */
     public static final Long SUPPER_ADMIN_USER_ID = 1L;
+    
+    /**
+     * 当前平台标记
+     */
+    public static final Platform CURRENT_PLATFORM = Platform.Eagle;
 }

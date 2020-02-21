@@ -26,9 +26,9 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("t_role")
 public class Role extends AbstractEntity<Role> {
-
+    
     private static final long serialVersionUID = 1L;
-
+    
     /**
      * ID
      */
@@ -55,6 +55,11 @@ public class Role extends AbstractEntity<Role> {
     @TableField("enabled")
     private Integer enabled;
     /**
+     * 平台编号
+     */
+    @TableField("platform")
+    private Integer platform;
+    /**
      * 创建时间
      */
     @TableField("created_at")
@@ -74,11 +79,11 @@ public class Role extends AbstractEntity<Role> {
      */
     @TableField("last_updater")
     private Long lastUpdater;
-
-
+    
+    
     @Override
     protected Serializable pkVal() {
         return this.id;
     }
-
+    
 }

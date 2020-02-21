@@ -17,6 +17,9 @@
             <if test="accountId != null">
                 AND tra.account_id = #{accountId}
             </if>
+            <if test="platform != null">
+                AND tr.platform = #{platform}
+            </if>
             <if test="enabled != null">
                 AND tr.enabled = #{enabled}
             </if>

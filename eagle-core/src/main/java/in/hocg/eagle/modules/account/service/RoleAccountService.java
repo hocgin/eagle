@@ -37,16 +37,18 @@ public interface RoleAccountService extends AbstractService<RoleAccount> {
      * 查找账号所具备的权限
      *
      * @param accountId
+     * @param platform
      * @return
      */
-    List<Authority> selectListAuthorityByAccountId(Long accountId);
+    List<Authority> selectListAuthorityByAccountId(Long accountId, Integer platform);
     
     /**
      * 查找账号所具备的角色
      *
      * @param accountId
+     * @param platform
      * @return
      */
-    List<Role> selectListRoleByAccountId(Long accountId);
+    List<Role> selectListRoleByAccountId(Long accountId, Integer platform);
     
 }

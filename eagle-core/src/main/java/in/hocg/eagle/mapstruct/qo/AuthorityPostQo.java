@@ -2,6 +2,7 @@ package in.hocg.eagle.mapstruct.qo;
 
 import in.hocg.eagle.basic.constant.Enabled;
 import in.hocg.eagle.basic.constant.PatternConstant;
+import in.hocg.eagle.basic.constant.Platform;
 import in.hocg.eagle.basic.qo.BaseQo;
 import in.hocg.eagle.basic.valid.RangeEnum;
 import io.swagger.annotations.ApiModelProperty;
@@ -54,5 +55,9 @@ public class AuthorityPostQo extends BaseQo {
     
     @ApiModelProperty("父级")
     private Long parentId;
+    @NotNull(message = "平台不能为空")
+    @RangeEnum(enumClass = Platform.class)
+    @ApiModelProperty("平台")
+    private Integer platform;
     
 }

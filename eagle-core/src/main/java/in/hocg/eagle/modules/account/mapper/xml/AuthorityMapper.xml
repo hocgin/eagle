@@ -12,12 +12,15 @@
         SET ta.tree_path = REPLACE(ta.tree_path, #{oldTreePath}, #{newTreePath})
         WHERE ta.tree_path REGEXP #{regexTreePath}
     </update>
-    <select id="selectListByParentId" resultType="in.hocg.eagle.modules.account.entity.Authority">
+    <select id="search" resultType="in.hocg.eagle.modules.account.entity.Authority">
         SELECT ta.*
         FROM t_authority ta
         <where>
-            <if test="parentId != null">
-                ta.parent_id = #{parentId}
+            <if test="qo.parentId != null">
+                AND ta.parent_id = #{parentId}
+            </if>
+            <if test="qo.platform != null">
+                AND ta.platform = #{qo.platform}
             </if>
         </where>
         ORDER BY sort DESC, created_at DESC

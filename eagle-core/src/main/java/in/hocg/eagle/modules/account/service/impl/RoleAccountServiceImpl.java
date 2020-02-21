@@ -55,8 +55,8 @@ public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMappe
     }
     
     @Override
-    public List<Authority> selectListAuthorityByAccountId(Long accountId) {
-        final List<Role> roles = baseMapper.selectListRoleByAccountIdAndEnabled(accountId, Enabled.On.getCode());
+    public List<Authority> selectListAuthorityByAccountId(Long accountId, Integer platform) {
+        final List<Role> roles = baseMapper.selectListRoleByAccountIdAndEnabled(accountId, platform, Enabled.On.getCode());
         final List<Long> roleIds = LangUtils.toList(roles, Role::getId);
         if (roleIds.isEmpty()) {
             return Lists.newArrayList();
@@ -65,8 +65,8 @@ public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMappe
     }
     
     @Override
-    public List<Role> selectListRoleByAccountId(Long accountId) {
-        return baseMapper.selectListRoleByAccountIdAndEnabled(accountId, Enabled.On.getCode());
+    public List<Role> selectListRoleByAccountId(Long accountId, Integer platform) {
+        return baseMapper.selectListRoleByAccountIdAndEnabled(accountId, platform, Enabled.On.getCode());
     }
     
     private boolean isHasRole(Long accountId, Long roleId) {

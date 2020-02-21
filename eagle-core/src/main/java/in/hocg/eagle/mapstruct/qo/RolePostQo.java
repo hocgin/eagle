@@ -2,6 +2,7 @@ package in.hocg.eagle.mapstruct.qo;
 
 import in.hocg.eagle.basic.constant.Enabled;
 import in.hocg.eagle.basic.constant.PatternConstant;
+import in.hocg.eagle.basic.constant.Platform;
 import in.hocg.eagle.basic.qo.BaseQo;
 import in.hocg.eagle.basic.valid.RangeEnum;
 import io.swagger.annotations.ApiModelProperty;
@@ -34,4 +35,8 @@ public class RolePostQo extends BaseQo {
     @RangeEnum(enumClass = Enabled.class)
     @ApiModelProperty("启用状态[0:为禁用状态;1:为正常状态]")
     private Integer enabled;
+    @NotNull(message = "平台不能为空")
+    @RangeEnum(enumClass = Platform.class)
+    @ApiModelProperty("平台")
+    private Integer platform;
 }

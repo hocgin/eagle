@@ -1,6 +1,7 @@
 package in.hocg.eagle.basic.security;
 
 import com.google.common.collect.Lists;
+import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.RoleMapping;
 import in.hocg.eagle.modules.account.entity.Account;
@@ -37,8 +38,8 @@ public class UserDetailsService implements org.springframework.security.core.use
             final Account account = accountOptional.get();
             final Long id = account.getId();
             final String password = account.getPassword();
-            final List<Role> roles = accountService.selectListRoleById(id);
-            final List<Authority> authorities = accountService.selectListAuthorityById(id);
+            final List<Role> roles = accountService.selectListRoleById(id, GlobalConstant.CURRENT_PLATFORM.getCode());
+            final List<Authority> authorities = accountService.selectListAuthorityById(id, GlobalConstant.CURRENT_PLATFORM.getCode());
             return new User(id, username, password, buildAuthorities(roles, authorities));
         }
         throw new UsernameNotFoundException("用户名或密码错误");

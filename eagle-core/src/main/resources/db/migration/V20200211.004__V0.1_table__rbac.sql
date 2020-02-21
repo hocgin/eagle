@@ -13,6 +13,8 @@ CREATE TABLE `t_authority`
         COMMENT '请求方式 [*, GET, POST..]',
     `uri`             varchar(255) NOT NULL
         COMMENT '请求URL',
+    `platform`        INT(10)      NOT NULL
+        COMMENT '平台编号',
     `parent_id`       BIGINT
         COMMENT '父级ID, 顶级为 NULL',
     `tree_path`       varchar(255) NOT NULL
@@ -46,6 +48,8 @@ CREATE TABLE `t_role`
         COMMENT '角色名称',
     `role_code`       varchar(20) NOT NULL UNIQUE
         COMMENT '角色授权码',
+    `platform`        INT(10)      NOT NULL
+        COMMENT '平台编号',
     `remark`          varchar(255)
         COMMENT '角色描述',
     `enabled`         TINYINT(1) UNSIGNED DEFAULT 1

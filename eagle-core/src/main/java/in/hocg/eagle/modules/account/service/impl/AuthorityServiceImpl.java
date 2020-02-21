@@ -97,7 +97,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     @Override
     public List<AuthorityTreeNodeVo> search(AuthoritySearchQo qo) {
         final Long parentId = qo.getParentId();
-        List<Authority> all = baseMapper.selectListByParentId(parentId);
+        List<Authority> all = baseMapper.search(qo);
         return Tree.getChild(parentId, all.stream()
                 .map(mapping::asAuthorityTreeNodeVo)
                 .collect(Collectors.toList()));

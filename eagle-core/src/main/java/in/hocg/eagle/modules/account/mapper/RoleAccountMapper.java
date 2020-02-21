@@ -40,9 +40,11 @@ public interface RoleAccountMapper extends BaseMapper<RoleAccount> {
      * 查找账号所具备的角色
      *
      * @param accountId
+     * @param platform
      * @param enabled
      * @return
      */
     List<Role> selectListRoleByAccountIdAndEnabled(@Param("accountId") Long accountId,
+                                                   @Param("platform") Integer platform,
                                                    @Param("enabled") Integer enabled);
 }

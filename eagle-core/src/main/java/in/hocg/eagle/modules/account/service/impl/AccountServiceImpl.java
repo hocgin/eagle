@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.Tree;
 import in.hocg.eagle.basic.constant.Enabled;
+import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.mapstruct.AccountMapping;
 import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.RoleMapping;
@@ -51,7 +52,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     public IdAccountComplexVo selectOneComplex(Long id) {
         final Account account = baseMapper.selectById(id);
         VerifyUtils.notNull(account, "账号不存在");
-        final List<Role> roles = roleAccountService.selectListRoleByAccountId(id);
+        final List<Role> roles = roleAccountService.selectListRoleByAccountId(id, GlobalConstant.CURRENT_PLATFORM.getCode());
         List<Authority> authorities;
         List<RoleComplexVo> roleComplexes = Lists.newArrayList();
         for (Role role : roles) {
@@ -75,19 +76,19 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<Authority> selectListAuthorityById(Long accountId) {
-        List<Authority> authorities = roleAccountService.selectListAuthorityByAccountId(accountId);
+    public List<Authority> selectListAuthorityById(Long accountId, Integer platform) {
+        List<Authority> authorities = roleAccountService.selectListAuthorityByAccountId(accountId, platform);
         return authorities.stream().distinct().collect(Collectors.toList());
     }
     
     @Override
-    public List<Role> selectListRoleById(Long accountId) {
-        return roleAccountService.selectListRoleByAccountId(accountId);
+    public List<Role> selectListRoleById(Long accountId, Integer platform) {
+        return roleAccountService.selectListRoleByAccountId(accountId, platform);
     }
     
     @Override
-    public List<AuthorityTreeNodeVo> selectAuthorityTreeByCurrentAccount(Long accountId) {
-        final List<Authority> authorities = selectListAuthorityById(accountId);
+    public List<AuthorityTreeNodeVo> selectAuthorityTreeByCurrentAccount(Long accountId, Integer platform) {
+        final List<Authority> authorities = selectListAuthorityById(accountId, platform);
         return Tree.getChild(null, authorities.stream()
                 .map(authorityMapping::asAuthorityTreeNodeVo)
                 .collect(Collectors.toList()));
