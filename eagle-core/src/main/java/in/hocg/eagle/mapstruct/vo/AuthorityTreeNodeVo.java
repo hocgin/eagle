@@ -24,6 +24,8 @@ public class AuthorityTreeNodeVo
     private Long id;
     @ApiModelProperty("名称")
     private String title;
+    @ApiModelProperty("code")
+    private String authorityCode;
     @ApiModelProperty("父ID")
     private Long parentId;
     

@@ -30,12 +30,6 @@ public class AuthorityPutQo extends IdQo {
     @Pattern(regexp = PatternConstant.ONLY_NUMBER_OR_WORD, message = "仅支持数字和字母组合")
     private String authorityCode;
     
-    @ApiModelProperty("请求方式")
-    private String method;
-    
-    @ApiModelProperty("请求URL")
-    private String uri;
-    
     @ApiModelProperty("启用状态")
     @RangeEnum(enumClass = Enabled.class)
     private Integer enabled;

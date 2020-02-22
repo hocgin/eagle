@@ -36,14 +36,6 @@ public class AuthorityPostQo extends BaseQo {
     @Pattern(regexp = PatternConstant.ONLY_NUMBER_OR_WORD, message = "仅支持数字和字母组合")
     private String authorityCode;
     
-    @NotBlank(message = "请求方式")
-    @ApiModelProperty("请求方式")
-    private String method;
-    
-    @NotBlank(message = "请求URL")
-    @ApiModelProperty("请求URL")
-    private String uri;
-    
     @NotNull(message = "启用状态")
     @ApiModelProperty("启用状态")
     @RangeEnum(enumClass = Enabled.class)
