@@ -24,7 +24,7 @@ public class AuthorityServiceImplTest extends AbstractSpringBootTest {
     
     @Test
     public void search() {
-        final List<AuthorityTreeNodeVo> search = authorityService.search(new AuthoritySearchQo());
+        final List<AuthorityTreeNodeVo> search = authorityService.tree(new AuthoritySearchQo());
         log.debug("{}", search);
     }
 }

@@ -24,7 +24,7 @@ public class RangeEnumValidator implements ConstraintValidator<RangeEnum, Intege
     public boolean isValid(Integer id, ConstraintValidatorContext context) {
         IntEnum intEnum;
         for (Class<? extends Enum> aClass : enumClass) {
-            if (aClass.isAssignableFrom(IntEnum.class)) {
+            if (IntEnum.class.isAssignableFrom(aClass)) {
                 for (Enum enumConstant : aClass.getEnumConstants()) {
                     intEnum = (IntEnum) enumConstant;
                     if (LangUtils.equals(intEnum.getCode(), id)) {

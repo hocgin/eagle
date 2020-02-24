@@ -41,12 +41,12 @@ public class AuthorityPostQo extends BaseQo {
     @RangeEnum(enumClass = Enabled.class)
     private Integer enabled;
     
-    @NotNull(message = "排序")
     @ApiModelProperty("排序")
     private Integer sort;
     
     @ApiModelProperty("父级")
     private Long parentId;
+    
     @NotNull(message = "平台不能为空")
     @RangeEnum(enumClass = Platform.class)
     @ApiModelProperty("平台")

@@ -11,8 +11,8 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum Platform {
+public enum Platform implements IntEnum {
     Eagle(0, "Eagle 后台");
-    private final int code;
+    private final Integer code;
     private final String name;
 }
