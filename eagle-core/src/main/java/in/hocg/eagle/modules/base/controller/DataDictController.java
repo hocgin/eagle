@@ -44,8 +44,8 @@ public class DataDictController {
     }
     
     @PutMapping("/{id}")
-    public Result<Void> insert(@PathVariable Serializable id,
-                               @Validated @RequestBody ExamplePutQo qo) {
+    public Result<Void> updateOne(@PathVariable Serializable id,
+                                  @Validated @RequestBody ExamplePutQo qo) {
         return Result.success();
     }
     
