@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.account.service.impl;
 
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.Enabled;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
 import in.hocg.eagle.modules.account.entity.RoleAuthority;
@@ -72,6 +72,11 @@ public class RoleAuthorityServiceImpl extends AbstractServiceImpl<RoleAuthorityM
     @Override
     public List<Authority> selectListAuthorityByRoleIds(List<Long> roleIds) {
         return baseMapper.selectListAuthorityByRoleIdsAndEnabled(roleIds, Enabled.On.getCode());
+    }
+    
+    @Override
+    public List<Role> selectListRoleByAuthorityId(Integer id) {
+        return baseMapper.selectListRoleByAuthorityId(id);
     }
     
     

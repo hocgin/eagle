@@ -1,6 +1,8 @@
 package in.hocg.eagle.modules.base.service.impl;
 
 import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.pojo.KeyValue;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.modules.base.entity.DataDict;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import in.hocg.eagle.modules.base.mapper.DataDictMapper;
@@ -9,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -27,5 +31,13 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
     @Override
     public Optional<DataDictItem> selectOneByDictIdAndCode(String typeCode, String itemCode) {
         return baseMapper.selectOneByDictIdAndCode(typeCode, itemCode);
+    }
+    
+    @Override
+    public List<KeyValue> selectListDictItemByCode(String typeCode) {
+        return baseMapper.selectListDictItemByCodeAndEnabled(typeCode, Enabled.On.getCode())
+                .stream()
+                .map(item -> new KeyValue().setKey(item.getTitle()).setValue(item.getCode()))
+                .collect(Collectors.toList());
     }
 }

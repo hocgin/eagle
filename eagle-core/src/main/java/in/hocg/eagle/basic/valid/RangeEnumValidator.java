@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.valid;
 
-import in.hocg.eagle.basic.constant.IntEnum;
+import in.hocg.eagle.basic.constant.datadict.IntEnum;
 import in.hocg.eagle.utils.LangUtils;
 
 import javax.validation.ConstraintValidator;

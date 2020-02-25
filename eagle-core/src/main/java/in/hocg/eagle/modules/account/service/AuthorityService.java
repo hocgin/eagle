@@ -5,6 +5,7 @@ import in.hocg.eagle.mapstruct.qo.AuthorityPostQo;
 import in.hocg.eagle.mapstruct.qo.AuthorityPutQo;
 import in.hocg.eagle.mapstruct.qo.AuthoritySearchQo;
 import in.hocg.eagle.mapstruct.qo.GrantRoleQo;
+import in.hocg.eagle.mapstruct.vo.AuthorityComplexVo;
 import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 
@@ -65,4 +66,6 @@ public interface AuthorityService extends AbstractService<Authority> {
      * @param qo
      */
     void grantRole(GrantRoleQo qo);
+    
+    AuthorityComplexVo selectOne(Integer id);
 }

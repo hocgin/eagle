@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.base.controller;
 
 
+import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.mapstruct.qo.ExamplePostQo;
 import in.hocg.eagle.mapstruct.qo.ExamplePutQo;
@@ -12,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -27,14 +29,18 @@ import java.io.Serializable;
 public class DataDictController {
     private final DataDictService service;
     
+    @GetMapping("/{code:\\w+}")
+    public Result<List<KeyValue>> selectListDictItem(@PathVariable("code") String code) {
+        return Result.success(service.selectListDictItemByCode(code));
+    }
     
-    @DeleteMapping("/{id}")
-    public Result<Void> deleteById(@PathVariable Serializable id) {
+    @DeleteMapping("/{id:\\d+}")
+    public Result<Void> deleteById(@PathVariable Integer id) {
         return Result.success();
     }
     
-    @GetMapping("/{id}")
-    public Result<Void> selectById(@PathVariable Serializable id) {
+    @GetMapping("/{id:\\d+}")
+    public Result<Void> selectById(@PathVariable Integer id) {
         return Result.success();
     }
     

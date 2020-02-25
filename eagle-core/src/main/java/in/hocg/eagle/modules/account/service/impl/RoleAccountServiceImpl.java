@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.account.service.impl;
 
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.Enabled;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;

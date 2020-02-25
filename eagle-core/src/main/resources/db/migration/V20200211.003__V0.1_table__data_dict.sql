@@ -79,7 +79,6 @@ INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
     VALUE (1, '禁用', '0', '启用状态:禁用', 1,
            NOW(), 1);
 
-
 #  性别
 INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
                           `created_at`, `creator`)
@@ -92,4 +91,28 @@ INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
 INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
                                `created_at`, `creator`)
     VALUE (2, '女', '0', '性别:女', 1,
+           NOW(), 1);
+
+#  平台类型
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (3, '平台类型', 'platform', '平台类型', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (3, 'Eagle', '0', '平台类型:Eagle', 1,
+           NOW(), 1);
+
+#  权限类型
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (4, '权限类型', 'authorityType', '权限类型', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (4, '按钮', '0', '权限类型:按钮', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (4, '菜单', '1', '权限类型:菜单', 1,
            NOW(), 1);

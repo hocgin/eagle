@@ -1,18 +1,21 @@
-package in.hocg.eagle.basic.constant;
+package in.hocg.eagle.basic.constant.datadict;
 
+import in.hocg.eagle.basic.constant.datadict.IntEnum;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
  * Created by hocgin on 2020/2/11.
  * email: hocgin@gmail.com
+ * 开关 [关, 开]
  *
  * @author hocgin
  */
 @Getter
 @RequiredArgsConstructor
-public enum Platform implements IntEnum {
-    Eagle(0, "Eagle 后台");
+public enum Enabled implements IntEnum {
+    Off(0, "禁用"),
+    On(1, "启用");
     private final Integer code;
     private final String name;
 }

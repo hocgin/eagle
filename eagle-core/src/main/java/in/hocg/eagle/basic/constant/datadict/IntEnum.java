@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic.constant;
+package in.hocg.eagle.basic.constant.datadict;
 
 /**
  * Created by hocgin on 2020/2/16.
@@ -10,6 +10,7 @@ public interface IntEnum {
     
     /**
      * 枚举值
+     *
      * @return
      */
     Integer getCode();

@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.account.service.impl;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.Tree;
-import in.hocg.eagle.basic.constant.Enabled;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.mapstruct.AccountMapping;
 import in.hocg.eagle.mapstruct.AuthorityMapping;

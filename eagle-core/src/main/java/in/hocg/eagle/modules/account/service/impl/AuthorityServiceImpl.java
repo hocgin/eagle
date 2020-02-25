@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.account.service.impl;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.Tree;
-import in.hocg.eagle.basic.constant.Enabled;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.security.SecurityContext;
 import in.hocg.eagle.mapstruct.AuthorityMapping;
@@ -11,8 +11,10 @@ import in.hocg.eagle.mapstruct.qo.AuthorityPostQo;
 import in.hocg.eagle.mapstruct.qo.AuthorityPutQo;
 import in.hocg.eagle.mapstruct.qo.AuthoritySearchQo;
 import in.hocg.eagle.mapstruct.qo.GrantRoleQo;
+import in.hocg.eagle.mapstruct.vo.AuthorityComplexVo;
 import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Authority;
+import in.hocg.eagle.modules.account.entity.Role;
 import in.hocg.eagle.modules.account.mapper.AuthorityMapper;
 import in.hocg.eagle.modules.account.service.AuthorityService;
 import in.hocg.eagle.modules.account.service.RoleAuthorityService;
@@ -128,6 +130,14 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         roles.forEach(roleId -> roleAuthorityService.grantAuthority(roleId, authorityId));
     }
     
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public AuthorityComplexVo selectOne(Integer id) {
+        final Authority authority = baseMapper.selectById(id);
+        List<Role> roles = roleAuthorityService.selectListRoleByAuthorityId(id);
+        return mapping.asAuthorityComplexVo(authority, roles);
+    }
+    
     /**
      * 删除当前节点及其子节点
      *
@@ -158,7 +168,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
             return Lists.newArrayList();
         }
         
-        final String regexTreePath = String.format("%s.*?", authority.getTreePath());
+        final String regexTreePath = String.format("%s/.*?", authority.getTreePath());
         return baseMapper.selectListByRegexTreePath(regexTreePath);
     }
     

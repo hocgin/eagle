@@ -1,7 +1,7 @@
 package in.hocg.eagle.mapstruct.qo;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.qo.IdQo;
+import in.hocg.eagle.basic.pojo.qo.IdQo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

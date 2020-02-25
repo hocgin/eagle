@@ -1,7 +1,9 @@
 package in.hocg.eagle.basic.aspect.named;
 
 import in.hocg.eagle.modules.account.entity.Account;
+import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.service.AccountService;
+import in.hocg.eagle.modules.account.service.AuthorityService;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import in.hocg.eagle.modules.base.service.DataDictService;
 import in.hocg.eagle.utils.LangUtils;
@@ -25,6 +27,7 @@ public class NamedService {
     
     private final DataDictService service;
     private final AccountService accountService;
+    private final AuthorityService authorityService;
     
     
     /**
@@ -35,6 +38,9 @@ public class NamedService {
      * @return
      */
     public Object selectOneByDataDict(Object id, String[] args) {
+        if (Objects.isNull(id)) {
+            return null;
+        }
         final String type = args[0];
         final String item = LangUtils.toString(id);
         if (Strings.isBlank(type) || Strings.isBlank(item)) {
@@ -51,12 +57,25 @@ public class NamedService {
      * @param args
      * @return
      */
-    public Object selectOneByUsername(Object id, String[] args) {
-        final Long accountId = (Long) id;
-        final Account account = accountService.getById(accountId);
-        if (Objects.isNull(account)) {
+    public Object selectOneNicknameByAccountId(Object id, String[] args) {
+        if (Objects.isNull(id)) {
             return null;
         }
-        return account.getNickname();
+        final Account entity = accountService.getById((Long) id);
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+        return entity.getNickname();
+    }
+    
+    public Object selectOneAuthorityTitleByAuthorityId(Object id, String[] args) {
+        if (Objects.isNull(id)) {
+            return null;
+        }
+        final Authority entity = authorityService.getById((Long) id);
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+        return entity.getTitle();
     }
 }

@@ -1,20 +1,20 @@
-package in.hocg.eagle.basic.constant;
+package in.hocg.eagle.basic.constant.datadict;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Created by hocgin on 2020/2/11.
+ * Created by hocgin on 2020/2/25.
  * email: hocgin@gmail.com
- * 开关 [关, 开]
  *
  * @author hocgin
  */
 @Getter
 @RequiredArgsConstructor
-public enum Enabled implements IntEnum {
-    Off(0, "禁用"),
-    On(1, "启用");
+public enum AuthorityType implements IntEnum {
+    
+    Button(0, "按钮"),
+    Menu(1, "菜单");
     private final Integer code;
     private final String name;
 }

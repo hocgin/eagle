@@ -1,9 +1,11 @@
 package in.hocg.eagle.modules.base.service;
 
-import in.hocg.eagle.modules.base.entity.DataDict;
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.basic.pojo.KeyValue;
+import in.hocg.eagle.modules.base.entity.DataDict;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,4 +19,6 @@ import java.util.Optional;
 public interface DataDictService extends AbstractService<DataDict> {
     
     Optional<DataDictItem> selectOneByDictIdAndCode(String typeCode, String itemCode);
+    
+    List<KeyValue> selectListDictItemByCode(String code);
 }

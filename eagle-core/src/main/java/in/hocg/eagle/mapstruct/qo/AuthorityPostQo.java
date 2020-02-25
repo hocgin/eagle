@@ -1,9 +1,9 @@
 package in.hocg.eagle.mapstruct.qo;
 
-import in.hocg.eagle.basic.constant.Enabled;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.PatternConstant;
-import in.hocg.eagle.basic.constant.Platform;
-import in.hocg.eagle.basic.qo.BaseQo;
+import in.hocg.eagle.basic.constant.datadict.Platform;
+import in.hocg.eagle.basic.pojo.qo.BaseQo;
 import in.hocg.eagle.basic.valid.RangeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.constant;
 
+import in.hocg.eagle.basic.constant.datadict.Platform;
 import lombok.experimental.UtilityClass;
 
 /**

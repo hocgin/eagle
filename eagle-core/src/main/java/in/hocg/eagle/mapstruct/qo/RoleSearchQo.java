@@ -1,7 +1,7 @@
 package in.hocg.eagle.mapstruct.qo;
 
-import in.hocg.eagle.basic.constant.Platform;
-import in.hocg.eagle.basic.qo.PageQo;
+import in.hocg.eagle.basic.constant.datadict.Platform;
+import in.hocg.eagle.basic.pojo.qo.PageQo;
 import lombok.Data;
 
 /**

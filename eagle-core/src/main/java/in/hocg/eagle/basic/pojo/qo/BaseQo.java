@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic.qo;
+package in.hocg.eagle.basic.pojo.qo;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;

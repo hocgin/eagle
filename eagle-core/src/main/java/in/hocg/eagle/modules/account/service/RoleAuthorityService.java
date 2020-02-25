@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.account.service;
 
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.modules.account.entity.Authority;
+import in.hocg.eagle.modules.account.entity.Role;
 import in.hocg.eagle.modules.account.entity.RoleAuthority;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,4 +58,12 @@ public interface RoleAuthorityService extends AbstractService<RoleAuthority> {
      * @return
      */
     List<Authority> selectListAuthorityByRoleIds(List<Long> roleIds);
+    
+    /**
+     * 查询使用该权限的角色
+     *
+     * @param id
+     * @return
+     */
+    List<Role> selectListRoleByAuthorityId(Integer id);
 }

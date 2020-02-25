@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.aspect.logger;
 
+import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.security.SecurityContext;
 import in.hocg.eagle.basic.security.User;
@@ -16,12 +17,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.StringJoiner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author hocgin
@@ -60,7 +60,10 @@ public class LoggerAspect {
             Class[] parameterTypes = signature.getMethod().getParameterTypes();
             Method method = target.getClass().getMethod(methodName, parameterTypes);
             UseLogger annotation = method.getAnnotation(UseLogger.class);
-            Object[] args = point.getArgs();
+            List<Object> args = Lists.newArrayList(point.getArgs())
+                    .stream()
+                    .filter(arg -> (!(arg instanceof HttpServletRequest) && !(arg instanceof HttpServletResponse)))
+                    .collect(Collectors.toList());
             
             HttpServletRequest request = SpringContext.getRequest();
             String uri = "Unknown";

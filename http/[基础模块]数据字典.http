@@ -1,0 +1,6 @@
+### 根据code查询数据字典
+GET {{host}}/api/data-dict/enabled
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+###

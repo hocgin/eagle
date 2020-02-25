@@ -49,4 +49,13 @@
             </if>
         </where>
     </select>
+    <select id="selectListRoleByAuthorityId" resultType="in.hocg.eagle.modules.account.entity.Role">
+        SELECT
+        tr.*
+        FROM t_role_authority tra
+            LEFT JOIN t_role tr on tra.role_id = tr.id
+        <where>
+            tra.authority_id = #{authorityId}
+        </where>
+    </select>
 </mapper>

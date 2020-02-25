@@ -6,6 +6,7 @@ import in.hocg.eagle.mapstruct.qo.AuthorityPostQo;
 import in.hocg.eagle.mapstruct.qo.AuthorityPutQo;
 import in.hocg.eagle.mapstruct.qo.AuthoritySearchQo;
 import in.hocg.eagle.mapstruct.qo.GrantRoleQo;
+import in.hocg.eagle.mapstruct.vo.AuthorityComplexVo;
 import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.service.AuthorityService;
@@ -15,7 +16,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -43,8 +43,15 @@ public class AuthorityController {
     
     @GetMapping("/{id}")
     @ApiOperation("查询权限信息")
-    public Result<Void> selectById(@PathVariable Serializable id) {
-        return Result.success();
+    public Result<Authority> selectById(@PathVariable Integer id) {
+        return Result.success(service.getById(id));
+    }
+    
+    
+    @GetMapping("/{id:\\d+}:complex")
+    @ApiOperation("查询权限信息")
+    public Result<AuthorityComplexVo> selectOneAuthorityComplexById(@PathVariable Integer id) {
+        return Result.success(service.selectOne(id));
     }
     
     @PostMapping

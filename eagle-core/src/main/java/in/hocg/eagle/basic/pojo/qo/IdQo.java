@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic.qo;
+package in.hocg.eagle.basic.pojo.qo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

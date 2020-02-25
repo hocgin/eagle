@@ -6,6 +6,7 @@ import in.hocg.eagle.modules.base.entity.DataDictItem;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -28,4 +29,14 @@ public interface DataDictMapper extends BaseMapper<DataDict> {
      */
     Optional<DataDictItem> selectOneByDictIdAndCode(@Param("typeCode") String typeCode,
                                                     @Param("itemCode") String itemCode);
+    
+    /**
+     * 根据 typeCode 查询数据字典列表
+     *
+     * @param typeCode
+     * @param enabled
+     * @return
+     */
+    List<DataDictItem> selectListDictItemByCodeAndEnabled(@Param("typeCode") String typeCode,
+                                                          @Param("enabled") Integer enabled);
 }
