@@ -13,4 +13,5 @@ import java.io.Serializable;
 @Data
 public class RoleSearchVo implements Serializable {
     private Integer id;
+    private String title;
 }

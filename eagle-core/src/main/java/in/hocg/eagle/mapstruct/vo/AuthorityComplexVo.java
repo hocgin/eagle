@@ -36,7 +36,7 @@ public class AuthorityComplexVo implements Serializable {
     @ApiModelProperty("父级")
     private Long parentId;
     @Named(idFor = "parentId", type = NamedType.AuthorityTitle)
-    private String parentIdName;
+    private String parentName;
     @ApiModelProperty("开启状态")
     private Integer enabled;
     @Named(idFor = "enabled", type = NamedType.DataDict)
