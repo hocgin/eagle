@@ -1,7 +1,7 @@
 package in.hocg.eagle.basic.mybatis;
 
 
-import in.hocg.eagle.EagleApplication;
+import in.hocg.eagle.AppApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,10 @@ import java.util.List;
 
 @ActiveProfiles("local")
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = EagleApplication.class)
+@SpringBootTest(classes = AppApplication.class)
 public class EagleGenerateTest {
     @Autowired
-    private EagleGenerate eagleGenerate;
+    private MapperGenerate eagleGenerate;
     
     @Test
     public void generateByTables() {

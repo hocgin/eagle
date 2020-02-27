@@ -10,9 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author hocgin
  */
 @SpringBootApplication
-public class EagleApplication {
+public class AppApplication {
     
     public static void main(String[] args) {
-        SpringApplication.run(EagleApplication.class, args);
+        SpringApplication.run(AppApplication.class, args);
     }
 }

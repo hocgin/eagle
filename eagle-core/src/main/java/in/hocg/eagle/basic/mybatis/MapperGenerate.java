@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class EagleGenerate {
+public class MapperGenerate {
     private final DataSourceProperties properties;
     List<String> tablePrefix = Lists.newArrayList("T_");
     

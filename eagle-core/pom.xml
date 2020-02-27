@@ -15,6 +15,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.statemachine</groupId>
+            <artifactId>spring-statemachine-starter</artifactId>
+        </dependency>
+        <dependency>
             <groupId>in.hocg.swagger2</groupId>
             <artifactId>swagger2-spring-boot-starter</artifactId>
         </dependency>

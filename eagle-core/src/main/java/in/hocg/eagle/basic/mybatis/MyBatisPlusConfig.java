@@ -1,7 +1,7 @@
 package in.hocg.eagle.basic.mybatis;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import in.hocg.eagle.EagleApplication;
+import in.hocg.eagle.AppApplication;
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @author hocgin
  */
 @Configuration
-@MapperScan(basePackageClasses = EagleApplication.class, annotationClass = Mapper.class)
+@MapperScan(basePackageClasses = AppApplication.class, annotationClass = Mapper.class)
 public class MyBatisPlusConfig {
     
     @Bean
