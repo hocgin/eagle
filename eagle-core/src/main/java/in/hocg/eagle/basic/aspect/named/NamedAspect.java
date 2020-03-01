@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.aspect.named;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.utils.ClassUtils;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ import java.util.Objects;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class NamedAspect {
     
-    @Pointcut("execution((@in.hocg.eagle.basic.aspect.named.InjectNamed *) *(..))")
+    @Pointcut("@within(org.springframework.stereotype.Service) && execution((*) *(..))")
     public void pointcut() {
     }
     
@@ -41,11 +41,11 @@ public class NamedAspect {
     }
     
     private void handleResult(Object result) {
-        if (Objects.isNull(result)) {
+        if (Objects.isNull(result) || ClassUtils.isBaseType(result.getClass())) {
             return;
         }
-        if (result instanceof Page) {
-            handlePageResult((Page) result);
+        if (result instanceof IPage) {
+            handlePageResult((IPage) result);
         } else if (result instanceof Collection) {
             handleCollectionResult((Collection) result);
         } else if (result instanceof Object[]) {
@@ -55,7 +55,7 @@ public class NamedAspect {
         }
     }
     
-    private void handlePageResult(Page result) {
+    private void handlePageResult(IPage result) {
         this.handleResult(result.getRecords());
     }
     

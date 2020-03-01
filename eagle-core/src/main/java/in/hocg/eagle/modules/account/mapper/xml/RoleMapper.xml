@@ -9,6 +9,10 @@
             <if test="qo.platform != null">
                 AND tr.platform = #{qo.platform}
             </if>
+            <if test="qo.keyword != null">
+                <bind name="keyword" value="'%'+qo.keyword+'%'"/>
+                AND (tr.role_code LIKE #{keyword} OR tr.title LIKE #{keyword} OR tr.remark LIKE #{keyword})
+            </if>
         </where>
     </select>
 </mapper>

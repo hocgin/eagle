@@ -12,6 +12,6 @@ import lombok.Data;
  */
 @Data
 public class RoleSearchQo extends PageQo {
-    
+    private String keyword;
     private Integer platform = Platform.Eagle.getCode();
 }

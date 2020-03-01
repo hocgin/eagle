@@ -46,6 +46,18 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     private final AuthorityMapping mapping;
     private final RoleAuthorityService roleAuthorityService;
     
+    private int insert(Authority authority) {
+        final String authorityCode = authority.getAuthorityCode();
+        if (hasAuthorityCode(authorityCode)) {
+            throw ServiceException.wrap("新增失败,权限码已经存在");
+        }
+        return baseMapper.insert(authority);
+    }
+    
+    public boolean hasAuthorityCode(String authorityCode) {
+        return lambdaQuery().eq(Authority::getAuthorityCode, authorityCode).count() > 0;
+    }
+    
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertOne(AuthorityPostQo qo) {
@@ -67,7 +79,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         authority.setParentId(parentId);
         authority.setCreator(qo.getUserId());
         authority.setTreePath("/tmp");
-        baseMapper.insert(authority);
+        insert(authority);
         path.append(String.format("/%d", authority.getId()));
         authority.setTreePath(path.toString());
         baseMapper.updateById(authority);

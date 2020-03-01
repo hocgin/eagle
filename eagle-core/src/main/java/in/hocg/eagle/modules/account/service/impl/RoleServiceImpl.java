@@ -40,13 +40,32 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     private final RoleAuthorityService roleAuthorityService;
     private final RoleAccountService roleAccountService;
     
+    private int insert(Role role) {
+        final String roleCode = role.getRoleCode();
+        if (hasRoleCode(roleCode)) {
+            throw ServiceException.wrap("新增失败,角色码已经存在");
+        }
+        return baseMapper.insert(role);
+    }
+    
+    public boolean hasRoleCode(String roleCode) {
+        return lambdaQuery().eq(Role::getRoleCode, roleCode).count() > 0;
+    }
+    
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertOne(RolePostQo qo) {
         final Role role = mapping.asRole(qo);
         role.setCreatedAt(qo.getCreatedAt());
         role.setCreator(qo.getUserId());
-        baseMapper.insert(role);
+        insert(role);
+        final List<Long> authorities = qo.getAuthorities();
+        if (authorities.isEmpty()) {
+            return;
+        }
+        for (Long authorityId : authorities) {
+            roleAuthorityService.grantAuthority(role.getId(), authorityId);
+        }
     }
     
     @Override

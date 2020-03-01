@@ -45,6 +45,11 @@ public interface RoleMapping {
     @Mapping(target = "remark", source = "role.remark")
     @Mapping(target = "id", source = "role.id")
     @Mapping(target = "enabled", source = "role.enabled")
+    @Mapping(target = "platform", source = "role.platform")
+    @Mapping(target = "creator", source = "role.creator")
+    @Mapping(target = "createdAt", source = "role.createdAt")
+    @Mapping(target = "lastUpdater", source = "role.lastUpdater")
+    @Mapping(target = "lastUpdatedAt", source = "role.lastUpdatedAt")
     RoleComplexVo asRoleComplexVo(Role role);
     
     /**

@@ -1,7 +1,8 @@
 package in.hocg.eagle.mapstruct.qo;
 
-import in.hocg.eagle.basic.constant.datadict.Enabled;
+import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.constant.PatternConstant;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.Platform;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
 import in.hocg.eagle.basic.valid.RangeEnum;
@@ -12,6 +13,7 @@ import lombok.EqualsAndHashCode;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 /**
  * Created by hocgin on 2020/2/14.
@@ -39,4 +41,6 @@ public class RolePostQo extends BaseQo {
     @RangeEnum(enumClass = Platform.class)
     @ApiModelProperty("平台")
     private Integer platform;
+    @ApiModelProperty("权限列表")
+    private List<Long> authorities = Lists.newArrayList();
 }

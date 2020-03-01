@@ -98,12 +98,14 @@ CREATE TABLE `t_role_account`
     COMMENT = '[用户模块] 角色-账号表';
 
 # 权限
+# -- 主页
 INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                         `creator`)
     VALUE (1, '主页', 1, 'index', 0, null, '/1', NOW(), 1);
 INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                         `creator`)
     VALUE (2, '控制台', 1, 'dashboard', 0, 1, '/1/2', NOW(), 1);
+# -- 开发工具
 INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                         `creator`)
     VALUE (3, '开发工具', 1, 'devtools', 0, null, '/3', NOW(), 1);
@@ -113,6 +115,16 @@ INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `pa
 INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                         `creator`)
     VALUE (5, '测试5', 1, 'test5', 0, 4, '/3/4/5', NOW(), 1);
+# -- 访问控制
+INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                        `creator`)
+    VALUE (6, '访问控制', 1, 'access', 0, null, '/6', NOW(), 1);
+INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                        `creator`)
+    VALUE (7, '权限管理', 1, 'authority', 0, 6, '/6/7', NOW(), 1);
+INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                        `creator`)
+    VALUE (8, '角色管理', 1, 'role', 0, 6, '/6/8', NOW(), 1);
 
 # 角色
 INSERT INTO t_role(`id`, `title`, `role_code`, `platform`, `created_at`, `creator`)
@@ -124,7 +136,10 @@ VALUES (1, 1, 1),
        (2, 1, 2),
        (3, 1, 3),
        (4, 1, 4),
-       (5, 1, 5);
+       (5, 1, 5),
+       (6, 1, 6),
+       (7, 1, 7),
+       (8, 1, 8);
 
 # 赋予账号角色
 INSERT INTO t_role_account(`id`, `role_id`, `account_id`)
