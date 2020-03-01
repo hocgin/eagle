@@ -22,6 +22,16 @@
         </where>
         ORDER BY tddi.sort DESC, tddi.created_at DESC
     </select>
+    <select id="search" resultType="in.hocg.eagle.modules.base.entity.DataDict">
+        SELECT tdd.*
+        FROM t_data_dict tdd
+        <where>
+            <if test="qo.keyword != null">
+                <bind name="keyword" value="'%'+qo.keyword+'%'"/>
+                AND (tdd.title LIKE #{keyword} OR tdd.remark LIKE #{keyword} OR tdd.code LIKE #{keyword})
+            </if>
+        </where>
+    </select>
 
 
 </mapper>

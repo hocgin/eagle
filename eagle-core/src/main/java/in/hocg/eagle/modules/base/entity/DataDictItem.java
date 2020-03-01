@@ -38,7 +38,7 @@ public class DataDictItem extends AbstractEntity<DataDictItem> {
      * t_data_dict ID
      */
     @TableField("dict_id")
-    private Integer dictId;
+    private Long dictId;
     /**
      * 字典项名称
      */

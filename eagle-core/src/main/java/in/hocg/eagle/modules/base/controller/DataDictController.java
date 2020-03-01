@@ -1,18 +1,21 @@
 package in.hocg.eagle.modules.base.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.mapstruct.qo.ExamplePostQo;
-import in.hocg.eagle.mapstruct.qo.ExamplePutQo;
-import in.hocg.eagle.mapstruct.qo.ExampleSearchQo;
+import in.hocg.eagle.mapstruct.qo.datadict.DataDictDeleteQo;
+import in.hocg.eagle.mapstruct.qo.datadict.DataDictPostQo;
+import in.hocg.eagle.mapstruct.qo.datadict.DataDictPutQo;
+import in.hocg.eagle.mapstruct.qo.datadict.DataDictSearchQo;
+import in.hocg.eagle.mapstruct.vo.DataDictComplexVo;
+import in.hocg.eagle.mapstruct.vo.DataDictSearchVo;
 import in.hocg.eagle.modules.base.service.DataDictService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -34,30 +37,34 @@ public class DataDictController {
         return Result.success(service.selectListDictItemByCode(code));
     }
     
-    @DeleteMapping("/{id:\\d+}")
-    public Result<Void> deleteById(@PathVariable Integer id) {
-        return Result.success();
+    @GetMapping("/{id:\\d+}")
+    public Result<DataDictComplexVo> selectOne(@PathVariable("id") Long id) {
+        return Result.success(service.selectOne(id));
     }
     
-    @GetMapping("/{id:\\d+}")
-    public Result<Void> selectById(@PathVariable Integer id) {
+    @DeleteMapping
+    public Result<Void> deletes(@PathVariable DataDictDeleteQo qo) {
+        service.deletes(qo);
         return Result.success();
     }
     
     @PostMapping
-    public Result<Void> insert(@Validated @RequestBody ExamplePostQo qo) {
+    public Result<Void> insert(@Validated @RequestBody DataDictPostQo qo) {
+        service.insertOne(qo);
         return Result.success();
     }
     
     @PutMapping("/{id}")
-    public Result<Void> updateOne(@PathVariable Serializable id,
-                                  @Validated @RequestBody ExamplePutQo qo) {
+    public Result<Void> updateOne(@PathVariable Long id,
+                                  @Validated @RequestBody DataDictPutQo qo) {
+        qo.setId(id);
+        service.updateOne(qo);
         return Result.success();
     }
     
     @PostMapping("/_search")
-    public Result<Void> search(@Validated @RequestBody ExampleSearchQo qo) {
-        return Result.success();
+    public Result<IPage<DataDictSearchVo>> search(@Validated @RequestBody DataDictSearchQo qo) {
+        return Result.success(service.search(qo));
     }
 }
 
