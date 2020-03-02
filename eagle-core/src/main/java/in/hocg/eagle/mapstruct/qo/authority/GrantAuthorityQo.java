@@ -1,4 +1,4 @@
-package in.hocg.eagle.mapstruct.qo;
+package in.hocg.eagle.mapstruct.qo.authority;
 
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.pojo.qo.IdQo;

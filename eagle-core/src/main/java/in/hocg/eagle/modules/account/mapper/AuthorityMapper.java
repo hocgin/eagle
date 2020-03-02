@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.account.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import in.hocg.eagle.mapstruct.qo.AuthoritySearchQo;
+import in.hocg.eagle.mapstruct.qo.authority.AuthoritySearchQo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

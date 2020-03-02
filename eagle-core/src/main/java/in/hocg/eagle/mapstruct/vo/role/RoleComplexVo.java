@@ -1,4 +1,4 @@
-package in.hocg.eagle.mapstruct.vo;
+package in.hocg.eagle.mapstruct.vo.role;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
@@ -6,7 +6,6 @@ import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
-import in.hocg.eagle.modules.account.entity.Role;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -15,29 +14,23 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Created by hocgin on 2020/2/25.
+ * Created by hocgin on 2020/2/15.
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Data
 @InjectNamed
-public class AuthorityComplexVo implements Serializable {
+public class RoleComplexVo implements Serializable {
     @ApiModelProperty("ID")
-    private Long id;
-    @ApiModelProperty("标题")
+    private Integer id;
+    @ApiModelProperty("角色名称")
     private String title;
-    @ApiModelProperty("权限类型")
-    private Integer type;
-    @Named(idFor = "type", type = NamedType.DataDict, args = {"authorityType"})
-    private String typeName;
-    @ApiModelProperty("权限码")
-    private String authorityCode;
-    @ApiModelProperty("父级")
-    private Long parentId;
-    @Named(idFor = "parentId", type = NamedType.AuthorityTitle)
-    private String parentName;
-    @ApiModelProperty("开启状态")
+    @ApiModelProperty("角色授权码")
+    private String roleCode;
+    @ApiModelProperty("角色描述")
+    private String remark;
+    @ApiModelProperty("启用状态[0:为禁用状态;1:为正常状态]")
     private Integer enabled;
     @Named(idFor = "enabled", type = NamedType.DataDict)
     private String enabledName;
@@ -45,8 +38,6 @@ public class AuthorityComplexVo implements Serializable {
     private Integer platform;
     @Named(idFor = "platform", type = NamedType.DataDict)
     private String platformName;
-    @ApiModelProperty("权重")
-    private Long sort;
     @ApiModelProperty("创建时间")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
@@ -61,6 +52,18 @@ public class AuthorityComplexVo implements Serializable {
     private Long lastUpdater;
     @Named(idFor = "lastUpdater", type = NamedType.Nickname)
     private String lastUpdaterName;
-    @ApiModelProperty("角色列表")
-    private List<Role> roles = Lists.newArrayList();
+    @ApiModelProperty("权限列表")
+    private List<AuthorityVo> authorities = Lists.newArrayList();
+    
+    @Data
+    public static class AuthorityVo implements Serializable {
+        @ApiModelProperty("ID")
+        private Integer id;
+        @ApiModelProperty("权限名称")
+        private String title;
+        @ApiModelProperty("权限类型")
+        private Integer type;
+        @ApiModelProperty("权限授权码")
+        private String authorityCode;
+    }
 }

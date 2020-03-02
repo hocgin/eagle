@@ -1,4 +1,4 @@
-package in.hocg.eagle.mapstruct.vo;
+package in.hocg.eagle.mapstruct.vo.authority;
 
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.Tree;

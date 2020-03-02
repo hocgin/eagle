@@ -1,4 +1,4 @@
-package in.hocg.eagle.mapstruct.qo;
+package in.hocg.eagle.mapstruct.qo.role;
 
 import in.hocg.eagle.basic.constant.datadict.Platform;
 import in.hocg.eagle.basic.pojo.qo.PageQo;

@@ -5,6 +5,7 @@ import in.hocg.eagle.basic.pojo.qo.IdsQo;
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPostQo;
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPutQo;
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemsPostQo;
+import in.hocg.eagle.mapstruct.vo.datadict.item.DataDictItemComplexVo;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,4 +33,6 @@ public interface DataDictItemService extends AbstractService<DataDictItem> {
     void insertList(DataDictItemsPostQo qo);
     
     void updateOne(DataDictItemPutQo qo);
+    
+    DataDictItemComplexVo selectOne(Long id);
 }

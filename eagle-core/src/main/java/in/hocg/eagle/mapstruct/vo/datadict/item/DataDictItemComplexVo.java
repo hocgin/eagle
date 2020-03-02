@@ -1,4 +1,4 @@
-package in.hocg.eagle.mapstruct.vo;
+package in.hocg.eagle.mapstruct.vo.datadict.item;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
@@ -8,25 +8,23 @@ import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * Created by hocgin on 2020/3/1.
+ * Created by hocgin on 2020/3/2.
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Data
 @InjectNamed
-public class DataDictItemVo implements Serializable {
-    private Integer id;
+public class DataDictItemComplexVo {
+    private Long id;
+    private Long dictId;
     private String title;
     private String code;
     private String remark;
     private Integer sort;
-    private Integer enabled;
-    
     @Named(idFor = "enabled", type = NamedType.DataDict)
     private String enabledName;
     @ApiModelProperty("创建时间")
@@ -43,5 +41,4 @@ public class DataDictItemVo implements Serializable {
     private Long lastUpdater;
     @Named(idFor = "lastUpdater", type = NamedType.Nickname)
     private String lastUpdaterName;
-    
 }

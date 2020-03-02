@@ -2,12 +2,12 @@ package in.hocg.eagle.modules.account.controller;
 
 
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.mapstruct.qo.AuthorityPostQo;
-import in.hocg.eagle.mapstruct.qo.AuthorityPutQo;
-import in.hocg.eagle.mapstruct.qo.AuthoritySearchQo;
-import in.hocg.eagle.mapstruct.qo.GrantRoleQo;
-import in.hocg.eagle.mapstruct.vo.AuthorityComplexVo;
-import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
+import in.hocg.eagle.mapstruct.qo.authority.AuthorityPostQo;
+import in.hocg.eagle.mapstruct.qo.authority.AuthorityPutQo;
+import in.hocg.eagle.mapstruct.qo.authority.AuthoritySearchQo;
+import in.hocg.eagle.mapstruct.qo.role.GrantRoleQo;
+import in.hocg.eagle.mapstruct.vo.authority.AuthorityComplexVo;
+import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.service.AuthorityService;
 import io.swagger.annotations.ApiOperation;

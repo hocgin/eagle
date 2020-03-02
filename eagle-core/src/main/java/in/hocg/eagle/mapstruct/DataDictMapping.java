@@ -2,9 +2,9 @@ package in.hocg.eagle.mapstruct;
 
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictPostQo;
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictPutQo;
-import in.hocg.eagle.mapstruct.vo.DataDictComplexVo;
-import in.hocg.eagle.mapstruct.vo.DataDictItemVo;
-import in.hocg.eagle.mapstruct.vo.DataDictSearchVo;
+import in.hocg.eagle.mapstruct.vo.datadict.DataDictComplexVo;
+import in.hocg.eagle.mapstruct.vo.datadict.item.DataDictItemVo;
+import in.hocg.eagle.mapstruct.vo.datadict.DataDictSearchVo;
 import in.hocg.eagle.modules.base.entity.DataDict;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

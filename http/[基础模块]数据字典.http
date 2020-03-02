@@ -61,15 +61,3 @@ Token: Bearer {{auth_token}}
 {
 }
 
-### 删除数据字典项
-DELETE {{host}}/api/data-dict/item
-Content-Type: application/json
-Token: Bearer {{auth_token}}
-
-{
-  "id": [
-    1
-  ]
-}
-
-###

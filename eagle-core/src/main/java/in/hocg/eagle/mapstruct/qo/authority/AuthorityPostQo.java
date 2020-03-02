@@ -1,4 +1,4 @@
-package in.hocg.eagle.mapstruct.qo;
+package in.hocg.eagle.mapstruct.qo.authority;
 
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.PatternConstant;

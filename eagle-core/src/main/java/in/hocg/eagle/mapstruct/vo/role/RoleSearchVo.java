@@ -1,7 +1,6 @@
-package in.hocg.eagle.mapstruct.vo;
+package in.hocg.eagle.mapstruct.vo.role;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
@@ -11,38 +10,35 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
- * Created by hocgin on 2020/3/1.
+ * Created by hocgin on 2020/2/15.
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Data
 @InjectNamed
-public class DataDictComplexVo implements Serializable {
-    private Long id;
+public class RoleSearchVo implements Serializable {
+    private Integer id;
+    @ApiModelProperty("角色名称")
     private String title;
-    private String code;
+    @ApiModelProperty("角色码")
+    private String roleCode;
+    @ApiModelProperty("备注")
     private String remark;
+    @ApiModelProperty("启用状态")
     private Integer enabled;
     @Named(idFor = "enabled", type = NamedType.DataDict)
     private String enabledName;
+    @ApiModelProperty("平台")
+    private Integer platform;
+    @Named(idFor = "platform", type = NamedType.DataDict)
+    private String platformName;
     @ApiModelProperty("创建时间")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
-    @ApiModelProperty("创建人")
-    private Long creator;
-    @Named(idFor = "creator", type = NamedType.Nickname)
-    private String creatorName;
     @ApiModelProperty("最后更新时间")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime lastUpdatedAt;
-    @ApiModelProperty("最后更新时间")
-    private Long lastUpdater;
-    @Named(idFor = "lastUpdater", type = NamedType.Nickname)
-    private String lastUpdaterName;
-    
-    private List<DataDictItemVo> items = Lists.newArrayList();
 }

@@ -6,6 +6,7 @@ import in.hocg.eagle.mapstruct.DataDictItemMapping;
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPostQo;
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPutQo;
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemsPostQo;
+import in.hocg.eagle.mapstruct.vo.datadict.item.DataDictItemComplexVo;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import in.hocg.eagle.modules.base.mapper.DataDictItemMapper;
 import in.hocg.eagle.modules.base.service.DataDictItemService;
@@ -74,6 +75,11 @@ public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMap
         entity.setLastUpdater(qo.getUserId());
         entity.setLastUpdatedAt(qo.getCreatedAt());
         update(entity);
+    }
+    
+    @Override
+    public DataDictItemComplexVo selectOne(Long id) {
+        return mapping.asDataDictItemComplexVo(getById(id));
     }
     
     private void update(DataDictItem entity) {

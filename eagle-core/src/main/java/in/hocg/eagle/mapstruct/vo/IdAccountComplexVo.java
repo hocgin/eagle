@@ -3,6 +3,7 @@ package in.hocg.eagle.mapstruct.vo;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
+import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

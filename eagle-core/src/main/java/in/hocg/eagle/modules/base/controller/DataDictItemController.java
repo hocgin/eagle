@@ -6,7 +6,7 @@ import in.hocg.eagle.basic.pojo.qo.IdsQo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPutQo;
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemsPostQo;
-import in.hocg.eagle.modules.base.entity.DataDictItem;
+import in.hocg.eagle.mapstruct.vo.datadict.item.DataDictItemComplexVo;
 import in.hocg.eagle.modules.base.service.DataDictItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -29,7 +29,7 @@ public class DataDictItemController {
     
     @UseLogger("删除数据字典项")
     @DeleteMapping
-    public Result<Void> deleteItem(@RequestBody IdsQo qo) {
+    public Result<Void> deletes(@RequestBody IdsQo qo) {
         service.deletes(qo);
         return Result.success();
     }
@@ -43,8 +43,8 @@ public class DataDictItemController {
     
     @UseLogger("查询数据字典详情")
     @GetMapping("/{id:\\d+}")
-    public Result<DataDictItem> selectOne(@PathVariable("id") Long id) {
-        return Result.success(service.getById(id));
+    public Result<DataDictItemComplexVo> selectOne(@PathVariable("id") Long id) {
+        return Result.success(service.selectOne(id));
     }
     
     @UseLogger("更新数据字典项")
