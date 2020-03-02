@@ -1,4 +1,4 @@
-package in.hocg.eagle.mapstruct.vo;
+package in.hocg.eagle.mapstruct.vo.file;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

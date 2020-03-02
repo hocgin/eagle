@@ -1,7 +1,7 @@
 package in.hocg.eagle.mapstruct;
 
 
-import in.hocg.eagle.mapstruct.vo.IdAccountComplexVo;
+import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
 import in.hocg.eagle.modules.account.entity.Account;
 import org.mapstruct.Mapper;
@@ -24,6 +24,7 @@ public interface AccountMapping {
      * @param account
      * @return
      */
+    @Mapping(target = "genderName", ignore = true)
     @Mapping(target = "roles", ignore = true)
     IdAccountComplexVo asIdAccountComplexVo(Account account);
     

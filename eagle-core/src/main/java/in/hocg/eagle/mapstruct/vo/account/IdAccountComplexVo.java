@@ -1,4 +1,4 @@
-package in.hocg.eagle.mapstruct.vo;
+package in.hocg.eagle.mapstruct.vo.account;
 
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;

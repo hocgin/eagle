@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Mapper(componentModel = "spring")
 public interface DataDictMapping {
+    @Mapping(target = "items", ignore = true)
     @Mapping(target = "enabledName", ignore = true)
     DataDictSearchVo asDataDictSearchVo(DataDict entity);
     

@@ -10,7 +10,7 @@ import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.RoleMapping;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
-import in.hocg.eagle.mapstruct.vo.IdAccountComplexVo;
+import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
 import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.entity.Authority;
