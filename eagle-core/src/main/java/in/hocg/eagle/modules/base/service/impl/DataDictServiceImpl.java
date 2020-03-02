@@ -7,10 +7,7 @@ import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.mapstruct.DataDictItemMapping;
 import in.hocg.eagle.mapstruct.DataDictMapping;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictDeleteQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictPostQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictPutQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictSearchQo;
+import in.hocg.eagle.mapstruct.qo.datadict.*;
 import in.hocg.eagle.mapstruct.vo.DataDictComplexVo;
 import in.hocg.eagle.mapstruct.vo.DataDictItemVo;
 import in.hocg.eagle.mapstruct.vo.DataDictSearchVo;
@@ -19,6 +16,7 @@ import in.hocg.eagle.modules.base.entity.DataDictItem;
 import in.hocg.eagle.modules.base.mapper.DataDictMapper;
 import in.hocg.eagle.modules.base.service.DataDictItemService;
 import in.hocg.eagle.modules.base.service.DataDictService;
+import in.hocg.eagle.utils.VerifyUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -67,7 +65,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<DataDictSearchVo> search(DataDictSearchQo qo) {
-        final IPage<DataDict> result = baseMapper.search(qo);
+        final IPage<DataDict> result = baseMapper.search(qo, qo.page());
         return result.convert(dataDict -> {
             final List<DataDictItemVo> items = selectListDictItemByCodeAndEnabled(dataDict.getCode(), null);
             return mapping.asDataDictSearchVo(dataDict, items);
@@ -94,7 +92,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
         entity.setCreatedAt(qo.getCreatedAt());
         entity.setCreator(qo.getUserId());
         insert(entity);
-        for (DataDictPostQo.DataDictItemPostQo item : qo.getItems()) {
+        for (DataDictItemPostQo item : qo.getItems()) {
             dataDictItemService.insertOne(entity.getId(), item);
         }
     }
@@ -104,10 +102,16 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
         DataDict entity = mapping.asDataDict(qo);
         entity.setLastUpdatedAt(qo.getCreatedAt());
         entity.setLastUpdater(qo.getUserId());
+        update(entity);
+    }
+    
+    private void update(DataDict entity) {
+        verifyEntity(entity);
         baseMapper.updateById(entity);
     }
     
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deletes(DataDictDeleteQo qo) {
         for (Long id : qo.getId()) {
             deleteById(id, qo.getForce());
@@ -132,15 +136,23 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
     }
     
     private void insert(DataDict entity) {
-        final String code = entity.getCode();
-        if (hasCode(code)) {
-            throw ServiceException.wrap("新增失败,字典码已经存在");
-        }
+        verifyEntity(entity);
         baseMapper.insert(entity);
     }
     
-    private boolean hasCode(String code) {
-        return lambdaQuery().eq(DataDict::getCode, code).count() > 0;
+    
+    private boolean hasCode(String code, Long id) {
+        return baseMapper.countByCodeIgnoreId(code, id) > 0;
     }
     
+    @Override
+    public void verifyEntity(DataDict entity) {
+        final String code = entity.getCode();
+        final Long id = entity.getId();
+        
+        // 检查数据字典码
+        if (Objects.nonNull(code)) {
+            VerifyUtils.isFalse(hasCode(code, id), "数据字典码已经存在");
+        }
+    }
 }

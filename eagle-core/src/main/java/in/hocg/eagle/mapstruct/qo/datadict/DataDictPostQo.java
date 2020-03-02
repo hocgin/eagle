@@ -38,23 +38,4 @@ public class DataDictPostQo extends BaseQo {
     private Integer enabled;
     @Valid
     private List<DataDictItemPostQo> items = new ArrayList<>();
-    
-    @Data
-    public static class DataDictItemPostQo extends BaseQo {
-        @ApiModelProperty("排序")
-        private Integer sort;
-        @NotNull(message = "启用状态")
-        @RangeEnum(enumClass = Enabled.class)
-        @ApiModelProperty("启用状态")
-        private Integer enabled;
-        @NotNull
-        @ApiModelProperty("字典标识")
-        @Pattern(regexp = PatternConstant.ONLY_NUMBER_OR_WORD, message = "仅支持数字和字母组合")
-        private String code;
-        @ApiModelProperty("字典备注")
-        private String remark;
-        @NotNull
-        @ApiModelProperty("字典项名称")
-        private String title;
-    }
 }

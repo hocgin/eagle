@@ -29,7 +29,7 @@ import java.util.Objects;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class NamedAspect {
     
-    @Pointcut("@within(org.springframework.stereotype.Service) && execution((*) *(..))")
+    @Pointcut("@within(org.springframework.stereotype.Service) && execution((@in.hocg.eagle.basic.aspect.named.InjectNamed *) *(..))")
     public void pointcut() {
     }
     

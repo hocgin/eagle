@@ -55,7 +55,13 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     }
     
     public boolean hasAuthorityCode(String authorityCode) {
-        return lambdaQuery().eq(Authority::getAuthorityCode, authorityCode).count() > 0;
+        return hasAuthorityCodeIgnoreId(authorityCode, null);
+    }
+    
+    public boolean hasAuthorityCodeIgnoreId(String authorityCode, Long id) {
+        return lambdaQuery().eq(Authority::getAuthorityCode, authorityCode)
+                .ne(Objects.nonNull(id), Authority::getId, id)
+                .count() > 0;
     }
     
     @Override
@@ -105,7 +111,18 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         
         authority.setLastUpdatedAt(qo.getCreatedAt());
         authority.setLastUpdater(qo.getUserId());
-        baseMapper.updateById(authority);
+        update(authority);
+    }
+    
+    private void update(Authority entity) {
+        final String authorityCode = entity.getAuthorityCode();
+        VerifyUtils.notNull(authorityCode);
+        final Long id = entity.getId();
+        VerifyUtils.notNull(id);
+        if (hasAuthorityCodeIgnoreId(authorityCode, id)) {
+            throw ServiceException.wrap("更新失败,权限码已经存在");
+        }
+        baseMapper.updateById(entity);
     }
     
     @Override

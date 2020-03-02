@@ -32,6 +32,15 @@
             </if>
         </where>
     </select>
+    <select id="countByCodeIgnoreId" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_data_dict tdd
+        <where>
+            AND tdd.code = #{code}
+            <if test="id != null">
+                AND tdd.id != #{id}
+            </if>
+        </where>
+    </select>
 
 
 </mapper>

@@ -1,6 +1,7 @@
 package in.hocg.eagle.mapstruct;
 
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictPostQo;
+import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPostQo;
+import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPutQo;
 import in.hocg.eagle.mapstruct.vo.DataDictItemVo;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import org.mapstruct.Mapper;
@@ -17,6 +18,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface DataDictItemMapping {
     
+    @Mapping(target = "enabledName", ignore = true)
     @Mapping(target = "lastUpdaterName", ignore = true)
     @Mapping(target = "creatorName", ignore = true)
     DataDictItemVo asDataDictItemVo(DataDictItem entity);
@@ -28,5 +30,11 @@ public interface DataDictItemMapping {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "dictId", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    DataDictItem asDataDictItem(DataDictPostQo.DataDictItemPostQo item);
+    DataDictItem asDataDictItem(DataDictItemPostQo item);
+    
+    @Mapping(target = "lastUpdater", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
+    @Mapping(target = "dictId", ignore = true)
+    @Mapping(target = "creator", ignore = true)
+    DataDictItem asDataDictItem(DataDictItemPutQo qo);
 }

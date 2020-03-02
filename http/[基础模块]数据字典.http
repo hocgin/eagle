@@ -3,4 +3,73 @@ GET {{host}}/api/data-dict/enabled
 Content-Type: application/json
 Token: Bearer {{auth_token}}
 
+### 查询数据字典详情
+GET {{host}}/api/data-dict/1:complex
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+### 删除数据字典
+DELETE {{host}}/api/data-dict
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "id": [
+    1
+  ],
+  "force": false
+}
+
+### 新增数据字典
+POST {{host}}/api/data-dict
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "title": "标题",
+  "remark": "字典备注",
+  "code": "ddxd",
+  "enabled": 0,
+  "items": [
+    {
+      "sort": 1000,
+      "enabled": 0,
+      "code": "0",
+      "remark": "标题:测试",
+      "title": "标题"
+    }
+  ]
+}
+
+### 更新数据字典
+PUT {{host}}/api/data-dict/11
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "title": "标题",
+  "remark": "字典备注",
+  "code": "ddxxd",
+  "enabled": 0
+}
+
+### 查询数据字典列表
+POST {{host}}/api/data-dict/_search
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+}
+
+### 删除数据字典项
+DELETE {{host}}/api/data-dict/item
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "id": [
+    1
+  ]
+}
+
 ###

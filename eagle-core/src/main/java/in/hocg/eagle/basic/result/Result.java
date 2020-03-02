@@ -16,7 +16,8 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 public class Result<T> implements Serializable {
-    private int code;
+    private Integer code;
+    private Boolean success;
     private String message;
     private T data;
     
@@ -32,7 +33,7 @@ public class Result<T> implements Serializable {
     }
     
     public static <T> Result<T> success(String message, T data) {
-        return Result.result(ResultCode.SUCCESS.getCode(), message, data);
+        return Result.result(Boolean.TRUE, ResultCode.SUCCESS.getCode(), message, data);
     }
     
     public static <T> Result<T> success(T data) {
@@ -43,12 +44,12 @@ public class Result<T> implements Serializable {
         return Result.success(null);
     }
     
-    public static <T> Result<T> result(Integer code, String message) {
-        return Result.result(code, message, null);
+    public static <T> Result<T> result(Boolean success, Integer code, String message) {
+        return Result.result(success, code, message, null);
     }
     
-    public static <T> Result<T> error(int errorCode, String message) {
-        return Result.result(errorCode, message);
+    public static <T> Result<T> error(Integer errorCode, String message) {
+        return Result.result(Boolean.FALSE, errorCode, message);
     }
     
     public static <T> Result<T> error(String message) {
@@ -59,9 +60,10 @@ public class Result<T> implements Serializable {
         return Result.error(ResultCode.ERROR.getMessage());
     }
     
-    public static <T> Result<T> result(Integer code, String message, T data) {
+    public static <T> Result<T> result(Boolean success, Integer code, String message, T data) {
         Result<T> result = new Result<>();
         return result.setCode(code)
+                .setSuccess(success)
                 .setMessage(message)
                 .setData(data);
     }

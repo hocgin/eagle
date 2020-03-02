@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -49,7 +50,13 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     }
     
     public boolean hasRoleCode(String roleCode) {
-        return lambdaQuery().eq(Role::getRoleCode, roleCode).count() > 0;
+        return hasRoleCodeIgnoreId(roleCode, null);
+    }
+    
+    public boolean hasRoleCodeIgnoreId(String roleCode, Long id) {
+        return lambdaQuery().eq(Role::getRoleCode, roleCode)
+                .ne(Objects.nonNull(id), Role::getId, id)
+                .count() > 0;
     }
     
     @Override
@@ -74,7 +81,14 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
         final Role role = mapping.asRole(qo);
         role.setLastUpdatedAt(qo.getCreatedAt());
         role.setLastUpdater(qo.getUserId());
-        baseMapper.updateById(role);
+        update(role);
+    }
+    
+    private void update(Role entity) {
+        if (hasRoleCodeIgnoreId(entity.getRoleCode(), entity.getId())) {
+            throw ServiceException.wrap("更新失败,角色码已经存在");
+        }
+        baseMapper.updateById(entity);
     }
     
     @Override

@@ -1,6 +1,7 @@
 package in.hocg.eagle.mapstruct.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
@@ -17,12 +18,14 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
+@InjectNamed
 public class DataDictItemVo implements Serializable {
     private Integer id;
     private String title;
     private String code;
     private String remark;
     private Integer sort;
+    private Integer enabled;
     
     @Named(idFor = "enabled", type = NamedType.DataDict)
     private String enabledName;

@@ -38,4 +38,5 @@ public interface DataDictService extends AbstractService<DataDict> {
     void updateOne(DataDictPutQo qo);
     
     void deletes(DataDictDeleteQo qo);
+    
 }

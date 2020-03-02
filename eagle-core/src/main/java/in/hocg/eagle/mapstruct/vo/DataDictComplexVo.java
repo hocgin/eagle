@@ -2,6 +2,7 @@ package in.hocg.eagle.mapstruct.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
+import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
@@ -19,6 +20,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@InjectNamed
 public class DataDictComplexVo implements Serializable {
     private Long id;
     private String title;
