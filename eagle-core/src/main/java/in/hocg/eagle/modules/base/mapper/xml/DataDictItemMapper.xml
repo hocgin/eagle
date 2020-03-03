@@ -11,8 +11,8 @@
         </where>
     </select>
     <delete id="deleteByDictId">
-        DELETE FROM t_data_dict_item tddi
-        WHERE tddi.dict_id = #{dictId}
+        DELETE FROM t_data_dict_item
+        WHERE dict_id = #{dictId}
     </delete>
     <select id="countDictIdAndCodeIgnoreId" resultType="java.lang.Integer">
         SELECT COUNT(1) FROM t_data_dict_item tddi

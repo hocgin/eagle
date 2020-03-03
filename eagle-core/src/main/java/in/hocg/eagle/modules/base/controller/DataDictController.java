@@ -47,7 +47,7 @@ public class DataDictController {
 
     @UseLogger("删除数据字典")
     @DeleteMapping
-    public Result<Void> deletes(@RequestBody DataDictDeleteQo qo) {
+    public Result<Void> deletes(@Validated @RequestBody DataDictDeleteQo qo) {
         service.deletes(qo);
         return Result.success();
     }

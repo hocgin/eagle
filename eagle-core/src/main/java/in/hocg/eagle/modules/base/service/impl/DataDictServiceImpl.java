@@ -42,18 +42,18 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
     private final DataDictMapping mapping;
     private final DataDictItemMapping dataDictItemMapping;
     private final DataDictItemService dataDictItemService;
-    
+
     @Override
     public Optional<DataDictItem> selectOneByDictIdAndCode(String typeCode, String itemCode) {
         return baseMapper.selectOneByDictIdAndCode(typeCode, itemCode);
     }
-    
+
     @Transactional(rollbackFor = Exception.class)
     public List<DataDictItemVo> selectListDictItemByCodeAndEnabled(String typeCode, Integer enabled) {
         final List<DataDictItem> result = baseMapper.selectListDictItemByCodeAndEnabled(typeCode, enabled);
         return dataDictItemMapping.asDataDictItemVo(result);
     }
-    
+
     @Override
     public List<KeyValue> selectListDictItemByCode(String typeCode) {
         return baseMapper.selectListDictItemByCodeAndEnabled(typeCode, Enabled.On.getCode())
@@ -61,7 +61,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
                 .map(item -> new KeyValue().setKey(item.getTitle()).setValue(item.getCode()))
                 .collect(Collectors.toList());
     }
-    
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<DataDictSearchVo> search(DataDictSearchQo qo) {
@@ -71,7 +71,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
             return mapping.asDataDictSearchVo(dataDict, items);
         });
     }
-    
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public DataDictComplexVo selectOne(Long id) {
@@ -81,10 +81,10 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
         }
         final String typeCode = dataDict.getCode();
         final List<DataDictItemVo> items = selectListDictItemByCodeAndEnabled(typeCode, Enabled.On.getCode());
-        
+
         return mapping.asDataDictComplexVo(dataDict, items);
     }
-    
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertOne(DataDictPostQo qo) {
@@ -96,7 +96,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
             dataDictItemService.insertOne(entity.getId(), item);
         }
     }
-    
+
     @Override
     public void updateOne(DataDictPutQo qo) {
         DataDict entity = mapping.asDataDict(qo);
@@ -104,12 +104,12 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
         entity.setLastUpdater(qo.getUserId());
         update(entity);
     }
-    
+
     private void update(DataDict entity) {
         verifyEntity(entity);
         baseMapper.updateById(entity);
     }
-    
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deletes(DataDictDeleteQo qo) {
@@ -117,7 +117,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
             deleteById(id, qo.getForce());
         }
     }
-    
+
     @Transactional(rollbackFor = Exception.class)
     public void deleteById(Long id, boolean force) {
         if (force) {
@@ -128,28 +128,28 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
             throw ServiceException.wrap("该字典存在字典项，无法进行删除");
         }
     }
-    
+
     @Transactional(rollbackFor = Exception.class)
     public void deleteById(Long id) {
-        baseMapper.deleteById(id);
         dataDictItemService.deleteByDictId(id);
+        baseMapper.deleteById(id);
     }
-    
+
     private void insert(DataDict entity) {
         verifyEntity(entity);
         baseMapper.insert(entity);
     }
-    
-    
+
+
     private boolean hasCode(String code, Long id) {
         return baseMapper.countByCodeIgnoreId(code, id) > 0;
     }
-    
+
     @Override
     public void verifyEntity(DataDict entity) {
         final String code = entity.getCode();
         final Long id = entity.getId();
-        
+
         // 检查数据字典码
         if (Objects.nonNull(code)) {
             VerifyUtils.isFalse(hasCode(code, id), "数据字典码已经存在");
