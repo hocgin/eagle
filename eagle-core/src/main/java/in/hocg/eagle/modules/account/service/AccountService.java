@@ -1,9 +1,12 @@
 package in.hocg.eagle.modules.account.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.mapstruct.qo.account.AccountSearchQo;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
-import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
+import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
 import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
+import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
@@ -20,7 +23,7 @@ import java.util.Optional;
  * @since 2020-02-11
  */
 public interface AccountService extends AbstractService<Account> {
-    
+
     /**
      * 查看详情
      *
@@ -28,7 +31,7 @@ public interface AccountService extends AbstractService<Account> {
      * @return
      */
     IdAccountComplexVo selectOneComplex(Long id);
-    
+
     /**
      * 根据 username 查找账号
      *
@@ -36,14 +39,14 @@ public interface AccountService extends AbstractService<Account> {
      * @return
      */
     Optional<Account> selectOneByUsername(String username);
-    
+
     /**
      * 授权角色
      *
      * @param qo
      */
     void grantRole(GrantRoleQo qo);
-    
+
     /**
      * 查找账号具备的所有权限
      *
@@ -51,7 +54,7 @@ public interface AccountService extends AbstractService<Account> {
      * @return
      */
     List<Authority> selectListAuthorityById(Long accountId, Integer platform);
-    
+
     /**
      * 查找账号具备的所有角色
      *
@@ -59,11 +62,13 @@ public interface AccountService extends AbstractService<Account> {
      * @return
      */
     List<Role> selectListRoleById(Long accountId, Integer platform);
-    
+
     /**
      * 获取权限树(当前用户)
      *
      * @param accountId
      */
     List<AuthorityTreeNodeVo> selectAuthorityTreeByCurrentAccount(Long accountId, Integer platform);
+
+    IPage<AccountSearchVo> search(AccountSearchQo qo);
 }

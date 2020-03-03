@@ -1,6 +1,7 @@
 package in.hocg.eagle.mapstruct;
 
 
+import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
 import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
 import in.hocg.eagle.modules.account.entity.Account;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 @Mapper(componentModel = "spring")
 public interface AccountMapping {
-    
+
     /**
      * Account -> IdAccountComplexVo
      *
@@ -27,7 +28,7 @@ public interface AccountMapping {
     @Mapping(target = "genderName", ignore = true)
     @Mapping(target = "roles", ignore = true)
     IdAccountComplexVo asIdAccountComplexVo(Account account);
-    
+
     /**
      * Account account, List<RoleComplexVo> roles -> IdAccountComplexVo
      *
@@ -40,4 +41,6 @@ public interface AccountMapping {
         result.setRoles(roles);
         return result;
     }
+
+    AccountSearchVo asAccountSearchVo(Account account);
 }

@@ -8,4 +8,14 @@
             ta.username = #{username}
         </where>
     </select>
+    <select id="search" resultType="in.hocg.eagle.modules.account.entity.Account">
+        SELECT * FROM t_account ta
+        <where>
+            <if test="qo.keyword != null ">
+                <bind name="keyword" value="'%'+qo.keyword+'%'"/>
+                AND (ta.nickname LIKE #{keyword} OR ta.username LIKE #{keyword} OR ta.phone LIKE #{keyword} OR ta.email
+                LIKE #{keyword})
+            </if>
+        </where>
+    </select>
 </mapper>
