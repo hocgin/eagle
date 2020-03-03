@@ -114,7 +114,7 @@ INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `pa
     VALUE (4, '数据字典', 1, 'data-dict', 0, 3, '/3/4', NOW(), 1);
 INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                         `creator`)
-    VALUE (5, '测试5', 1, 'test5', 0, 4, '/3/4/5', NOW(), 1);
+    VALUE (5, '测试5', 1, 'test5', 0, 3, '/3/5', NOW(), 1);
 # -- 访问控制
 INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                         `creator`)

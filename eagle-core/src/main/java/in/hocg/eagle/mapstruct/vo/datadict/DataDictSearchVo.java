@@ -1,6 +1,7 @@
 package in.hocg.eagle.mapstruct.vo.datadict;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
@@ -18,8 +19,9 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@InjectNamed
 public class DataDictSearchVo implements Serializable {
-    
+
     private Long id;
     private String title;
     private String code;
@@ -31,6 +33,6 @@ public class DataDictSearchVo implements Serializable {
     private LocalDateTime createdAt;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime lastUpdatedAt;
-    
+
     private List<DataDictItemVo> items;
 }
