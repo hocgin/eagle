@@ -16,7 +16,7 @@ public class ShortUrlTools {
     /**
      * 在进制表示中的字符集合
      */
-    final static char[] digits = {
+    final static char[] DIGITS = {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
             'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
@@ -38,10 +38,10 @@ public class ShortUrlTools {
         char[] buf = new char[32];
         int charPos = 32;
         while ((num / base) > 0) {
-            buf[--charPos] = digits[(int) (num % base)];
+            buf[--charPos] = DIGITS[(int) (num % base)];
             num /= base;
         }
-        buf[--charPos] = digits[(int) (num % base)];
+        buf[--charPos] = DIGITS[(int) (num % base)];
         return new String(buf, charPos, (32 - charPos));
     }
     

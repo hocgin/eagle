@@ -3,9 +3,7 @@ package in.hocg.eagle.basic.aspect.logger;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.security.SecurityContext;
-import in.hocg.eagle.basic.security.User;
-import in.hocg.eagle.utils.DateUtils;
-import in.hocg.eagle.utils.JSONUtility;
+import in.hocg.eagle.utils.RequestUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -15,12 +13,15 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -43,10 +44,12 @@ public class LoggerAspect {
         StopWatch watch = new StopWatch();
         watch.start();
         Object ret = null;
+        String errorMessage = null;
         try {
             ret = point.proceed();
         } catch (Exception e) {
             log.warn("发生异常:", e);
+            errorMessage = e.getMessage();
             throw e;
         } finally {
             watch.stop();
@@ -55,64 +58,50 @@ public class LoggerAspect {
             MethodSignature signature = (MethodSignature) point.getSignature();
             String methodName = signature.getName();
             String[] parameterNames = signature.getParameterNames();
-            Class aClass = point.getSourceLocation().getWithinType();
+            Class<?> aClass = point.getSourceLocation().getWithinType();
             String mapping = String.format("%s#%s(%s)", aClass.getName(), methodName, Arrays.toString(parameterNames));
-            Class[] parameterTypes = signature.getMethod().getParameterTypes();
+            Class<?>[] parameterTypes = signature.getMethod().getParameterTypes();
             Method method = target.getClass().getMethod(methodName, parameterTypes);
             UseLogger annotation = method.getAnnotation(UseLogger.class);
             List<Object> args = Lists.newArrayList(point.getArgs())
                     .stream()
-                    .filter(arg -> (!(arg instanceof HttpServletRequest) && !(arg instanceof HttpServletResponse)))
+                    .filter(arg -> (!(arg instanceof HttpServletRequest)
+                            && !(arg instanceof HttpServletResponse)
+                            && !(arg instanceof MultipartFile)))
                     .collect(Collectors.toList());
             
             HttpServletRequest request = SpringContext.getRequest();
             String uri = "Unknown";
             String requestMethod = "Unknown";
+            String host = "Unknown";
+            String userAgent = "Unknown";
+            String clientIp = "0.0.0.0";
             if (Objects.nonNull(request)) {
                 uri = request.getRequestURI();
                 requestMethod = request.getMethod();
+                userAgent = RequestUtility.getUserAgent(request);
+                host = RequestUtility.getHost(request);
+                clientIp = RequestUtility.getClientIP(request);
             }
-            
-            StringJoiner stringJoiner = new StringJoiner("\n")
-                    .add("")
-                    .add("╔═[{}]═{}════════════════════════════════════════════════")
-                    .add("║ {}")
-                    .add("║ > {} ({})")
-                    .add("╠═[请求体]════════════════════════════════════════════════════════════════════════════")
-                    .add("║ {}")
-                    .add("╠═[响应体]════════════════════════════════════════════════════════════════════════════")
-                    .add("║ {}")
-                    .add("╚═[总耗时:{} ms]══════════════════════════════════════════════════════════════════════")
-                    .add("");
-            log.info(stringJoiner.toString(),
-                    DateUtils.format(LocalDateTime.now(), DateUtils.SIMPLE_FORMATTER),
-                    getUserStringThrow(),
-                    String.format("%s %s", requestMethod, uri),
-                    annotation.value(),
-                    mapping,
-                    JSONUtility.toJSONString(args, true).replaceAll("\n", "\n║ "),
-                    JSONUtility.toJSONString(ret, true).replaceAll("\n", "\n║ "),
-                    watch.getTotalTimeMillis());
+            final Logger logger = new Logger();
+            final String enterRemark = annotation.value();
+            logger.setCurrentUser(SecurityContext.getCurrentUser().orElse(null))
+                    .setMapping(mapping)
+                    .setException(errorMessage)
+                    .setEnterRemark(enterRemark)
+                    .setHost(host)
+                    .setCreatedAt(LocalDateTime.now())
+                    .setClientIp(clientIp)
+                    .setUserAgent(userAgent)
+                    .setMethod(requestMethod)
+                    .setTotalTimeMillis(watch.getTotalTimeMillis())
+                    .setUri(uri)
+                    .setRet(ret)
+                    .setArgs(args);
+            logger.save();
         }
         
         return ret;
     }
     
-    private String getUserStringThrow() {
-        try {
-            return getUserString();
-        } catch (Exception e) {
-           log.error("", e);
-            return "";
-        }
-    }
-    
-    private String getUserString() {
-        final Optional<User> currentUser = SecurityContext.getCurrentUser();
-        if (currentUser.isPresent()) {
-            final User user = currentUser.get();
-            return String.format("[@%s(ID:%s)]", user.getUsername(), user.getId());
-        }
-        return "";
-    }
 }
