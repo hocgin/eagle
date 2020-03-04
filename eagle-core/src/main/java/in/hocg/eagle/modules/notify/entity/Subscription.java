@@ -32,8 +32,8 @@ public class Subscription extends AbstractEntity<Subscription> {
     /**
      * 订阅人ID
      */
-    @TableField("subscriber")
-    private Long subscriber;
+    @TableField("subscriber_id")
+    private Long subscriberId;
     /**
      * 订阅通知类型
      */

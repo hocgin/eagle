@@ -2,7 +2,7 @@
 CREATE TABLE t_notify
 (
     id              bigint,
-    actor           bigint      not null comment '触发者ID',
+    actor_id        bigint      not null comment '触发者ID',
     notify_type     int         not null comment '通知类型',
     subject_type    int         null comment '订阅对象类型',
     subject_id      bigint      null comment '订阅对象ID',
@@ -19,10 +19,10 @@ CREATE TABLE t_notify
 -- auto-generated definition
 CREATE TABLE t_notification
 (
-    notify_id bigint      not null comment '通知ID',
-    receiver  bigint      not null comment '接收人ID',
-    read_at   datetime(6) null,
-    PRIMARY KEY (notify_id, receiver)
+    notify_id   bigint      not null comment '通知ID',
+    receiver_id bigint      not null comment '接收人ID',
+    read_at     datetime(6) null,
+    PRIMARY KEY (notify_id, receiver_id)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
@@ -32,7 +32,7 @@ CREATE TABLE t_notification
 CREATE TABLE t_subscription
 (
     id              bigint,
-    subscriber      bigint      not null comment '订阅人ID',
+    subscriber_id   bigint      not null comment '订阅人ID',
     notify_type     int         not null comment '订阅通知类型',
     subject_id      bigint      not null comment '订阅对象ID',
     subject_type    int         not null comment '订阅对象类型',
