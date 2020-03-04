@@ -26,17 +26,19 @@ import java.util.List;
 public class EagleGenerateTest {
     @Autowired
     private MapperGenerate eagleGenerate;
-    
+
     @Test
     public void generateByTables() {
         List<String> TABLES = Arrays.asList(
-                "t_example",
-                ""
+            "t_notify",
+            "t_notification",
+            "t_subscription",
+            ""
         );
         String javaPath = "src/main/java";
         String dir = Paths.get(System.getProperty("user.dir"), javaPath).toString();
         eagleGenerate.generateByTables("in.hocg.eagle.modules",
-                "test",
-                dir, TABLES.toArray(new String[]{}));
+            "notify",
+            dir, TABLES.toArray(new String[]{}));
     }
 }
