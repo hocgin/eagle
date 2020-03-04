@@ -13,12 +13,14 @@
         LIMIT 1
     </select>
     <select id="selectListDictItemByCodeAndEnabled" resultType="in.hocg.eagle.modules.base.entity.DataDictItem">
-        SELECT tddi.* FROM t_data_dict tdd
-        LEFT JOIN t_data_dict_item tddi ON tdd.id = tddi.dict_id
+        SELECT tddi.* FROM t_data_dict_item tddi
+        LEFT JOIN t_data_dict tdd ON tdd.id = tddi.dict_id
         <where>
             tdd.code = #{typeCode}
-            AND tdd.enabled = #{enabled}
-            AND tddi.enabled = #{enabled}
+            <if test="enabled != null">
+                AND tdd.enabled = #{enabled}
+                AND tddi.enabled = #{enabled}
+            </if>
         </where>
         ORDER BY tddi.sort DESC, tddi.created_at DESC
     </select>

@@ -15,5 +15,6 @@ public class DataDictItemPutQo extends IdQo {
     private String code;
     private String remark;
     private Integer sort;
+    private Long dictId;
     private Integer enabled;
 }

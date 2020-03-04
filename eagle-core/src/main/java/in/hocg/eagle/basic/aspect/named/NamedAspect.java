@@ -28,18 +28,18 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class NamedAspect {
-    
-    @Pointcut("@within(org.springframework.stereotype.Service) && execution((@in.hocg.eagle.basic.aspect.named.InjectNamed *) *(..))")
+
+    @Pointcut("@within(org.springframework.stereotype.Service) && execution((*) *(..))")
     public void pointcut() {
     }
-    
+
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         Object result = point.proceed();
         handleResult(result);
         return result;
     }
-    
+
     private void handleResult(Object result) {
         if (Objects.isNull(result) || ClassUtils.isBaseType(result.getClass())) {
             return;
@@ -54,41 +54,41 @@ public class NamedAspect {
             handleObjectResult(result);
         }
     }
-    
+
     private void handlePageResult(IPage result) {
         this.handleResult(result.getRecords());
     }
-    
+
     private void handleArrayResult(Object[] result) {
         for (Object item : result) {
             handleResult(item);
         }
     }
-    
+
     private void handleCollectionResult(Collection result) {
         result.forEach(this::handleResult);
     }
-    
+
     private void handleObjectResult(Object result) {
         final Class<?> aClass = result.getClass();
         if (!aClass.isAnnotationPresent(InjectNamed.class)) {
             return;
         }
-        
+
         Map<String, Field> fieldMap = LangUtils.toMap(ClassUtils.getAllField(aClass), Field::getName);
         fieldMap.values().stream()
-                .peek(field -> {
-                    final Object object = ClassUtils.getObjectValue(result, field, null);
-                    handleResult(object);
-                })
-                .filter(field -> field.isAnnotationPresent(Named.class))
-                .filter(field -> {
-                    final Object value = ClassUtils.getObjectValue(result, field, null);
-                    return Objects.isNull(value);
-                })
-                .forEach(field -> injectValue(result, fieldMap, field));
+            .peek(field -> {
+                final Object object = ClassUtils.getObjectValue(result, field, null);
+                handleResult(object);
+            })
+            .filter(field -> field.isAnnotationPresent(Named.class))
+            .filter(field -> {
+                final Object value = ClassUtils.getObjectValue(result, field, null);
+                return Objects.isNull(value);
+            })
+            .forEach(field -> injectValue(result, fieldMap, field));
     }
-    
+
     private void injectValue(Object result, Map<String, Field> fieldMap, Field field) {
         final Named named = field.getAnnotation(Named.class);
         final Field idField = fieldMap.get(named.idFor());
@@ -104,5 +104,5 @@ public class NamedAspect {
         final Object val = namedType.getFunction().apply(id, argsValue);
         ClassUtils.setFieldValue(result, field, val);
     }
-    
+
 }

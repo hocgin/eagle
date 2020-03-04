@@ -25,6 +25,8 @@ public class DataDictItemComplexVo {
     private String code;
     private String remark;
     private Integer sort;
+    private Integer enabled;
+
     @Named(idFor = "enabled", type = NamedType.DataDict)
     private String enabledName;
     @ApiModelProperty("创建时间")
