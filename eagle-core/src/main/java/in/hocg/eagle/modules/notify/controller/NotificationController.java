@@ -1,10 +1,14 @@
 package in.hocg.eagle.modules.notify.controller;
 
 
+import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.mapstruct.qo.notify.SearchNotifyPageQo;
+import in.hocg.eagle.modules.notify.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -16,8 +20,21 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/notify/notification")
+@RequestMapping("/notify")
 public class NotificationController {
+    private final NotificationService service;
 
+    @UseLogger("查询我的消息列表")
+    @GetMapping
+    public Result<Void> _search(@Validated @RequestBody SearchNotifyPageQo qo) {
+
+        return Result.success();
+    }
+
+    @UseLogger("发布消息")
+    @PostMapping("published")
+    public Result<Void> published() {
+        return Result.success();
+    }
 }
 
