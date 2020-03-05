@@ -5,18 +5,16 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Created by hocgin on 2020/2/11.
+ * Created by hocgin on 2020/3/5.
  * email: hocgin@gmail.com
- * 开关 [关, 开]
  *
  * @author hocgin
  */
 @Getter
-@ApiModel("开关")
+@ApiModel("订阅类型")
 @RequiredArgsConstructor
-public enum Enabled implements IntEnum {
-    Off(0, "禁用"),
-    On(1, "启用");
+public enum SubjectType implements IntEnum {
+    Comment(0, "评论");
     private final Integer code;
     private final String name;
 }

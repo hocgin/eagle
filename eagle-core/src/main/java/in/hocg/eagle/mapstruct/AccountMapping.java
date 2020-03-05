@@ -1,6 +1,7 @@
 package in.hocg.eagle.mapstruct;
 
 
+import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
 import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
@@ -43,4 +44,7 @@ public interface AccountMapping {
     }
 
     AccountSearchVo asAccountSearchVo(Account account);
+
+    @Mapping(target = "genderName", ignore = true)
+    AccountComplexVo asAccountComplexVo(Account account);
 }

@@ -11,6 +11,7 @@ import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.RoleMapping;
 import in.hocg.eagle.mapstruct.qo.account.AccountSearchQo;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
+import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
 import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
@@ -52,7 +53,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public IdAccountComplexVo selectOneComplex(Long id) {
+    public IdAccountComplexVo selectOneComplexAndRole(Long id) {
         final Account account = baseMapper.selectById(id);
         VerifyUtils.notNull(account, "账号不存在");
         final List<Role> roles = roleAccountService.selectListRoleByAccountId(id, GlobalConstant.CURRENT_PLATFORM.getCode());
@@ -63,6 +64,14 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
             roleComplexes.add(roleMapping.asRoleComplexVo(role, authorities));
         }
         return mapping.asIdAccountComplexVo(account, roleComplexes);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public AccountComplexVo selectOneComplex(Long id) {
+        final Account account = baseMapper.selectById(id);
+        VerifyUtils.notNull(account, "账号不存在");
+        return mapping.asAccountComplexVo(account);
     }
 
     @Override

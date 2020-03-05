@@ -1,7 +1,9 @@
 package in.hocg.eagle.modules.notify.service;
 
+import in.hocg.eagle.mapstruct.dto.PublishNotifyDto;
 import in.hocg.eagle.modules.notify.entity.Notify;
 import in.hocg.eagle.basic.AbstractService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -13,4 +15,6 @@ import in.hocg.eagle.basic.AbstractService;
  */
 public interface NotifyService extends AbstractService<Notify> {
 
+    @Transactional(rollbackFor = Exception.class)
+    void published(PublishNotifyDto dto);
 }

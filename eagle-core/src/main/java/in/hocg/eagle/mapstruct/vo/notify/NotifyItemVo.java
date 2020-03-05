@@ -2,7 +2,7 @@ package in.hocg.eagle.mapstruct.vo.notify;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
-import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
+import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
-public class SearchNotifyVo {
+public class NotifyItemVo {
     @ApiModelProperty("通知ID")
     private Long notifyId;
     @ApiModelProperty("通知类型")
@@ -27,10 +27,10 @@ public class SearchNotifyVo {
 
     @ApiModelProperty("接收者ID")
     private Long receiverId;
-    private IdAccountComplexVo receiver;
+    private AccountComplexVo receiver;
     @ApiModelProperty("触发者ID")
     private Long actorId;
-    private IdAccountComplexVo actor;
+    private AccountComplexVo actor;
 
     @ApiModelProperty("读取消息的时间")
     @JsonSerialize(using = LocalDateTimeSerializer.class)

@@ -2,8 +2,11 @@ package in.hocg.eagle.modules.notify.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.mapstruct.qo.notify.PublishPrivateLetterQo;
+import in.hocg.eagle.mapstruct.qo.notify.PublishSubscriptionDto;
 import in.hocg.eagle.mapstruct.qo.notify.SearchNotifyPageQo;
-import in.hocg.eagle.mapstruct.vo.notify.SearchNotifyVo;
+import in.hocg.eagle.mapstruct.vo.notify.NotifyItemVo;
+import in.hocg.eagle.mapstruct.vo.notify.SummaryVo;
 import in.hocg.eagle.modules.notify.entity.Notification;
 
 /**
@@ -16,5 +19,13 @@ import in.hocg.eagle.modules.notify.entity.Notification;
  */
 public interface NotificationService extends AbstractService<Notification> {
 
-    IPage<SearchNotifyVo> search(SearchNotifyPageQo qo);
+    IPage<NotifyItemVo> search(SearchNotifyPageQo qo);
+
+    void insertOne(Notification notification);
+
+    void publishPrivateLetter(PublishPrivateLetterQo qo);
+
+    void publishSubscription(PublishSubscriptionDto dto) throws Throwable;
+
+    SummaryVo selectSummary(Long currentUserId);
 }

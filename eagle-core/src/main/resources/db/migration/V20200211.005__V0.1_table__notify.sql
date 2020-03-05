@@ -2,6 +2,7 @@
 CREATE TABLE t_notify
 (
     id              bigint,
+    content         varchar(255) comment '消息文本',
     actor_id        bigint      not null comment '触发者ID',
     notify_type     int         not null comment '通知类型',
     subject_type    int         null comment '订阅对象类型',

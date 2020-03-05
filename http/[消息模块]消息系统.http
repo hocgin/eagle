@@ -1,0 +1,26 @@
+### 查询当前用户所有消息
+POST {{host}}/api/notification
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+}
+
+### 发送私信消息
+POST {{host}}/api/notification/private-letter/publish
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+    "content": "消息",
+    "receivers": [1]
+}
+
+### 获取消息概要
+GET {{host}}/api/notification/summary
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+}
+###

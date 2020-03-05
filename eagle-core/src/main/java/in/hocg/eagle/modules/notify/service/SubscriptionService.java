@@ -1,7 +1,9 @@
 package in.hocg.eagle.modules.notify.service;
 
-import in.hocg.eagle.modules.notify.entity.Subscription;
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.modules.notify.entity.Subscription;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import in.hocg.eagle.basic.AbstractService;
  */
 public interface SubscriptionService extends AbstractService<Subscription> {
 
+    List<Subscription> selectListBySubjectIdAndSubjectTypeAndNotifyType(Long subjectId, Integer subjectType, Integer notifyType);
 }

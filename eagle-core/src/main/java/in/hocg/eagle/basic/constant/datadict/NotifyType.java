@@ -5,18 +5,18 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Created by hocgin on 2020/2/11.
+ * Created by hocgin on 2020/3/5.
  * email: hocgin@gmail.com
- * 开关 [关, 开]
  *
  * @author hocgin
  */
 @Getter
-@ApiModel("开关")
+@ApiModel("通知类型")
 @RequiredArgsConstructor
-public enum Enabled implements IntEnum {
-    Off(0, "禁用"),
-    On(1, "启用");
+public enum NotifyType implements IntEnum {
+    PrivateLetter(0, "私信"),
+    Announcement(1, "公告"),
+    Subscription(2, "订阅");
     private final Integer code;
     private final String name;
 }

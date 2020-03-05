@@ -37,6 +37,7 @@ public class Notification extends AbstractEntity<Notification> {
      */
     @TableField("receiver_id")
     private Long receiverId;
+
     @TableField("read_at")
     private LocalDateTime readAt;
 

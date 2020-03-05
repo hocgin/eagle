@@ -1,7 +1,7 @@
 package in.hocg.eagle.mapstruct;
 
-import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
-import in.hocg.eagle.mapstruct.vo.notify.SearchNotifyVo;
+import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
+import in.hocg.eagle.mapstruct.vo.notify.NotifyItemVo;
 import in.hocg.eagle.modules.notify.entity.Notification;
 import in.hocg.eagle.modules.notify.entity.Notify;
 import org.mapstruct.Mapper;
@@ -25,15 +25,16 @@ public interface NotificationMapping {
     @Mapping(target = "subjectType", source = "notify.subjectType")
     @Mapping(target = "subjectId", source = "notify.subjectId")
     @Mapping(target = "actorId", source = "notify.actorId")
-    SearchNotifyVo asSearchNotifyVo(Notification notification, Notify notify);
+    NotifyItemVo asSearchNotifyVo(Notification notification, Notify notify);
 
-    default SearchNotifyVo asSearchNotifyVo(Notification notification,
-                                            Notify notify,
-                                            IdAccountComplexVo receiver,
-                                            IdAccountComplexVo actor) {
-        final SearchNotifyVo result = asSearchNotifyVo(notification, notify);
+    default NotifyItemVo asSearchNotifyVo(Notification notification,
+                                          Notify notify,
+                                          AccountComplexVo receiver,
+                                          AccountComplexVo actor) {
+        final NotifyItemVo result = asSearchNotifyVo(notification, notify);
         result.setReceiver(receiver);
         result.setActor(actor);
         return result;
     }
+
 }

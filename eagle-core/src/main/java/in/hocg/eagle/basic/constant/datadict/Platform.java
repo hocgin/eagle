@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.constant.datadict;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
  * @author hocgin
  */
 @Getter
+@ApiModel("平台类型")
 @RequiredArgsConstructor
 public enum Platform implements IntEnum {
     Eagle(0, "Eagle 后台");

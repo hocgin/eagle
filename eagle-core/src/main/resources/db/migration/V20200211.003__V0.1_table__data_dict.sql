@@ -116,3 +116,31 @@ INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
                                `created_at`, `creator`)
     VALUE (4, '菜单', '1', '权限类型:菜单', 1,
            NOW(), 1);
+
+#  通知类型
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (5, '通知类型', 'notifyType', '通知类型', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (5, '私信', '0', '通知类型:私信', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (5, '公告', '1', '通知类型:公告', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (5, '订阅', '2', '通知类型:订阅', 1,
+           NOW(), 1);
+
+#  订阅类型
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (6, '订阅类型', 'subjectType', '订阅类型', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (6, '评论', '0', '订阅类型:评论', 1,
+           NOW(), 1);

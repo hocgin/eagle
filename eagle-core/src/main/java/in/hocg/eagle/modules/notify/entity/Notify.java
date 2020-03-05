@@ -30,6 +30,11 @@ public class Notify extends AbstractEntity<Notify> {
     @TableId("id")
     private Long id;
     /**
+     * 消息文本
+     */
+    @TableField("content")
+    private String content;
+    /**
      * 触发者ID
      */
     @TableField("actor_id")

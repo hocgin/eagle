@@ -40,7 +40,7 @@ public class AccountController {
     @PreAuthorize(AuthorizeConstant.IS_AUTHENTICATED)
     public Result<IdAccountComplexVo> current() {
         final Long accountId = SecurityContext.getCurrentUserId();
-        return Result.success(service.selectOneComplex(accountId));
+        return Result.success(service.selectOneComplexAndRole(accountId));
     }
 
     @GetMapping("/authority")
@@ -53,7 +53,7 @@ public class AccountController {
     @GetMapping("/{id}")
     @UseLogger("获取账号信息")
     public Result<IdAccountComplexVo> id(@PathVariable Long id) {
-        return Result.success(service.selectOneComplex(id));
+        return Result.success(service.selectOneComplexAndRole(id));
     }
 
     @PostMapping("/{id}/grant/role")

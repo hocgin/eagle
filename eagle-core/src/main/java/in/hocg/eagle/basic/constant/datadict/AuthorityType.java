@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.constant.datadict;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -10,9 +11,9 @@ import lombok.RequiredArgsConstructor;
  * @author hocgin
  */
 @Getter
+@ApiModel("权限类型")
 @RequiredArgsConstructor
 public enum AuthorityType implements IntEnum {
-    
     Button(0, "按钮"),
     Menu(1, "菜单");
     private final Integer code;
