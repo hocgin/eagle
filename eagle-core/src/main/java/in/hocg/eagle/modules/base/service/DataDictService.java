@@ -24,19 +24,19 @@ import java.util.Optional;
  * @since 2020-02-14
  */
 public interface DataDictService extends AbstractService<DataDict> {
-    
+
     Optional<DataDictItem> selectOneByDictIdAndCode(String typeCode, String itemCode);
-    
+
     List<KeyValue> selectListDictItemByCode(String code);
-    
+
     IPage<DataDictSearchVo> search(DataDictSearchQo qo);
-    
+
     DataDictComplexVo selectOne(Long id);
-    
+
     void insertOne(DataDictPostQo qo);
-    
-    void updateOne(DataDictPutQo qo);
-    
+
+    void update(DataDictPutQo qo);
+
     void deletes(DataDictDeleteQo qo);
-    
+
 }

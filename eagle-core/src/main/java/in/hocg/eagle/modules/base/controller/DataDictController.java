@@ -64,7 +64,7 @@ public class DataDictController {
     public Result<Void> updateOne(@PathVariable Long id,
                                   @Validated @RequestBody DataDictPutQo qo) {
         qo.setId(id);
-        service.updateOne(qo);
+        service.update(qo);
         return Result.success();
     }
 

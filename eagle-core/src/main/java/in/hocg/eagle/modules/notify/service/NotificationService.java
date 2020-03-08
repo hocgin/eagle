@@ -21,8 +21,6 @@ public interface NotificationService extends AbstractService<Notification> {
 
     IPage<NotifyItemVo> search(SearchNotifyPageQo qo);
 
-    void insertOne(Notification notification);
-
     void publishPrivateLetter(PublishPrivateLetterQo qo);
 
     void publishSubscription(PublishSubscriptionDto dto) throws Throwable;

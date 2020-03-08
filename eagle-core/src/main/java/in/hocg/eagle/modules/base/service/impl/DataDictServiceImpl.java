@@ -9,8 +9,8 @@ import in.hocg.eagle.mapstruct.DataDictItemMapping;
 import in.hocg.eagle.mapstruct.DataDictMapping;
 import in.hocg.eagle.mapstruct.qo.datadict.*;
 import in.hocg.eagle.mapstruct.vo.datadict.DataDictComplexVo;
-import in.hocg.eagle.mapstruct.vo.datadict.item.DataDictItemVo;
 import in.hocg.eagle.mapstruct.vo.datadict.DataDictSearchVo;
+import in.hocg.eagle.mapstruct.vo.datadict.item.DataDictItemVo;
 import in.hocg.eagle.modules.base.entity.DataDict;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import in.hocg.eagle.modules.base.mapper.DataDictMapper;
@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, DataDict>
-        implements DataDictService {
+    implements DataDictService {
     private final DataDictMapping mapping;
     private final DataDictItemMapping dataDictItemMapping;
     private final DataDictItemService dataDictItemService;
@@ -57,9 +57,9 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
     @Override
     public List<KeyValue> selectListDictItemByCode(String typeCode) {
         return baseMapper.selectListDictItemByCodeAndEnabled(typeCode, Enabled.On.getCode())
-                .stream()
-                .map(item -> new KeyValue().setKey(item.getTitle()).setValue(item.getCode()))
-                .collect(Collectors.toList());
+            .stream()
+            .map(item -> new KeyValue().setKey(item.getTitle()).setValue(item.getCode()))
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -91,23 +91,18 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
         DataDict entity = mapping.asDataDict(qo);
         entity.setCreatedAt(qo.getCreatedAt());
         entity.setCreator(qo.getUserId());
-        insert(entity);
+        insertOne(entity);
         for (DataDictItemPostQo item : qo.getItems()) {
             dataDictItemService.insertOne(entity.getId(), item);
         }
     }
 
     @Override
-    public void updateOne(DataDictPutQo qo) {
+    public void update(DataDictPutQo qo) {
         DataDict entity = mapping.asDataDict(qo);
         entity.setLastUpdatedAt(qo.getCreatedAt());
         entity.setLastUpdater(qo.getUserId());
-        update(entity);
-    }
-
-    private void update(DataDict entity) {
-        verifyEntity(entity);
-        baseMapper.updateById(entity);
+        updateOne(entity);
     }
 
     @Override
@@ -133,11 +128,6 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
     public void deleteById(Long id) {
         dataDictItemService.deleteByDictId(id);
         baseMapper.deleteById(id);
-    }
-
-    private void insert(DataDict entity) {
-        verifyEntity(entity);
-        baseMapper.insert(entity);
     }
 
 

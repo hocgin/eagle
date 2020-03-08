@@ -151,14 +151,4 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
             VerifyUtils.notNull(commentTargetService.getById(targetId));
         }
     }
-
-    private void insertOne(Comment entity) {
-        verifyEntity(entity);
-        baseMapper.insert(entity);
-    }
-
-    private void updateOne(Comment entity) {
-        verifyEntity(entity);
-        baseMapper.updateById(entity);
-    }
 }

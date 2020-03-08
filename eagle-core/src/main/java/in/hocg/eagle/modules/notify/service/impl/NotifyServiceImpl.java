@@ -33,11 +33,6 @@ public class NotifyServiceImpl extends AbstractServiceImpl<NotifyMapper, Notify>
     private final NotifyMapping mapping;
     private final NotificationService notificationService;
 
-    private void insertOne(Notify entity) {
-        verifyEntity(entity);
-        baseMapper.insert(entity);
-    }
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void published(PublishNotifyDto dto) {

@@ -36,10 +36,11 @@ public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetM
     @Transactional(rollbackFor = Exception.class)
     public Long getOrCreateCommentTarget(CommentTargetType relType, Long relId) {
         final Optional<Long> idOpt = getCommentTarget(relType, relId);
-        return idOpt.orElseGet(() -> insertOne(new CommentTarget()
-            .setRelId(relId)
-            .setRelType(relType.getCode())));
+        return idOpt.orElseGet(() -> insertOne(
+            new CommentTarget().setRelId(relId).setRelType(relType.getCode())
+        ).getId());
     }
+
 
     /**
      * 获取评论对象ID
@@ -62,12 +63,6 @@ public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetM
             .eq(CommentTarget::getRelId, relId)
             .oneOpt()
             .map(CommentTarget::getId);
-    }
-
-    private Long insertOne(CommentTarget entity) {
-        verifyEntity(entity);
-        baseMapper.insert(entity);
-        return entity.getId();
     }
 
     @Override

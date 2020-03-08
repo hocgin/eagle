@@ -37,7 +37,6 @@ public interface CommentMapping {
     Comment asComment(CommentPostQo qo);
 
     @Mapping(target = "parentId", ignore = true)
-    @Mapping(target = "parentId", ignore = true)
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)

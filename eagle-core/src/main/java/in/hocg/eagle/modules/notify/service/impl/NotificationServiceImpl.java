@@ -42,7 +42,8 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMapper, Notification> implements NotificationService {
+public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMapper, Notification>
+    implements NotificationService {
 
     private final AccountService accountService;
     private final NotifyService notifyService;
@@ -69,13 +70,6 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
         final AccountComplexVo receiver = accountService.selectOneComplex(receiverId);
         final AccountComplexVo actor = accountService.selectOneComplex(actorId);
         return mapping.asSearchNotifyVo(notification, notify, receiver, actor);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void insertOne(Notification entity) {
-        verifyEntity(entity);
-        baseMapper.insert(entity);
     }
 
     @Override
