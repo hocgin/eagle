@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `t_comment_target`;
 CREATE TABLE t_comment_target
 (
     id       BIGINT AUTO_INCREMENT,
@@ -12,6 +13,7 @@ CREATE TABLE t_comment_target
     COMMENT '[评论模块] 评论对象表';
 
 -- auto-generated definition
+DROP TABLE IF EXISTS `t_comment`;
 CREATE TABLE t_comment
 (
     id              bigint AUTO_INCREMENT,

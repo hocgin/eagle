@@ -1,4 +1,5 @@
 -- auto-generated definition
+DROP TABLE IF EXISTS `t_notify`;
 CREATE TABLE t_notify
 (
     id              bigint AUTO_INCREMENT,
@@ -19,6 +20,7 @@ CREATE TABLE t_notify
     COMMENT '[消息模块] 通知表';
 
 -- auto-generated definition
+DROP TABLE IF EXISTS `t_notification`;
 CREATE TABLE t_notification
 (
     notify_id   bigint      not null comment '通知ID',
@@ -31,6 +33,7 @@ CREATE TABLE t_notification
     COMMENT '[消息模块] 通知-接收人表';
 
 -- auto-generated definition
+DROP TABLE IF EXISTS `t_subscription`;
 CREATE TABLE t_subscription
 (
     id              bigint AUTO_INCREMENT,
