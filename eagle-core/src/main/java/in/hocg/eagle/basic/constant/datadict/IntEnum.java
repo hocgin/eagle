@@ -27,4 +27,9 @@ public interface IntEnum {
         }
         return Optional.empty();
     }
+
+
+    static <T extends Enum<T>> Optional<T> of(String name, Class<T> enumClass) {
+        return Optional.of(Enum.valueOf(enumClass, name));
+    }
 }
