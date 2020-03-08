@@ -11,11 +11,11 @@ import lombok.RequiredArgsConstructor;
  * @author hocgin
  */
 @Getter
-@ApiModel("启用状态")
+@ApiModel("锁定状态")
 @RequiredArgsConstructor
-public enum Enabled implements IntEnum {
-    Off(0, "禁用"),
-    On(1, "启用");
+public enum Locked implements IntEnum {
+    Off(0, "已锁定"),
+    On(1, "正常");
     private final Integer code;
     private final String name;
 }

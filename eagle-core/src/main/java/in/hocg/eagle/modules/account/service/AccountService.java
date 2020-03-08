@@ -3,6 +3,7 @@ package in.hocg.eagle.modules.account.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.mapstruct.qo.account.AccountSearchQo;
+import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusPutQo;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
@@ -76,4 +77,6 @@ public interface AccountService extends AbstractService<Account> {
     List<AuthorityTreeNodeVo> selectAuthorityTreeByCurrentAccount(Long accountId, Integer platform);
 
     IPage<AccountSearchVo> search(AccountSearchQo qo);
+
+    void updateStatus(AccountUpdateStatusPutQo qo);
 }

@@ -11,6 +11,7 @@ import in.hocg.eagle.mapstruct.AccountMapping;
 import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.RoleMapping;
 import in.hocg.eagle.mapstruct.qo.account.AccountSearchQo;
+import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusPutQo;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
@@ -127,5 +128,14 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     @Override
     public IPage<AccountSearchVo> search(AccountSearchQo qo) {
         return baseMapper.search(qo, qo.page()).convert(mapping::asAccountSearchVo);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateStatus(AccountUpdateStatusPutQo qo) {
+        Account entity = mapping.asAccount(qo);
+        entity.setLastUpdatedAt(qo.getCreatedAt());
+        entity.setLastUpdater(qo.getUserId());
+        updateOne(entity);
     }
 }

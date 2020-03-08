@@ -1,6 +1,7 @@
 package in.hocg.eagle.mapstruct;
 
 
+import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusPutQo;
 import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
 import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
@@ -50,4 +51,17 @@ public interface AccountMapping {
 
     @Mapping(target = "genderName", ignore = true)
     AccountComplexVo asAccountComplexVo(Account account);
+
+    @Mapping(target = "email", ignore = true)
+    @Mapping(target = "gender", ignore = true)
+    @Mapping(target = "lastUpdater", ignore = true)
+    @Mapping(target = "username", ignore = true)
+    @Mapping(target = "nickname", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
+    @Mapping(target = "creator", ignore = true)
+    @Mapping(target = "createdIp", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "phone", ignore = true)
+    @Mapping(target = "avatar", ignore = true)
+    Account asAccount(AccountUpdateStatusPutQo qo);
 }

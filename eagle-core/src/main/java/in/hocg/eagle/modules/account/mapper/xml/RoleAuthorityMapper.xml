@@ -39,8 +39,7 @@
             LEFT JOIN t_authority ta ON ta.id = tra.authority_id
         <where>
             <if test="roleIds != null">
-                <foreach collection="roleIds" item="item"
-                         open="tra.role_id IN(" close=")">
+                <foreach collection="roleIds" item="item" separator="," open="tra.role_id IN(" close=")">
                     #{item}
                 </foreach>
             </if>

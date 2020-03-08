@@ -7,15 +7,16 @@ import lombok.RequiredArgsConstructor;
 /**
  * Created by hocgin on 2020/2/11.
  * email: hocgin@gmail.com
+ * 开关 [关, 开]
  *
  * @author hocgin
  */
 @Getter
-@ApiModel("启用状态")
+@ApiModel("过期状态")
 @RequiredArgsConstructor
-public enum Enabled implements IntEnum {
-    Off(0, "禁用"),
-    On(1, "启用");
+public enum Expired implements IntEnum {
+    Off(0, "已过期"),
+    On(1, "正常");
     private final Integer code;
     private final String name;
 }
