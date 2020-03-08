@@ -2,9 +2,8 @@ package in.hocg.eagle.modules.comment.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.CommentTargetType;
-import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.MessageContext;
+import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.mapstruct.CommentMapping;
 import in.hocg.eagle.mapstruct.qo.comment.CommentPostQo;
@@ -18,6 +17,7 @@ import in.hocg.eagle.modules.comment.entity.Comment;
 import in.hocg.eagle.modules.comment.mapper.CommentMapper;
 import in.hocg.eagle.modules.comment.service.CommentService;
 import in.hocg.eagle.modules.comment.service.CommentTargetService;
+import in.hocg.eagle.modules.notify.message.event.SubscriptionEvent;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ResultUtils;
 import in.hocg.eagle.utils.VerifyUtils;
@@ -77,11 +77,18 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
         entity.setTargetId(targetId);
         entity.setTreePath("/tmp");
         entity.setCreatedAt(qo.getCreatedAt());
-        entity.setCreator(qo.getUserId());
+        final Long creatorId = qo.getUserId();
+        final Long commentId = entity.getId();
+        entity.setCreator(creatorId);
         insertOne(entity);
-        path.append(String.format("/%d", entity.getId()));
+        path.append(String.format("/%d", commentId));
         entity.setTreePath(path.toString());
         updateOne(entity);
+        MessageContext.publish(new SubscriptionEvent()
+            .setActorId(creatorId)
+            .setSubjectId(commentId)
+            .setSubjectType(SubjectType.Comment)
+            .setNotifyType(NotifyType.SubscriptionComment));
     }
 
     @Override

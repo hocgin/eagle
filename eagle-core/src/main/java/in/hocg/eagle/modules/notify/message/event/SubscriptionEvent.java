@@ -4,6 +4,7 @@ import in.hocg.eagle.basic.constant.datadict.NotifyType;
 import in.hocg.eagle.basic.constant.datadict.SubjectType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * Created by hocgin on 2020/3/5.
@@ -12,6 +13,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
+@Accessors(chain = true)
 public class SubscriptionEvent {
     @ApiModelProperty("触发者ID")
     private Long actorId;

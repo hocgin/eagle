@@ -9,6 +9,7 @@ import in.hocg.eagle.modules.comment.service.CommentService;
 import in.hocg.eagle.modules.notify.entity.Subscription;
 import in.hocg.eagle.modules.notify.mapper.SubscriptionMapper;
 import in.hocg.eagle.modules.notify.service.SubscriptionService;
+import in.hocg.eagle.utils.VerifyUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -42,8 +43,10 @@ public class SubscriptionServiceImpl extends AbstractServiceImpl<SubscriptionMap
     public List<Long> getReceivers(NotifyType notifyType, SubjectType subjectType, Long subjectId) {
         List<Long> receivers = Lists.newArrayList();
 
-        if (notifyType.compareTo(NotifyType.SubscriptionComment) == 0) {
+
+        if (SubjectType.Comment.equals(subjectType)) {
             final Comment comment = commentService.getById(subjectId);
+            VerifyUtils.notNull(comment);
             receivers.add(comment.getCreator());
         }
 
