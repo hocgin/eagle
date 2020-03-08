@@ -1,0 +1,32 @@
+### 评论
+POST {{host}}/api/comment
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+    "targetTypeCode": "Test",
+    "id": 1,
+    "parentId": 1,
+    "content": "你好哈"
+}
+
+### 查询根评论
+POST {{host}}/api/comment/paging
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+    "targetTypeCode": "Test",
+    "id": 1
+}
+
+### 查询根评论的子评论
+POST {{host}}/api/comment/1/paging
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+}
+
+###
+

@@ -22,5 +22,5 @@ public interface CommentMapper extends BaseMapper<Comment> {
                                      @Param("enabled") Integer enabled,
                                      Page page);
 
-    IPage<Comment> pagingByRegexTreePath(@Param("regexTreePath") String regexTreePath);
+    IPage<Comment> pagingByRegexTreePath(@Param("regexTreePath") String regexTreePath, Page page);
 }

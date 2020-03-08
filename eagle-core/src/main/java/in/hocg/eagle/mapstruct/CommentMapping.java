@@ -20,18 +20,12 @@ public interface CommentMapping {
     @Mapping(target = "PCommenterId", ignore = true)
     @Mapping(target = "commenterId", source = "entity.creator")
     @Mapping(target = "commenter", ignore = true)
-    @Mapping(target = "pCommenterId", ignore = true)
-    @Mapping(target = "pCommenter", ignore = true)
+//    @Mapping(target = "pCommenterId", ignore = true)
+//    @Mapping(target = "pCommenter", ignore = true)
     CommentComplexVo asCommentComplexVo(Comment entity);
 
     @Mapping(target = "childrenTotal", ignore = true)
-    @Mapping(target = "PCommenter", ignore = true)
-    @Mapping(target = "PCommenterId", ignore = true)
-    @Mapping(target = "commenterId", source = "entity.creator")
-    @Mapping(target = "commenter", ignore = true)
-    @Mapping(target = "pCommenterId", ignore = true)
-    @Mapping(target = "pCommenter", ignore = true)
-    RootCommentComplexVo asRootCommentComplexVo(Comment entity);
+    RootCommentComplexVo asRootCommentComplexVo(CommentComplexVo entity);
 
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)

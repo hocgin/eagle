@@ -87,10 +87,10 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
             .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("未找到评论"));
         final IPage<Comment> result = baseMapper.pagingRootCommend(targetId, Enabled.On.getCode(), qo.page());
         return result.convert(entity -> {
-            final RootCommentComplexVo result1 = mapping.asRootCommentComplexVo(entity);
+            final RootCommentComplexVo item = mapping.asRootCommentComplexVo(this.convert(entity));
             final String treePath = entity.getTreePath();
-            result1.setChildrenTotal(countRightLikeTreePath(treePath));
-            return result1;
+            item.setChildrenTotal(countRightLikeTreePath(treePath));
+            return item;
         });
     }
 
@@ -106,7 +106,7 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
         VerifyUtils.isNull(pComment.getParentId(), "非根评论");
         final String treePath = pComment.getTreePath();
         final String regexTreePath = String.format("%s/.*", treePath);
-        final IPage<Comment> result = baseMapper.pagingByRegexTreePath(regexTreePath);
+        final IPage<Comment> result = baseMapper.pagingByRegexTreePath(regexTreePath, qo.page());
         return result.convert(this::convert);
     }
 
@@ -114,10 +114,12 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
         final CommentComplexVo result = mapping.asCommentComplexVo(entity);
         final Long parentId = entity.getParentId();
         result.setCommenter(accountService.selectOneComplex(result.getCommenterId()));
-        final Comment pComment = baseMapper.selectById(parentId);
-        final Long pCommentCreatorId = pComment.getCreator();
-        result.setPCommenterId(pCommentCreatorId);
-        result.setPCommenter(accountService.selectOneComplex(pCommentCreatorId));
+        if (Objects.nonNull(parentId)) {
+            final Comment pComment = baseMapper.selectById(parentId);
+            final Long pCommentCreatorId = pComment.getCreator();
+            result.setPCommenterId(pCommentCreatorId);
+            result.setPCommenter(accountService.selectOneComplex(pCommentCreatorId));
+        }
         return result;
     }
 
@@ -134,7 +136,7 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
             VerifyUtils.notNull(baseMapper.selectById(parentId));
         }
         if (Objects.nonNull(targetId)) {
-            VerifyUtils.notNull(commentTargetService.getById(parentId));
+            VerifyUtils.notNull(commentTargetService.getById(targetId));
         }
     }
 
