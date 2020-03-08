@@ -110,8 +110,8 @@ INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `pa
                         `creator`)
     VALUE (3, '开发工具', 1, 'devtools', 0, null, '/3', NOW(), 1);
 INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
-                        `creator`)
-    VALUE (4, '数据字典', 1, 'data-dict', 0, 3, '/3/4', NOW(), 1);
+                        `creator`, `sort`)
+    VALUE (4, '数据字典', 1, 'data-dict', 0, 3, '/3/4', NOW(), 1, 0);
 INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                         `creator`)
     VALUE (5, '测试5', 1, 'test5', 0, 3, '/3/5', NOW(), 1);
@@ -125,25 +125,30 @@ INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `pa
 INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                         `creator`)
     VALUE (8, '角色管理', 1, 'role', 0, 6, '/6/8', NOW(), 1);
-# -- 消息中心
-# INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
-#                         `creator`)
-#     VALUE (9, '消息中心', 1, 'notify', 0, null, '/9', NOW(), 1);
+-- 用户中心
+INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                        `creator`)
+    VALUE (9, '用户中心', 1, 'user', 0, null, '/9', NOW(), 1);
+INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                        `creator`)
+    VALUE (10, '账号管理', 1, 'account', 0, 9, '/9/10', NOW(), 1);
 
 # 角色
 INSERT INTO t_role(`id`, `title`, `role_code`, `platform`, `created_at`, `creator`)
     VALUE (1, '超级管理员', 'SUPER_ADMIN', 0, NOW(), 1);
 
 # 赋予角色权限
-INSERT INTO t_role_authority(`id`, `role_id`, `authority_id`)
-VALUES (1, 1, 1),
-       (2, 1, 2),
-       (3, 1, 3),
-       (4, 1, 4),
-       (5, 1, 5),
-       (6, 1, 6),
-       (7, 1, 7),
-       (8, 1, 8);
+INSERT INTO t_role_authority(`role_id`, `authority_id`)
+VALUES (1, 1),
+       (1, 2),
+       (1, 3),
+       (1, 4),
+       (1, 5),
+       (1, 6),
+       (1, 7),
+       (1, 8),
+       (1, 9),
+       (1, 10);
 
 # 赋予账号角色
 INSERT INTO t_role_account(`id`, `role_id`, `account_id`)

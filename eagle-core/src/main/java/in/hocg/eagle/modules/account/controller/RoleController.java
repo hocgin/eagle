@@ -16,6 +16,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * [用户模块] 角色表 前端控制器
@@ -64,6 +66,15 @@ public class RoleController {
     @UseLogger("分页查询角色列表")
     public Result<IPage<RoleSearchVo>> search(@Validated @RequestBody RoleSearchQo qo) {
         return Result.success(service.search(qo));
+    }
+
+
+    @PostMapping("/all")
+    @UseLogger("查询所有角色列表")
+    public Result<List<RoleSearchVo>> all() {
+        final RoleSearchQo qo = new RoleSearchQo();
+        qo.setSize(Integer.MAX_VALUE);
+        return Result.success(service.search(qo).getRecords());
     }
 
     @PostMapping("/{id}/grant/authority")

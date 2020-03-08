@@ -144,3 +144,31 @@ INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
                                `created_at`, `creator`)
     VALUE (6, '评论', '0', '订阅类型:评论', 1,
            NOW(), 1);
+
+#  过期状态
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (7, '过期状态', 'expired', '过期状态', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (7, '已过期', '0', '过期状态:已过期', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (7, '正常', '1', '过期状态:正常', 1,
+           NOW(), 1);
+
+#  锁定状态
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (8, '锁定状态', 'locked', '过期状态', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (8, '已锁定', '0', '过期状态:已锁定', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (8, '正常', '1', '过期状态:正常', 1,
+           NOW(), 1);

@@ -34,4 +34,8 @@
             </if>
         </where>
     </select>
+    <delete id="deleteByAccountIdAndRoleId">
+        DELETE FROM t_role_account
+        WHERE account_id = #{accountId} AND role_id = #{roleId}
+    </delete>
 </mapper>

@@ -58,4 +58,9 @@
             tra.authority_id = #{authorityId}
         </where>
     </select>
+    <delete id="deleteByRoleIdAndAuthorityId">
+        DELETE
+        FROM t_role_authority
+        WHERE role_id = #{roleId} AND authority_id = #{authorityId}
+    </delete>
 </mapper>

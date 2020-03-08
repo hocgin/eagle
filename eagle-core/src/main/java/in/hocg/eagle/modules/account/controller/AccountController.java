@@ -52,7 +52,7 @@ public class AccountController {
 
     @GetMapping("/{id}")
     @UseLogger("获取账号信息")
-    public Result<IdAccountComplexVo> id(@PathVariable Long id) {
+    public Result<IdAccountComplexVo> selectOneById(@PathVariable Long id) {
         return Result.success(service.selectOneComplexAndRole(id));
     }
 
@@ -66,7 +66,7 @@ public class AccountController {
     }
 
     @PostMapping("/_search")
-    @UseLogger("查询权限列表")
+    @UseLogger("查询账号列表")
     public Result<IPage<AccountSearchVo>> search(@Validated @RequestBody AccountSearchQo qo) {
         return Result.success(service.search(qo));
     }

@@ -1,5 +1,10 @@
 package in.hocg.eagle.mapstruct.vo.account;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import in.hocg.eagle.basic.aspect.named.InjectNamed;
+import in.hocg.eagle.basic.aspect.named.Named;
+import in.hocg.eagle.basic.aspect.named.NamedType;
+import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -12,6 +17,7 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
+@InjectNamed
 public class AccountSearchVo {
     @ApiModelProperty("ID")
     private Long id;
@@ -27,16 +33,31 @@ public class AccountSearchVo {
     private String avatar;
     @ApiModelProperty("性别")
     private Integer gender;
+    @Named(idFor = "gender", type = NamedType.DataDict)
+    private String genderName;
+
     @ApiModelProperty("过期状态")
     private Integer expired;
+    @Named(idFor = "expired", type = NamedType.DataDict)
+    private String expiredName;
+
     @ApiModelProperty("锁定状态")
     private Integer locked;
+    @Named(idFor = "locked", type = NamedType.DataDict)
+    private String lockedName;
+
     @ApiModelProperty("启用状态")
     private Integer enabled;
+    @Named(idFor = "enabled", type = NamedType.DataDict)
+    private String enabledName;
+
     @ApiModelProperty("创建时IP")
     private String createdIp;
+
     @ApiModelProperty("创建时间")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
     @ApiModelProperty("最后更新时间")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime lastUpdatedAt;
 }

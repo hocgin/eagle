@@ -6,6 +6,7 @@ import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.Tree;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.eagle.basic.constant.datadict.Platform;
 import in.hocg.eagle.mapstruct.AccountMapping;
 import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.RoleMapping;
@@ -83,7 +84,24 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     @Transactional(rollbackFor = Exception.class)
     public void grantRole(GrantRoleQo qo) {
         final Long accountId = qo.getId();
-        qo.getRoles().forEach(roleId -> roleAccountService.grantRole(accountId, roleId));
+        final Integer platform = Platform.Eagle.getCode();
+        final List<Long> currentRoleIds = roleAccountService.selectListRoleByAccountId(accountId, platform)
+            .stream().map(Role::getId).collect(Collectors.toList());
+
+        final List<Long> roleIds = qo.getRoles();
+        // 删除
+        for (Long roleId : currentRoleIds) {
+            if (!roleIds.contains(roleId)) {
+                roleAccountService.deleteByAccountIdAndRoleId(accountId, roleId);
+            }
+        }
+
+        // 新增
+        for (Long roleId : roleIds) {
+            if (!currentRoleIds.contains(roleId)) {
+                roleAccountService.grantRole(accountId, roleId);
+            }
+        }
     }
 
     @Override
@@ -102,8 +120,8 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     public List<AuthorityTreeNodeVo> selectAuthorityTreeByCurrentAccount(Long accountId, Integer platform) {
         final List<Authority> authorities = selectListAuthorityById(accountId, platform);
         return Tree.getChild(null, authorities.stream()
-                .map(authorityMapping::asAuthorityTreeNodeVo)
-                .collect(Collectors.toList()));
+            .map(authorityMapping::asAuthorityTreeNodeVo)
+            .collect(Collectors.toList()));
     }
 
     @Override

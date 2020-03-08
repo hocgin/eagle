@@ -29,15 +29,15 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class RoleAuthorityServiceImpl extends AbstractServiceImpl<RoleAuthorityMapper, RoleAuthority>
         implements RoleAuthorityService {
-    
+
     private final RoleService roleService;
     private final AuthorityService authorityService;
-    
+
     @Override
     public boolean isUsedAuthority(String regexTreePath) {
         return baseMapper.selectListByAuthorityRegexTreePath(regexTreePath) > 0;
     }
-    
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void grantAuthority(Long roleId, Long authorityId) {
@@ -54,30 +54,35 @@ public class RoleAuthorityServiceImpl extends AbstractServiceImpl<RoleAuthorityM
                 .setRoleId(roleId);
         baseMapper.insert(roleAuthority);
     }
-    
+
     private boolean isHasAuthority(Long roleId, Long authorityId) {
         return baseMapper.countByRoleIdAndAuthorityId(roleId, authorityId) > 0;
     }
-    
+
     @Override
     public void deleteByRoleId(Long roleId) {
         baseMapper.deleteByRoleId(roleId);
     }
-    
+
     @Override
     public List<Authority> selectListAuthorityByRoleIdAndEnabled(Long roleId, Integer enabled) {
         return baseMapper.selectListAuthorityByRoleIdAndEnabled(roleId, enabled);
     }
-    
+
     @Override
     public List<Authority> selectListAuthorityByRoleIds(List<Long> roleIds) {
         return baseMapper.selectListAuthorityByRoleIdsAndEnabled(roleIds, Enabled.On.getCode());
     }
-    
+
     @Override
     public List<Role> selectListRoleByAuthorityId(Integer id) {
         return baseMapper.selectListRoleByAuthorityId(id);
     }
-    
-    
+
+    @Override
+    public void deleteByRoleIdAndAuthorityId(Long roleId, Long authorityId) {
+        baseMapper.deleteByRoleIdAndAuthorityId(roleId, authorityId);
+    }
+
+
 }

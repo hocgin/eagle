@@ -3,6 +3,7 @@ package in.hocg.eagle.mapstruct.vo.account;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
+import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -30,11 +31,30 @@ public class IdAccountComplexVo implements Serializable {
     private String phone;
     @ApiModelProperty("头像地址")
     private String avatar;
+
     @ApiModelProperty("性别(0:女, 1:男)")
     private Integer gender;
     @Named(idFor = "gender")
     private String genderName;
-    
+
+    @ApiModelProperty("过期状态")
+    private Integer expired;
+    @Named(idFor = "expired", type = NamedType.DataDict)
+    private String expiredName;
+
+    @ApiModelProperty("锁定状态")
+    private Integer locked;
+    @Named(idFor = "locked", type = NamedType.DataDict)
+    private String lockedName;
+
+    @ApiModelProperty("启用状态")
+    private Integer enabled;
+    @Named(idFor = "enabled", type = NamedType.DataDict)
+    private String enabledName;
+
+    @ApiModelProperty("创建时IP")
+    private String createdIp;
+
     @ApiModelProperty("角色及其权限")
     private List<RoleComplexVo> roles = Lists.newArrayList();
 }

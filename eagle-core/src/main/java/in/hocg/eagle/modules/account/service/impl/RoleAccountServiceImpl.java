@@ -30,15 +30,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMapper, RoleAccount> implements RoleAccountService {
-    
+
     private final AccountService accountService;
     private final RoleService roleService;
-    
+
     @Override
     public boolean isUsedRole(Long roleId) {
         return baseMapper.countByRoleId(roleId) > 0;
     }
-    
+
     @Override
     public void grantRole(Long accountId, Long roleId) {
         final Account account = accountService.getById(accountId);
@@ -53,7 +53,7 @@ public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMappe
                 .setRoleId(roleId);
         baseMapper.insert(insert);
     }
-    
+
     @Override
     public List<Authority> selectListAuthorityByAccountId(Long accountId, Integer platform) {
         final List<Role> roles = baseMapper.selectListRoleByAccountIdAndEnabled(accountId, platform, Enabled.On.getCode());
@@ -63,14 +63,19 @@ public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMappe
         }
         return roleService.selectListAuthorityByIds(roleIds);
     }
-    
+
     @Override
     public List<Role> selectListRoleByAccountId(Long accountId, Integer platform) {
         return baseMapper.selectListRoleByAccountIdAndEnabled(accountId, platform, Enabled.On.getCode());
     }
-    
+
+    @Override
+    public void deleteByAccountIdAndRoleId(Long accountId, Long roleId) {
+        baseMapper.deleteByAccountIdAndRoleId(accountId, roleId);
+    }
+
     private boolean isHasRole(Long accountId, Long roleId) {
         return baseMapper.countByAccountIdAndRoleId(accountId, roleId) > 0;
     }
-    
+
 }

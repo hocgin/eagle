@@ -16,7 +16,7 @@ import java.util.List;
  * @since 2020-02-11
  */
 public interface RoleAccountService extends AbstractService<RoleAccount> {
-    
+
     /**
      * 角色是否正在被使用
      *
@@ -24,7 +24,7 @@ public interface RoleAccountService extends AbstractService<RoleAccount> {
      * @return
      */
     boolean isUsedRole(Long roleId);
-    
+
     /**
      * 授权角色给账号
      *
@@ -32,7 +32,7 @@ public interface RoleAccountService extends AbstractService<RoleAccount> {
      * @param roleId
      */
     void grantRole(Long accountId, Long roleId);
-    
+
     /**
      * 查找账号所具备的权限
      *
@@ -41,7 +41,7 @@ public interface RoleAccountService extends AbstractService<RoleAccount> {
      * @return
      */
     List<Authority> selectListAuthorityByAccountId(Long accountId, Integer platform);
-    
+
     /**
      * 查找账号所具备的角色
      *
@@ -50,5 +50,12 @@ public interface RoleAccountService extends AbstractService<RoleAccount> {
      * @return
      */
     List<Role> selectListRoleByAccountId(Long accountId, Integer platform);
-    
+
+    /**
+     * 移除账户的角色
+     *
+     * @param accountId
+     * @param roleId
+     */
+    void deleteByAccountIdAndRoleId(Long accountId, Long roleId);
 }

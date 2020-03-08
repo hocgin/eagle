@@ -26,6 +26,9 @@ public interface AccountMapping {
      * @param account
      * @return
      */
+    @Mapping(target = "lockedName", ignore = true)
+    @Mapping(target = "expiredName", ignore = true)
+    @Mapping(target = "enabledName", ignore = true)
     @Mapping(target = "genderName", ignore = true)
     @Mapping(target = "roles", ignore = true)
     IdAccountComplexVo asIdAccountComplexVo(Account account);

@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Mapper
 public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
-    
+
     /**
      * 查询有符合 tree_path 的关联关系
      *
@@ -27,7 +27,7 @@ public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
      * @return
      */
     Integer selectListByAuthorityRegexTreePath(@Param("regexTreePath") String regexTreePath);
-    
+
     /**
      * 删除角色相关的权限绑定
      *
@@ -35,7 +35,7 @@ public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
      * @return
      */
     Integer deleteByRoleId(@Param("roleId") Long roleId);
-    
+
     /**
      * 查询角色关联的权限列表
      *
@@ -44,7 +44,7 @@ public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
      * @return
      */
     List<Authority> selectListAuthorityByRoleIdAndEnabled(@Param("roleId") Long roleId, @Param("enabled") Integer enabled);
-    
+
     /**
      * 查询 role_id 与 authority_id 符合条件的数量
      *
@@ -53,7 +53,7 @@ public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
      * @return
      */
     Integer countByRoleIdAndAuthorityId(@Param("roleId") Long roleId, @Param("authorityId") Long authorityId);
-    
+
     /**
      * 查找角色所具备的权限列表
      *
@@ -61,7 +61,7 @@ public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
      * @return
      */
     List<Authority> selectListAuthorityByRoleIdsAndEnabled(@Param("roleIds") List<Long> roleIds, @Param("enabled") Integer enabled);
-    
+
     /**
      * 查询使用该权限的角色
      *
@@ -69,4 +69,6 @@ public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
      * @return
      */
     List<Role> selectListRoleByAuthorityId(@Param("authorityId") Integer authorityId);
+
+    void deleteByRoleIdAndAuthorityId(@Param("roleId") Long roleId, @Param("authorityId") Long authorityId);
 }
