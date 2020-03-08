@@ -1,7 +1,7 @@
 -- auto-generated definition
 CREATE TABLE t_notify
 (
-    id              bigint,
+    id              bigint AUTO_INCREMENT,
     content         varchar(255) comment '消息文本',
     title           varchar(255) comment '消息标题',
     actor_id        bigint      not null comment '触发者ID',
@@ -33,7 +33,7 @@ CREATE TABLE t_notification
 -- auto-generated definition
 CREATE TABLE t_subscription
 (
-    id              bigint,
+    id              bigint AUTO_INCREMENT,
     subscriber_id   bigint      not null comment '订阅人ID',
     notify_type     int         not null comment '订阅通知类型',
     subject_id      bigint      not null comment '订阅对象ID',
