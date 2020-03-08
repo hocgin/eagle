@@ -1,7 +1,8 @@
 package in.hocg.eagle.mapstruct.qo.comment;
 
-import in.hocg.eagle.basic.constant.datadict.CommentTargetType;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.valid.RangeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,17 +17,12 @@ import javax.validation.constraints.NotEmpty;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class CommentPostQo extends BaseQo {
-    /**
-     * @see CommentTargetType 的名称
-     */
-    @ApiModelProperty("评论对象")
-    private String targetTypeCode;
-    @ApiModelProperty("评论对象的原ID,如:文章ID")
-    private Long id;
-    @ApiModelProperty("评论父级ID")
-    private Long parentId;
+public class CommentPutQo extends IdQo {
     @NotEmpty(message = "评论内容不能为空")
     @ApiModelProperty(value = "评论内容", required = true)
     private String content;
+
+    @ApiModelProperty("启用状态")
+    @RangeEnum(enumClass = Enabled.class)
+    private Integer enabled;
 }

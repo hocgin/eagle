@@ -1,6 +1,7 @@
 package in.hocg.eagle.mapstruct;
 
 import in.hocg.eagle.mapstruct.qo.comment.CommentPostQo;
+import in.hocg.eagle.mapstruct.qo.comment.CommentPutQo;
 import in.hocg.eagle.mapstruct.vo.comment.CommentComplexVo;
 import in.hocg.eagle.mapstruct.vo.comment.RootCommentComplexVo;
 import in.hocg.eagle.modules.comment.entity.Comment;
@@ -34,4 +35,13 @@ public interface CommentMapping {
     @Mapping(target = "targetId", ignore = true)
     @Mapping(target = "treePath", ignore = true)
     Comment asComment(CommentPostQo qo);
+
+    @Mapping(target = "parentId", ignore = true)
+    @Mapping(target = "parentId", ignore = true)
+    @Mapping(target = "creator", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
+    @Mapping(target = "lastUpdater", ignore = true)
+    @Mapping(target = "targetId", ignore = true)
+    @Mapping(target = "treePath", ignore = true)
+    Comment asComment(CommentPutQo qo);
 }

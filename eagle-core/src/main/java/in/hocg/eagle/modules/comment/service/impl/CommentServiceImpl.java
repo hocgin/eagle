@@ -8,6 +8,7 @@ import in.hocg.eagle.basic.constant.datadict.IntEnum;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.mapstruct.CommentMapping;
 import in.hocg.eagle.mapstruct.qo.comment.CommentPostQo;
+import in.hocg.eagle.mapstruct.qo.comment.CommentPutQo;
 import in.hocg.eagle.mapstruct.qo.comment.G2ndAfterCommentPagingQo;
 import in.hocg.eagle.mapstruct.qo.comment.RootCommentPagingQo;
 import in.hocg.eagle.mapstruct.vo.comment.CommentComplexVo;
@@ -46,6 +47,15 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public void updateComment(CommentPutQo qo) {
+        final Comment entity = mapping.asComment(qo);
+        entity.setLastUpdatedAt(qo.getCreatedAt());
+        entity.setLastUpdater(qo.getUserId());
+        updateOne(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void comment(CommentPostQo qo) throws Throwable {
         final String targetTypeCode = qo.getTargetTypeCode();
         final Long id = qo.getId();
@@ -60,8 +70,6 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
             Comment parent = baseMapper.selectById(parentId);
             VerifyUtils.notNull(parent, "父级不存在");
             path.append(parent.getTreePath());
-            boolean parentIsOff = LangUtils.equals(Enabled.Off.getCode(), parent.getEnabled());
-            VerifyUtils.isFalse(parentIsOff, "系统繁忙");
         }
 
         final Comment entity = mapping.asComment(qo);
@@ -112,6 +120,10 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
 
     private CommentComplexVo convert(Comment entity) {
         final CommentComplexVo result = mapping.asCommentComplexVo(entity);
+        final String content = LangUtils.equals(entity.getEnabled(), Enabled.On.getCode())
+            ? result.getContent()
+            : "已删除";
+        result.setContent(content);
         final Long parentId = entity.getParentId();
         result.setCommenter(accountService.selectOneComplex(result.getCommenterId()));
         if (Objects.nonNull(parentId)) {

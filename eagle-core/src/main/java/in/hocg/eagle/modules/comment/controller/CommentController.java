@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.mapstruct.qo.comment.CommentPostQo;
+import in.hocg.eagle.mapstruct.qo.comment.CommentPutQo;
 import in.hocg.eagle.mapstruct.qo.comment.G2ndAfterCommentPagingQo;
 import in.hocg.eagle.mapstruct.qo.comment.RootCommentPagingQo;
 import in.hocg.eagle.mapstruct.vo.comment.CommentComplexVo;
@@ -28,6 +29,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/comment")
 public class CommentController {
     private final CommentService service;
+
+    @PutMapping("/{id:\\d+}")
+    @UseLogger("更新评论")
+    public Result<Void> updateComment(@PathVariable("id") Long id,
+                                      @Validated @RequestBody CommentPutQo qo) {
+        qo.setId(id);
+        service.updateComment(qo);
+        return Result.success();
+    }
 
     @PostMapping
     @UseLogger("评论")
