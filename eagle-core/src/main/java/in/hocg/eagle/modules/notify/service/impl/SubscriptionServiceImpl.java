@@ -1,14 +1,20 @@
 package in.hocg.eagle.modules.notify.service.impl;
 
+import com.google.common.collect.Lists;
+import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.constant.datadict.NotifyType;
+import in.hocg.eagle.basic.constant.datadict.SubjectType;
+import in.hocg.eagle.modules.comment.entity.Comment;
+import in.hocg.eagle.modules.comment.service.CommentService;
 import in.hocg.eagle.modules.notify.entity.Subscription;
 import in.hocg.eagle.modules.notify.mapper.SubscriptionMapper;
 import in.hocg.eagle.modules.notify.service.SubscriptionService;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import org.springframework.stereotype.Service;
-import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -22,8 +28,28 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SubscriptionServiceImpl extends AbstractServiceImpl<SubscriptionMapper, Subscription> implements SubscriptionService {
 
+    private final CommentService commentService;
+
     @Override
     public List<Subscription> selectListBySubjectIdAndSubjectTypeAndNotifyType(Long subjectId, Integer subjectType, Integer notifyType) {
-        return null;
+        return lambdaQuery().eq(Subscription::getSubjectId, subjectId)
+            .eq(Subscription::getSubjectType, subjectType)
+            .eq(Subscription::getNotifyType, notifyType)
+            .list();
+    }
+
+    @Override
+    public List<Long> getReceivers(NotifyType notifyType, SubjectType subjectType, Long subjectId) {
+        List<Long> receivers = Lists.newArrayList();
+
+        if (notifyType.compareTo(NotifyType.SubscriptionComment) == 0) {
+            final Comment comment = commentService.getById(subjectId);
+            receivers.add(comment.getCreator());
+        }
+
+        receivers.addAll(selectListBySubjectIdAndSubjectTypeAndNotifyType(subjectId, subjectType.getCode(), notifyType.getCode())
+            .stream().map(Subscription::getSubscriberId)
+            .collect(Collectors.toList()));
+        return receivers.stream().distinct().collect(Collectors.toList());
     }
 }

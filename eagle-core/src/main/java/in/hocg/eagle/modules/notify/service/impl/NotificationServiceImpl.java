@@ -17,7 +17,6 @@ import in.hocg.eagle.mapstruct.vo.notify.SummaryVo;
 import in.hocg.eagle.modules.account.service.AccountService;
 import in.hocg.eagle.modules.notify.entity.Notification;
 import in.hocg.eagle.modules.notify.entity.Notify;
-import in.hocg.eagle.modules.notify.entity.Subscription;
 import in.hocg.eagle.modules.notify.mapper.NotificationMapper;
 import in.hocg.eagle.modules.notify.service.NotificationService;
 import in.hocg.eagle.modules.notify.service.NotifyService;
@@ -99,15 +98,12 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
         dto.setNotifyType(notifyType);
         dto.setSubjectType(subjectType);
         dto.setSubjectId(subjectId);
-        final List<Subscription> subscriptions = subscriptionService.selectListBySubjectIdAndSubjectTypeAndNotifyType(subjectId, subjectTypeCode, notifyTypeCode);
-        dto.setActorId(subscriptionDto.getActorId());
-        if (subscriptions.isEmpty()) {
+        final List<Long> receivers = subscriptionService.getReceivers(notifyType, subjectType, subjectId);
+        if (receivers.isEmpty()) {
             return;
         }
-        final List<Long> receivers = subscriptions.stream()
-            .map(Subscription::getSubscriberId)
-            .collect(Collectors.toList());
         dto.setReceivers(receivers);
+        dto.setActorId(subscriptionDto.getActorId());
         notifyService.published(dto);
     }
 
@@ -120,7 +116,7 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
         Integer top5 = 5;
         final List<NotifyItemVo> privateLetter = baseMapper.selectListByReceiverIdAndNotifyType(accountId, NotifyType.PrivateLetter.getCode(), top5)
             .stream().map(this::convertNotifyItem).collect(Collectors.toList());
-        final List<NotifyItemVo> subscription = baseMapper.selectListByReceiverIdAndNotifyType(accountId, NotifyType.Announcement.getCode(), top5)
+        final List<NotifyItemVo> subscription = baseMapper.selectListByReceiverIdAndNotifyType(accountId, NotifyType.Subscription.getCode(), top5)
             .stream().map(this::convertNotifyItem).collect(Collectors.toList());
         final List<NotifyItemVo> announcement = baseMapper.selectListByReceiverIdAndNotifyType(accountId, NotifyType.Announcement.getCode(), top5)
             .stream().map(this::convertNotifyItem).collect(Collectors.toList());

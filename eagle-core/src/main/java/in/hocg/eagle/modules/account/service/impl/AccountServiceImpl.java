@@ -32,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -137,5 +138,17 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         entity.setLastUpdatedAt(qo.getCreatedAt());
         entity.setLastUpdater(qo.getUserId());
         updateOne(entity);
+    }
+
+    @Override
+    public void verifyEntity(Account entity) {
+        final Long creatorId = entity.getCreator();
+        final Long lastUpdaterId = entity.getLastUpdater();
+        if (Objects.nonNull(creatorId)) {
+            VerifyUtils.notNull(baseMapper.selectById(creatorId));
+        }
+        if (Objects.nonNull(lastUpdaterId)) {
+            VerifyUtils.notNull(baseMapper.selectById(lastUpdaterId));
+        }
     }
 }

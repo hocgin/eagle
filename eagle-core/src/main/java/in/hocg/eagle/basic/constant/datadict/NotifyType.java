@@ -16,7 +16,12 @@ import lombok.RequiredArgsConstructor;
 public enum NotifyType implements IntEnum {
     PrivateLetter(0, "私信"),
     Announcement(1, "公告"),
-    Subscription(2, "订阅");
+    // > 100 都是订阅范围
+    Subscription(100, "订阅"),
+    /**
+     * @see in.hocg.eagle.modules.comment.entity.Comment
+     */
+    SubscriptionComment(111, "订阅::评论");
     private final Integer code;
     private final String name;
 }
