@@ -30,7 +30,4 @@ public class SummaryVo {
     @ApiModelProperty("5条公告")
     private List<NotifyItemVo> announcement = Lists.newArrayList();
 
-    enum SummaryType {
-
-    }
 }

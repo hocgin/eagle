@@ -125,6 +125,10 @@ INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `pa
 INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                         `creator`)
     VALUE (8, '角色管理', 1, 'role', 0, 6, '/6/8', NOW(), 1);
+# -- 消息中心
+# INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+#                         `creator`)
+#     VALUE (9, '消息中心', 1, 'notify', 0, null, '/9', NOW(), 1);
 
 # 角色
 INSERT INTO t_role(`id`, `title`, `role_code`, `platform`, `created_at`, `creator`)

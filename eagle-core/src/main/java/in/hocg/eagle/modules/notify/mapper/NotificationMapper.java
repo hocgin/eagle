@@ -21,7 +21,8 @@ import java.util.List;
 @Mapper
 public interface NotificationMapper extends BaseMapper<Notification> {
 
-    IPage<Notification> search(@Param("qo") SearchNotifyPageQo qo, @Param("page") Page page);
+    IPage<Notification> search(@Param("qo") SearchNotifyPageQo qo,
+                               @Param("page") Page page);
 
     void updateReadyAtNowByNotifyId(@Param("notifyId") Long notifyId,
                                     @Param("receiverId") Long receiverId);

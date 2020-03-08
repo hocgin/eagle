@@ -25,6 +25,9 @@ public class NotifyItemVo {
     @ApiModelProperty("订阅对象ID")
     private Long subjectId;
 
+    @ApiModelProperty("消息内容")
+    private String content;
+
     @ApiModelProperty("接收者ID")
     private Long receiverId;
     private AccountComplexVo receiver;

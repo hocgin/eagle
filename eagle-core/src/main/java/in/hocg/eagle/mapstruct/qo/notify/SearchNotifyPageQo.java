@@ -16,5 +16,7 @@ import lombok.EqualsAndHashCode;
 public class SearchNotifyPageQo extends PageQo {
     @ApiModelProperty("接收者")
     private Long receiverId;
+    @ApiModelProperty("通知类型")
+    private Integer notifyType;
 
 }

@@ -53,6 +53,11 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
     @Transactional(rollbackFor = Exception.class)
     public IPage<NotifyItemVo> search(SearchNotifyPageQo qo) {
         final IPage<Notification> result = baseMapper.search(qo, qo.page());
+        result.getRecords().forEach(notification -> {
+            final Long notifyId = notification.getNotifyId();
+            final Long receiverId = notification.getReceiverId();
+            updateReadyAtNow(notifyId, receiverId);
+        });
         return result.convert(this::convertNotifyItem);
     }
 
@@ -63,7 +68,6 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
         final Long actorId = notify.getActorId();
         final AccountComplexVo receiver = accountService.selectOneComplex(receiverId);
         final AccountComplexVo actor = accountService.selectOneComplex(actorId);
-        updateReadyAtNow(notifyId, receiverId);
         return mapping.asSearchNotifyVo(notification, notify, receiver, actor);
     }
 
@@ -114,6 +118,7 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
     }
 
     @Override
+    @ApiOperation("查询详情")
     @Transactional(rollbackFor = Exception.class)
     public SummaryVo selectSummary(Long accountId) {
         Integer readyCount = countByReady(accountId);

@@ -13,7 +13,7 @@ CREATE TABLE `t_account`
         COMMENT '手机号码;唯一,登录使用',
     `password`        VARCHAR(100)        NOT NULL
         COMMENT '密码',
-    `avatar`          VARCHAR(129)
+    `avatar`          VARCHAR(255)
         COMMENT '头像地址',
     `gender`          TINYINT(1) UNSIGNED NOT NULL
         COMMENT '性别(0:女, 1:男)',
@@ -68,6 +68,7 @@ CREATE TABLE `t_member`
  */
 INSERT INTO `t_account`(`id`, `nickname`, `username`, `email`, `phone`, `password`, `avatar`, `gender`, `created_ip`,
                         `created_at`, `creator`)
-    VALUE (1, 'admin', 'admin', 'admin@example.com', '13600747016', '{noop}hocgin', 'https://example.com/avatar', 1,
+    VALUE (1, 'admin', 'admin', 'admin@example.com', '13600747016', '{noop}hocgin', 'https://avataaars.io/?avatarStyle=Circle&topType=WinterHat4&accessoriesType=Prescription02&hatColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Blue02&eyeType=Wink&eyebrowType=UpDown&mouthType=Smile&skinColor=Pale', 1,
            '127.0.0.1',
            NOW(), 1);
+

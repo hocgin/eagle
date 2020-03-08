@@ -12,7 +12,7 @@ Content-Type: application/json
 Token: Bearer {{auth_token}}
 
 {
-    "content": "消息",
+    "content": "消息1",
     "receivers": [1]
 }
 

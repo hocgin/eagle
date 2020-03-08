@@ -4,12 +4,17 @@
 
     <select id="search" resultType="in.hocg.eagle.modules.notify.entity.Notification">
         SELECT tn.* FROM t_notification tn
-        LEFT JOIN t_notify t on tn.notify_id = t.id
+            LEFT JOIN t_notify tn2 on tn.notify_id = tn2.id
         <where>
             <if test="qo.receiverId != null">
                 AND tn.receiver_id = #{qo.receiverId}
             </if>
+            <!--通知类型: [私信, 公告, 订阅通知]-->
+            <if test="qo.notifyType != null">
+                AND tn2.notify_type = #{qo.notifyType}
+            </if>
         </where>
+        ORDER BY tn2.created_at DESC
     </select>
     <update id="updateReadyAtNowByNotifyId">
         UPDATE t_notification
@@ -23,15 +28,11 @@
         FROM t_notification tn
         LEFT JOIN t_notify tn2 on tn.notify_id = tn2.id
         WHERE tn.receiver_id = #{accountId}
-        <choose>
-            <!--订阅方式-->
-            <when test="notifyType == 2">
-                AND tn2.notify_type NOT IN(0, 1)
-            </when>
-            <otherwise>
-                AND tn2.notify_type = #{notifyType}
-            </otherwise>
-        </choose>
+        <if test="notifyType != null">
+            AND tn2.notify_type = #{notifyType}
+        </if>
+        ORDER BY tn2.created_at DESC
         LIMIT 0,#{topNumber}
     </select>
+
 </mapper>

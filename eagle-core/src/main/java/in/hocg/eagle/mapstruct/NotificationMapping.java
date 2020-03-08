@@ -25,6 +25,7 @@ public interface NotificationMapping {
     @Mapping(target = "subjectType", source = "notify.subjectType")
     @Mapping(target = "subjectId", source = "notify.subjectId")
     @Mapping(target = "actorId", source = "notify.actorId")
+    @Mapping(target = "content", source = "notify.content")
     NotifyItemVo asSearchNotifyVo(Notification notification, Notify notify);
 
     default NotifyItemVo asSearchNotifyVo(Notification notification,
