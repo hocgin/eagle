@@ -2,12 +2,12 @@ package in.hocg.eagle.modules.account.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.mapstruct.qo.GrantAuthorityQo;
-import in.hocg.eagle.mapstruct.qo.RolePostQo;
-import in.hocg.eagle.mapstruct.qo.RolePutQo;
-import in.hocg.eagle.mapstruct.qo.RoleSearchQo;
-import in.hocg.eagle.mapstruct.vo.RoleComplexVo;
-import in.hocg.eagle.mapstruct.vo.RoleSearchVo;
+import in.hocg.eagle.mapstruct.qo.authority.GrantAuthorityQo;
+import in.hocg.eagle.mapstruct.qo.role.RolePostQo;
+import in.hocg.eagle.mapstruct.qo.role.RolePutQo;
+import in.hocg.eagle.mapstruct.qo.role.RoleSearchQo;
+import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
+import in.hocg.eagle.mapstruct.vo.role.RoleSearchVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
 

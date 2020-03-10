@@ -9,7 +9,7 @@ import org.springframework.context.annotation.FilterType;
 @Configuration
 @ComponentScan(excludeFilters = {
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
-                EagleApplication.class
+                AppApplication.class
         })})
 @EnableAutoConfiguration
 public class TestConfiguration {

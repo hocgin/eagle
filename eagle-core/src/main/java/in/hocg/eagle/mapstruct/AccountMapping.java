@@ -1,8 +1,11 @@
 package in.hocg.eagle.mapstruct;
 
 
-import in.hocg.eagle.mapstruct.vo.IdAccountComplexVo;
-import in.hocg.eagle.mapstruct.vo.RoleComplexVo;
+import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusPutQo;
+import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
+import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
+import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
+import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
 import in.hocg.eagle.modules.account.entity.Account;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,16 +20,20 @@ import java.util.List;
  */
 @Mapper(componentModel = "spring")
 public interface AccountMapping {
-    
+
     /**
      * Account -> IdAccountComplexVo
      *
      * @param account
      * @return
      */
+    @Mapping(target = "lockedName", ignore = true)
+    @Mapping(target = "expiredName", ignore = true)
+    @Mapping(target = "enabledName", ignore = true)
+    @Mapping(target = "genderName", ignore = true)
     @Mapping(target = "roles", ignore = true)
     IdAccountComplexVo asIdAccountComplexVo(Account account);
-    
+
     /**
      * Account account, List<RoleComplexVo> roles -> IdAccountComplexVo
      *
@@ -39,4 +46,22 @@ public interface AccountMapping {
         result.setRoles(roles);
         return result;
     }
+
+    AccountSearchVo asAccountSearchVo(Account account);
+
+    @Mapping(target = "genderName", ignore = true)
+    AccountComplexVo asAccountComplexVo(Account account);
+
+    @Mapping(target = "email", ignore = true)
+    @Mapping(target = "gender", ignore = true)
+    @Mapping(target = "lastUpdater", ignore = true)
+    @Mapping(target = "username", ignore = true)
+    @Mapping(target = "nickname", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
+    @Mapping(target = "creator", ignore = true)
+    @Mapping(target = "createdIp", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "phone", ignore = true)
+    @Mapping(target = "avatar", ignore = true)
+    Account asAccount(AccountUpdateStatusPutQo qo);
 }

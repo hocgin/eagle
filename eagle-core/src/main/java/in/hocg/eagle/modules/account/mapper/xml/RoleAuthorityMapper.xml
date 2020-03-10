@@ -39,8 +39,7 @@
             LEFT JOIN t_authority ta ON ta.id = tra.authority_id
         <where>
             <if test="roleIds != null">
-                <foreach collection="roleIds" item="item"
-                         open="tra.role_id IN(" close=")">
+                <foreach collection="roleIds" item="item" separator="," open="tra.role_id IN(" close=")">
                     #{item}
                 </foreach>
             </if>
@@ -49,4 +48,18 @@
             </if>
         </where>
     </select>
+    <select id="selectListRoleByAuthorityId" resultType="in.hocg.eagle.modules.account.entity.Role">
+        SELECT
+        tr.*
+        FROM t_role_authority tra
+            LEFT JOIN t_role tr on tra.role_id = tr.id
+        <where>
+            tra.authority_id = #{authorityId}
+        </where>
+    </select>
+    <delete id="deleteByRoleIdAndAuthorityId">
+        DELETE
+        FROM t_role_authority
+        WHERE role_id = #{roleId} AND authority_id = #{authorityId}
+    </delete>
 </mapper>

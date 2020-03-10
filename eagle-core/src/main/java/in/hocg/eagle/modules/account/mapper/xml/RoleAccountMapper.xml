@@ -17,6 +17,9 @@
             <if test="accountId != null">
                 AND tra.account_id = #{accountId}
             </if>
+            <if test="platform != null">
+                AND tr.platform = #{platform}
+            </if>
             <if test="enabled != null">
                 AND tr.enabled = #{enabled}
             </if>
@@ -31,4 +34,8 @@
             </if>
         </where>
     </select>
+    <delete id="deleteByAccountIdAndRoleId">
+        DELETE FROM t_role_account
+        WHERE account_id = #{accountId} AND role_id = #{roleId}
+    </delete>
 </mapper>

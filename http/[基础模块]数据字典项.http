@@ -1,0 +1,44 @@
+### 删除数据字典项
+DELETE {{host}}/api/data-dict/item
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "id": [
+    1
+  ]
+}
+
+### 新增数据字典项
+POST {{host}}/api/data-dict/item
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "dictId": 1,
+  "items": [
+    {
+      "sort": 1000,
+      "enabled": 0,
+      "code": "0",
+      "remark": "标题:测试",
+      "title": "标题"
+    }
+  ]
+}
+
+### 详情数据字典项
+GET {{host}}/api/data-dict/item/2
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+### 更新数据字典项
+PUT {{host}}/api/data-dict/item/2
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+  "title": "sdkj"
+}
+
+####

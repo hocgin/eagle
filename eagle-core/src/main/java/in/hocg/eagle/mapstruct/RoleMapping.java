@@ -2,9 +2,9 @@ package in.hocg.eagle.mapstruct;
 
 
 import in.hocg.eagle.basic.security.GrantedAuthority;
-import in.hocg.eagle.mapstruct.qo.RolePostQo;
-import in.hocg.eagle.mapstruct.qo.RolePutQo;
-import in.hocg.eagle.mapstruct.vo.RoleComplexVo;
+import in.hocg.eagle.mapstruct.qo.role.RolePostQo;
+import in.hocg.eagle.mapstruct.qo.role.RolePutQo;
+import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
 import org.mapstruct.Mapper;
@@ -45,6 +45,11 @@ public interface RoleMapping {
     @Mapping(target = "remark", source = "role.remark")
     @Mapping(target = "id", source = "role.id")
     @Mapping(target = "enabled", source = "role.enabled")
+    @Mapping(target = "platform", source = "role.platform")
+    @Mapping(target = "creator", source = "role.creator")
+    @Mapping(target = "createdAt", source = "role.createdAt")
+    @Mapping(target = "lastUpdater", source = "role.lastUpdater")
+    @Mapping(target = "lastUpdatedAt", source = "role.lastUpdatedAt")
     RoleComplexVo asRoleComplexVo(Role role);
     
     /**

@@ -48,16 +48,6 @@ public class Authority extends AbstractEntity<Authority> {
      */
     @TableField("authority_code")
     private String authorityCode;
-    /**
-     * 请求方式 [*, GET, POST..]
-     */
-    @TableField("method")
-    private String method;
-    /**
-     * 请求URL
-     */
-    @TableField("uri")
-    private String uri;
     
     /**
      * 父级ID, 顶级为 NULL
@@ -74,6 +64,11 @@ public class Authority extends AbstractEntity<Authority> {
      */
     @TableField("enabled")
     private Integer enabled;
+    /**
+     * 平台编号
+     */
+    @TableField("platform")
+    private Integer platform;
     /**
      * 排序, 从大到小降序
      */

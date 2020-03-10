@@ -2,4 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.eagle.modules.base.mapper.DataDictItemMapper">
 
+    <select id="selectList" resultType="in.hocg.eagle.modules.base.entity.DataDictItem">
+        SELECT tddi.* FROM t_data_dict_item tddi
+        <where>
+            <if test="dictId != null">
+                AND tddi.dict_id = #{dictId}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByDictId">
+        DELETE FROM t_data_dict_item
+        WHERE dict_id = #{dictId}
+    </delete>
+    <select id="countDictIdAndCodeIgnoreId" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_data_dict_item tddi
+        <where>
+            tddi.code = #{code} AND tddi.dict_id = #{dictId}
+            <if test="id != null">
+                AND tddi.id != #{id}
+            </if>
+        </where>
+    </select>
 </mapper>

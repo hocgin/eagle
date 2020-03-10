@@ -60,6 +60,10 @@ public class RequestUtility {
         return request.getHeader("User-Agent");
     }
     
+    public static String getHost(HttpServletRequest request) {
+        return request.getHeader("Host");
+    }
+    
     public static boolean isAJAX(HttpServletRequest request) {
         return "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With"));
     }

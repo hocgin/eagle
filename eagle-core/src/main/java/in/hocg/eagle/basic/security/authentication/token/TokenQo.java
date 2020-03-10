@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.security.authentication.token;
 
-import in.hocg.eagle.basic.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.qo.BaseQo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -1,11 +1,12 @@
 package in.hocg.eagle.modules.account.service;
 
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.mapstruct.qo.AuthorityPostQo;
-import in.hocg.eagle.mapstruct.qo.AuthorityPutQo;
-import in.hocg.eagle.mapstruct.qo.AuthoritySearchQo;
-import in.hocg.eagle.mapstruct.qo.GrantRoleQo;
-import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
+import in.hocg.eagle.mapstruct.qo.authority.AuthorityPostQo;
+import in.hocg.eagle.mapstruct.qo.authority.AuthorityPutQo;
+import in.hocg.eagle.mapstruct.qo.authority.AuthoritySearchQo;
+import in.hocg.eagle.mapstruct.qo.role.GrantRoleQo;
+import in.hocg.eagle.mapstruct.vo.authority.AuthorityComplexVo;
+import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 
 import java.util.List;
@@ -44,7 +45,14 @@ public interface AuthorityService extends AbstractService<Authority> {
      * @param qo
      * @return
      */
-    List<AuthorityTreeNodeVo> search(AuthoritySearchQo qo);
+    List<Authority> search(AuthoritySearchQo qo);
+    /**
+     * 搜索权限
+     *
+     * @param qo
+     * @return
+     */
+    List<AuthorityTreeNodeVo> tree(AuthoritySearchQo qo);
     
     /**
      * 删除权限
@@ -58,4 +66,6 @@ public interface AuthorityService extends AbstractService<Authority> {
      * @param qo
      */
     void grantRole(GrantRoleQo qo);
+    
+    AuthorityComplexVo selectOne(Integer id);
 }

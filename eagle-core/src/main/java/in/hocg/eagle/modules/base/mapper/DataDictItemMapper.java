@@ -3,6 +3,9 @@ package in.hocg.eagle.modules.base.mapper;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +17,12 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface DataDictItemMapper extends BaseMapper<DataDictItem> {
-
+    
+    List<DataDictItem> selectList(@Param("dictId") Long dictId);
+    
+    void deleteByDictId(@Param("dictId") Long dictId);
+    
+    Integer countDictIdAndCodeIgnoreId(@Param("dictId") Long dictId,
+                                     @Param("code") String code,
+                                     @Param("id") Long id);
 }

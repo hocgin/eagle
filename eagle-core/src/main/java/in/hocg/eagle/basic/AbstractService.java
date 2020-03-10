@@ -10,4 +10,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author hocgin
  */
 public interface AbstractService<T> extends IService<T> {
+    void verifyEntity(T entity);
+
+    T updateOne(T entity);
+
+    T insertOne(T entity);
 }

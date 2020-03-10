@@ -1,6 +1,6 @@
 package in.hocg.eagle.mapstruct.qo;
 
-import in.hocg.eagle.basic.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.qo.BaseQo;
 import lombok.Data;
 
 /**

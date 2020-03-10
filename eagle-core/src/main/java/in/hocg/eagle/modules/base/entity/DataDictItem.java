@@ -33,12 +33,12 @@ public class DataDictItem extends AbstractEntity<DataDictItem> {
      * ID
      */
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
     /**
      * t_data_dict ID
      */
     @TableField("dict_id")
-    private Integer dictId;
+    private Long dictId;
     /**
      * 字典项名称
      */

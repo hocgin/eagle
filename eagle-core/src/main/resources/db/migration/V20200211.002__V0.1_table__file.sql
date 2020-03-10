@@ -17,5 +17,9 @@ CREATE TABLE `t_file`
     creator    BIGINT               NOT NULL
         COMMENT '创建人',
 
+    UNIQUE KEY (rel_id, rel_type),
     PRIMARY KEY (id)
-) COMMENT '[基础模块] 文件引用表';
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COMMENT '[基础模块] 文件引用表';

@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.account.service.impl;
 
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.Enabled;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
@@ -30,15 +30,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMapper, RoleAccount> implements RoleAccountService {
-    
+
     private final AccountService accountService;
     private final RoleService roleService;
-    
+
     @Override
     public boolean isUsedRole(Long roleId) {
         return baseMapper.countByRoleId(roleId) > 0;
     }
-    
+
     @Override
     public void grantRole(Long accountId, Long roleId) {
         final Account account = accountService.getById(accountId);
@@ -53,24 +53,29 @@ public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMappe
                 .setRoleId(roleId);
         baseMapper.insert(insert);
     }
-    
+
     @Override
-    public List<Authority> selectListAuthorityByAccountId(Long accountId) {
-        final List<Role> roles = baseMapper.selectListRoleByAccountIdAndEnabled(accountId, Enabled.On.getCode());
+    public List<Authority> selectListAuthorityByAccountId(Long accountId, Integer platform) {
+        final List<Role> roles = baseMapper.selectListRoleByAccountIdAndEnabled(accountId, platform, Enabled.On.getCode());
         final List<Long> roleIds = LangUtils.toList(roles, Role::getId);
         if (roleIds.isEmpty()) {
             return Lists.newArrayList();
         }
         return roleService.selectListAuthorityByIds(roleIds);
     }
-    
+
     @Override
-    public List<Role> selectListRoleByAccountId(Long accountId) {
-        return baseMapper.selectListRoleByAccountIdAndEnabled(accountId, Enabled.On.getCode());
+    public List<Role> selectListRoleByAccountId(Long accountId, Integer platform) {
+        return baseMapper.selectListRoleByAccountIdAndEnabled(accountId, platform, Enabled.On.getCode());
     }
-    
+
+    @Override
+    public void deleteByAccountIdAndRoleId(Long accountId, Long roleId) {
+        baseMapper.deleteByAccountIdAndRoleId(accountId, roleId);
+    }
+
     private boolean isHasRole(Long accountId, Long roleId) {
         return baseMapper.countByAccountIdAndRoleId(accountId, roleId) > 0;
     }
-    
+
 }

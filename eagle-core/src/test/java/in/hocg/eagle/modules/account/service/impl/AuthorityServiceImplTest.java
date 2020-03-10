@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.account.service.impl;
 
 import in.hocg.eagle.basic.AbstractSpringBootTest;
-import in.hocg.eagle.mapstruct.qo.AuthoritySearchQo;
-import in.hocg.eagle.mapstruct.vo.AuthorityTreeNodeVo;
+import in.hocg.eagle.mapstruct.qo.authority.AuthoritySearchQo;
+import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.service.AuthorityService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class AuthorityServiceImplTest extends AbstractSpringBootTest {
     
     @Test
     public void search() {
-        final List<AuthorityTreeNodeVo> search = authorityService.search(new AuthoritySearchQo());
+        final List<AuthorityTreeNodeVo> search = authorityService.tree(new AuthoritySearchQo());
         log.debug("{}", search);
     }
 }

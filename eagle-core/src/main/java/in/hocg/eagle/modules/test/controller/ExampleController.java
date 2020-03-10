@@ -4,7 +4,6 @@ package in.hocg.eagle.modules.test.controller;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.mapstruct.qo.ExamplePostQo;
 import in.hocg.eagle.mapstruct.qo.ExamplePutQo;
-import in.hocg.eagle.mapstruct.qo.ExampleSearchQo;
 import in.hocg.eagle.modules.test.service.ExampleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -51,7 +50,7 @@ public class ExampleController {
     }
     
     @PostMapping("/_search")
-    public Result<Void> search(@Validated @RequestBody ExampleSearchQo qo) {
+    public Result<Void> search(@Validated @RequestBody Void qo) {
         return Result.success();
     }
 }

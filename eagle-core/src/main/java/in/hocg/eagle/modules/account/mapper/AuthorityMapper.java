@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.account.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.eagle.mapstruct.qo.authority.AuthoritySearchQo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -33,16 +34,16 @@ public interface AuthorityMapper extends BaseMapper<Authority> {
      * @param newTreePath
      */
     int updateTreePathByRegexTreePath(@Param("regexTreePath") String regexTreePath,
-                                       @Param("oldTreePath") String oldTreePath,
-                                       @Param("newTreePath") String newTreePath);
+                                      @Param("oldTreePath") String oldTreePath,
+                                      @Param("newTreePath") String newTreePath);
     
     /**
      * 查找 parent_id 符合的数据
      *
-     * @param parentId
+     * @param qo
      * @return
      */
-    List<Authority> selectListByParentId(@Param("parentId") Long parentId);
+    List<Authority> search(@Param("qo") AuthoritySearchQo qo);
     
     /**
      * 获取 tree_path 匹配的数据

@@ -1,0 +1,37 @@
+version: "2"
+services:
+  redis:
+    image: redis
+    restart: always
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+      - ./conf/mariadb:/etc/mysql/conf.d
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: hocgin
+    depends_on:
+      - dbdata
+    volumes_from:
+      - dbdata
+
+#  eagle:
+#    build:
+#      dockerfile: ../Dockerfile
+#      args:
+#        JAR_FILE: ../
+
+  dbdata:
+    image: alpine:latest
+    container_name: dbdata
+    volumes:
+      - /var/lib/mysql

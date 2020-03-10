@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.base.service.impl;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.mapstruct.qo.file.UploadFileDto;
-import in.hocg.eagle.mapstruct.vo.FileVo;
+import in.hocg.eagle.mapstruct.vo.file.FileVo;
 import in.hocg.eagle.modules.base.entity.File;
 import in.hocg.eagle.modules.base.mapper.FileMapper;
 import in.hocg.eagle.modules.base.service.FileService;

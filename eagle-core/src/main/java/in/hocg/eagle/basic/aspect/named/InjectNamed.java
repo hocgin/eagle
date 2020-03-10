@@ -8,7 +8,7 @@ import java.lang.annotation.*;
  *
  * @author hocgin
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.TYPE, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface InjectNamed {

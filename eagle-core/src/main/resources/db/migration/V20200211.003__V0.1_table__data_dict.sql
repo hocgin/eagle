@@ -79,7 +79,6 @@ INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
     VALUE (1, '禁用', '0', '启用状态:禁用', 1,
            NOW(), 1);
 
-
 #  性别
 INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
                           `created_at`, `creator`)
@@ -92,4 +91,84 @@ INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
 INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
                                `created_at`, `creator`)
     VALUE (2, '女', '0', '性别:女', 1,
+           NOW(), 1);
+
+#  平台类型
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (3, '平台类型', 'platform', '平台类型', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (3, 'Eagle', '0', '平台类型:Eagle', 1,
+           NOW(), 1);
+
+#  权限类型
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (4, '权限类型', 'authorityType', '权限类型', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (4, '按钮', '0', '权限类型:按钮', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (4, '菜单', '1', '权限类型:菜单', 1,
+           NOW(), 1);
+
+#  通知类型
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (5, '通知类型', 'notifyType', '通知类型', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (5, '私信', '0', '通知类型:私信', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (5, '公告', '1', '通知类型:公告', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (5, '订阅', '2', '通知类型:订阅', 1,
+           NOW(), 1);
+
+#  订阅类型
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (6, '订阅类型', 'subjectType', '订阅类型', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (6, '评论', '0', '订阅类型:评论', 1,
+           NOW(), 1);
+
+#  过期状态
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (7, '过期状态', 'expired', '过期状态', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (7, '已过期', '0', '过期状态:已过期', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (7, '正常', '1', '过期状态:正常', 1,
+           NOW(), 1);
+
+#  锁定状态
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (8, '锁定状态', 'locked', '过期状态', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (8, '已锁定', '0', '过期状态:已锁定', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (8, '正常', '1', '过期状态:正常', 1,
            NOW(), 1);
