@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `t_product`;
-CREATE TABLE `t_product`
+DROP TABLE IF EXISTS `shop_product`;
+CREATE TABLE `shop_product`
 (
     id              BIGINT AUTO_INCREMENT,
     classify_id     BIGINT       NOT NULL
@@ -26,8 +26,8 @@ CREATE TABLE `t_product`
     DEFAULT CHARSET = utf8mb4
     COMMENT '[Shop模块] 商品表';
 --
-DROP TABLE IF EXISTS `t_product_classify`;
-CREATE TABLE t_product_classify
+DROP TABLE IF EXISTS `shop_product_classify`;
+CREATE TABLE shop_product_classify
 (
     id              bigint AUTO_INCREMENT,
     parent_id       bigint,
@@ -51,8 +51,8 @@ CREATE TABLE t_product_classify
     DEFAULT CHARSET = utf8mb4
     COMMENT '[Shop模块] 商品分类表';
 --
-DROP TABLE IF EXISTS `t_sku`;
-CREATE TABLE `t_sku`
+DROP TABLE IF EXISTS `shop_sku`;
+CREATE TABLE `shop_sku`
 (
     id        BIGINT AUTO_INCREMENT,
     --
@@ -70,8 +70,8 @@ CREATE TABLE `t_sku`
     DEFAULT CHARSET = utf8mb4
     COMMENT '[Shop模块] 商品SKU表';
 --
-DROP TABLE IF EXISTS `t_spec`;
-CREATE TABLE `t_spec`
+DROP TABLE IF EXISTS `shop_spec`;
+CREATE TABLE `shop_spec`
 (
     id         BIGINT AUTO_INCREMENT,
     product_id BIGINT NOT NULL,
@@ -84,8 +84,8 @@ CREATE TABLE `t_spec`
     DEFAULT CHARSET = utf8mb4
     COMMENT '[Shop模块] 商品规格表';
 --
-DROP TABLE IF EXISTS `t_spec_value`;
-CREATE TABLE `t_spec_value`
+DROP TABLE IF EXISTS `shop_spec_value`;
+CREATE TABLE `shop_spec_value`
 (
     id      BIGINT AUTO_INCREMENT,
     spec_id BIGINT NOT NULL
