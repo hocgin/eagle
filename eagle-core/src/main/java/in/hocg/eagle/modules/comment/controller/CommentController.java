@@ -32,17 +32,17 @@ public class CommentController {
 
     @PutMapping("/{id:\\d+}")
     @UseLogger("更新评论")
-    public Result<Void> updateComment(@PathVariable("id") Long id,
-                                      @Validated @RequestBody CommentPutQo qo) {
+    public Result<Void> updateOne(@PathVariable("id") Long id,
+                                  @Validated @RequestBody CommentPutQo qo) {
         qo.setId(id);
-        service.updateComment(qo);
+        service.updateOne(qo);
         return Result.success();
     }
 
     @PostMapping
     @UseLogger("评论")
-    public Result<Void> comment(@Validated @RequestBody CommentPostQo qo) throws Throwable {
-        service.comment(qo);
+    public Result<Void> insertOne(@Validated @RequestBody CommentPostQo qo) throws Throwable {
+        service.insertOne(qo);
         return Result.success();
     }
 
@@ -55,7 +55,7 @@ public class CommentController {
     @PostMapping("/{parentId:\\d+}/paging")
     @UseLogger("查询根评论的子评论")
     public Result<IPage<CommentComplexVo>> paging2ndAfterComment(@PathVariable("parentId") Long parentId,
-                                                                 @RequestBody G2ndAfterCommentPagingQo qo) throws Throwable {
+                                                                 @RequestBody G2ndAfterCommentPagingQo qo) {
         qo.setParentId(parentId);
         return Result.success(service.paging2ndAfterComment(qo));
     }

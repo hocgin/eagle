@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SearchNotifyPageQo extends PageQo {
+public class SearchNotifyPagingQo extends PageQo {
     @ApiModelProperty("接收者")
     private Long receiverId;
     @ApiModelProperty("通知类型")

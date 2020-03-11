@@ -3,11 +3,11 @@ package in.hocg.eagle.modules.account.controller;
 
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.mapstruct.qo.authority.AuthorityPostQo;
-import in.hocg.eagle.mapstruct.qo.authority.AuthorityPutQo;
+import in.hocg.eagle.mapstruct.qo.authority.AuthorityInsertQo;
 import in.hocg.eagle.mapstruct.qo.authority.AuthoritySearchQo;
+import in.hocg.eagle.mapstruct.qo.authority.AuthorityUpdateQo;
 import in.hocg.eagle.mapstruct.qo.role.GrantRoleQo;
-import in.hocg.eagle.mapstruct.vo.authority.AuthorityComplexVo;
+import in.hocg.eagle.mapstruct.vo.authority.AuthorityComplexAndRoleVo;
 import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.service.AuthorityService;
@@ -35,28 +35,28 @@ public class AuthorityController {
 
     @DeleteMapping("/{id}")
     @UseLogger("删除权限")
-    public Result<Void> deleteById(@PathVariable Long id,
-                                   @RequestParam(name = "force", required = false, defaultValue = "false") boolean force) {
+    public Result<Void> deleteOne(@PathVariable Long id,
+                                  @RequestParam(name = "force", required = false, defaultValue = "false") boolean force) {
         service.deleteById(id, force);
         return Result.success();
     }
 
     @GetMapping("/{id}")
     @UseLogger("查询权限信息")
-    public Result<Authority> selectById(@PathVariable Integer id) {
+    public Result<Authority> selectOne(@PathVariable Integer id) {
         return Result.success(service.getById(id));
     }
 
 
     @GetMapping("/{id:\\d+}:complex")
     @UseLogger("查询权限信息")
-    public Result<AuthorityComplexVo> selectOneAuthorityComplexById(@PathVariable Integer id) {
+    public Result<AuthorityComplexAndRoleVo> selectOneAuthorityComplexAndRole(@PathVariable Long id) {
         return Result.success(service.selectOne(id));
     }
 
     @PostMapping
     @UseLogger("新增权限")
-    public Result<Void> insert(@Validated @RequestBody AuthorityPostQo qo) {
+    public Result<Void> insert(@Validated @RequestBody AuthorityInsertQo qo) {
         service.insertOne(qo);
         return Result.success();
     }
@@ -64,7 +64,7 @@ public class AuthorityController {
     @PutMapping("/{id}")
     @UseLogger("更新权限")
     public Result<Void> update(@PathVariable Long id,
-                               @Validated @RequestBody AuthorityPutQo qo) {
+                               @Validated @RequestBody AuthorityUpdateQo qo) {
         qo.setId(id);
         service.updateOne(qo);
         return Result.success();

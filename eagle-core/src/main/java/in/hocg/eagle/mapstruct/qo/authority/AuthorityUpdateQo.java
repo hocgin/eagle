@@ -18,25 +18,25 @@ import javax.validation.constraints.Pattern;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AuthorityPutQo extends IdQo {
-    
+public class AuthorityUpdateQo extends IdQo {
+
     @ApiModelProperty("权限名称")
     private String title;
-    
+
     @ApiModelProperty("权限类型")
     private Integer type;
-    
+
     @ApiModelProperty("权限授权码")
     @Pattern(regexp = PatternConstant.ONLY_NUMBER_OR_WORD, message = "仅支持数字和字母组合")
     private String authorityCode;
-    
+
     @ApiModelProperty("启用状态")
     @RangeEnum(enumClass = Enabled.class)
     private Integer enabled;
-    
+
     @ApiModelProperty("排序")
     private Integer sort;
-    
+
     @ApiModelProperty("父级")
     private Integer parentId;
 }

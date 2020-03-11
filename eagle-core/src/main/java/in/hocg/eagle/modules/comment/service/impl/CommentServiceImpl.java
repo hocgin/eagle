@@ -20,7 +20,7 @@ import in.hocg.eagle.modules.comment.service.CommentTargetService;
 import in.hocg.eagle.modules.notify.message.event.SubscriptionEvent;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ResultUtils;
-import in.hocg.eagle.utils.VerifyUtils;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -47,7 +47,7 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateComment(CommentPutQo qo) {
+    public void updateOne(CommentPutQo qo) {
         final Comment entity = mapping.asComment(qo);
         entity.setLastUpdatedAt(qo.getCreatedAt());
         entity.setLastUpdater(qo.getUserId());
@@ -56,7 +56,7 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void comment(CommentPostQo qo) throws Throwable {
+    public void insertOne(CommentPostQo qo) throws Throwable {
         final String targetTypeCode = qo.getTargetTypeCode();
         final Long id = qo.getId();
         final CommentTargetType targetType = IntEnum.of(targetTypeCode, CommentTargetType.class)
@@ -68,7 +68,7 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
 
         if (Objects.nonNull(parentId)) {
             Comment parent = baseMapper.selectById(parentId);
-            VerifyUtils.notNull(parent, "父级不存在");
+            ValidUtils.notNull(parent, "父级不存在");
             path.append(parent.getTreePath());
         }
 
@@ -84,6 +84,8 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
         path.append(String.format("/%d", commentId));
         entity.setTreePath(path.toString());
         validUpdateById(entity);
+
+        // 触发消息
         MessageContext.publish(new SubscriptionEvent()
             .setActorId(creatorId)
             .setSubjectId(commentId)
@@ -102,7 +104,7 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
             .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("未找到评论"));
         final IPage<Comment> result = baseMapper.pagingRootCommend(targetId, Enabled.On.getCode(), qo.page());
         return result.convert(entity -> {
-            final RootCommentComplexVo item = mapping.asRootCommentComplexVo(this.convert(entity));
+            final RootCommentComplexVo item = mapping.asRootCommentComplexVo(this.convertComplex(entity));
             final String treePath = entity.getTreePath();
             item.setChildrenTotal(countRightLikeTreePath(treePath));
             return item;
@@ -117,15 +119,15 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
             return ResultUtils.emptyPage(qo);
         }
 
-        VerifyUtils.notNull(pComment);
-        VerifyUtils.isNull(pComment.getParentId(), "非根评论");
+        ValidUtils.notNull(pComment);
+        ValidUtils.isNull(pComment.getParentId(), "非根评论");
         final String treePath = pComment.getTreePath();
         final String regexTreePath = String.format("%s/.*", treePath);
         final IPage<Comment> result = baseMapper.pagingByRegexTreePath(regexTreePath, qo.page());
-        return result.convert(this::convert);
+        return result.convert(this::convertComplex);
     }
 
-    private CommentComplexVo convert(Comment entity) {
+    private CommentComplexVo convertComplex(Comment entity) {
         final CommentComplexVo result = mapping.asCommentComplexVo(entity);
         final String content = LangUtils.equals(entity.getEnabled(), Enabled.On.getCode())
             ? result.getContent()
@@ -152,10 +154,10 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
         final Long targetId = entity.getTargetId();
 
         if (Objects.nonNull(parentId)) {
-            VerifyUtils.notNull(baseMapper.selectById(parentId));
+            ValidUtils.notNull(baseMapper.selectById(parentId));
         }
         if (Objects.nonNull(targetId)) {
-            VerifyUtils.notNull(commentTargetService.getById(targetId));
+            ValidUtils.notNull(commentTargetService.getById(targetId));
         }
     }
 }

@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
-import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
+import in.hocg.eagle.mapstruct.vo.role.RoleComplexAndAuthorityVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -56,5 +56,5 @@ public class IdAccountComplexVo implements Serializable {
     private String createdIp;
 
     @ApiModelProperty("角色及其权限")
-    private List<RoleComplexVo> roles = Lists.newArrayList();
+    private List<RoleComplexAndAuthorityVo> roles = Lists.newArrayList();
 }

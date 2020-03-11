@@ -25,7 +25,7 @@ public interface CommentService extends AbstractService<Comment> {
      *
      * @param qo
      */
-    void updateComment(CommentPutQo qo);
+    void updateOne(CommentPutQo qo);
 
     /**
      * 发表评论
@@ -33,7 +33,7 @@ public interface CommentService extends AbstractService<Comment> {
      * @param qo qo
      * @throws Throwable
      */
-    void comment(CommentPostQo qo) throws Throwable;
+    void insertOne(CommentPostQo qo) throws Throwable;
 
     /**
      * 查询根级评论

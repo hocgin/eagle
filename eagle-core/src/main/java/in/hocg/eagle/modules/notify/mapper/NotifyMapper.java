@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.notify.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import in.hocg.eagle.mapstruct.qo.notify.SearchNotifyPageQo;
+import in.hocg.eagle.mapstruct.qo.notify.SearchNotifyPagingQo;
 import in.hocg.eagle.modules.notify.entity.Notify;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,5 +18,5 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface NotifyMapper extends BaseMapper<Notify> {
-    IPage<Notify> search(@Param("qo") SearchNotifyPageQo qo, @Param("page") Page page);
+    IPage<Notify> search(@Param("qo") SearchNotifyPagingQo qo, @Param("page") Page page);
 }

@@ -8,9 +8,9 @@ import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.basic.security.SecurityContext;
 import in.hocg.eagle.mapstruct.qo.account.AccountSearchQo;
-import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusPutQo;
+import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusQo;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
-import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
+import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.service.AccountService;
@@ -69,7 +69,7 @@ public class AccountController {
     @PutMapping("/{id}")
     @UseLogger("更改账户状态")
     public Result<Void> updateAccountStatus(@PathVariable Long id,
-                                            @Validated @RequestBody AccountUpdateStatusPutQo qo) {
+                                            @Validated @RequestBody AccountUpdateStatusQo qo) {
         qo.setId(id);
         service.updateStatus(qo);
         return Result.success();
@@ -77,7 +77,7 @@ public class AccountController {
 
     @PostMapping("/_search")
     @UseLogger("查询账号列表")
-    public Result<IPage<AccountSearchVo>> search(@Validated @RequestBody AccountSearchQo qo) {
+    public Result<IPage<AccountComplexVo>> search(@Validated @RequestBody AccountSearchQo qo) {
         return Result.success(service.search(qo));
     }
 

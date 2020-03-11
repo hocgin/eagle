@@ -1,11 +1,11 @@
 package in.hocg.eagle.mapstruct;
 
 
-import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusPutQo;
+import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusQo;
 import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
 import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
-import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
+import in.hocg.eagle.mapstruct.vo.role.RoleComplexAndAuthorityVo;
 import in.hocg.eagle.modules.account.entity.Account;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -41,7 +41,7 @@ public interface AccountMapping {
      * @param roles
      * @return
      */
-    default IdAccountComplexVo asIdAccountComplexVo(Account account, List<RoleComplexVo> roles) {
+    default IdAccountComplexVo asIdAccountComplexVo(Account account, List<RoleComplexAndAuthorityVo> roles) {
         final IdAccountComplexVo result = asIdAccountComplexVo(account);
         result.setRoles(roles);
         return result;
@@ -63,5 +63,5 @@ public interface AccountMapping {
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "phone", ignore = true)
     @Mapping(target = "avatar", ignore = true)
-    Account asAccount(AccountUpdateStatusPutQo qo);
+    Account asAccount(AccountUpdateStatusQo qo);
 }

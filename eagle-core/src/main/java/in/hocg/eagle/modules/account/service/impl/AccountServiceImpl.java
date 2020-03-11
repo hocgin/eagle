@@ -11,13 +11,12 @@ import in.hocg.eagle.mapstruct.AccountMapping;
 import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.RoleMapping;
 import in.hocg.eagle.mapstruct.qo.account.AccountSearchQo;
-import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusPutQo;
+import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusQo;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
-import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
 import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
-import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
+import in.hocg.eagle.mapstruct.vo.role.RoleComplexAndAuthorityVo;
 import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
@@ -25,7 +24,7 @@ import in.hocg.eagle.modules.account.mapper.AccountMapper;
 import in.hocg.eagle.modules.account.service.AccountService;
 import in.hocg.eagle.modules.account.service.RoleAccountService;
 import in.hocg.eagle.modules.account.service.RoleAuthorityService;
-import in.hocg.eagle.utils.VerifyUtils;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -58,13 +57,13 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     @Transactional(rollbackFor = Exception.class)
     public IdAccountComplexVo selectOneComplexAndRole(Long id) {
         final Account account = baseMapper.selectById(id);
-        VerifyUtils.notNull(account, "账号不存在");
+        ValidUtils.notNull(account, "账号不存在");
         final List<Role> roles = roleAccountService.selectListRoleByAccountId(id, GlobalConstant.CURRENT_PLATFORM.getCode());
         List<Authority> authorities;
-        List<RoleComplexVo> roleComplexes = Lists.newArrayList();
+        List<RoleComplexAndAuthorityVo> roleComplexes = Lists.newArrayList();
         for (Role role : roles) {
             authorities = roleAuthorityService.selectListAuthorityByRoleIdAndEnabled(role.getId(), Enabled.On.getCode());
-            roleComplexes.add(roleMapping.asRoleComplexVo(role, authorities));
+            roleComplexes.add(roleMapping.asRoleComplexAndAuthorityVo(role, authorities));
         }
         return mapping.asIdAccountComplexVo(account, roleComplexes);
     }
@@ -72,9 +71,9 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     @Override
     @Transactional(rollbackFor = Exception.class)
     public AccountComplexVo selectOneComplex(Long id) {
-        final Account account = baseMapper.selectById(id);
-        VerifyUtils.notNull(account, "账号不存在");
-        return mapping.asAccountComplexVo(account);
+        final Account entity = baseMapper.selectById(id);
+        ValidUtils.notNull(entity, "账号不存在");
+        return convertComplex(entity);
     }
 
     @Override
@@ -127,17 +126,22 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     }
 
     @Override
-    public IPage<AccountSearchVo> search(AccountSearchQo qo) {
-        return baseMapper.search(qo, qo.page()).convert(mapping::asAccountSearchVo);
+    public IPage<AccountComplexVo> search(AccountSearchQo qo) {
+        return baseMapper.search(qo, qo.page())
+            .convert(this::convertComplex);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateStatus(AccountUpdateStatusPutQo qo) {
+    public void updateStatus(AccountUpdateStatusQo qo) {
         Account entity = mapping.asAccount(qo);
         entity.setLastUpdatedAt(qo.getCreatedAt());
         entity.setLastUpdater(qo.getUserId());
         validUpdateById(entity);
+    }
+
+    private AccountComplexVo convertComplex(Account entity) {
+        return mapping.asAccountComplexVo(entity);
     }
 
     @Override
@@ -145,10 +149,10 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         final Long creatorId = entity.getCreator();
         final Long lastUpdaterId = entity.getLastUpdater();
         if (Objects.nonNull(creatorId)) {
-            VerifyUtils.notNull(baseMapper.selectById(creatorId));
+            ValidUtils.notNull(baseMapper.selectById(creatorId));
         }
         if (Objects.nonNull(lastUpdaterId)) {
-            VerifyUtils.notNull(baseMapper.selectById(lastUpdaterId));
+            ValidUtils.notNull(baseMapper.selectById(lastUpdaterId));
         }
     }
 }

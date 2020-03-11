@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Data
 @InjectNamed
-public class AuthorityComplexVo implements Serializable {
+public class AuthorityComplexAndRoleVo implements Serializable {
     @ApiModelProperty("ID")
     private Long id;
     @ApiModelProperty("标题")

@@ -7,18 +7,18 @@ import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.mapstruct.RoleMapping;
 import in.hocg.eagle.mapstruct.qo.authority.GrantAuthorityQo;
-import in.hocg.eagle.mapstruct.qo.role.RolePostQo;
-import in.hocg.eagle.mapstruct.qo.role.RolePutQo;
+import in.hocg.eagle.mapstruct.qo.role.RoleInsertQo;
+import in.hocg.eagle.mapstruct.qo.role.RoleUpdateQo;
 import in.hocg.eagle.mapstruct.qo.role.RoleSearchQo;
+import in.hocg.eagle.mapstruct.vo.role.RoleComplexAndAuthorityVo;
 import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
-import in.hocg.eagle.mapstruct.vo.role.RoleSearchVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
 import in.hocg.eagle.modules.account.mapper.RoleMapper;
 import in.hocg.eagle.modules.account.service.RoleAccountService;
 import in.hocg.eagle.modules.account.service.RoleAuthorityService;
 import in.hocg.eagle.modules.account.service.RoleService;
-import in.hocg.eagle.utils.VerifyUtils;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -43,18 +43,6 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     private final RoleAuthorityService roleAuthorityService;
     private final RoleAccountService roleAccountService;
 
-    private int insert(Role role) {
-        final String roleCode = role.getRoleCode();
-        if (hasRoleCode(roleCode)) {
-            throw ServiceException.wrap("新增失败,角色码已经存在");
-        }
-        return baseMapper.insert(role);
-    }
-
-    public boolean hasRoleCode(String roleCode) {
-        return hasRoleCodeIgnoreId(roleCode, null);
-    }
-
     public boolean hasRoleCodeIgnoreId(String roleCode, Long id) {
         return lambdaQuery().eq(Role::getRoleCode, roleCode)
             .ne(Objects.nonNull(id), Role::getId, id)
@@ -63,11 +51,11 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void insertOne(RolePostQo qo) {
+    public void insertOne(RoleInsertQo qo) {
         final Role role = mapping.asRole(qo);
         role.setCreatedAt(qo.getCreatedAt());
         role.setCreator(qo.getUserId());
-        insert(role);
+        validInsert(role);
         final List<Long> authorities = qo.getAuthorities();
         if (authorities.isEmpty()) {
             return;
@@ -79,23 +67,17 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateOne(RolePutQo qo) {
+    public void updateOne(RoleUpdateQo qo) {
         final Role role = mapping.asRole(qo);
         role.setLastUpdatedAt(qo.getCreatedAt());
         role.setLastUpdater(qo.getUserId());
-        update(role);
-    }
-
-    private void update(Role entity) {
-        if (hasRoleCodeIgnoreId(entity.getRoleCode(), entity.getId())) {
-            throw ServiceException.wrap("更新失败,角色码已经存在");
-        }
-        baseMapper.updateById(entity);
+        validUpdateById(role);
     }
 
     @Override
-    public IPage<RoleSearchVo> search(RoleSearchQo qo) {
-        return baseMapper.search(qo, qo.page());
+    public IPage<RoleComplexVo> search(RoleSearchQo qo) {
+        return baseMapper.search(qo, qo.page())
+            .convert(this::convertComplex);
     }
 
     @Override
@@ -135,15 +117,28 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public RoleComplexVo selectOne(Long id) {
+    public RoleComplexAndAuthorityVo selectOne(Long id) {
         final Role role = baseMapper.selectById(id);
-        VerifyUtils.notNull(role, "角色不存在");
+        ValidUtils.notNull(role, "角色不存在");
         List<Authority> authorities = roleAuthorityService.selectListAuthorityByRoleIdAndEnabled(id, Enabled.On.getCode());
-        return mapping.asRoleComplexVo(role, authorities);
+        return mapping.asRoleComplexAndAuthorityVo(role, authorities);
     }
 
     @Override
     public List<Authority> selectListAuthorityByIds(List<Long> roleIds) {
         return roleAuthorityService.selectListAuthorityByRoleIds(roleIds);
+    }
+
+    @Override
+    public void validEntity(Role entity) {
+        final Long id = entity.getId();
+        final String roleCode = entity.getRoleCode();
+        if (Objects.nonNull(roleCode)) {
+            ValidUtils.isFalse(hasRoleCodeIgnoreId(roleCode, id), "新增失败,角色码已经存在");
+        }
+    }
+
+    private RoleComplexVo convertComplex(Role entity) {
+        return mapping.asRoleComplexVo(entity);
     }
 }

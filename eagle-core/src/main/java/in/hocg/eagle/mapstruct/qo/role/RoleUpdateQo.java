@@ -18,7 +18,7 @@ import javax.validation.constraints.Pattern;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class RolePutQo extends IdQo {
+public class RoleUpdateQo extends IdQo {
     @ApiModelProperty("角色名称")
     private String title;
     @Pattern(regexp = PatternConstant.ONLY_NUMBER_OR_WORD, message = "仅支持数字和字母组合")

@@ -20,19 +20,19 @@ import java.util.List;
  * @since 2020-02-14
  */
 public interface DataDictItemService extends AbstractService<DataDictItem> {
-    
+
     void insertOne(Long id, DataDictItemPostQo item);
-    
+
     @Transactional(rollbackFor = Exception.class)
-    void deletes(IdsQo qo);
-    
+    void batchDelete(IdsQo qo);
+
     void deleteByDictId(Long id);
-    
+
     List<DataDictItem> selectListByDictId(Long dictId);
-    
-    void insertList(DataDictItemsPostQo qo);
-    
+
+    void batchInsert(DataDictItemsPostQo qo);
+
     void updateOne(DataDictItemPutQo qo);
-    
+
     DataDictItemComplexVo selectOne(Long id);
 }

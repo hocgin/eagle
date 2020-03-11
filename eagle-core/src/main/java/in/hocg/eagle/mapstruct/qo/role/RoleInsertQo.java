@@ -23,7 +23,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class RolePostQo extends BaseQo {
+public class RoleInsertQo extends BaseQo {
     @NotBlank(message = "角色名称不能为空")
     @ApiModelProperty("角色名称")
     private String title;

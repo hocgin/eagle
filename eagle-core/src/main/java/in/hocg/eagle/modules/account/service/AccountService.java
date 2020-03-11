@@ -3,16 +3,14 @@ package in.hocg.eagle.modules.account.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.mapstruct.qo.account.AccountSearchQo;
-import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusPutQo;
+import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusQo;
 import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
 import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
-import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
 import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,14 +26,19 @@ import java.util.Optional;
 public interface AccountService extends AbstractService<Account> {
 
     /**
-     * 查看详情
+     * 获取账号详情和角色列表
      *
      * @param id
      * @return
      */
     IdAccountComplexVo selectOneComplexAndRole(Long id);
 
-    @Transactional(rollbackFor = Exception.class)
+    /**
+     * 查看详情
+     *
+     * @param id
+     * @return
+     */
     AccountComplexVo selectOneComplex(Long id);
 
     /**
@@ -76,7 +79,13 @@ public interface AccountService extends AbstractService<Account> {
      */
     List<AuthorityTreeNodeVo> selectAuthorityTreeByCurrentAccount(Long accountId, Integer platform);
 
-    IPage<AccountSearchVo> search(AccountSearchQo qo);
+    /**
+     * 搜索账号列表
+     *
+     * @param qo
+     * @return
+     */
+    IPage<AccountComplexVo> search(AccountSearchQo qo);
 
-    void updateStatus(AccountUpdateStatusPutQo qo);
+    void updateStatus(AccountUpdateStatusQo qo);
 }

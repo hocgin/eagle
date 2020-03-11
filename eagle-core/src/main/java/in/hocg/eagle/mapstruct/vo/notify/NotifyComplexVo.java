@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
-public class NotifyItemVo {
+public class NotifyComplexVo {
     @ApiModelProperty("通知ID")
     private Long notifyId;
     @ApiModelProperty("通知类型")

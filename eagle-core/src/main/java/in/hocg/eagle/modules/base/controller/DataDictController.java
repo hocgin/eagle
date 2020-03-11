@@ -6,8 +6,8 @@ import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictDeleteQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictPostQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictPutQo;
+import in.hocg.eagle.mapstruct.qo.datadict.DataDictInsertQo;
+import in.hocg.eagle.mapstruct.qo.datadict.DataDictUpdateQo;
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictSearchQo;
 import in.hocg.eagle.mapstruct.vo.datadict.DataDictComplexVo;
 import in.hocg.eagle.mapstruct.vo.datadict.DataDictSearchVo;
@@ -41,20 +41,20 @@ public class DataDictController {
 
     @UseLogger("查询数据字典详情")
     @GetMapping("/{id:\\d+}:complex")
-    public Result<DataDictComplexVo> selectOneDataDictComplexById(@PathVariable("id") Long id) {
+    public Result<DataDictComplexVo> selectOne(@PathVariable("id") Long id) {
         return Result.success(service.selectOne(id));
     }
 
     @UseLogger("删除数据字典")
     @DeleteMapping
-    public Result<Void> deletes(@Validated @RequestBody DataDictDeleteQo qo) {
-        service.deletes(qo);
+    public Result<Void> batchDelete(@Validated @RequestBody DataDictDeleteQo qo) {
+        service.batchDelete(qo);
         return Result.success();
     }
 
     @UseLogger("新增数据字典")
     @PostMapping
-    public Result<Void> insert(@Validated @RequestBody DataDictPostQo qo) {
+    public Result<Void> insertOne(@Validated @RequestBody DataDictInsertQo qo) {
         service.insertOne(qo);
         return Result.success();
     }
@@ -62,9 +62,9 @@ public class DataDictController {
     @UseLogger("更新数据字典")
     @PutMapping("/{id}")
     public Result<Void> updateOne(@PathVariable Long id,
-                                  @Validated @RequestBody DataDictPutQo qo) {
+                                  @Validated @RequestBody DataDictUpdateQo qo) {
         qo.setId(id);
-        service.update(qo);
+        service.updateOne(qo);
         return Result.success();
     }
 

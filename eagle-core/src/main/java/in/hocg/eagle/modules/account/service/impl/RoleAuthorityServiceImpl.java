@@ -9,7 +9,7 @@ import in.hocg.eagle.modules.account.mapper.RoleAuthorityMapper;
 import in.hocg.eagle.modules.account.service.AuthorityService;
 import in.hocg.eagle.modules.account.service.RoleAuthorityService;
 import in.hocg.eagle.modules.account.service.RoleService;
-import in.hocg.eagle.utils.VerifyUtils;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -42,17 +42,18 @@ public class RoleAuthorityServiceImpl extends AbstractServiceImpl<RoleAuthorityM
     @Transactional(rollbackFor = Exception.class)
     public void grantAuthority(Long roleId, Long authorityId) {
         final Role role = roleService.getById(roleId);
-        VerifyUtils.notNull(role, "授权失败");
+        ValidUtils.notNull(role, "授权失败");
         Authority authority = authorityService.getById(authorityId);
-        VerifyUtils.notNull(authority, "授权失败");
+        ValidUtils.notNull(authority, "授权失败");
+
         // 已经具备权限
         if (isHasAuthority(roleId, authorityId)) {
             return;
         }
-        RoleAuthority roleAuthority = new RoleAuthority()
+        RoleAuthority entity = new RoleAuthority()
                 .setAuthorityId(authorityId)
                 .setRoleId(roleId);
-        baseMapper.insert(roleAuthority);
+        validInsert(entity);
     }
 
     private boolean isHasAuthority(Long roleId, Long authorityId) {
@@ -75,7 +76,7 @@ public class RoleAuthorityServiceImpl extends AbstractServiceImpl<RoleAuthorityM
     }
 
     @Override
-    public List<Role> selectListRoleByAuthorityId(Integer id) {
+    public List<Role> selectListRoleByAuthorityId(Long id) {
         return baseMapper.selectListRoleByAuthorityId(id);
     }
 

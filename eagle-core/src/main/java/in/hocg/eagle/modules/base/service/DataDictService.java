@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictDeleteQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictPostQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictPutQo;
+import in.hocg.eagle.mapstruct.qo.datadict.DataDictInsertQo;
+import in.hocg.eagle.mapstruct.qo.datadict.DataDictUpdateQo;
 import in.hocg.eagle.mapstruct.qo.datadict.DataDictSearchQo;
 import in.hocg.eagle.mapstruct.vo.datadict.DataDictComplexVo;
 import in.hocg.eagle.mapstruct.vo.datadict.DataDictSearchVo;
@@ -33,10 +33,10 @@ public interface DataDictService extends AbstractService<DataDict> {
 
     DataDictComplexVo selectOne(Long id);
 
-    void insertOne(DataDictPostQo qo);
+    void insertOne(DataDictInsertQo qo);
 
-    void update(DataDictPutQo qo);
+    void updateOne(DataDictUpdateQo qo);
 
-    void deletes(DataDictDeleteQo qo);
+    void batchDelete(DataDictDeleteQo qo);
 
 }

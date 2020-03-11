@@ -22,12 +22,12 @@ public class SummaryVo {
     private Integer unready;
 
     @ApiModelProperty("5条私信")
-    private List<NotifyItemVo> privateLetter = Lists.newArrayList();
+    private List<NotifyComplexVo> privateLetter = Lists.newArrayList();
 
     @ApiModelProperty("5条订阅")
-    private List<NotifyItemVo> subscription = Lists.newArrayList();
+    private List<NotifyComplexVo> subscription = Lists.newArrayList();
 
     @ApiModelProperty("5条公告")
-    private List<NotifyItemVo> announcement = Lists.newArrayList();
+    private List<NotifyComplexVo> announcement = Lists.newArrayList();
 
 }

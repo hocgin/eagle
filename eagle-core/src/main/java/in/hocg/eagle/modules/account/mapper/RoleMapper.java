@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.eagle.mapstruct.qo.role.RoleSearchQo;
-import in.hocg.eagle.mapstruct.vo.role.RoleSearchVo;
 import in.hocg.eagle.modules.account.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -19,7 +18,7 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface RoleMapper extends BaseMapper<Role> {
-    
+
     /**
      * 分页查询
      *
@@ -27,5 +26,5 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @param page
      * @return
      */
-    IPage<RoleSearchVo> search(@Param("qo") RoleSearchQo qo, Page page);
+    IPage<Role> search(@Param("qo") RoleSearchQo qo, Page page);
 }

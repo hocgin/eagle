@@ -16,7 +16,7 @@ import in.hocg.eagle.modules.base.entity.DataDictItem;
 import in.hocg.eagle.modules.base.mapper.DataDictMapper;
 import in.hocg.eagle.modules.base.service.DataDictItemService;
 import in.hocg.eagle.modules.base.service.DataDictService;
-import in.hocg.eagle.utils.VerifyUtils;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -87,7 +87,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void insertOne(DataDictPostQo qo) {
+    public void insertOne(DataDictInsertQo qo) {
         DataDict entity = mapping.asDataDict(qo);
         entity.setCreatedAt(qo.getCreatedAt());
         entity.setCreator(qo.getUserId());
@@ -98,7 +98,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
     }
 
     @Override
-    public void update(DataDictPutQo qo) {
+    public void updateOne(DataDictUpdateQo qo) {
         DataDict entity = mapping.asDataDict(qo);
         entity.setLastUpdatedAt(qo.getCreatedAt());
         entity.setLastUpdater(qo.getUserId());
@@ -107,7 +107,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deletes(DataDictDeleteQo qo) {
+    public void batchDelete(DataDictDeleteQo qo) {
         for (Long id : qo.getId()) {
             deleteById(id, qo.getForce());
         }
@@ -142,7 +142,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
 
         // 检查数据字典码
         if (Objects.nonNull(code)) {
-            VerifyUtils.isFalse(hasCode(code, id), "数据字典码已经存在");
+            ValidUtils.isFalse(hasCode(code, id), "数据字典码已经存在");
         }
     }
 }
