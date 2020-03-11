@@ -1,9 +1,9 @@
 package in.hocg.eagle.mapstruct;
 
-import in.hocg.eagle.mapstruct.qo.comment.CommentPostQo;
-import in.hocg.eagle.mapstruct.qo.comment.CommentPutQo;
-import in.hocg.eagle.mapstruct.vo.comment.CommentComplexVo;
-import in.hocg.eagle.mapstruct.vo.comment.RootCommentComplexVo;
+import in.hocg.eagle.modules.comment.pojo.qo.comment.CommentPostQo;
+import in.hocg.eagle.modules.comment.pojo.qo.comment.CommentPutQo;
+import in.hocg.eagle.modules.comment.pojo.vo.comment.CommentComplexVo;
+import in.hocg.eagle.modules.comment.pojo.vo.comment.RootCommentComplexVo;
 import in.hocg.eagle.modules.comment.entity.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,8 +21,6 @@ public interface CommentMapping {
     @Mapping(target = "PCommenterId", ignore = true)
     @Mapping(target = "commenterId", source = "entity.creator")
     @Mapping(target = "commenter", ignore = true)
-//    @Mapping(target = "pCommenterId", ignore = true)
-//    @Mapping(target = "pCommenter", ignore = true)
     CommentComplexVo asCommentComplexVo(Comment entity);
 
     @Mapping(target = "childrenTotal", ignore = true)

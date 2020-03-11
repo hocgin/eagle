@@ -3,10 +3,10 @@ package in.hocg.eagle.modules.base.service.impl;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.pojo.qo.IdsQo;
 import in.hocg.eagle.mapstruct.DataDictItemMapping;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPostQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPutQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemsPostQo;
-import in.hocg.eagle.mapstruct.vo.datadict.item.DataDictItemComplexVo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemInsertQo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemUpdateQo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemsBatchInsertQo;
+import in.hocg.eagle.modules.base.pojo.vo.datadict.item.DataDictItemComplexVo;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import in.hocg.eagle.modules.base.mapper.DataDictItemMapper;
 import in.hocg.eagle.modules.base.service.DataDictItemService;
@@ -34,7 +34,7 @@ public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMap
     private final DataDictItemMapping mapping;
 
     @Override
-    public void insertOne(Long dictId, DataDictItemPostQo qo) {
+    public void insertOne(Long dictId, DataDictItemInsertQo qo) {
         DataDictItem entity = mapping.asDataDictItem(qo);
         entity.setDictId(dictId);
         entity.setCreator(qo.getUserId());
@@ -63,14 +63,14 @@ public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMap
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void batchInsert(DataDictItemsPostQo qo) {
-        for (DataDictItemPostQo item : qo.getItems()) {
+    public void batchInsert(DataDictItemsBatchInsertQo qo) {
+        for (DataDictItemInsertQo item : qo.getItems()) {
             insertOne(qo.getDictId(), item);
         }
     }
 
     @Override
-    public void updateOne(DataDictItemPutQo qo) {
+    public void updateOne(DataDictItemUpdateQo qo) {
         DataDictItem entity = mapping.asDataDictItem(qo);
         entity.setLastUpdater(qo.getUserId());
         entity.setLastUpdatedAt(qo.getCreatedAt());

@@ -9,6 +9,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 /**
  * @author hocgin
@@ -17,14 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @Component
 public class SpringContext implements ApplicationContextAware {
-    
+
     private static ApplicationContext APPLICATION_CONTEXT;
-    
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         SpringContext.APPLICATION_CONTEXT = applicationContext;
     }
-    
+
     /**
      * 获取上下文
      *
@@ -33,8 +34,8 @@ public class SpringContext implements ApplicationContextAware {
     public static ApplicationContext getApplicationContext() {
         return APPLICATION_CONTEXT;
     }
-    
-    
+
+
     /**
      * 通过名字获取上下文中的bean
      *
@@ -44,7 +45,7 @@ public class SpringContext implements ApplicationContextAware {
     public static <T> T getBean(String name) {
         return ((T) APPLICATION_CONTEXT.getBean(name));
     }
-    
+
     /**
      * 通过类型获取上下文中的bean
      *
@@ -54,22 +55,22 @@ public class SpringContext implements ApplicationContextAware {
     public static <T> T getBean(Class<T> requiredType) {
         return APPLICATION_CONTEXT.getBean(requiredType);
     }
-    
-    public static HttpServletResponse getResponse() {
+
+    public static Optional<HttpServletResponse> getResponse() {
         try {
-            return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+            final HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+            return Optional.ofNullable(response);
         } catch (Exception e) {
-            log.error("", e);
-            return null;
+            return Optional.empty();
         }
     }
-    
-    public static HttpServletRequest getRequest() {
+
+    public static Optional<HttpServletRequest> getRequest() {
         try {
-            return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            final HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+            return Optional.of(request);
         } catch (Exception e) {
-            log.error("", e);
-            return null;
+            return Optional.empty();
         }
     }
 }

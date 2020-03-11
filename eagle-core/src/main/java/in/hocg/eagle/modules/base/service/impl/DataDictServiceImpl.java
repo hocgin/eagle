@@ -7,13 +7,14 @@ import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.mapstruct.DataDictItemMapping;
 import in.hocg.eagle.mapstruct.DataDictMapping;
-import in.hocg.eagle.mapstruct.qo.datadict.*;
-import in.hocg.eagle.mapstruct.vo.datadict.DataDictComplexVo;
-import in.hocg.eagle.mapstruct.vo.datadict.DataDictSearchVo;
-import in.hocg.eagle.mapstruct.vo.datadict.item.DataDictItemVo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.*;
+import in.hocg.eagle.modules.base.pojo.vo.datadict.DataDictComplexVo;
+import in.hocg.eagle.modules.base.pojo.vo.datadict.DataDictSearchVo;
+import in.hocg.eagle.modules.base.pojo.vo.datadict.item.DataDictItemVo;
 import in.hocg.eagle.modules.base.entity.DataDict;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import in.hocg.eagle.modules.base.mapper.DataDictMapper;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemInsertQo;
 import in.hocg.eagle.modules.base.service.DataDictItemService;
 import in.hocg.eagle.modules.base.service.DataDictService;
 import in.hocg.eagle.utils.ValidUtils;
@@ -92,7 +93,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
         entity.setCreatedAt(qo.getCreatedAt());
         entity.setCreator(qo.getUserId());
         validInsert(entity);
-        for (DataDictItemPostQo item : qo.getItems()) {
+        for (DataDictItemInsertQo item : qo.getItems()) {
             dataDictItemService.insertOne(entity.getId(), item);
         }
     }

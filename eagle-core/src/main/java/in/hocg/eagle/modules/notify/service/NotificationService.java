@@ -2,11 +2,11 @@ package in.hocg.eagle.modules.notify.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.mapstruct.qo.notify.PublishPrivateLetterQo;
-import in.hocg.eagle.mapstruct.qo.notify.PublishSubscriptionDto;
-import in.hocg.eagle.mapstruct.qo.notify.SearchNotifyPagingQo;
-import in.hocg.eagle.mapstruct.vo.notify.NotifyComplexVo;
-import in.hocg.eagle.mapstruct.vo.notify.SummaryVo;
+import in.hocg.eagle.modules.notify.pojo.qo.notify.PublishPrivateLetterQo;
+import in.hocg.eagle.modules.notify.pojo.qo.notify.PublishSubscriptionDto;
+import in.hocg.eagle.modules.notify.pojo.qo.notify.SearchNotifyPagingQo;
+import in.hocg.eagle.modules.notify.pojo.vo.notify.NotifyComplexVo;
+import in.hocg.eagle.modules.notify.pojo.vo.notify.SummaryVo;
 import in.hocg.eagle.modules.notify.entity.Notification;
 
 /**

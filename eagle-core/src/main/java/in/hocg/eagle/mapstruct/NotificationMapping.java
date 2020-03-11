@@ -1,7 +1,7 @@
 package in.hocg.eagle.mapstruct;
 
-import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
-import in.hocg.eagle.mapstruct.vo.notify.NotifyComplexVo;
+import in.hocg.eagle.modules.account.pojo.vo.account.AccountComplexVo;
+import in.hocg.eagle.modules.notify.pojo.vo.notify.NotifyComplexVo;
 import in.hocg.eagle.modules.notify.entity.Notification;
 import in.hocg.eagle.modules.notify.entity.Notify;
 import org.mapstruct.Mapper;

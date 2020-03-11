@@ -2,10 +2,10 @@ package in.hocg.eagle.modules.base.service;
 
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.basic.pojo.qo.IdsQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPostQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPutQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemsPostQo;
-import in.hocg.eagle.mapstruct.vo.datadict.item.DataDictItemComplexVo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemInsertQo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemUpdateQo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemsBatchInsertQo;
+import in.hocg.eagle.modules.base.pojo.vo.datadict.item.DataDictItemComplexVo;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public interface DataDictItemService extends AbstractService<DataDictItem> {
 
-    void insertOne(Long id, DataDictItemPostQo item);
+    void insertOne(Long id, DataDictItemInsertQo item);
 
     @Transactional(rollbackFor = Exception.class)
     void batchDelete(IdsQo qo);
@@ -30,9 +30,9 @@ public interface DataDictItemService extends AbstractService<DataDictItem> {
 
     List<DataDictItem> selectListByDictId(Long dictId);
 
-    void batchInsert(DataDictItemsPostQo qo);
+    void batchInsert(DataDictItemsBatchInsertQo qo);
 
-    void updateOne(DataDictItemPutQo qo);
+    void updateOne(DataDictItemUpdateQo qo);
 
     DataDictItemComplexVo selectOne(Long id);
 }

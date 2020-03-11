@@ -1,12 +1,11 @@
 package in.hocg.eagle.mapstruct;
 
 
-import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusQo;
-import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
-import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
-import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
-import in.hocg.eagle.mapstruct.vo.role.RoleComplexAndAuthorityVo;
 import in.hocg.eagle.modules.account.entity.Account;
+import in.hocg.eagle.modules.account.pojo.qo.account.AccountUpdateStatusQo;
+import in.hocg.eagle.modules.account.pojo.vo.account.AccountComplexVo;
+import in.hocg.eagle.modules.account.pojo.vo.account.IdAccountComplexVo;
+import in.hocg.eagle.modules.account.pojo.vo.role.RoleComplexAndAuthorityVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -47,8 +46,9 @@ public interface AccountMapping {
         return result;
     }
 
-    AccountSearchVo asAccountSearchVo(Account account);
-
+    @Mapping(target = "expiredName", ignore = true)
+    @Mapping(target = "lockedName", ignore = true)
+    @Mapping(target = "enabledName", ignore = true)
     @Mapping(target = "genderName", ignore = true)
     AccountComplexVo asAccountComplexVo(Account account);
 

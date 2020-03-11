@@ -1,8 +1,6 @@
 package in.hocg.eagle.mapstruct;
 
 
-import in.hocg.eagle.mapstruct.bo.ExampleBo;
-import in.hocg.eagle.mapstruct.qo.ExampleQo;
 import org.mapstruct.Mapper;
 
 /**
@@ -13,6 +11,5 @@ import org.mapstruct.Mapper;
  */
 @Mapper(componentModel = "spring")
 public interface ExampleMapping {
-    
-    ExampleBo toExampleBo(ExampleQo qo);
+
 }

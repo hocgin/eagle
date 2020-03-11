@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.account.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import in.hocg.eagle.mapstruct.qo.authority.AuthoritySearchQo;
+import in.hocg.eagle.modules.account.pojo.qo.authority.AuthoritySearchQo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,14 +18,14 @@ import java.util.List;
  */
 @Mapper
 public interface AuthorityMapper extends BaseMapper<Authority> {
-    
+
     /**
      * 根据 regex 匹配 tree_path 来更新节点的状态
      *
      * @param regexTreePath
      */
     int updateOffStatusByRegexTreePath(@Param("regexTreePath") String regexTreePath);
-    
+
     /**
      * 指定新的 tree_path 并根据 regex 替换旧的 tree_path
      *
@@ -36,7 +36,7 @@ public interface AuthorityMapper extends BaseMapper<Authority> {
     int updateTreePathByRegexTreePath(@Param("regexTreePath") String regexTreePath,
                                       @Param("oldTreePath") String oldTreePath,
                                       @Param("newTreePath") String newTreePath);
-    
+
     /**
      * 查找 parent_id 符合的数据
      *
@@ -44,7 +44,7 @@ public interface AuthorityMapper extends BaseMapper<Authority> {
      * @return
      */
     List<Authority> search(@Param("qo") AuthoritySearchQo qo);
-    
+
     /**
      * 获取 tree_path 匹配的数据
      *
@@ -52,7 +52,7 @@ public interface AuthorityMapper extends BaseMapper<Authority> {
      * @return
      */
     List<Authority> selectListByRegexTreePath(@Param("regexTreePath") String regexTreePath);
-    
+
     /**
      * 删除 tree_path 匹配的数据
      *

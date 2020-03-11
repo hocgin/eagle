@@ -3,12 +3,12 @@ package in.hocg.eagle.modules.base.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.basic.pojo.KeyValue;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictDeleteQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictInsertQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictUpdateQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictSearchQo;
-import in.hocg.eagle.mapstruct.vo.datadict.DataDictComplexVo;
-import in.hocg.eagle.mapstruct.vo.datadict.DataDictSearchVo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.DataDictDeleteQo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.DataDictInsertQo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.DataDictUpdateQo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.DataDictSearchQo;
+import in.hocg.eagle.modules.base.pojo.vo.datadict.DataDictComplexVo;
+import in.hocg.eagle.modules.base.pojo.vo.datadict.DataDictSearchVo;
 import in.hocg.eagle.modules.base.entity.DataDict;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 

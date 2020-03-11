@@ -3,12 +3,12 @@ package in.hocg.eagle.modules.account.controller;
 
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.mapstruct.qo.authority.AuthorityInsertQo;
-import in.hocg.eagle.mapstruct.qo.authority.AuthoritySearchQo;
-import in.hocg.eagle.mapstruct.qo.authority.AuthorityUpdateQo;
-import in.hocg.eagle.mapstruct.qo.role.GrantRoleQo;
-import in.hocg.eagle.mapstruct.vo.authority.AuthorityComplexAndRoleVo;
-import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
+import in.hocg.eagle.modules.account.pojo.qo.authority.AuthorityInsertQo;
+import in.hocg.eagle.modules.account.pojo.qo.authority.AuthoritySearchQo;
+import in.hocg.eagle.modules.account.pojo.qo.authority.AuthorityUpdateQo;
+import in.hocg.eagle.modules.account.pojo.qo.role.GrantRoleQo;
+import in.hocg.eagle.modules.account.pojo.vo.authority.AuthorityComplexAndRoleVo;
+import in.hocg.eagle.modules.account.pojo.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.service.AuthorityService;
 import lombok.RequiredArgsConstructor;

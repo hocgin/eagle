@@ -1,10 +1,10 @@
 package in.hocg.eagle.mapstruct;
 
 import in.hocg.eagle.basic.security.GrantedAuthority;
-import in.hocg.eagle.mapstruct.qo.authority.AuthorityInsertQo;
-import in.hocg.eagle.mapstruct.qo.authority.AuthorityUpdateQo;
-import in.hocg.eagle.mapstruct.vo.authority.AuthorityComplexAndRoleVo;
-import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
+import in.hocg.eagle.modules.account.pojo.qo.authority.AuthorityInsertQo;
+import in.hocg.eagle.modules.account.pojo.qo.authority.AuthorityUpdateQo;
+import in.hocg.eagle.modules.account.pojo.vo.authority.AuthorityComplexAndRoleVo;
+import in.hocg.eagle.modules.account.pojo.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
 import org.mapstruct.Mapper;
@@ -43,6 +43,7 @@ public interface AuthorityMapping {
      * @param qo
      * @return
      */
+    @Mapping(target = "platform", ignore = true)
     @Mapping(target = "treePath", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
@@ -79,6 +80,8 @@ public interface AuthorityMapping {
      */
     List<GrantedAuthority> asGrantedAuthority(Collection<Authority> authorities);
 
+    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "parentName", ignore = true)
     @Mapping(target = "typeName", ignore = true)
     @Mapping(target = "platformName", ignore = true)
     @Mapping(target = "lastUpdaterName", ignore = true)

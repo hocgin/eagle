@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.notify.message;
 
-import in.hocg.eagle.mapstruct.qo.notify.PublishSubscriptionDto;
+import in.hocg.eagle.modules.notify.pojo.qo.notify.PublishSubscriptionDto;
 import in.hocg.eagle.modules.notify.message.event.SubscriptionEvent;
 import in.hocg.eagle.modules.notify.service.NotificationService;
 import lombok.RequiredArgsConstructor;

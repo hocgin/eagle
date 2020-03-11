@@ -4,9 +4,9 @@ package in.hocg.eagle.modules.base.controller;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.pojo.qo.IdsQo;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPutQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemsPostQo;
-import in.hocg.eagle.mapstruct.vo.datadict.item.DataDictItemComplexVo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemUpdateQo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemsBatchInsertQo;
+import in.hocg.eagle.modules.base.pojo.vo.datadict.item.DataDictItemComplexVo;
 import in.hocg.eagle.modules.base.service.DataDictItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -36,7 +36,7 @@ public class DataDictItemController {
 
     @UseLogger("新增数据字典项")
     @PostMapping
-    public Result<Void> insert(@RequestBody DataDictItemsPostQo qo) {
+    public Result<Void> insert(@RequestBody DataDictItemsBatchInsertQo qo) {
         service.batchInsert(qo);
         return Result.success();
     }
@@ -50,7 +50,7 @@ public class DataDictItemController {
     @UseLogger("更新数据字典项")
     @PutMapping("/{id}")
     public Result<Void> updateOne(@PathVariable Long id,
-                                  @Validated @RequestBody DataDictItemPutQo qo) {
+                                  @Validated @RequestBody DataDictItemUpdateQo qo) {
         qo.setId(id);
         service.updateOne(qo);
         return Result.success();

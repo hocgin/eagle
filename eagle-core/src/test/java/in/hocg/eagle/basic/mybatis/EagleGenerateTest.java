@@ -30,8 +30,6 @@ public class EagleGenerateTest {
     @Test
     public void generateByTables() {
         List<String> TABLES = Arrays.asList(
-            "t_comment_target",
-            "t_comment",
             ""
         );
         String javaPath = "src/main/java";

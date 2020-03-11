@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.base.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictSearchQo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.DataDictSearchQo;
 import in.hocg.eagle.modules.base.entity.DataDict;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,7 +22,7 @@ import java.util.Optional;
  */
 @Mapper
 public interface DataDictMapper extends BaseMapper<DataDict> {
-    
+
     /**
      * 查询数据项
      *
@@ -32,7 +32,7 @@ public interface DataDictMapper extends BaseMapper<DataDict> {
      */
     Optional<DataDictItem> selectOneByDictIdAndCode(@Param("typeCode") String typeCode,
                                                     @Param("itemCode") String itemCode);
-    
+
     /**
      * 根据 typeCode 查询数据字典列表
      *
@@ -42,8 +42,8 @@ public interface DataDictMapper extends BaseMapper<DataDict> {
      */
     List<DataDictItem> selectListDictItemByCodeAndEnabled(@Param("typeCode") String typeCode,
                                                           @Param("enabled") Integer enabled);
-    
+
     IPage<DataDict> search(@Param("qo") DataDictSearchQo qo, Page page);
-    
+
     Integer countByCodeIgnoreId(@Param("code") String code, @Param("id") Long id);
 }

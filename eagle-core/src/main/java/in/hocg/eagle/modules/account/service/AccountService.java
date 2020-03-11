@@ -1,16 +1,17 @@
 package in.hocg.eagle.modules.account.service;
 
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.mapstruct.qo.account.AccountSearchQo;
-import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusQo;
-import in.hocg.eagle.mapstruct.qo.account.GrantRoleQo;
-import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
-import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
-import in.hocg.eagle.mapstruct.vo.authority.AuthorityTreeNodeVo;
+import in.hocg.eagle.modules.account.pojo.vo.account.AccountComplexVo;
+import in.hocg.eagle.modules.account.pojo.vo.account.IdAccountComplexVo;
+import in.hocg.eagle.modules.account.pojo.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.account.entity.Account;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
+import in.hocg.eagle.modules.account.pojo.qo.account.AccountSearchQo;
+import in.hocg.eagle.modules.account.pojo.qo.account.AccountUpdateStatusQo;
+import in.hocg.eagle.modules.account.pojo.qo.account.GrantRoleQo;
 
 import java.util.List;
 import java.util.Optional;
