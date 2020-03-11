@@ -51,7 +51,7 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
         final Comment entity = mapping.asComment(qo);
         entity.setLastUpdatedAt(qo.getCreatedAt());
         entity.setLastUpdater(qo.getUserId());
-        updateOne(entity);
+        validUpdateById(entity);
     }
 
     @Override
@@ -80,10 +80,10 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
         final Long creatorId = qo.getUserId();
         final Long commentId = entity.getId();
         entity.setCreator(creatorId);
-        insertOne(entity);
+        validInsert(entity);
         path.append(String.format("/%d", commentId));
         entity.setTreePath(path.toString());
-        updateOne(entity);
+        validUpdateById(entity);
         MessageContext.publish(new SubscriptionEvent()
             .setActorId(creatorId)
             .setSubjectId(commentId)
@@ -147,7 +147,7 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
     }
 
     @Override
-    public void verifyEntity(Comment entity) {
+    public void validEntity(Comment entity) {
         final Long parentId = entity.getParentId();
         final Long targetId = entity.getTargetId();
 

@@ -36,9 +36,13 @@ public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetM
     @Transactional(rollbackFor = Exception.class)
     public Long getOrCreateCommentTarget(CommentTargetType relType, Long relId) {
         final Optional<Long> idOpt = getCommentTarget(relType, relId);
-        return idOpt.orElseGet(() -> insertOne(
-            new CommentTarget().setRelId(relId).setRelType(relType.getCode())
-        ).getId());
+        return idOpt.orElseGet(() -> {
+            final CommentTarget entity = new CommentTarget()
+                .setRelId(relId)
+                .setRelType(relType.getCode());
+            validInsert(entity);
+            return entity.getId();
+        });
     }
 
 
@@ -66,7 +70,7 @@ public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetM
     }
 
     @Override
-    public void verifyEntity(CommentTarget entity) {
+    public void validEntity(CommentTarget entity) {
 
     }
 }

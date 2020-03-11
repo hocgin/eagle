@@ -147,7 +147,7 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
     }
 
     @Override
-    public void verifyEntity(Notification entity) {
+    public void validEntity(Notification entity) {
 
     }
 }

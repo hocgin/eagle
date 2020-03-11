@@ -30,9 +30,9 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMapper, DataDictItem> implements DataDictItemService {
-    
+
     private final DataDictItemMapping mapping;
-    
+
     @Override
     public void insertOne(Long dictId, DataDictItemPostQo qo) {
         DataDictItem entity = mapping.asDataDictItem(qo);
@@ -41,7 +41,7 @@ public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMap
         entity.setCreatedAt(qo.getCreatedAt());
         insert(entity);
     }
-    
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deletes(IdsQo qo) {
@@ -49,18 +49,18 @@ public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMap
             removeById(id);
         }
     }
-    
-    
+
+
     @Override
     public void deleteByDictId(Long dictId) {
         baseMapper.deleteByDictId(dictId);
     }
-    
+
     @Override
     public List<DataDictItem> selectListByDictId(Long dictId) {
         return baseMapper.selectList(dictId);
     }
-    
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertList(DataDictItemsPostQo qo) {
@@ -68,7 +68,7 @@ public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMap
             insertOne(qo.getDictId(), item);
         }
     }
-    
+
     @Override
     public void updateOne(DataDictItemPutQo qo) {
         DataDictItem entity = mapping.asDataDictItem(qo);
@@ -76,37 +76,37 @@ public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMap
         entity.setLastUpdatedAt(qo.getCreatedAt());
         update(entity);
     }
-    
+
     @Override
     public DataDictItemComplexVo selectOne(Long id) {
         return mapping.asDataDictItemComplexVo(getById(id));
     }
-    
+
     private void update(DataDictItem entity) {
-        verifyEntity(entity);
+        validEntity(entity);
         updateById(entity);
     }
-    
+
     private void insert(DataDictItem entity) {
-        verifyEntity(entity);
+        validEntity(entity);
         baseMapper.insert(entity);
     }
-    
+
     private boolean hasDictIdAndCodeIgnoreId(Long dictId, String code, Long ignoreId) {
         return baseMapper.countDictIdAndCodeIgnoreId(dictId, code, ignoreId) > 0;
     }
-    
+
     /**
      * 入库时, 检查实体
      *
      * @param entity
      */
     @Override
-    public void verifyEntity(DataDictItem entity) {
+    public void validEntity(DataDictItem entity) {
         final String code = entity.getCode();
         final Long dictId = entity.getDictId();
         final Long id = entity.getId();
-        
+
         // 检查数据字典码
         if (Objects.nonNull(code)) {
             VerifyUtils.notNull(dictId);

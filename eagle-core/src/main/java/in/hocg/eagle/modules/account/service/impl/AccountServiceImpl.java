@@ -137,11 +137,11 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         Account entity = mapping.asAccount(qo);
         entity.setLastUpdatedAt(qo.getCreatedAt());
         entity.setLastUpdater(qo.getUserId());
-        updateOne(entity);
+        validUpdateById(entity);
     }
 
     @Override
-    public void verifyEntity(Account entity) {
+    public void validEntity(Account entity) {
         final Long creatorId = entity.getCreator();
         final Long lastUpdaterId = entity.getLastUpdater();
         if (Objects.nonNull(creatorId)) {

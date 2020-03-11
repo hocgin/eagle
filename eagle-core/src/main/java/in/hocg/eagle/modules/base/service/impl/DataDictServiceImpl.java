@@ -91,7 +91,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
         DataDict entity = mapping.asDataDict(qo);
         entity.setCreatedAt(qo.getCreatedAt());
         entity.setCreator(qo.getUserId());
-        insertOne(entity);
+        validInsert(entity);
         for (DataDictItemPostQo item : qo.getItems()) {
             dataDictItemService.insertOne(entity.getId(), item);
         }
@@ -102,7 +102,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
         DataDict entity = mapping.asDataDict(qo);
         entity.setLastUpdatedAt(qo.getCreatedAt());
         entity.setLastUpdater(qo.getUserId());
-        updateOne(entity);
+        validUpdateById(entity);
     }
 
     @Override
@@ -136,7 +136,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
     }
 
     @Override
-    public void verifyEntity(DataDict entity) {
+    public void validEntity(DataDict entity) {
         final String code = entity.getCode();
         final Long id = entity.getId();
 
