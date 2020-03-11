@@ -1,9 +1,9 @@
 package in.hocg.eagle.mapstruct;
 
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPostQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPutQo;
-import in.hocg.eagle.mapstruct.vo.datadict.item.DataDictItemComplexVo;
-import in.hocg.eagle.mapstruct.vo.datadict.item.DataDictItemVo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemInsertQo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemUpdateQo;
+import in.hocg.eagle.modules.base.pojo.vo.datadict.item.DataDictItemComplexVo;
+import in.hocg.eagle.modules.base.pojo.vo.datadict.item.DataDictItemVo;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -31,12 +31,12 @@ public interface DataDictItemMapping {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "dictId", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    DataDictItem asDataDictItem(DataDictItemPostQo item);
+    DataDictItem asDataDictItem(DataDictItemInsertQo item);
 
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    DataDictItem asDataDictItem(DataDictItemPutQo qo);
+    DataDictItem asDataDictItem(DataDictItemUpdateQo qo);
 
     @Mapping(target = "lastUpdaterName", ignore = true)
     @Mapping(target = "enabledName", ignore = true)

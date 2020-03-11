@@ -12,7 +12,7 @@ import in.hocg.eagle.modules.account.service.AccountService;
 import in.hocg.eagle.modules.account.service.RoleAccountService;
 import in.hocg.eagle.modules.account.service.RoleService;
 import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.VerifyUtils;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -42,9 +42,9 @@ public class RoleAccountServiceImpl extends AbstractServiceImpl<RoleAccountMappe
     @Override
     public void grantRole(Long accountId, Long roleId) {
         final Account account = accountService.getById(accountId);
-        VerifyUtils.notNull(account, "授权失败");
+        ValidUtils.notNull(account, "授权失败");
         final Role role = roleService.getById(roleId);
-        VerifyUtils.notNull(role, "授权失败");
+        ValidUtils.notNull(role, "授权失败");
         if (isHasRole(accountId, roleId)) {
             return;
         }

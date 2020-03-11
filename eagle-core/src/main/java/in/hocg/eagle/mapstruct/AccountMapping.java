@@ -1,12 +1,11 @@
 package in.hocg.eagle.mapstruct;
 
 
-import in.hocg.eagle.mapstruct.qo.account.AccountUpdateStatusPutQo;
-import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
-import in.hocg.eagle.mapstruct.vo.account.AccountSearchVo;
-import in.hocg.eagle.mapstruct.vo.account.IdAccountComplexVo;
-import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
 import in.hocg.eagle.modules.account.entity.Account;
+import in.hocg.eagle.modules.account.pojo.qo.account.AccountUpdateStatusQo;
+import in.hocg.eagle.modules.account.pojo.vo.account.AccountComplexVo;
+import in.hocg.eagle.modules.account.pojo.vo.account.IdAccountComplexVo;
+import in.hocg.eagle.modules.account.pojo.vo.role.RoleComplexAndAuthorityVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -41,14 +40,15 @@ public interface AccountMapping {
      * @param roles
      * @return
      */
-    default IdAccountComplexVo asIdAccountComplexVo(Account account, List<RoleComplexVo> roles) {
+    default IdAccountComplexVo asIdAccountComplexVo(Account account, List<RoleComplexAndAuthorityVo> roles) {
         final IdAccountComplexVo result = asIdAccountComplexVo(account);
         result.setRoles(roles);
         return result;
     }
 
-    AccountSearchVo asAccountSearchVo(Account account);
-
+    @Mapping(target = "expiredName", ignore = true)
+    @Mapping(target = "lockedName", ignore = true)
+    @Mapping(target = "enabledName", ignore = true)
     @Mapping(target = "genderName", ignore = true)
     AccountComplexVo asAccountComplexVo(Account account);
 
@@ -63,5 +63,5 @@ public interface AccountMapping {
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "phone", ignore = true)
     @Mapping(target = "avatar", ignore = true)
-    Account asAccount(AccountUpdateStatusPutQo qo);
+    Account asAccount(AccountUpdateStatusQo qo);
 }

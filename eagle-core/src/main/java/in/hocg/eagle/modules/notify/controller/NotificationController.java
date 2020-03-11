@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.basic.security.SecurityContext;
-import in.hocg.eagle.mapstruct.qo.notify.PublishPrivateLetterQo;
-import in.hocg.eagle.mapstruct.qo.notify.SearchNotifyPageQo;
-import in.hocg.eagle.mapstruct.vo.notify.NotifyItemVo;
-import in.hocg.eagle.mapstruct.vo.notify.SummaryVo;
+import in.hocg.eagle.modules.notify.pojo.qo.notify.PublishPrivateLetterQo;
+import in.hocg.eagle.modules.notify.pojo.qo.notify.SearchNotifyPagingQo;
+import in.hocg.eagle.modules.notify.pojo.vo.notify.NotifyComplexVo;
+import in.hocg.eagle.modules.notify.pojo.vo.notify.SummaryVo;
 import in.hocg.eagle.modules.notify.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -31,7 +31,7 @@ public class NotificationController {
 
     @UseLogger("查询我的消息列表")
     @PostMapping
-    public Result<IPage<NotifyItemVo>> _search(@Validated @RequestBody SearchNotifyPageQo qo) {
+    public Result<IPage<NotifyComplexVo>> _search(@Validated @RequestBody SearchNotifyPagingQo qo) {
         qo.setReceiverId(qo.getUserId());
         return Result.success(service.search(qo));
     }

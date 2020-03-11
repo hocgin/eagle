@@ -10,9 +10,34 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author hocgin
  */
 public interface AbstractService<T> extends IService<T> {
-    void verifyEntity(T entity);
 
-    T updateOne(T entity);
+    /**
+     * 校验数据的约束
+     *
+     * @param entity
+     */
+    void validEntity(T entity);
 
-    T insertOne(T entity);
+    /**
+     * 校验后，更新数据
+     *
+     * @param entity
+     * @return
+     */
+    boolean validUpdateById(T entity);
+
+    /**
+     * 校验后，新增数据
+     *
+     * @param entity
+     * @return
+     */
+    boolean validInsert(T entity);
+
+    /**
+     * 校验后，新增或更新数据
+     *
+     * @param entity
+     */
+    void validInsertOrUpdate(T entity);
 }

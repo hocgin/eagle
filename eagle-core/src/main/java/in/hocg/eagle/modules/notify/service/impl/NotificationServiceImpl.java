@@ -8,12 +8,12 @@ import in.hocg.eagle.basic.constant.datadict.SubjectType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.mapstruct.NotificationMapping;
 import in.hocg.eagle.mapstruct.dto.PublishNotifyDto;
-import in.hocg.eagle.mapstruct.qo.notify.PublishPrivateLetterQo;
-import in.hocg.eagle.mapstruct.qo.notify.PublishSubscriptionDto;
-import in.hocg.eagle.mapstruct.qo.notify.SearchNotifyPageQo;
-import in.hocg.eagle.mapstruct.vo.account.AccountComplexVo;
-import in.hocg.eagle.mapstruct.vo.notify.NotifyItemVo;
-import in.hocg.eagle.mapstruct.vo.notify.SummaryVo;
+import in.hocg.eagle.modules.notify.pojo.qo.notify.PublishPrivateLetterQo;
+import in.hocg.eagle.modules.notify.pojo.qo.notify.PublishSubscriptionDto;
+import in.hocg.eagle.modules.notify.pojo.qo.notify.SearchNotifyPagingQo;
+import in.hocg.eagle.modules.account.pojo.vo.account.AccountComplexVo;
+import in.hocg.eagle.modules.notify.pojo.vo.notify.NotifyComplexVo;
+import in.hocg.eagle.modules.notify.pojo.vo.notify.SummaryVo;
 import in.hocg.eagle.modules.account.service.AccountService;
 import in.hocg.eagle.modules.notify.entity.Notification;
 import in.hocg.eagle.modules.notify.entity.Notify;
@@ -51,17 +51,13 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public IPage<NotifyItemVo> search(SearchNotifyPageQo qo) {
+    public IPage<NotifyComplexVo> search(SearchNotifyPagingQo qo) {
         final IPage<Notification> result = baseMapper.search(qo, qo.page());
-        result.getRecords().forEach(notification -> {
-            final Long notifyId = notification.getNotifyId();
-            final Long receiverId = notification.getReceiverId();
-            updateReadyAtNow(notifyId, receiverId);
-        });
-        return result.convert(this::convertNotifyItem);
+        result.getRecords().forEach(notification -> updateReadyAtNow(notification.getNotifyId(), notification.getReceiverId()));
+        return result.convert(this::convertComplex);
     }
 
-    private NotifyItemVo convertNotifyItem(Notification notification) {
+    private NotifyComplexVo convertComplex(Notification notification) {
         final Long notifyId = notification.getNotifyId();
         final Long receiverId = notification.getReceiverId();
         final Notify notify = notifyService.getById(notifyId);
@@ -114,12 +110,12 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
         Integer readyCount = countByReady(accountId);
         Integer unReadyCount = countByUnReady(accountId);
         Integer top5 = 5;
-        final List<NotifyItemVo> privateLetter = baseMapper.selectListByReceiverIdAndNotifyType(accountId, NotifyType.PrivateLetter.getCode(), top5)
-            .stream().map(this::convertNotifyItem).collect(Collectors.toList());
-        final List<NotifyItemVo> subscription = baseMapper.selectListByReceiverIdAndNotifyType(accountId, NotifyType.Subscription.getCode(), top5)
-            .stream().map(this::convertNotifyItem).collect(Collectors.toList());
-        final List<NotifyItemVo> announcement = baseMapper.selectListByReceiverIdAndNotifyType(accountId, NotifyType.Announcement.getCode(), top5)
-            .stream().map(this::convertNotifyItem).collect(Collectors.toList());
+        final List<NotifyComplexVo> privateLetter = baseMapper.selectListByReceiverIdAndNotifyType(accountId, NotifyType.PrivateLetter.getCode(), top5)
+            .stream().map(this::convertComplex).collect(Collectors.toList());
+        final List<NotifyComplexVo> subscription = baseMapper.selectListByReceiverIdAndNotifyType(accountId, NotifyType.Subscription.getCode(), top5)
+            .stream().map(this::convertComplex).collect(Collectors.toList());
+        final List<NotifyComplexVo> announcement = baseMapper.selectListByReceiverIdAndNotifyType(accountId, NotifyType.Announcement.getCode(), top5)
+            .stream().map(this::convertComplex).collect(Collectors.toList());
 
         return new SummaryVo()
             .setReady(readyCount)
@@ -147,7 +143,7 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
     }
 
     @Override
-    public void verifyEntity(Notification entity) {
+    public void validEntity(Notification entity) {
 
     }
 }

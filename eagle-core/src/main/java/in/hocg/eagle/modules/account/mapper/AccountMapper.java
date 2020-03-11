@@ -1,10 +1,10 @@
 package in.hocg.eagle.modules.account.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import in.hocg.eagle.mapstruct.qo.account.AccountSearchQo;
 import in.hocg.eagle.modules.account.entity.Account;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.eagle.modules.account.pojo.qo.account.AccountSearchQo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

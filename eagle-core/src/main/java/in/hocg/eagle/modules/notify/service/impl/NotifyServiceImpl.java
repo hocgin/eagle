@@ -43,7 +43,7 @@ public class NotifyServiceImpl extends AbstractServiceImpl<NotifyMapper, Notify>
         entity.setNotifyType(notifyType.orElse(null));
         entity.setCreator(dto.getUserId());
         entity.setCreatedAt(dto.getCreatedAt());
-        insertOne(entity);
+        validInsert(entity);
 
         Notification notification;
         for (Long receiverId : dto.getReceivers()) {
@@ -51,11 +51,12 @@ public class NotifyServiceImpl extends AbstractServiceImpl<NotifyMapper, Notify>
             notification.setNotifyId(entity.getId());
             notification.setReceiverId(receiverId);
 
-            notificationService.insertOne(notification);
+            notificationService.validInsert(notification);
         }
     }
 
     @Override
-    public void verifyEntity(Notify entity) {
+    public void validEntity(Notify entity) {
+
     }
 }

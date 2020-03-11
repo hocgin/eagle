@@ -2,11 +2,12 @@ package in.hocg.eagle.mapstruct;
 
 
 import in.hocg.eagle.basic.security.GrantedAuthority;
-import in.hocg.eagle.mapstruct.qo.role.RolePostQo;
-import in.hocg.eagle.mapstruct.qo.role.RolePutQo;
-import in.hocg.eagle.mapstruct.vo.role.RoleComplexVo;
 import in.hocg.eagle.modules.account.entity.Authority;
 import in.hocg.eagle.modules.account.entity.Role;
+import in.hocg.eagle.modules.account.pojo.qo.role.RoleInsertQo;
+import in.hocg.eagle.modules.account.pojo.qo.role.RoleUpdateQo;
+import in.hocg.eagle.modules.account.pojo.vo.role.RoleComplexAndAuthorityVo;
+import in.hocg.eagle.modules.account.pojo.vo.role.RoleComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -20,7 +21,7 @@ import java.util.List;
  */
 @Mapper(componentModel = "spring")
 public interface RoleMapping {
-    
+
     /**
      * RolePostQo -> Role
      *
@@ -32,14 +33,20 @@ public interface RoleMapping {
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    Role asRole(RolePostQo qo);
-    
+    Role asRole(RoleInsertQo qo);
+
+    @Mapping(target = "platform", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "creator", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
-    Role asRole(RolePutQo qo);
-    
+    Role asRole(RoleUpdateQo qo);
+
+    @Mapping(target = "platformName", ignore = true)
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "enabledName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
+    @Mapping(target = "authorities", ignore = true)
     @Mapping(target = "title", source = "role.title")
     @Mapping(target = "roleCode", source = "role.roleCode")
     @Mapping(target = "remark", source = "role.remark")
@@ -50,24 +57,24 @@ public interface RoleMapping {
     @Mapping(target = "createdAt", source = "role.createdAt")
     @Mapping(target = "lastUpdater", source = "role.lastUpdater")
     @Mapping(target = "lastUpdatedAt", source = "role.lastUpdatedAt")
-    RoleComplexVo asRoleComplexVo(Role role);
-    
+    RoleComplexAndAuthorityVo asRoleComplexAndAuthorityVo(Role role);
+
     /**
      * Authority -> RoleComplexVo.AuthorityVo
      *
      * @param authority
      * @return
      */
-    RoleComplexVo.AuthorityVo asRoleComplexVo$AuthorityVo(Authority authority);
-    
+    RoleComplexAndAuthorityVo.AuthorityVo asRoleComplexVoAuthorityVo(Authority authority);
+
     /**
      * List<Authority> -> List<RoleComplexVo.AuthorityVo>
      *
      * @param authorities
      * @return
      */
-    List<RoleComplexVo.AuthorityVo> asRoleComplexVo$AuthorityVo(List<Authority> authorities);
-    
+    List<RoleComplexAndAuthorityVo.AuthorityVo> asRoleComplexVoAuthorityVo(List<Authority> authorities);
+
     /**
      * Role role, List<Authority> authorities -> RoleComplexVo
      *
@@ -75,12 +82,12 @@ public interface RoleMapping {
      * @param authorities
      * @return
      */
-    default RoleComplexVo asRoleComplexVo(Role role, List<Authority> authorities) {
-        RoleComplexVo result = asRoleComplexVo(role);
-        result.setAuthorities(asRoleComplexVo$AuthorityVo(authorities));
+    default RoleComplexAndAuthorityVo asRoleComplexAndAuthorityVo(Role role, List<Authority> authorities) {
+        RoleComplexAndAuthorityVo result = asRoleComplexAndAuthorityVo(role);
+        result.setAuthorities(asRoleComplexVoAuthorityVo(authorities));
         return result;
     }
-    
+
     /**
      * List<Role> -> List<GrantedAuthority>
      *
@@ -88,8 +95,8 @@ public interface RoleMapping {
      * @return
      */
     List<GrantedAuthority> asGrantedAuthority(List<Role> roles);
-    
-    
+
+
     /**
      * Role -> SimpleGrantedAuthority
      *
@@ -98,7 +105,10 @@ public interface RoleMapping {
      */
     default GrantedAuthority asGrantedAuthority(Role role) {
         return new GrantedAuthority()
-                .setAuthority("ROLE_" + role.getRoleCode());
+            .setAuthority("ROLE_" + role.getRoleCode());
     }
-    
+
+    @Mapping(target = "platformName", ignore = true)
+    @Mapping(target = "enabledName", ignore = true)
+    RoleComplexVo asRoleComplexVo(Role entity);
 }

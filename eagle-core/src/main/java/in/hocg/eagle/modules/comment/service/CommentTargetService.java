@@ -1,9 +1,8 @@
 package in.hocg.eagle.modules.comment.service;
 
+import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.basic.constant.datadict.CommentTargetType;
 import in.hocg.eagle.modules.comment.entity.CommentTarget;
-import in.hocg.eagle.basic.AbstractService;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -17,9 +16,21 @@ import java.util.Optional;
  */
 public interface CommentTargetService extends AbstractService<CommentTarget> {
 
-    @Transactional(rollbackFor = Exception.class)
+    /**
+     * 获取或创建评论对象ID
+     *
+     * @param relType
+     * @param relId
+     * @return
+     */
     Long getOrCreateCommentTarget(CommentTargetType relType, Long relId);
 
-    @Transactional(rollbackFor = Exception.class)
+    /**
+     * 获取评论对象ID
+     *
+     * @param relType
+     * @param relId
+     * @return
+     */
     Optional<Long> getCommentTarget(CommentTargetType relType, Long relId);
 }

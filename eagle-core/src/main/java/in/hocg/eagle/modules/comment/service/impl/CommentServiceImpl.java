@@ -6,12 +6,12 @@ import in.hocg.eagle.basic.MessageContext;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.mapstruct.CommentMapping;
-import in.hocg.eagle.mapstruct.qo.comment.CommentPostQo;
-import in.hocg.eagle.mapstruct.qo.comment.CommentPutQo;
-import in.hocg.eagle.mapstruct.qo.comment.G2ndAfterCommentPagingQo;
-import in.hocg.eagle.mapstruct.qo.comment.RootCommentPagingQo;
-import in.hocg.eagle.mapstruct.vo.comment.CommentComplexVo;
-import in.hocg.eagle.mapstruct.vo.comment.RootCommentComplexVo;
+import in.hocg.eagle.modules.comment.pojo.qo.comment.CommentPostQo;
+import in.hocg.eagle.modules.comment.pojo.qo.comment.CommentPutQo;
+import in.hocg.eagle.modules.comment.pojo.qo.comment.G2ndAfterCommentPagingQo;
+import in.hocg.eagle.modules.comment.pojo.qo.comment.RootCommentPagingQo;
+import in.hocg.eagle.modules.comment.pojo.vo.comment.CommentComplexVo;
+import in.hocg.eagle.modules.comment.pojo.vo.comment.RootCommentComplexVo;
 import in.hocg.eagle.modules.account.service.AccountService;
 import in.hocg.eagle.modules.comment.entity.Comment;
 import in.hocg.eagle.modules.comment.mapper.CommentMapper;
@@ -20,7 +20,7 @@ import in.hocg.eagle.modules.comment.service.CommentTargetService;
 import in.hocg.eagle.modules.notify.message.event.SubscriptionEvent;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ResultUtils;
-import in.hocg.eagle.utils.VerifyUtils;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -47,16 +47,16 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateComment(CommentPutQo qo) {
+    public void updateOne(CommentPutQo qo) {
         final Comment entity = mapping.asComment(qo);
         entity.setLastUpdatedAt(qo.getCreatedAt());
         entity.setLastUpdater(qo.getUserId());
-        updateOne(entity);
+        validUpdateById(entity);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void comment(CommentPostQo qo) throws Throwable {
+    public void insertOne(CommentPostQo qo) throws Throwable {
         final String targetTypeCode = qo.getTargetTypeCode();
         final Long id = qo.getId();
         final CommentTargetType targetType = IntEnum.of(targetTypeCode, CommentTargetType.class)
@@ -68,7 +68,7 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
 
         if (Objects.nonNull(parentId)) {
             Comment parent = baseMapper.selectById(parentId);
-            VerifyUtils.notNull(parent, "父级不存在");
+            ValidUtils.notNull(parent, "父级不存在");
             path.append(parent.getTreePath());
         }
 
@@ -80,10 +80,12 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
         final Long creatorId = qo.getUserId();
         final Long commentId = entity.getId();
         entity.setCreator(creatorId);
-        insertOne(entity);
+        validInsert(entity);
         path.append(String.format("/%d", commentId));
         entity.setTreePath(path.toString());
-        updateOne(entity);
+        validUpdateById(entity);
+
+        // 触发消息
         MessageContext.publish(new SubscriptionEvent()
             .setActorId(creatorId)
             .setSubjectId(commentId)
@@ -102,7 +104,7 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
             .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("未找到评论"));
         final IPage<Comment> result = baseMapper.pagingRootCommend(targetId, Enabled.On.getCode(), qo.page());
         return result.convert(entity -> {
-            final RootCommentComplexVo item = mapping.asRootCommentComplexVo(this.convert(entity));
+            final RootCommentComplexVo item = mapping.asRootCommentComplexVo(this.convertComplex(entity));
             final String treePath = entity.getTreePath();
             item.setChildrenTotal(countRightLikeTreePath(treePath));
             return item;
@@ -117,15 +119,15 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
             return ResultUtils.emptyPage(qo);
         }
 
-        VerifyUtils.notNull(pComment);
-        VerifyUtils.isNull(pComment.getParentId(), "非根评论");
+        ValidUtils.notNull(pComment);
+        ValidUtils.isNull(pComment.getParentId(), "非根评论");
         final String treePath = pComment.getTreePath();
         final String regexTreePath = String.format("%s/.*", treePath);
         final IPage<Comment> result = baseMapper.pagingByRegexTreePath(regexTreePath, qo.page());
-        return result.convert(this::convert);
+        return result.convert(this::convertComplex);
     }
 
-    private CommentComplexVo convert(Comment entity) {
+    private CommentComplexVo convertComplex(Comment entity) {
         final CommentComplexVo result = mapping.asCommentComplexVo(entity);
         final String content = LangUtils.equals(entity.getEnabled(), Enabled.On.getCode())
             ? result.getContent()
@@ -147,15 +149,15 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
     }
 
     @Override
-    public void verifyEntity(Comment entity) {
+    public void validEntity(Comment entity) {
         final Long parentId = entity.getParentId();
         final Long targetId = entity.getTargetId();
 
         if (Objects.nonNull(parentId)) {
-            VerifyUtils.notNull(baseMapper.selectById(parentId));
+            ValidUtils.notNull(baseMapper.selectById(parentId));
         }
         if (Objects.nonNull(targetId)) {
-            VerifyUtils.notNull(commentTargetService.getById(targetId));
+            ValidUtils.notNull(commentTargetService.getById(targetId));
         }
     }
 }

@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -33,11 +33,11 @@ import java.util.stream.Collectors;
 @Order(Integer.MIN_VALUE)
 @Component
 public class LoggerAspect {
-    
+
     @Pointcut("execution(public * *.*(..)) && @annotation(in.hocg.eagle.basic.aspect.logger.UseLogger)")
     public void pointcut() {
     }
-    
+
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         // 耗时统计
@@ -69,14 +69,15 @@ public class LoggerAspect {
                             && !(arg instanceof HttpServletResponse)
                             && !(arg instanceof MultipartFile)))
                     .collect(Collectors.toList());
-            
-            HttpServletRequest request = SpringContext.getRequest();
+
+            Optional<HttpServletRequest> requestOpt = SpringContext.getRequest();
             String uri = "Unknown";
             String requestMethod = "Unknown";
             String host = "Unknown";
             String userAgent = "Unknown";
             String clientIp = "0.0.0.0";
-            if (Objects.nonNull(request)) {
+            if (requestOpt.isPresent()) {
+                final HttpServletRequest request = requestOpt.get();
                 uri = request.getRequestURI();
                 requestMethod = request.getMethod();
                 userAgent = RequestUtility.getUserAgent(request);
@@ -100,8 +101,8 @@ public class LoggerAspect {
                     .setArgs(args);
             logger.save();
         }
-        
+
         return ret;
     }
-    
+
 }

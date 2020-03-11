@@ -2,12 +2,12 @@ package in.hocg.eagle.modules.comment.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.mapstruct.qo.comment.CommentPostQo;
-import in.hocg.eagle.mapstruct.qo.comment.CommentPutQo;
-import in.hocg.eagle.mapstruct.qo.comment.G2ndAfterCommentPagingQo;
-import in.hocg.eagle.mapstruct.qo.comment.RootCommentPagingQo;
-import in.hocg.eagle.mapstruct.vo.comment.CommentComplexVo;
-import in.hocg.eagle.mapstruct.vo.comment.RootCommentComplexVo;
+import in.hocg.eagle.modules.comment.pojo.qo.comment.CommentPostQo;
+import in.hocg.eagle.modules.comment.pojo.qo.comment.CommentPutQo;
+import in.hocg.eagle.modules.comment.pojo.qo.comment.G2ndAfterCommentPagingQo;
+import in.hocg.eagle.modules.comment.pojo.qo.comment.RootCommentPagingQo;
+import in.hocg.eagle.modules.comment.pojo.vo.comment.CommentComplexVo;
+import in.hocg.eagle.modules.comment.pojo.vo.comment.RootCommentComplexVo;
 import in.hocg.eagle.modules.comment.entity.Comment;
 
 /**
@@ -25,7 +25,7 @@ public interface CommentService extends AbstractService<Comment> {
      *
      * @param qo
      */
-    void updateComment(CommentPutQo qo);
+    void updateOne(CommentPutQo qo);
 
     /**
      * 发表评论
@@ -33,7 +33,7 @@ public interface CommentService extends AbstractService<Comment> {
      * @param qo qo
      * @throws Throwable
      */
-    void comment(CommentPostQo qo) throws Throwable;
+    void insertOne(CommentPostQo qo) throws Throwable;
 
     /**
      * 查询根级评论

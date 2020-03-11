@@ -4,9 +4,9 @@ package in.hocg.eagle.modules.base.controller;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.pojo.qo.IdsQo;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemPutQo;
-import in.hocg.eagle.mapstruct.qo.datadict.DataDictItemsPostQo;
-import in.hocg.eagle.mapstruct.vo.datadict.item.DataDictItemComplexVo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemUpdateQo;
+import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemsBatchInsertQo;
+import in.hocg.eagle.modules.base.pojo.vo.datadict.item.DataDictItemComplexVo;
 import in.hocg.eagle.modules.base.service.DataDictItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -26,31 +26,31 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/data-dict/item")
 public class DataDictItemController {
     private final DataDictItemService service;
-    
+
     @UseLogger("删除数据字典项")
     @DeleteMapping
     public Result<Void> deletes(@RequestBody IdsQo qo) {
-        service.deletes(qo);
+        service.batchDelete(qo);
         return Result.success();
     }
-    
+
     @UseLogger("新增数据字典项")
     @PostMapping
-    public Result<Void> insert(@RequestBody DataDictItemsPostQo qo) {
-        service.insertList(qo);
+    public Result<Void> insert(@RequestBody DataDictItemsBatchInsertQo qo) {
+        service.batchInsert(qo);
         return Result.success();
     }
-    
+
     @UseLogger("查询数据字典详情")
     @GetMapping("/{id:\\d+}")
     public Result<DataDictItemComplexVo> selectOne(@PathVariable("id") Long id) {
         return Result.success(service.selectOne(id));
     }
-    
+
     @UseLogger("更新数据字典项")
     @PutMapping("/{id}")
     public Result<Void> updateOne(@PathVariable Long id,
-                                  @Validated @RequestBody DataDictItemPutQo qo) {
+                                  @Validated @RequestBody DataDictItemUpdateQo qo) {
         qo.setId(id);
         service.updateOne(qo);
         return Result.success();

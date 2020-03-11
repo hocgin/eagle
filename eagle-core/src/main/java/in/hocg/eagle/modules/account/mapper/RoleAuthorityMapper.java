@@ -68,7 +68,7 @@ public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
      * @param authorityId
      * @return
      */
-    List<Role> selectListRoleByAuthorityId(@Param("authorityId") Integer authorityId);
+    List<Role> selectListRoleByAuthorityId(@Param("authorityId") Long authorityId);
 
     void deleteByRoleIdAndAuthorityId(@Param("roleId") Long roleId, @Param("authorityId") Long authorityId);
 }

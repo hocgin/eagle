@@ -11,26 +11,31 @@ import org.springframework.transaction.annotation.Transactional;
  * @author hocgin
  */
 public abstract class AbstractServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T>
-        implements AbstractService<T> {
+    implements AbstractService<T> {
 
     @Override
-    public void verifyEntity(T entity) {
-        throw new UnsupportedOperationException("未实现该函数");
+    public void validEntity(T entity) {
+        // Default SUCCESS
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public T updateOne(T entity) {
-        verifyEntity(entity);
-        baseMapper.updateById(entity);
-        return entity;
+    public boolean validUpdateById(T entity) {
+        validEntity(entity);
+        return updateById(entity);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public T insertOne(T entity) {
-        verifyEntity(entity);
-        baseMapper.insert(entity);
-        return entity;
+    public boolean validInsert(T entity) {
+        validEntity(entity);
+        return save(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void validInsertOrUpdate(T entity) {
+        validEntity(entity);
+        saveOrUpdate(entity);
     }
 }

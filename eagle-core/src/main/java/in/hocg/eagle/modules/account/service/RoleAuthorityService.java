@@ -63,7 +63,7 @@ public interface RoleAuthorityService extends AbstractService<RoleAuthority> {
      * @param id
      * @return
      */
-    List<Role> selectListRoleByAuthorityId(Integer id);
+    List<Role> selectListRoleByAuthorityId(Long id);
 
     void deleteByRoleIdAndAuthorityId(Long roleId, Long authorityId);
 }

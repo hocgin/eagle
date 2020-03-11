@@ -5,7 +5,7 @@ import in.hocg.eagle.basic.constant.datadict.CommentTargetType;
 import in.hocg.eagle.modules.comment.entity.CommentTarget;
 import in.hocg.eagle.modules.comment.mapper.CommentTargetMapper;
 import in.hocg.eagle.modules.comment.service.CommentTargetService;
-import in.hocg.eagle.utils.VerifyUtils;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -25,35 +25,25 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetMapper, CommentTarget> implements CommentTargetService {
 
-    /**
-     * 获取或创建评论对象ID
-     *
-     * @param relType
-     * @param relId
-     * @return
-     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Long getOrCreateCommentTarget(CommentTargetType relType, Long relId) {
         final Optional<Long> idOpt = getCommentTarget(relType, relId);
-        return idOpt.orElseGet(() -> insertOne(
-            new CommentTarget().setRelId(relId).setRelType(relType.getCode())
-        ).getId());
+        return idOpt.orElseGet(() -> {
+            final CommentTarget entity = new CommentTarget()
+                .setRelId(relId)
+                .setRelType(relType.getCode());
+            validInsert(entity);
+            return entity.getId();
+        });
     }
 
 
-    /**
-     * 获取评论对象ID
-     *
-     * @param relType
-     * @param relId
-     * @return
-     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Optional<Long> getCommentTarget(CommentTargetType relType, Long relId) {
-        VerifyUtils.notNull(relType);
-        VerifyUtils.notNull(relId);
+        ValidUtils.notNull(relType);
+        ValidUtils.notNull(relId);
         final Integer relTypeCode = relType.getCode();
         return selectOneByRelTypeAndRelId(relTypeCode, relId);
     }
@@ -66,7 +56,7 @@ public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetM
     }
 
     @Override
-    public void verifyEntity(CommentTarget entity) {
+    public void validEntity(CommentTarget entity) {
 
     }
 }

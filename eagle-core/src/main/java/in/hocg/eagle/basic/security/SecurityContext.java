@@ -4,6 +4,7 @@ import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.result.ResultCode;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,9 +19,10 @@ import java.util.Optional;
  *
  * @author hocgin
  */
+@Slf4j
 @UtilityClass
 public class SecurityContext {
-    
+
     /**
      * 登录
      *
@@ -29,7 +31,7 @@ public class SecurityContext {
     public static void signin(String userId) {
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userId, null, null));
     }
-    
+
     /**
      * 获取授权方式
      *
@@ -38,8 +40,8 @@ public class SecurityContext {
     public static Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
-    
-    
+
+
     /**
      * 当前登录的用户
      *
@@ -50,9 +52,13 @@ public class SecurityContext {
         if (auth instanceof AnonymousAuthenticationToken) {
             return Optional.empty();
         }
-        return Optional.of(((String) auth.getPrincipal()));
+        try {
+            return Optional.of(((String) auth.getPrincipal()));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
-    
+
     /**
      * 当前登录的用户
      *
@@ -67,7 +73,7 @@ public class SecurityContext {
         }
         return Optional.empty();
     }
-    
+
     /**
      * User Id
      *
@@ -82,5 +88,5 @@ public class SecurityContext {
             throw ServiceException.wrap(ResultCode.AUTHENTICATION_ERROR.getMessage());
         }
     }
-    
+
 }
