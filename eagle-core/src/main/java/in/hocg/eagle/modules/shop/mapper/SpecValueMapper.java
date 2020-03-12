@@ -3,6 +3,7 @@ package in.hocg.eagle.modules.shop.mapper;
 import in.hocg.eagle.modules.shop.entity.SpecValue;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -15,4 +16,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SpecValueMapper extends BaseMapper<SpecValue> {
 
+    void deleteAllByProductId(@Param("productId") Long productId);
 }

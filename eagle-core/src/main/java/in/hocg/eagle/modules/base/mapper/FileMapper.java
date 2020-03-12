@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Mapper
 public interface FileMapper extends BaseMapper<File> {
-    
-    
-    List<File> selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(@Param("relType") Integer relType, @Param("relId") Integer relId);
+
+
+    List<File> selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(@Param("relType") Integer relType, @Param("relId") Long relId);
 }

@@ -1,7 +1,9 @@
 package in.hocg.eagle.modules.shop.service;
 
-import in.hocg.eagle.modules.shop.entity.Product;
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.modules.shop.entity.Product;
+import in.hocg.eagle.modules.shop.pojo.qo.ProductSaveQo;
+import in.hocg.eagle.modules.shop.pojo.vo.product.ProductComplexVo;
 
 /**
  * <p>
@@ -13,4 +15,18 @@ import in.hocg.eagle.basic.AbstractService;
  */
 public interface ProductService extends AbstractService<Product> {
 
+    /**
+     * 新增商品
+     *
+     * @param qo
+     */
+    void saveOne(ProductSaveQo qo);
+
+    /**
+     * 查看商品详情
+     *
+     * @param id
+     * @return
+     */
+    ProductComplexVo selectOne(Long id);
 }

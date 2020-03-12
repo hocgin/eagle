@@ -27,9 +27,9 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("t_file")
 public class File extends AbstractEntity<File> {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
@@ -67,18 +67,19 @@ public class File extends AbstractEntity<File> {
      */
     @TableField("creator")
     private Long creator;
-    
-    
+
+
     @Override
     protected Serializable pkVal() {
         return this.id;
     }
-    
-    
+
+
     @RequiredArgsConstructor
     @Getter
     public enum RelType {
-        Unknown(0);
+        Unknown(0),
+        Product(1);
         private final Integer code;
     }
 }

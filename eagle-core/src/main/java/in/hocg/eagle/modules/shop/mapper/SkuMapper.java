@@ -3,6 +3,9 @@ package in.hocg.eagle.modules.shop.mapper;
 import in.hocg.eagle.modules.shop.entity.Sku;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SkuMapper extends BaseMapper<Sku> {
 
+    void deleteAllByProductId(@Param("productId") Long productId);
+
+    List<Sku> selectListByProductId2(@Param("productId") Long productId);
 }

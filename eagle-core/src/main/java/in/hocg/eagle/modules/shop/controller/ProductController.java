@@ -1,11 +1,17 @@
 package in.hocg.eagle.modules.shop.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.context.annotation.Lazy;
+import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.eagle.basic.pojo.qo.Insert;
+import in.hocg.eagle.basic.pojo.qo.Update;
+import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.modules.shop.pojo.qo.ProductSaveQo;
+import in.hocg.eagle.modules.shop.pojo.vo.product.ProductComplexVo;
+import in.hocg.eagle.modules.shop.service.ProductService;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -17,8 +23,33 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/shop/product")
+@RequestMapping("/api/product")
 public class ProductController {
+    private final ProductService service;
+
+    @UseLogger("新增商品")
+    @PostMapping
+    public Result<Void> insertOne(@Validated({Insert.class}) @RequestBody ProductSaveQo qo) {
+        qo.setId(null);
+        service.saveOne(qo);
+        return Result.success();
+    }
+
+    @UseLogger("更新商品信息")
+    @PutMapping("/{id}")
+    public Result<Void> updateOne(@PathVariable("id") Long id,
+                                  @Validated({Update.class}) @RequestBody ProductSaveQo qo) {
+        qo.setId(id);
+        service.saveOne(qo);
+        return Result.success();
+    }
+
+    @UseLogger("查看商品信息")
+    @GetMapping("/{id}")
+    public Result<ProductComplexVo> selectOne(@PathVariable("id") Long id) {
+        return Result.success(service.selectOne(id));
+    }
+
 
 }
 

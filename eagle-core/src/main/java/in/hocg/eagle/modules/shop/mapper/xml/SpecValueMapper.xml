@@ -2,4 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.eagle.modules.shop.mapper.SpecValueMapper">
 
+    <delete id="deleteAllByProductId">
+        DELETE  ssv FROM shop_spec_value ssv
+            LEFT JOIN shop_spec ss ON ss.id = ssv.spec_id
+        WHERE ss.product_id = #{productId}
+    </delete>
 </mapper>

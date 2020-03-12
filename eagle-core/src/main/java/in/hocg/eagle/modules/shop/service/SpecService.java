@@ -1,7 +1,10 @@
 package in.hocg.eagle.modules.shop.service;
 
-import in.hocg.eagle.modules.shop.entity.Spec;
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.modules.shop.entity.Spec;
+import in.hocg.eagle.modules.shop.pojo.vo.spec.SpecComplexVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import in.hocg.eagle.basic.AbstractService;
  */
 public interface SpecService extends AbstractService<Spec> {
 
+    void deleteAllByProductId(Long productId);
+
+    List<SpecComplexVo> selectListByProductId(Long productId);
 }

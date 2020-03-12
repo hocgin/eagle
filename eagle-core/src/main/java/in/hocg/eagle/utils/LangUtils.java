@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -18,7 +19,7 @@ import java.util.function.Function;
  */
 @UtilityClass
 public class LangUtils {
-    
+
     /**
      * 获取如果为 NULL，则返回默认值
      *
@@ -33,7 +34,7 @@ public class LangUtils {
         }
         return v;
     }
-    
+
     /**
      * 如果传入的值不为 NULL，则当作入参执行后续函数
      *
@@ -49,7 +50,7 @@ public class LangUtils {
         }
         return Optional.empty();
     }
-    
+
     /**
      * List 转为 Map
      *
@@ -67,7 +68,7 @@ public class LangUtils {
         }
         return result;
     }
-    
+
     /**
      * 数组 转为 Map
      *
@@ -85,7 +86,7 @@ public class LangUtils {
         }
         return result;
     }
-    
+
     /**
      * 提取 List 项的值
      *
@@ -102,7 +103,7 @@ public class LangUtils {
         }
         return result;
     }
-    
+
     /**
      * Integer 的比较
      *
@@ -114,18 +115,26 @@ public class LangUtils {
         if (s1 == null || s2 == null) {
             return Objects.equals(s1, s2);
         }
-    
+
         return s1.compareTo(s2) == 0;
     }
-    
+
     public static boolean equals(Long s1, Long s2) {
         if (s1 == null || s2 == null) {
             return Objects.equals(s1, s2);
         }
-        
+
         return s1.compareTo(s2) == 0;
     }
-    
+
+    public static boolean equals(String s1, String s2) {
+        if (s1 == null || s2 == null) {
+            return Objects.equals(s1, s2);
+        }
+
+        return s1.equals(s2);
+    }
+
     /**
      * toString
      *
@@ -143,5 +152,27 @@ public class LangUtils {
         } else {
             return object.toString();
         }
+    }
+
+    /**
+     * 两个集合之间过滤
+     *
+     * @param all
+     * @param sub
+     * @param biFunction
+     * @param <R>
+     * @param <T>
+     * @return
+     */
+    public <R, T> List<R> removeIfExits(List<R> all, List<T> sub, BiFunction<R, T, Boolean> biFunction) {
+        List<R> result = Lists.newArrayList();
+        for (R r : all) {
+            for (T t : sub) {
+                if (biFunction.apply(r, t)) {
+                    result.add(r);
+                }
+            }
+        }
+        return result;
     }
 }

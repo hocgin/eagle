@@ -57,15 +57,16 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File>
         }
     }
 
+    @Override
     public List<FileVo> selectListByRelTypeAndRelId2(@NotNull File.RelType relType,
-                                                     @NotNull Integer relId) {
+                                                     @NotNull Long relId) {
         return selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(relType, relId)
             .parallelStream()
             .map(item -> new FileVo().setFilename(item.getFilename()).setUrl(item.getFileUrl()))
             .collect(Collectors.toList());
     }
 
-    public List<File> selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(@NotNull File.RelType relType, @NotNull Integer relId) {
+    public List<File> selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(@NotNull File.RelType relType, @NotNull Long relId) {
         return baseMapper.selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(relType.getCode(), relId);
     }
 
