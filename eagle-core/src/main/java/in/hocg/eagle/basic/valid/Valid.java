@@ -19,8 +19,7 @@ public interface Valid {
      * @param groups
      */
     default void validThrow(Class<?>... groups) {
-        final Set<ConstraintViolation<Valid>> validate = ValidatorUtils.getValidation()
-            .validate(this, groups);
+        final Set<ConstraintViolation<Valid>> validate = ValidatorUtils.validate(this, groups);
         for (ConstraintViolation<Valid> violation : validate) {
             throw new ValidationException(violation.getMessage());
         }
