@@ -30,45 +30,47 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
-    
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-    
+
     @Override
     public void configure(WebSecurity web) {
         web.debug(true);
     }
-    
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
     }
-    
+
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-    
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().and()
-                .csrf().disable()
-                .antMatcher("/**")
-                .authorizeRequests()
-                .antMatchers(
-                        TokenAuthenticationEndpoint.ACCOUNT_TOKEN_URI
-                )
-                .permitAll()
-                .anyRequest().authenticated()
+            .cors().and()
+            .csrf().disable()
+            .antMatcher("/**")
+            .authorizeRequests()
+            .antMatchers("/api/**").hasAnyRole("EAGLE")
+            .antMatchers("/mini/api/**").hasAnyRole("MINI_EAGLE")
+            .antMatchers(
+                TokenAuthenticationEndpoint.ACCOUNT_TOKEN_URI
+            )
+            .permitAll()
+            .anyRequest().authenticated()
         ;
         http.exceptionHandling()
-                .defaultAuthenticationEntryPointFor(new AjaxAuthenticationEntryPoint(), new IsAjaxRequestMatcher())
-                .defaultAccessDeniedHandlerFor(new AjaxAccessDeniedHandler(), new IsAjaxRequestMatcher());
-        
+            .defaultAuthenticationEntryPointFor(new AjaxAuthenticationEntryPoint(), new IsAjaxRequestMatcher())
+            .defaultAccessDeniedHandlerFor(new AjaxAccessDeniedHandler(), new IsAjaxRequestMatcher());
+
         // ==== Token 登录方式 ====
         {
             http.addFilterBefore(new TokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

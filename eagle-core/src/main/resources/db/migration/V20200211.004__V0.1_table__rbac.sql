@@ -137,7 +137,9 @@ INSERT INTO t_authority(`id`, `title`, `type`, `authority_code`, `platform`, `pa
 INSERT INTO t_role(`id`, `title`, `role_code`, `platform`, `created_at`, `creator`)
     VALUE (1, '超级管理员', 'SUPER_ADMIN', 0, NOW(), 1);
 INSERT INTO t_role(`id`, `title`, `role_code`, `platform`, `created_at`, `creator`)
-    VALUE (2, 'EAGLE_MANAGER', 'EAGLE', 0, NOW(), 1);
+    VALUE (2, 'EAGLE 后台', 'EAGLE', 0, NOW(), 1);
+INSERT INTO t_role(`id`, `title`, `role_code`, `platform`, `created_at`, `creator`)
+    VALUE (3, 'EAGLE 客户端', 'MINI_EAGLE', 0, NOW(), 1);
 
 # 赋予角色权限
 INSERT INTO t_role_authority(`role_id`, `authority_id`)
@@ -157,3 +159,5 @@ INSERT INTO t_role_account(`role_id`, `account_id`)
 VALUES (1, 1);
 INSERT INTO t_role_account(`role_id`, `account_id`)
 VALUES (2, 1);
+INSERT INTO t_role_account(`role_id`, `account_id`)
+VALUES (3, 1);
