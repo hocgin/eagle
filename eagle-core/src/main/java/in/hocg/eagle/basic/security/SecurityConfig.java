@@ -59,8 +59,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .antMatcher("/**")
             .authorizeRequests()
-            .antMatchers("/api/**").hasAnyRole("EAGLE")
-            .antMatchers("/mini/api/**").hasAnyRole("MINI_EAGLE")
             .antMatchers(
                 TokenAuthenticationEndpoint.ACCOUNT_TOKEN_URI
             )

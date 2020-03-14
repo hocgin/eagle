@@ -14,6 +14,7 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface SkuMapping {
+
     @Mapping(target = "spec", ignore = true)
     SkuComplexVo asSkuComplexVo(Sku sku);
 

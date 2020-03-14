@@ -1,7 +1,9 @@
 package in.hocg.eagle.modules.shop.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.modules.shop.entity.Product;
+import in.hocg.eagle.modules.shop.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.shop.pojo.qo.ProductSaveQo;
 import in.hocg.eagle.modules.shop.pojo.vo.product.ProductComplexVo;
 
@@ -29,4 +31,11 @@ public interface ProductService extends AbstractService<Product> {
      * @return
      */
     ProductComplexVo selectOne(Long id);
+
+    /**
+     * 分页查询商品
+     * @param qo
+     * @return
+     */
+    IPage<ProductComplexVo> paging(ProductPagingQo qo);
 }

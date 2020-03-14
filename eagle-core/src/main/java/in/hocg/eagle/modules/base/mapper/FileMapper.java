@@ -20,4 +20,6 @@ public interface FileMapper extends BaseMapper<File> {
 
 
     List<File> selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(@Param("relType") Integer relType, @Param("relId") Long relId);
+
+    void deleteAllByRelTypeAndRelId(@Param("relType") Integer relType, @Param("relId") Long relId);
 }

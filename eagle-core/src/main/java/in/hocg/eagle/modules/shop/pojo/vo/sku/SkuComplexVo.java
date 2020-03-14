@@ -21,8 +21,8 @@ import java.util.List;
 public class SkuComplexVo {
     @ApiModelProperty("SKU ID")
     private Integer id;
-    @ApiModelProperty("规格")
-    private List<Spec> spec = Lists.newArrayList();
+    @ApiModelProperty("SKU编码")
+    private String skuCode;
     @ApiModelProperty("价格")
     private BigDecimal price;
     @ApiModelProperty("库存")
@@ -31,6 +31,8 @@ public class SkuComplexVo {
     private Integer sale;
     @ApiModelProperty("规格图片")
     private String imageUrl;
+    @ApiModelProperty("规格")
+    private List<Spec> spec = Lists.newArrayList();
 
     @Data
     public static class Spec {

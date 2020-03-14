@@ -5,6 +5,7 @@ import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.pojo.qo.Insert;
 import in.hocg.eagle.basic.pojo.qo.Update;
 import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.modules.shop.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.shop.pojo.qo.ProductSaveQo;
 import in.hocg.eagle.modules.shop.pojo.vo.product.ProductComplexVo;
 import in.hocg.eagle.modules.shop.service.ProductService;
@@ -50,6 +51,11 @@ public class ProductController {
         return Result.success(service.selectOne(id));
     }
 
+    @UseLogger("分页查询商品")
+    @PostMapping("/_paging")
+    public Result paging(@Validated @RequestBody ProductPagingQo qo) {
+        return Result.success(service.paging(qo));
+    }
 
 }
 

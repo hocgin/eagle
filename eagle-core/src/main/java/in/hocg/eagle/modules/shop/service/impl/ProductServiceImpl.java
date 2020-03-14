@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.shop.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.mapstruct.ProductMapping;
 import in.hocg.eagle.mapstruct.SkuMapping;
@@ -8,6 +9,7 @@ import in.hocg.eagle.modules.base.pojo.qo.file.UploadFileDto;
 import in.hocg.eagle.modules.base.service.FileService;
 import in.hocg.eagle.modules.shop.entity.Product;
 import in.hocg.eagle.modules.shop.mapper.ProductMapper;
+import in.hocg.eagle.modules.shop.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.shop.pojo.qo.ProductSaveQo;
 import in.hocg.eagle.modules.shop.pojo.vo.product.ProductComplexVo;
 import in.hocg.eagle.modules.shop.service.ProductCategoryService;
@@ -47,7 +49,7 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     public void saveOne(ProductSaveQo qo) {
         Product entity = mapping.asProduct(qo);
         final Long userId = qo.getUserId();
-        if (Objects.nonNull(qo.getId())) {
+        if (Objects.isNull(qo.getId())) {
             entity.setCreatedAt(qo.getCreatedAt());
             entity.setCreator(userId);
         } else {
@@ -82,6 +84,12 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     @Transactional(rollbackFor = Exception.class)
     public ProductComplexVo selectOne(Long id) {
         return convertProductComplex(getById(id));
+    }
+
+    @Override
+    public IPage<ProductComplexVo> paging(ProductPagingQo qo) {
+        IPage<Product> result = baseMapper.paging(qo, qo.page());
+        return result.convert(this::convertProductComplex);
     }
 
     public ProductComplexVo convertProductComplex(Product entity) {

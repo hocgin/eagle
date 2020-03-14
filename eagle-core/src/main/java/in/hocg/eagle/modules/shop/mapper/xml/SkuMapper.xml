@@ -4,14 +4,10 @@
 
     <delete id="deleteAllByProductId">
         DELETE ss FROM shop_sku ss
-            LEFT JOIN shop_spec_value ssv ON ss.id = ssv.sku_id
-            LEFT JOIN shop_spec ss ON ss.id = ssv.spec_id
         WHERE ss.product_id = #{productId}
     </delete>
     <select id="selectListByProductId2" resultType="in.hocg.eagle.modules.shop.entity.Sku">
         SELECT ss.* FROM shop_sku ss
-            LEFT JOIN shop_spec_value ssv ON ss.id = ssv.sku_id
-            LEFT JOIN shop_spec ss ON ss.id = ssv.spec_id
         WHERE ss.product_id = #{productId}
     </select>
 </mapper>

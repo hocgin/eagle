@@ -3,6 +3,7 @@ package in.hocg.eagle.modules.shop.pojo.qo;
 import in.hocg.eagle.basic.constant.product.ProductPublishStatus;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.basic.pojo.qo.Insert;
+import in.hocg.eagle.basic.pojo.qo.Update;
 import in.hocg.eagle.basic.valid.RangeEnum;
 import in.hocg.eagle.modules.base.pojo.qo.file.UploadFileDto;
 import io.swagger.annotations.ApiModelProperty;
@@ -33,7 +34,7 @@ public class ProductSaveQo extends IdQo {
     private String attrs;
     @Valid
     @NotNull(groups = {Insert.class}, message = "sku不能为空")
-    @Size(min = 1, groups = {Insert.class}, message = "sku不能为空")
+    @Size(min = 1, groups = {Insert.class, Update.class}, message = "sku不能为空")
     @ApiModelProperty("SKU列表")
     private List<Sku> sku;
     @ApiModelProperty("采购地")

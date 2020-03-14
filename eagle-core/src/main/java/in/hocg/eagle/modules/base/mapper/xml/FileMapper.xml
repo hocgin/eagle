@@ -10,4 +10,8 @@
           AND tf.rel_id = #{relId}
         ORDER BY tf.sort DESC, tf.created_at DESC
     </select>
+    <delete id="deleteAllByRelTypeAndRelId">
+        DELETE FROM t_file
+        WHERE rel_type = #{relType} AND rel_id = #{relId}
+    </delete>
 </mapper>

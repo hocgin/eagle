@@ -6,7 +6,9 @@ import in.hocg.eagle.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.shop.entity.Sku;
 import in.hocg.eagle.modules.shop.mapper.SkuMapper;
 import in.hocg.eagle.modules.shop.pojo.vo.sku.SkuComplexVo;
+import in.hocg.eagle.modules.shop.service.ProductService;
 import in.hocg.eagle.modules.shop.service.SkuService;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,7 @@ import java.util.stream.Collectors;
 public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implements SkuService {
 
     private final SkuMapping mapping;
+    private final ProductService productService;
 
     @Override
     public void deleteAllByProductId(Long productId) {
@@ -46,8 +49,22 @@ public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implemen
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void validInsertOrUpdateByProductId(@NotNull Long productId, List<Sku> entities) {
-        final List<Long> updateIds = entities.parallelStream().filter(sku -> Objects.nonNull(sku.getId())).map(Sku::getId).collect(Collectors.toList());
-        final List<Long> deleteIds = selectListByProductId2(productId).parallelStream().map(Sku::getId).filter(id -> !updateIds.contains(id)).collect(Collectors.toList());
+        final List<Long> allSkuIds = selectListByProductId2(productId).parallelStream().map(Sku::getId).collect(Collectors.toList());
+
+        // 需要更新的 ID
+        final List<Long> updateIds = entities.parallelStream()
+            .peek(sku -> {
+                final Long id = sku.getId();
+                if (Objects.nonNull(id) && !allSkuIds.contains(id)) {
+                    sku.setId(null);
+                }
+            })
+            .filter(sku -> Objects.nonNull(sku.getId()))
+            .map(Sku::getId).collect(Collectors.toList());
+
+        // 需要删除的ID
+        final List<Long> deleteIds = allSkuIds.parallelStream()
+            .filter(id -> !updateIds.contains(id)).collect(Collectors.toList());
         this.removeByIds(deleteIds);
         entities.forEach(this::validInsertOrUpdate);
     }
@@ -63,5 +80,13 @@ public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implemen
 
     private List<Sku> selectListByProductId2(Long productId) {
         return baseMapper.selectListByProductId2(productId);
+    }
+
+    @Override
+    public void validEntity(Sku entity) {
+        final Long productId = entity.getProductId();
+        if (Objects.nonNull(productId)) {
+            ValidUtils.notNull(productService.getById(productId), "商品ID不能为空");
+        }
     }
 }

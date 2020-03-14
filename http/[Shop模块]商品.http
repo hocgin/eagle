@@ -1,0 +1,20 @@
+## 新增商品
+POST {{host}}/api/product
+Content-Type: application/json
+Token: Bearer {{auth_token}}
+
+{
+    "title": "商品名称",
+    "attrs": null,
+    "procurement": "中国,福建",
+    "sku": [],
+    "photos": [],
+    "unit": "件",
+    "weight": null,
+    "videoUrl": null,
+    "productCategoryId": null,
+    "deleteStatus": null,
+    "publishStatus": null
+}
+
+###
