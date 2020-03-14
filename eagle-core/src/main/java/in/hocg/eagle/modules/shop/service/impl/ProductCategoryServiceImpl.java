@@ -1,12 +1,17 @@
 package in.hocg.eagle.modules.shop.service.impl;
 
+import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
+import in.hocg.eagle.mapstruct.ProductCategoryMapping;
 import in.hocg.eagle.modules.shop.entity.ProductCategory;
 import in.hocg.eagle.modules.shop.mapper.ProductCategoryMapper;
+import in.hocg.eagle.modules.shop.pojo.qo.category.ProductCategorySaveQo;
 import in.hocg.eagle.modules.shop.service.ProductCategoryService;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import org.springframework.stereotype.Service;
-import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 /**
  * <p>
@@ -18,6 +23,24 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class ProductCategoryServiceImpl extends AbstractServiceImpl<ProductCategoryMapper, ProductCategory> implements ProductCategoryService {
+public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryMapper, ProductCategory>
+    implements ProductCategoryService {
+    private final ProductCategoryMapping mapping;
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void saveOne(ProductCategorySaveQo qo) {
+        ProductCategory entity = mapping.asProductCategory(qo);
+        if (Objects.isNull(qo.getId())) {
+            entity.setCreatedAt(qo.getCreatedAt());
+            entity.setCreator(qo.getUserId());
+        } else {
+            entity.setLastUpdatedAt(qo.getCreatedAt());
+            entity.setLastUpdater(qo.getUserId());
+        }
+
+        validInsertOrUpdate(entity);
+    }
+
 
 }

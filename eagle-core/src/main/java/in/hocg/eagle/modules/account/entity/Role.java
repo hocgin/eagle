@@ -26,9 +26,9 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("t_role")
 public class Role extends AbstractEntity<Role> {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * ID
      */
@@ -79,11 +79,11 @@ public class Role extends AbstractEntity<Role> {
      */
     @TableField("last_updater")
     private Long lastUpdater;
-    
-    
+
+
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
-    
+
 }

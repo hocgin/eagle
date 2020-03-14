@@ -42,7 +42,7 @@ public class CommentTarget extends AbstractEntity<CommentTarget> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 

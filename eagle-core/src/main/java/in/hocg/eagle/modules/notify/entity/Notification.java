@@ -43,7 +43,7 @@ public class Notification extends AbstractEntity<Notification> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.notifyId;
     }
 

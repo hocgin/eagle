@@ -26,9 +26,9 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("t_data_dict_item")
 public class DataDictItem extends AbstractEntity<DataDictItem> {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * ID
      */
@@ -84,11 +84,11 @@ public class DataDictItem extends AbstractEntity<DataDictItem> {
      */
     @TableField("last_updater")
     private Long lastUpdater;
-    
-    
+
+
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
-    
+
 }

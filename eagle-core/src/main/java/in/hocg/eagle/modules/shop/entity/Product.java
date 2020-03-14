@@ -87,7 +87,7 @@ public class Product extends AbstractEntity<Product> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 

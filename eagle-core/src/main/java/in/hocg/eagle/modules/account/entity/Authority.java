@@ -25,9 +25,9 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @TableName("t_authority")
 public class Authority extends AbstractEntity<Authority> {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * ID
      */
@@ -48,7 +48,7 @@ public class Authority extends AbstractEntity<Authority> {
      */
     @TableField("authority_code")
     private String authorityCode;
-    
+
     /**
      * 父级ID, 顶级为 NULL
      */
@@ -94,11 +94,11 @@ public class Authority extends AbstractEntity<Authority> {
      */
     @TableField("last_updater")
     private Long lastUpdater;
-    
-    
+
+
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
-    
+
 }

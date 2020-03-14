@@ -70,7 +70,7 @@ public class Notify extends AbstractEntity<Notify> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 

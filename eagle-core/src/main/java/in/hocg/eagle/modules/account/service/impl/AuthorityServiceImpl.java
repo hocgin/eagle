@@ -56,14 +56,14 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     @Transactional(rollbackFor = Exception.class)
     public void insertOne(AuthorityInsertQo qo) {
         final Long parentId = qo.getParentId();
-        StringBuilder path = new StringBuilder();
+        StringBuilder treePath = new StringBuilder();
 
         // 如果存在父级别菜单
         if (Objects.nonNull(parentId)) {
-            Authority parentAuthority = baseMapper.selectById(parentId);
-            ValidUtils.notNull(parentAuthority, "父级不存在");
-            path.append(parentAuthority.getTreePath());
-            boolean parentIsOff = LangUtils.equals(Enabled.Off.getCode(), parentAuthority.getEnabled());
+            Authority parent = baseMapper.selectById(parentId);
+            ValidUtils.notNull(parent, "父级不存在");
+            treePath.append(parent.getTreePath());
+            boolean parentIsOff = LangUtils.equals(Enabled.Off.getCode(), parent.getEnabled());
             boolean nowIsOn = LangUtils.equals(Enabled.On.getCode(), qo.getEnabled());
             ValidUtils.isFalse(parentIsOff && nowIsOn, "父级为禁用状态，子级不能为开启状态");
         }
@@ -74,8 +74,8 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         authority.setCreator(qo.getUserId());
         authority.setTreePath("/tmp");
         validInsert(authority);
-        path.append(String.format("/%d", authority.getId()));
-        authority.setTreePath(path.toString());
+        treePath.append(String.format("/%d", authority.getId()));
+        authority.setTreePath(treePath.toString());
         validUpdateById(authority);
     }
 

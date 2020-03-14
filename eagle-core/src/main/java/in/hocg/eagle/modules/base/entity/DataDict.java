@@ -77,7 +77,7 @@ public class DataDict extends AbstractEntity<DataDict> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 
