@@ -30,7 +30,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     private final AccountService accountService;
     private final RoleMapping roleMapping;
     private final AuthorityMapping authorityMapping;
-    
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final Optional<Account> accountOptional = accountService.selectOneByUsername(username);
@@ -44,7 +44,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         }
         throw new UsernameNotFoundException("用户名或密码错误");
     }
-    
+
     /**
      * 构建权限集
      *

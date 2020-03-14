@@ -17,11 +17,11 @@ import java.util.List;
  */
 @Mapper
 public interface DataDictItemMapper extends BaseMapper<DataDictItem> {
-    
-    List<DataDictItem> selectList(@Param("dictId") Long dictId);
-    
+
+    List<DataDictItem> selectListByDictId(@Param("dictId") Long dictId);
+
     void deleteByDictId(@Param("dictId") Long dictId);
-    
+
     Integer countDictIdAndCodeIgnoreId(@Param("dictId") Long dictId,
                                      @Param("code") String code,
                                      @Param("id") Long id);

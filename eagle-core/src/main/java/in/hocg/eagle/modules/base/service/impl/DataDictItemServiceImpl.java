@@ -58,7 +58,7 @@ public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMap
 
     @Override
     public List<DataDictItem> selectListByDictId(Long dictId) {
-        return baseMapper.selectList(dictId);
+        return baseMapper.selectListByDictId(dictId);
     }
 
     @Override

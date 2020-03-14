@@ -43,4 +43,8 @@ public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryM
     }
 
 
+    @Override
+    public void validEntity(ProductCategory entity) {
+        super.validEntity(entity);
+    }
 }

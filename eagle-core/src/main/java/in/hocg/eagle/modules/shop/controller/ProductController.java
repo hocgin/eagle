@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.shop.controller;
 
 
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.pojo.qo.Insert;
 import in.hocg.eagle.basic.pojo.qo.Update;
 import in.hocg.eagle.basic.result.Result;
@@ -11,6 +12,7 @@ import in.hocg.eagle.modules.shop.pojo.vo.product.ProductComplexVo;
 import in.hocg.eagle.modules.shop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
  * @author hocgin
  * @since 2020-03-10
  */
+@PreAuthorize(AuthorizeConstant.IS_MANAGER)
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api/product")

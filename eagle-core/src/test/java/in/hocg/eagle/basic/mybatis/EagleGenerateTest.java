@@ -30,9 +30,6 @@ public class EagleGenerateTest {
     @Test
     public void generateByTables() {
         List<String> TABLES = Arrays.asList(
-            "shop_products",
-            "shop_product_category",
-            "shop_skus",
             ""
         );
         String javaPath = "src/main/java";

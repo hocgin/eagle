@@ -27,25 +27,27 @@ import java.io.IOException;
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private static final String BEARER = "Bearer ";
     private static final String TOKEN_HEADER = "Token";
-    
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         final String authorizationHeader = request.getHeader(TOKEN_HEADER);
-        
+
         if (Strings.isBlank(authorizationHeader) || !authorizationHeader.startsWith(BEARER)) {
             filterChain.doFilter(request, response);
             return;
         }
         final String authorization = authorizationHeader.substring(BEARER.length());
-        
+
         final SecurityContext context = SecurityContextHolder.getContext();
-        if (context.getAuthentication() != null) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-        
+
+        // 如果需要使用缓存的话，取消注释。这时候权限和角色的变更需要等待缓存过期
+//        if (context.getAuthentication() != null) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+
         try {
             String username = TokenUtility.decode(authorization);
             final UserDetailsService userDetailsService = SpringContext.getBean(UserDetailsService.class);

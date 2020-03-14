@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.eagle.modules.base.mapper.DataDictItemMapper">
 
-    <select id="selectList" resultType="in.hocg.eagle.modules.base.entity.DataDictItem">
+    <select id="selectListByDictId" resultType="in.hocg.eagle.modules.base.entity.DataDictItem">
         SELECT tddi.* FROM t_data_dict_item tddi
         <where>
             <if test="dictId != null">
