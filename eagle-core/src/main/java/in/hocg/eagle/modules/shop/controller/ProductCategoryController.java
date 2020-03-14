@@ -43,5 +43,12 @@ public class ProductCategoryController {
         return Result.success();
     }
 
+    @UseLogger("删除商品品类及其子品类")
+    @DeleteMapping("/{id}")
+    public Result deleteAll(@PathVariable("id") Long id) {
+        service.deleteCurrentAndChildren(id);
+        return Result.success();
+    }
+
 }
 

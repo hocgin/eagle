@@ -9,6 +9,7 @@ import in.hocg.eagle.utils.ValidUtils;
 import lombok.NonNull;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -121,6 +122,19 @@ public class TreeServiceImpl<M extends BaseMapper<T>, T extends TreeEntity<?>> e
             return Optional.empty();
         }
         return Optional.of(parent);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteCurrentAndChildren(Serializable id) {
+        final T entity = getById(id);
+        if (Objects.isNull(entity)) {
+            return;
+        }
+        final String treePath = entity.getTreePath();
+        final UpdateWrapper<T> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.likeRight(TreeEntity.TREE_PATH, treePath);
+        this.remove(updateWrapper);
     }
 
     /**
