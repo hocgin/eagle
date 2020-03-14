@@ -1,17 +1,18 @@
 package in.hocg.eagle.modules.shop.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.shop.entity.Sku;
-import in.hocg.eagle.modules.shop.entity.SpecValue;
 import in.hocg.eagle.modules.shop.mapper.SkuMapper;
 import in.hocg.eagle.modules.shop.pojo.vo.sku.SkuComplexVo;
 import in.hocg.eagle.modules.shop.service.SkuService;
-import in.hocg.eagle.modules.shop.service.SpecValueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -29,7 +30,6 @@ import java.util.stream.Collectors;
 public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implements SkuService {
 
     private final SkuMapping mapping;
-    private final SpecValueService specValueService;
 
     @Override
     public void deleteAllByProductId(Long productId) {
@@ -43,18 +43,21 @@ public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implemen
             .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void validInsertOrUpdateByProductId(@NotNull Long productId, List<Sku> entities) {
+        final List<Long> updateIds = entities.parallelStream().filter(sku -> Objects.nonNull(sku.getId())).map(Sku::getId).collect(Collectors.toList());
+        final List<Long> deleteIds = selectListByProductId2(productId).parallelStream().map(Sku::getId).filter(id -> !updateIds.contains(id)).collect(Collectors.toList());
+        this.removeByIds(deleteIds);
+        entities.forEach(this::validInsertOrUpdate);
+    }
+
     private SkuComplexVo convertSkuComplex(Sku entity) {
         if (Objects.isNull(entity)) {
             return null;
         }
-        final Long id = entity.getId();
-        List<SpecValue> specValues = specValueService.selectListBySkuId(id);
-        final List<Long> specValueId = specValues.parallelStream().map(SpecValue::getId).collect(Collectors.toList());
-        final List<String> specValue = specValues.parallelStream().map(SpecValue::getValue).collect(Collectors.toList());
-
         SkuComplexVo result = mapping.asSkuComplexVo(entity);
-        result.setSpecValue(specValue);
-        result.setSpecValueId(specValueId);
+        result.setSpec(JSON.parseArray(entity.getSpecData(), SkuComplexVo.Spec.class));
         return result;
     }
 

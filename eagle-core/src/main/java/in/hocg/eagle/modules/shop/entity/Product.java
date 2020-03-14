@@ -1,18 +1,17 @@
 package in.hocg.eagle.modules.shop.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import in.hocg.eagle.basic.AbstractEntity;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.eagle.basic.AbstractEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -33,10 +32,10 @@ public class Product extends AbstractEntity<Product> {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
-     * 产品分类(t_product_classify)ID
+     * 商品品类(t_product_classify)ID
      */
-    @TableField("classify_id")
-    private Long classifyId;
+    @TableField("product_category_id")
+    private Long productCategoryId;
     /**
      * video url
      */
@@ -58,10 +57,25 @@ public class Product extends AbstractEntity<Product> {
     @TableField("attrs")
     private String attrs;
     /**
-     * 上架状态: [下架, 上架]
+     * 上架状态: [0:下架, 1:上架]
      */
-    @TableField("status")
-    private Integer status;
+    @TableField("publish_status")
+    private Integer publishStatus;
+    /**
+     * 删除状态: [0:未删除, 1:删除]
+     */
+    @TableField("delete_status")
+    private Integer deleteStatus;
+    /**
+     * 单位
+     */
+    @TableField("unit")
+    private String unit;
+    /**
+     * 商品重量(克)
+     */
+    @TableField("weight")
+    private BigDecimal weight;
     @TableField("creator")
     private Long creator;
     @TableField("created_at")

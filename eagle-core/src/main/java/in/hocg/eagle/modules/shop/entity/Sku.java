@@ -1,18 +1,16 @@
 package in.hocg.eagle.modules.shop.entity;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import in.hocg.eagle.basic.AbstractEntity;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.eagle.basic.AbstractEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -32,21 +30,33 @@ public class Sku extends AbstractEntity<Sku> {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+    @TableField("product_id")
+    private Long productId;
     /**
      * SKU 编码
      */
-    @TableField("sku")
-    private String sku;
+    @TableField("sku_code")
+    private String skuCode;
     /**
-     * 价格(如: 12.00)
+     * 商品价格(如: 12.00)
      */
     @TableField("price")
     private BigDecimal price;
     /**
      * 库存, 默认为0
      */
-    @TableField("inventory")
-    private Integer inventory;
+    @TableField("stock")
+    private Integer stock;
+    /**
+     * 销量, 默认为0
+     */
+    @TableField("sale")
+    private Integer sale;
+    /**
+     * 规格属性(JSONArray, 如: [{"key":"颜色","value":"银色"}])
+     */
+    @TableField("spec_data")
+    private String specData;
     /**
      * 该特色商品图片
      */

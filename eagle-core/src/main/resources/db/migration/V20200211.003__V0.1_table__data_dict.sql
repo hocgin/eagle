@@ -172,3 +172,31 @@ INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
                                `created_at`, `creator`)
     VALUE (8, '正常', '1', '过期状态:正常', 1,
            NOW(), 1);
+
+#  删除状态
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (9, '删除状态', 'deleteStatus', '删除状态', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (9, '未删除', '0', '删除状态:未删除', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (9, '已删除', '1', '删除状态:已删除', 1,
+           NOW(), 1);
+
+#  上架状态
+INSERT INTO `t_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                          `created_at`, `creator`)
+    VALUE (10, '上架状态', 'publishStatus', '上架状态', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (10, '下架', '0', '上架状态:下架', 1,
+           NOW(), 1);
+INSERT INTO `t_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                               `created_at`, `creator`)
+    VALUE (10, '上架', '1', '上架状态:上架', 1,
+           NOW(), 1);

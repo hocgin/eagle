@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("商品状态")
 @RequiredArgsConstructor
-public enum ProductStatus implements IntEnum {
+public enum ProductPublishStatus implements IntEnum {
     SoldOut(0, "下架"),
     Shelves(1, "上架");
     private final Integer code;

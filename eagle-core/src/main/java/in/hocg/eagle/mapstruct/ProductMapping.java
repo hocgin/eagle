@@ -7,19 +7,21 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 /**
- * Created by hocgin on 2020/3/12.
+ * Created by hocgin on 2020/3/14.
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Mapper(componentModel = "spring")
-public interface ProductClassifyMapping {
+public interface ProductMapping {
 
-    @Mapping(target = "creator", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
+    @Mapping(target = "creator", ignore = true)
     Product asProduct(ProductSaveQo qo);
 
-    @Mapping(target = "statusName", ignore = true)
+    @Mapping(target = "photos", ignore = true)
+    @Mapping(target = "publishStatusName", ignore = true)
+    @Mapping(target = "sku", ignore = true)
     ProductComplexVo asProductComplex(Product entity);
 }

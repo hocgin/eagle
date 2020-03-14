@@ -6,7 +6,6 @@ import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.modules.base.pojo.vo.file.FileVo;
 import in.hocg.eagle.modules.shop.pojo.vo.sku.SkuComplexVo;
-import in.hocg.eagle.modules.shop.pojo.vo.spec.SpecComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -27,19 +26,17 @@ public class ProductComplexVo {
     private String title;
     @ApiModelProperty("属性")
     private String attrs;
-    @ApiModelProperty("分类")
-    private Long classifyId;
+    @ApiModelProperty("品类")
+    private Long productCategoryId;
     @ApiModelProperty("视频地址")
     private String videoUrl;
     @ApiModelProperty("产地")
     private String procurement;
-    @ApiModelProperty("状态")
-    private Integer status;
-    @Named(idFor = "productStatus", type = NamedType.DataDict)
-    private String statusName;
+    @ApiModelProperty("上架状态")
+    private Integer publishStatus;
+    @Named(idFor = "publishStatus", type = NamedType.DataDict)
+    private String publishStatusName;
 
-    @ApiModelProperty("规格")
-    private List<SpecComplexVo> spec = Lists.newArrayList();
     @ApiModelProperty("SKU")
     private List<SkuComplexVo> sku = Lists.newArrayList();
 

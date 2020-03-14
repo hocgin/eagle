@@ -16,17 +16,17 @@ import java.io.Serializable;
 
 /**
  * <p>
- * [Shop模块] 商品分类表
+ * [Shop模块] 商品品类表
  * </p>
  *
  * @author hocgin
- * @since 2020-03-10
+ * @since 2020-03-14
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("shop_product_classify")
-public class ProductClassify extends AbstractEntity<ProductClassify> {
+@TableName("shop_product_category")
+public class ProductCategory extends AbstractEntity<ProductCategory> {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,10 +35,25 @@ public class ProductClassify extends AbstractEntity<ProductClassify> {
     @TableField("parent_id")
     private Long parentId;
     /**
-     * 产品分类名称
+     * 商品品类名称
      */
     @TableField("title")
     private String title;
+    /**
+     * 商品品类描述
+     */
+    @TableField("remark")
+    private String remark;
+    /**
+     * 商品品类图片
+     */
+    @TableField("image_url")
+    private String imageUrl;
+    /**
+     * 商品品类关键词
+     */
+    @TableField("keywords")
+    private String keywords;
     /**
      * 树路径，组成方式: /父路径/当前ID
      */
