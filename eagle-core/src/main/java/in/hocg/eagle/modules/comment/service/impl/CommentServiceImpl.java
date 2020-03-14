@@ -1,20 +1,20 @@
 package in.hocg.eagle.modules.comment.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.MessageContext;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
 import in.hocg.eagle.mapstruct.CommentMapping;
+import in.hocg.eagle.modules.account.service.AccountService;
+import in.hocg.eagle.modules.comment.entity.Comment;
+import in.hocg.eagle.modules.comment.mapper.CommentMapper;
 import in.hocg.eagle.modules.comment.pojo.qo.comment.CommentPostQo;
 import in.hocg.eagle.modules.comment.pojo.qo.comment.CommentPutQo;
 import in.hocg.eagle.modules.comment.pojo.qo.comment.G2ndAfterCommentPagingQo;
 import in.hocg.eagle.modules.comment.pojo.qo.comment.RootCommentPagingQo;
 import in.hocg.eagle.modules.comment.pojo.vo.comment.CommentComplexVo;
 import in.hocg.eagle.modules.comment.pojo.vo.comment.RootCommentComplexVo;
-import in.hocg.eagle.modules.account.service.AccountService;
-import in.hocg.eagle.modules.comment.entity.Comment;
-import in.hocg.eagle.modules.comment.mapper.CommentMapper;
 import in.hocg.eagle.modules.comment.service.CommentService;
 import in.hocg.eagle.modules.comment.service.CommentTargetService;
 import in.hocg.eagle.modules.notify.message.event.SubscriptionEvent;
@@ -39,7 +39,7 @@ import java.util.function.Supplier;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comment> implements CommentService {
+public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> implements CommentService {
 
     private final CommentTargetService commentTargetService;
     private final AccountService accountService;
@@ -57,38 +57,24 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertOne(CommentPostQo qo) throws Throwable {
+        final Long creatorId = qo.getUserId();
         final String targetTypeCode = qo.getTargetTypeCode();
         final Long id = qo.getId();
         final CommentTargetType targetType = IntEnum.of(targetTypeCode, CommentTargetType.class)
             .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("参数错误"));
         final Long targetId = commentTargetService.getOrCreateCommentTarget(targetType, id);
 
-        final Long parentId = qo.getParentId();
-        StringBuilder path = new StringBuilder();
-
-        if (Objects.nonNull(parentId)) {
-            Comment parent = baseMapper.selectById(parentId);
-            ValidUtils.notNull(parent, "父级不存在");
-            path.append(parent.getTreePath());
-        }
-
         final Comment entity = mapping.asComment(qo);
         entity.setEnabled(Enabled.On.getCode());
         entity.setTargetId(targetId);
-        entity.setTreePath("/tmp");
         entity.setCreatedAt(qo.getCreatedAt());
-        final Long creatorId = qo.getUserId();
-        final Long commentId = entity.getId();
         entity.setCreator(creatorId);
         validInsert(entity);
-        path.append(String.format("/%d", commentId));
-        entity.setTreePath(path.toString());
-        validUpdateById(entity);
 
         // 触发消息
         MessageContext.publish(new SubscriptionEvent()
             .setActorId(creatorId)
-            .setSubjectId(commentId)
+            .setSubjectId(entity.getId())
             .setSubjectType(SubjectType.Comment)
             .setNotifyType(NotifyType.SubscriptionComment));
     }
@@ -150,12 +136,8 @@ public class CommentServiceImpl extends AbstractServiceImpl<CommentMapper, Comme
 
     @Override
     public void validEntity(Comment entity) {
-        final Long parentId = entity.getParentId();
+        super.validEntity(entity);
         final Long targetId = entity.getTargetId();
-
-        if (Objects.nonNull(parentId)) {
-            ValidUtils.notNull(baseMapper.selectById(parentId));
-        }
         if (Objects.nonNull(targetId)) {
             ValidUtils.notNull(commentTargetService.getById(targetId));
         }

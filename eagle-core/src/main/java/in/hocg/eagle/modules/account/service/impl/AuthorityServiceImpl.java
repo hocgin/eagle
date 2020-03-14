@@ -1,32 +1,27 @@
 package in.hocg.eagle.modules.account.service.impl;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.Tree;
-import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.basic.security.SecurityContext;
+import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
 import in.hocg.eagle.mapstruct.AuthorityMapping;
+import in.hocg.eagle.modules.account.entity.Authority;
+import in.hocg.eagle.modules.account.entity.Role;
+import in.hocg.eagle.modules.account.mapper.AuthorityMapper;
 import in.hocg.eagle.modules.account.pojo.qo.authority.AuthorityInsertQo;
 import in.hocg.eagle.modules.account.pojo.qo.authority.AuthoritySearchQo;
 import in.hocg.eagle.modules.account.pojo.qo.authority.AuthorityUpdateQo;
 import in.hocg.eagle.modules.account.pojo.qo.role.GrantRoleQo;
 import in.hocg.eagle.modules.account.pojo.vo.authority.AuthorityComplexAndRoleVo;
 import in.hocg.eagle.modules.account.pojo.vo.authority.AuthorityTreeNodeVo;
-import in.hocg.eagle.modules.account.entity.Authority;
-import in.hocg.eagle.modules.account.entity.Role;
-import in.hocg.eagle.modules.account.mapper.AuthorityMapper;
 import in.hocg.eagle.modules.account.service.AuthorityService;
 import in.hocg.eagle.modules.account.service.RoleAuthorityService;
-import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -41,7 +36,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, Authority> implements AuthorityService {
+public class AuthorityServiceImpl extends TreeServiceImpl<AuthorityMapper, Authority> implements AuthorityService {
 
     private final AuthorityMapping mapping;
     private final RoleAuthorityService roleAuthorityService;
@@ -55,27 +50,9 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertOne(AuthorityInsertQo qo) {
-        final Long parentId = qo.getParentId();
-        StringBuilder treePath = new StringBuilder();
-
-        // 如果存在父级别菜单
-        if (Objects.nonNull(parentId)) {
-            Authority parent = baseMapper.selectById(parentId);
-            ValidUtils.notNull(parent, "父级不存在");
-            treePath.append(parent.getTreePath());
-            boolean parentIsOff = LangUtils.equals(Enabled.Off.getCode(), parent.getEnabled());
-            boolean nowIsOn = LangUtils.equals(Enabled.On.getCode(), qo.getEnabled());
-            ValidUtils.isFalse(parentIsOff && nowIsOn, "父级为禁用状态，子级不能为开启状态");
-        }
-
         final Authority authority = mapping.asAuthority(qo);
         authority.setCreatedAt(qo.getCreatedAt());
-        authority.setParentId(parentId);
         authority.setCreator(qo.getUserId());
-        authority.setTreePath("/tmp");
-        validInsert(authority);
-        treePath.append(String.format("/%d", authority.getId()));
-        authority.setTreePath(treePath.toString());
         validUpdateById(authority);
     }
 
@@ -83,20 +60,6 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
     @Transactional(rollbackFor = Exception.class)
     public void updateOne(AuthorityUpdateQo qo) {
         final Authority authority = mapping.asAuthority(qo);
-        final Long parentId = authority.getParentId();
-        final Integer enabled = qo.getEnabled();
-        final Long id = qo.getId();
-
-        // 如果需要更新父级
-        if (Objects.nonNull(parentId)) {
-            updateAuthorityTreePath(id, parentId);
-        }
-
-        // 如果需要更新启用状态
-        if (Objects.nonNull(enabled)) {
-            updateAuthorityEnabledStatus(id, enabled);
-        }
-
         authority.setLastUpdatedAt(qo.getCreatedAt());
         authority.setLastUpdater(qo.getUserId());
         validUpdateById(authority);
@@ -164,7 +127,7 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         if (roleAuthorityService.isUsedAuthority(regexTreePath)) {
             throw ServiceException.wrap("所选节点正在被某些角色使用");
         }
-        baseMapper.deleteListByRegexTreePath(regexTreePath);
+        super.deleteCurrentAndChildren(id);
     }
 
     /**
@@ -183,78 +146,10 @@ public class AuthorityServiceImpl extends AbstractServiceImpl<AuthorityMapper, A
         return baseMapper.selectListByRegexTreePath(regexTreePath);
     }
 
-    /**
-     * - 父级更换，如果父级的父级发生更换，则其子级随着父级发生更换。
-     */
-    private void updateAuthorityTreePath(@NotNull Long id,
-                                         Long parentId) {
-        final Authority authority = baseMapper.selectById(id);
-        if (LangUtils.equals(authority.getParentId(), parentId)) {
-            return;
-        }
-        String oldTreePath = authority.getTreePath();
-
-        String newParentTreePath = "";
-        if (Objects.nonNull(parentId)) {
-            final Authority parentAuthority = baseMapper.selectById(parentId);
-            ValidUtils.notNull(parentAuthority, "父级不存在");
-            newParentTreePath = parentAuthority.getTreePath();
-        }
-        String newTreePath = String.format("%s/%d", newParentTreePath, id);
-        final String regexTreePath = String.format("%s.*?", oldTreePath);
-        baseMapper.updateTreePathByRegexTreePath(regexTreePath, oldTreePath, newTreePath);
-
-        Authority update = new Authority();
-        update.setId(id);
-        update.setParentId(parentId);
-        update.setLastUpdatedAt(LocalDateTime.now());
-        update.setLastUpdater(SecurityContext.getCurrentUserId());
-        baseMapper.updateById(update);
-    }
-
-    /**
-     * 状态更新
-     * - 状态更新，如果父级为禁用状态，子权限不能更新为启用状态。
-     * - 状态更新，如果父级更新为禁用状态，子权限均会更新为禁用状态。
-     *
-     * @param id
-     * @param enabled
-     */
-    private void updateAuthorityEnabledStatus(@NotNull Long id,
-                                              @NotNull Integer enabled) {
-        final Authority authority = baseMapper.selectById(id);
-        if (LangUtils.equals(authority.getEnabled(), enabled)) {
-            return;
-        }
-
-        // 该权限的父节点
-        final Long parentId = authority.getParentId();
-        if (Objects.nonNull(parentId)) {
-            Authority parentAuthority = baseMapper.selectById(parentId);
-            ValidUtils.notNull(parentAuthority, "父级不存在");
-            boolean parentIsOff = LangUtils.equals(Enabled.Off.getCode(), parentAuthority.getEnabled());
-            boolean nowIsOn = LangUtils.equals(Enabled.On.getCode(), enabled);
-            ValidUtils.isTrue(parentIsOff && nowIsOn, "父级为禁用状态，子级不能为开启状态");
-        }
-
-        // 该权限如果更新为禁用，则其子节点都需更新为禁用
-        if (LangUtils.equals(Enabled.Off.getCode(), enabled)) {
-            final String treePath = authority.getTreePath();
-            final String regexTreePath = String.format("%s.*?", treePath);
-            baseMapper.updateOffStatusByRegexTreePath(regexTreePath);
-            return;
-        }
-
-        Authority update = new Authority();
-        update.setId(id);
-        update.setEnabled(enabled);
-        update.setLastUpdatedAt(LocalDateTime.now());
-        update.setLastUpdater(SecurityContext.getCurrentUserId());
-        baseMapper.updateById(update);
-    }
 
     @Override
     public void validEntity(Authority entity) {
+        super.validEntity(entity);
         final Long id = entity.getId();
         final String authorityCode = entity.getAuthorityCode();
         if (Objects.nonNull(authorityCode)) {

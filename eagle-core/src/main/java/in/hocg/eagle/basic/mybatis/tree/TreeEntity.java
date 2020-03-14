@@ -23,6 +23,9 @@ public abstract class TreeEntity<T extends TreeEntity<?>> extends AbstractEntity
     @TableId(value = TreeEntity.ID, type = IdType.AUTO)
     private Long id;
 
+    /**
+     * 父级ID, 顶级为 NULL
+     */
     @TableField(TreeEntity.PARENT_ID)
     private Long parentId;
     /**

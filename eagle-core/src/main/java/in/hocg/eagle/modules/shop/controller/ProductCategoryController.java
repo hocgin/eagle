@@ -36,8 +36,8 @@ public class ProductCategoryController {
 
     @UseLogger("更新商品品类")
     @PutMapping("/{id}")
-    public Result updateQo(@PathVariable("id") Long id,
-                           @Validated({Update.class}) @RequestBody ProductCategorySaveQo qo) {
+    public Result updateOne(@PathVariable("id") Long id,
+                            @Validated({Update.class}) @RequestBody ProductCategorySaveQo qo) {
         qo.setId(id);
         service.saveOne(qo);
         return Result.success();

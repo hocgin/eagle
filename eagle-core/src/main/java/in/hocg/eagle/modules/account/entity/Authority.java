@@ -1,15 +1,12 @@
 package in.hocg.eagle.modules.account.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import in.hocg.eagle.basic.AbstractEntity;
+import in.hocg.eagle.basic.mybatis.tree.TreeEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -24,15 +21,10 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("t_authority")
-public class Authority extends AbstractEntity<Authority> {
+public class Authority extends TreeEntity<Authority> {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * ID
-     */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
     /**
      * 权限名称
      */
@@ -48,22 +40,6 @@ public class Authority extends AbstractEntity<Authority> {
      */
     @TableField("authority_code")
     private String authorityCode;
-
-    /**
-     * 父级ID, 顶级为 NULL
-     */
-    @TableField("parent_id")
-    private Long parentId;
-    /**
-     * 树路径，组成方式: /父路径/当前ID
-     */
-    @TableField("tree_path")
-    private String treePath;
-    /**
-     * 启用状态[0:为禁用状态;1:为正常状态]
-     */
-    @TableField("enabled")
-    private Integer enabled;
     /**
      * 平台编号
      */
@@ -94,11 +70,5 @@ public class Authority extends AbstractEntity<Authority> {
      */
     @TableField("last_updater")
     private Long lastUpdater;
-
-
-    @Override
-    public Serializable pkVal() {
-        return this.id;
-    }
 
 }
