@@ -2,16 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.eagle.modules.account.mapper.AuthorityMapper">
 
-    <update id="updateOffStatusByRegexTreePath">
-        UPDATE t_authority ta
-        SET ta.enabled = 0
-        WHERE ta.tree_path REGEXP #{regexTreePath}
-    </update>
-    <update id="updateTreePathByRegexTreePath">
-        UPDATE t_authority ta
-        SET ta.tree_path = REPLACE(ta.tree_path, #{oldTreePath}, #{newTreePath})
-        WHERE ta.tree_path REGEXP #{regexTreePath}
-    </update>
     <select id="search" resultType="in.hocg.eagle.modules.account.entity.Authority">
         SELECT ta.*
         FROM t_authority ta
