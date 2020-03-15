@@ -38,4 +38,5 @@ public interface ProductService extends AbstractService<Product> {
      * @return
      */
     IPage<ProductComplexVo> paging(ProductPagingQo qo);
+
 }

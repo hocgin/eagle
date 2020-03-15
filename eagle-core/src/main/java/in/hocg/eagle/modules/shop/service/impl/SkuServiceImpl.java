@@ -69,6 +69,12 @@ public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implemen
         entities.forEach(this::validInsertOrUpdate);
     }
 
+
+    @Override
+    public boolean validAndUseStock(Long id, Integer useStock) {
+        return this.retBool(baseMapper.validAndUseStock(id, useStock));
+    }
+
     private SkuComplexVo convertSkuComplex(Sku entity) {
         if (Objects.isNull(entity)) {
             return null;

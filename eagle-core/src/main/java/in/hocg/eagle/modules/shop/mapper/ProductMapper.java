@@ -20,4 +20,5 @@ import org.apache.ibatis.annotations.Param;
 public interface ProductMapper extends BaseMapper<Product> {
 
     IPage<Product> paging(@Param("qo") ProductPagingQo qo, @Param("page") Page page);
+
 }

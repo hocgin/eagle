@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `shop_product`;
-CREATE TABLE `shop_product`
+DROP TABLE IF EXISTS oms_product;
+CREATE TABLE oms_product
 (
     id                  BIGINT AUTO_INCREMENT,
     product_category_id BIGINT       NOT NULL
@@ -32,8 +32,8 @@ CREATE TABLE `shop_product`
     DEFAULT CHARSET = utf8mb4
     COMMENT '[Shop模块] 商品表';
 --
-DROP TABLE IF EXISTS `shop_product_category`;
-CREATE TABLE shop_product_category
+DROP TABLE IF EXISTS `oms_product_category`;
+CREATE TABLE oms_product_category
 (
     id              bigint AUTO_INCREMENT,
     parent_id       bigint,
@@ -63,8 +63,8 @@ CREATE TABLE shop_product_category
     DEFAULT CHARSET = utf8mb4
     COMMENT '[Shop模块] 商品品类表';
 --
-DROP TABLE IF EXISTS `shop_sku`;
-CREATE TABLE `shop_sku`
+DROP TABLE IF EXISTS `oms_sku`;
+CREATE TABLE `oms_sku`
 (
     id         BIGINT AUTO_INCREMENT,
     product_id BIGINT,
@@ -88,5 +88,5 @@ CREATE TABLE `shop_sku`
     COMMENT '[Shop模块] 商品SKU表';
 
 -- 品类
-INSERT INTO shop_product_category(id, title, tree_path, creator, created_at)
+INSERT INTO oms_product_category(id, title, tree_path, creator, created_at)
     VALUE (1, '测试品类', '/1', 1, NOW());

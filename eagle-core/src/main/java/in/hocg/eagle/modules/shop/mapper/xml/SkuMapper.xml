@@ -3,11 +3,16 @@
 <mapper namespace="in.hocg.eagle.modules.shop.mapper.SkuMapper">
 
     <delete id="deleteAllByProductId">
-        DELETE ss FROM shop_sku ss
-        WHERE ss.product_id = #{productId}
+        DELETE os FROM oms_sku os
+        WHERE os.product_id = #{productId}
     </delete>
     <select id="selectListByProductId2" resultType="in.hocg.eagle.modules.shop.entity.Sku">
-        SELECT ss.* FROM shop_sku ss
-        WHERE ss.product_id = #{productId}
+        SELECT os.* FROM oms_sku os
+        WHERE os.product_id = #{productId}
     </select>
+    <update id="validAndUseStock">
+        UPDATE oms_sku
+        SET stock = stock - #{useStock}
+        WHERE id = #{id} AND stock - #{useStock} > 0
+    </update>
 </mapper>

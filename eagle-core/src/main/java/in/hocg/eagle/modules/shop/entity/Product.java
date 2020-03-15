@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("shop_product")
+@TableName("oms_product")
 public class Product extends AbstractEntity<Product> {
 
     private static final long serialVersionUID = 1L;

@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.shop.pojo.qo;
 
-import in.hocg.eagle.basic.constant.product.ProductPublishStatus;
+import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.basic.pojo.qo.Insert;
 import in.hocg.eagle.basic.pojo.qo.Update;

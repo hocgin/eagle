@@ -43,4 +43,5 @@ public abstract class AbstractServiceImpl<M extends BaseMapper<T>, T extends Abs
             validInsert(entity);
         }
     }
+
 }

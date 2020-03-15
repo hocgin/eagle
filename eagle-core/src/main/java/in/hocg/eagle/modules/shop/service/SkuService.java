@@ -28,4 +28,13 @@ public interface SkuService extends AbstractService<Sku> {
      * @param entities
      */
     void validInsertOrUpdateByProductId(@NotNull Long productId, List<Sku> entities);
+
+    /**
+     * 检查并使用库存
+     *
+     * @param id
+     * @param useStock
+     * @return true 成功 false 失败
+     */
+    boolean validAndUseStock(Long id, Integer useStock);
 }

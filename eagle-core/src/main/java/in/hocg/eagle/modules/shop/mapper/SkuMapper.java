@@ -21,4 +21,6 @@ public interface SkuMapper extends BaseMapper<Sku> {
     void deleteAllByProductId(@Param("productId") Long productId);
 
     List<Sku> selectListByProductId2(@Param("productId") Long productId);
+
+    Integer validAndUseStock(@Param("id") Long id, @Param("useStock") Integer useStock);
 }

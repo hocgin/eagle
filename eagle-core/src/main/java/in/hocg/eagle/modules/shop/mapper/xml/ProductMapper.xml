@@ -3,6 +3,7 @@
 <mapper namespace="in.hocg.eagle.modules.shop.mapper.ProductMapper">
 
     <select id="paging" resultType="in.hocg.eagle.modules.shop.entity.Product">
-        SELECT * FROM shop_product sp
+        SELECT *
+        FROM oms_product op
     </select>
 </mapper>

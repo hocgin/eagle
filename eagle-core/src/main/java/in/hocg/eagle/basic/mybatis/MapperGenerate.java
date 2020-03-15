@@ -25,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class MapperGenerate {
     private final DataSourceProperties properties;
-    List<String> tablePrefix = Lists.newArrayList("T_", "SHOP_");
+    List<String> tablePrefix = Lists.newArrayList("T_", "SHOP_", "OMS_");
 
     public void generateByTables(String packageName,
                                  String moduleName,
