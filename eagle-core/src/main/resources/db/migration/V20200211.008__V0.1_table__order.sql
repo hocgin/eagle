@@ -93,6 +93,8 @@ DROP TABLE IF EXISTS `oms_order_return_apply`;
 CREATE TABLE `oms_order_return_apply`
 (
     `id`                 bigint(20)  NOT NULL AUTO_INCREMENT,
+    apply_sn                VARCHAR(64)    NOT NULL
+        COMMENT '退款申请编号',
     `apply_status`       int(1)         DEFAULT NULL COMMENT '申请状态：[0:待处理；1:退货中；2:已完成；3:已拒绝]',
     -- #退货信息
     `order_item_id`      bigint(20)     DEFAULT NULL COMMENT '订单商品ID',

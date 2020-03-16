@@ -31,6 +31,8 @@ public class OrderReturnApply extends AbstractEntity<OrderReturnApply> {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+    @TableField("apply_sn")
+    private String applySn;
     /**
      * 申请状态：[0:待处理；1:退货中；2:已完成；3:已拒绝]
      */

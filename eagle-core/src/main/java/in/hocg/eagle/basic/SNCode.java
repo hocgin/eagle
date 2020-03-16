@@ -16,19 +16,30 @@ import org.springframework.stereotype.Component;
 public class SNCode {
     private final SnowFlake snowFlake;
 
-    @Getter
-    @RequiredArgsConstructor
-    enum Type {
-        Order("E1");
-        private final String code;
+    /**
+     * 订单退款申请编号
+     *
+     * @return
+     */
+    public String getOrderReturnApplySNCode() {
+        return getSNCode(Type.OrderReturnApply);
     }
 
     /**
      * 订单编号
+     *
      * @return
      */
     public String getOrderSNCode() {
         return getSNCode(Type.Order);
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    enum Type {
+        Order("E1"),
+        OrderReturnApply("R1");
+        private final String code;
     }
 
     private String getSNCode(Type type) {

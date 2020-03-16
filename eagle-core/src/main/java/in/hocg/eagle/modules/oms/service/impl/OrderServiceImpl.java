@@ -206,6 +206,14 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         // TODO
     }
 
+    public void paySuccess(Long orderId) {
+        // TODO
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void payFail(Long orderId) {
+    }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void confirmOrder(ConfirmOrderQo qo) {
@@ -243,6 +251,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         final Optional<OrderReturnApply> orderReturnApplyOpt = orderReturnApplyService.selectOneByOrderItemId(orderItemId);
         if (!orderReturnApplyOpt.isPresent()) {
             OrderReturnApply apply = orderReturnApplyMapping.asOrderReturnApply(qo, orderItem);
+            apply.setApplySn(snCode.getOrderReturnApplySNCode());
             orderReturnApplyService.validInsert(apply);
         } else {
             final OrderReturnApply apply = orderReturnApplyOpt.get();
