@@ -36,7 +36,7 @@ public class OrderApi {
     }
 
     @UseLogger("创建订单")
-    @PostMapping("/calc")
+    @PostMapping
     private Result<Void> createOrder(@Validated @RequestBody CreateOrderQo qo) {
         orderService.createOrder(qo);
         return Result.success();

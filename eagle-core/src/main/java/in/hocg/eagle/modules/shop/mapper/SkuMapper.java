@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.shop.mapper;
 
-import in.hocg.eagle.modules.shop.entity.Sku;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.eagle.modules.shop.entity.Sku;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,5 +22,28 @@ public interface SkuMapper extends BaseMapper<Sku> {
 
     List<Sku> selectListByProductId2(@Param("productId") Long productId);
 
-    Integer validAndUseStock(@Param("id") Long id, @Param("useStock") Integer useStock);
+    /**
+     * 补充库存
+     *
+     * @param skuId    SKU ID
+     * @param useStock 要使用的库存数量
+     * @param preStock 原库存数量
+     * @return
+     */
+    Integer plusStock(@Param("skuId") Long skuId,
+                      @Param("useStock") Integer useStock,
+                      @Param("preStock") Integer preStock);
+
+    /**
+     * 减掉库存
+     *
+     * @param skuId    SKU ID
+     * @param useStock 要使用的库存数量
+     * @param preStock 原库存数量
+     * @return
+     */
+    Integer subtractStock(@Param("skuId") Long skuId,
+                          @Param("useStock") Integer useStock,
+                          @Param("preStock") Integer preStock);
+
 }

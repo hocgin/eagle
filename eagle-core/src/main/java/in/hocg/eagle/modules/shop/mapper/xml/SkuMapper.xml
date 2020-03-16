@@ -10,9 +10,15 @@
         SELECT os.* FROM oms_sku os
         WHERE os.product_id = #{productId}
     </select>
-    <update id="validAndUseStock">
+
+    <update id="subtractStock">
         UPDATE oms_sku
-        SET stock = stock - #{useStock}
-        WHERE id = #{id} AND stock - #{useStock} > 0
+        SET stock = (stock - #{useStock})
+        WHERE id = #{skuId} AND stock = #{preStock}
+    </update>
+    <update id="plusStock">
+        UPDATE oms_sku
+        SET stock = (stock + #{useStock})
+        WHERE id = #{skuId} AND stock = #{preStock}
     </update>
 </mapper>

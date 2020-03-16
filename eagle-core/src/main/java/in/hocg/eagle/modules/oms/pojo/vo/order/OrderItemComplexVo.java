@@ -35,4 +35,6 @@ public class OrderItemComplexVo {
     private BigDecimal couponAmount;
     @ApiModelProperty("优惠后金额")
     private BigDecimal realAmount;
+    @ApiModelProperty("退款状态")
+    private Integer returnStatus;
 }

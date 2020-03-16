@@ -3,23 +3,20 @@ package in.hocg.eagle.modules.oms.service.impl;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.SNCode;
-import in.hocg.eagle.basic.constant.datadict.DeleteStatus;
-import in.hocg.eagle.basic.constant.datadict.OrderConfirmStatus;
-import in.hocg.eagle.basic.constant.datadict.OrderStatus;
-import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
+import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.mapstruct.OrderMapping;
+import in.hocg.eagle.mapstruct.OrderReturnApplyMapping;
 import in.hocg.eagle.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
+import in.hocg.eagle.modules.oms.entity.OrderReturnApply;
 import in.hocg.eagle.modules.oms.mapper.OrderMapper;
-import in.hocg.eagle.modules.oms.pojo.qo.order.CalcOrderQo;
-import in.hocg.eagle.modules.oms.pojo.qo.order.CancelOrderQo;
-import in.hocg.eagle.modules.oms.pojo.qo.order.ConfirmOrderQo;
-import in.hocg.eagle.modules.oms.pojo.qo.order.CreateOrderQo;
+import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
+import in.hocg.eagle.modules.oms.service.OrderReturnApplyService;
 import in.hocg.eagle.modules.oms.service.OrderService;
 import in.hocg.eagle.modules.shop.entity.Product;
 import in.hocg.eagle.modules.shop.entity.Sku;
@@ -27,6 +24,7 @@ import in.hocg.eagle.modules.shop.service.ProductService;
 import in.hocg.eagle.modules.shop.service.SkuService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -37,6 +35,7 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -52,8 +51,10 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> implements OrderService {
     private final ProductService productService;
     private final OrderItemService orderItemService;
+    private final OrderReturnApplyService orderReturnApplyService;
     private final SkuService skuService;
     private final SkuMapping skuMapping;
+    private final OrderReturnApplyMapping orderReturnApplyMapping;
     private final OrderMapping mapping;
     private final SNCode snCode;
 
@@ -170,7 +171,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         for (OrderItem orderItem : orderItemList) {
             final Long skuId = orderItem.getProductSkuId();
             final Integer quantity = orderItem.getProductQuantity();
-            if (skuService.validAndUseStock(skuId, quantity)) {
+            if (skuService.casValidAndSubtractStock(skuId, quantity)) {
                 orderItemService.validInsert(orderItem);
             } else {
                 throw ServiceException.wrap("库存商品不足");
@@ -182,8 +183,8 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     @Transactional(rollbackFor = Exception.class)
     public void cancelOrder(CancelOrderQo qo) {
         final Long userId = qo.getUserId();
-        final Long id = qo.getId();
-        final Order order = getById(id);
+        final Long orderId = qo.getId();
+        final Order order = getById(orderId);
         ValidUtils.isTrue(LangUtils.equals(order.getAccountId(), userId), "非订单所有人，操作失败");
         ValidUtils.notNull(order, "未找到订单");
         if (!Lists.newArrayList(OrderStatus.PendingPayment.getCode()).contains(order.getOrderStatus())) {
@@ -191,17 +192,22 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         }
 
         final Order updated = new Order();
-        updated.setId(id);
+        updated.setId(orderId);
         updated.setOrderStatus(OrderStatus.Closed.getCode());
         updated.setLastUpdater(userId);
         updated.setLastUpdatedAt(qo.getCreatedAt());
         validUpdateById(updated);
+        this.handleCancelOrClosedOrderAfter(orderId);
     }
 
-    public void payOrder(Long id) {
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void payOrder(PayOrderQo qo) {
         // TODO
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void confirmOrder(ConfirmOrderQo qo) {
         final Long userId = qo.getUserId();
         final Long id = qo.getId();
@@ -224,9 +230,30 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         validUpdateById(updated);
     }
 
-    public void applyRefund() {
-        // TODO
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void applyRefund(RefundApplyQo qo) {
+        final Long userId = qo.getUserId();
+        final Long orderItemId = qo.getId();
+        final OrderItem orderItem = orderItemService.getById(orderItemId);
+        ValidUtils.notNull(orderItem, "订单商品不存在");
+        final Long orderId = orderItem.getOrderId();
+        final Order order = getById(orderId);
+        ValidUtils.isTrue(LangUtils.equals(order.getAccountId(), userId), "非订单所有人，操作失败");
+        final Optional<OrderReturnApply> orderReturnApplyOpt = orderReturnApplyService.selectOneByOrderItemId(orderItemId);
+        if (!orderReturnApplyOpt.isPresent()) {
+            OrderReturnApply apply = orderReturnApplyMapping.asOrderReturnApply(qo, orderItem);
+            orderReturnApplyService.validInsert(apply);
+        } else {
+            final OrderReturnApply apply = orderReturnApplyOpt.get();
+            final Optional<OrderReturnApplyStatus> applyStatusOpt = IntEnum.of(apply.getApplyStatus(), OrderReturnApplyStatus.class);
+            if (applyStatusOpt.isPresent()) {
+                final OrderReturnApplyStatus applyStatus = applyStatusOpt.get();
+                throw ServiceException.wrap("已进行退款申请，申请状态为" + applyStatus.getName());
+            }
+        }
     }
+
 
     @Transactional(rollbackFor = Exception.class)
     public OrderComplexVo selectOne(Long id) {
@@ -239,5 +266,25 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         final OrderComplexVo result = mapping.asOrderComplexVo(entity);
         result.setOrderItems(orderItemService.selectListByOrderId(entity.getId()));
         return result;
+    }
+
+    /**
+     * 处理关闭订单或取消订单之后的逻辑
+     * - 库存归还
+     * - 优惠券状态变更
+     *
+     * @param orderId
+     */
+    private void handleCancelOrClosedOrderAfter(@NonNull Long orderId) {
+        // 取消订单锁定库存
+        final List<OrderItem> orderItems = orderItemService.selectListByOrderId2(orderId);
+        for (OrderItem orderItem : orderItems) {
+            final Long skuId = orderItem.getProductSkuId();
+            final Integer quantity = orderItem.getProductQuantity();
+            if (!skuService.casValidAndPlusStock(skuId, quantity)) {
+                throw ServiceException.wrap("系统繁忙，请稍后");
+            }
+        }
+        // 归还优惠券
     }
 }

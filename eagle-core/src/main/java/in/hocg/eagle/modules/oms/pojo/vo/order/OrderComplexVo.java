@@ -74,5 +74,6 @@ public class OrderComplexVo {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
 
+    @ApiModelProperty("订单项")
     private List<OrderItemComplexVo> orderItems = Lists.newArrayList();
 }

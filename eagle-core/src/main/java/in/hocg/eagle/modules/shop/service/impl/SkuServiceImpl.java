@@ -10,8 +10,10 @@ import in.hocg.eagle.modules.shop.service.ProductService;
 import in.hocg.eagle.modules.shop.service.SkuService;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
@@ -71,8 +73,29 @@ public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implemen
 
 
     @Override
-    public boolean validAndUseStock(Long id, Integer useStock) {
-        return this.retBool(baseMapper.validAndUseStock(id, useStock));
+    @Transactional(propagation = Propagation.REQUIRES_NEW, timeout = 1, rollbackFor = Exception.class)
+    public boolean casValidAndSubtractStock(Long skuId, Integer useStock) {
+        final Sku sku = baseMapper.selectById(skuId);
+        final Integer stock = sku.getStock();
+        if (stock < useStock) {
+            return false;
+        }
+        final boolean isOk = this.retBool(baseMapper.subtractStock(skuId, useStock, stock));
+        if (isOk) {
+            return true;
+        }
+        return ((SkuService) AopContext.currentProxy()).casValidAndSubtractStock(skuId, useStock);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW, timeout = 1, rollbackFor = Exception.class)
+    public boolean casValidAndPlusStock(Long skuId, Integer useStock) {
+        final Sku sku = baseMapper.selectById(skuId);
+        final boolean isOk = this.retBool(baseMapper.plusStock(skuId, useStock, sku.getStock()));
+        if (isOk) {
+            return true;
+        }
+        return ((SkuService) AopContext.currentProxy()).casValidAndPlusStock(skuId, useStock);
     }
 
     private SkuComplexVo convertSkuComplex(Sku entity) {

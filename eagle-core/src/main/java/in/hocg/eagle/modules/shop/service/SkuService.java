@@ -32,9 +32,18 @@ public interface SkuService extends AbstractService<Sku> {
     /**
      * 检查并使用库存
      *
-     * @param id
+     * @param skuId
      * @param useStock
      * @return true 成功 false 失败
      */
-    boolean validAndUseStock(Long id, Integer useStock);
+    boolean casValidAndSubtractStock(Long skuId, Integer useStock);
+
+    /**
+     * 释放使用的库存
+     *
+     * @param skuId
+     * @param useStock
+     * @return
+     */
+    boolean casValidAndPlusStock(Long skuId, Integer useStock);
 }

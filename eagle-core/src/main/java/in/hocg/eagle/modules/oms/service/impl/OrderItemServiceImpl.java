@@ -3,14 +3,17 @@ package in.hocg.eagle.modules.oms.service.impl;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.mapstruct.OrderItemMapping;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
+import in.hocg.eagle.modules.oms.entity.OrderReturnApply;
 import in.hocg.eagle.modules.oms.mapper.OrderItemMapper;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderItemComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
+import in.hocg.eagle.modules.oms.service.OrderReturnApplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, OrderItem> implements OrderItemService {
     private final OrderItemMapping mapping;
+    private final OrderReturnApplyService orderReturnApplyService;
 
     @Override
     public List<OrderItemComplexVo> selectListByOrderId(Long orderId) {
@@ -32,10 +36,18 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
     }
 
     private OrderItemComplexVo convertOrderItemComplex(OrderItem entity) {
-        return mapping.asOrderItemComplexVo(entity);
+        final OrderItemComplexVo result = mapping.asOrderItemComplexVo(entity);
+        final Long id = entity.getId();
+        final Optional<OrderReturnApply> orderReturnApply = orderReturnApplyService.selectOneByOrderItemId(id);
+        if (orderReturnApply.isPresent()) {
+            final OrderReturnApply apply = orderReturnApply.get();
+            result.setReturnStatus(apply.getApplyStatus());
+        }
+        return result;
     }
 
-    private List<OrderItem> selectListByOrderId2(Long orderId) {
+    @Override
+    public List<OrderItem> selectListByOrderId2(Long orderId) {
         return lambdaQuery().eq(OrderItem::getOrderId, orderId).list();
     }
 }

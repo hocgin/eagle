@@ -2,10 +2,9 @@ package in.hocg.eagle.modules.oms.service;
 
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.modules.oms.entity.Order;
-import in.hocg.eagle.modules.oms.pojo.qo.order.CalcOrderQo;
-import in.hocg.eagle.modules.oms.pojo.qo.order.CancelOrderQo;
-import in.hocg.eagle.modules.oms.pojo.qo.order.CreateOrderQo;
+import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -38,4 +37,13 @@ public interface OrderService extends AbstractService<Order> {
      * @param qo
      */
     void cancelOrder(CancelOrderQo qo);
+
+    @Transactional(rollbackFor = Exception.class)
+    void payOrder(PayOrderQo qo);
+
+    @Transactional(rollbackFor = Exception.class)
+    void confirmOrder(ConfirmOrderQo qo);
+
+    @Transactional(rollbackFor = Exception.class)
+    void applyRefund(RefundApplyQo qo);
 }

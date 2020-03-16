@@ -2,8 +2,10 @@ package in.hocg.eagle.basic;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import in.hocg.eagle.modules.oms.entity.OrderItem;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 /**

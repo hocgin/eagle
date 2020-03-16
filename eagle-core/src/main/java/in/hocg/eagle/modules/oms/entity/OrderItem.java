@@ -76,7 +76,7 @@ public class OrderItem extends AbstractEntity<OrderItem> {
     @TableField("coupon_amount")
     private BigDecimal couponAmount;
     /**
-     * [计算型]该商品经过优惠后的分解金额
+     * [计算型]该商品经过优惠后的分解金额(总价)
      */
     @TableField("real_amount")
     private BigDecimal realAmount;
