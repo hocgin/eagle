@@ -1,19 +1,17 @@
 package in.hocg.eagle.modules.mkt.entity;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import in.hocg.eagle.basic.AbstractEntity;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.eagle.basic.AbstractEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -42,7 +40,7 @@ public class Coupon extends AbstractEntity<Coupon> {
      * 使用方式：[0:满减；1:折扣]
      */
     @TableField("coupon_type")
-    private Boolean couponType;
+    private Integer couponType;
     /**
      * 优惠券使用说明
      */
@@ -67,12 +65,12 @@ public class Coupon extends AbstractEntity<Coupon> {
      * 可用平台：[0:全部；1:移动；2:PC]
      */
     @TableField("platform")
-    private Boolean platform;
+    private Integer platform;
     /**
      * 可用类型：[0:全场通用；1:指定品类；2:指定商品]
      */
     @TableField("useType")
-    private Boolean useType;
+    private Integer useType;
     @TableField("creator")
     private Long creator;
     @TableField("created_at")
