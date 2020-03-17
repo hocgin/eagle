@@ -46,4 +46,6 @@ public interface SkuService extends AbstractService<Sku> {
      * @return
      */
     boolean casValidAndPlusStock(Long skuId, Integer useStock);
+
+    Sku selectOneBySkuIdAndValidQuantity(Long skuId, Integer quantity);
 }

@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("oms_sku")
+@TableName("pms_sku")
 public class Sku extends AbstractEntity<Sku> {
 
     private static final long serialVersionUID = 1L;

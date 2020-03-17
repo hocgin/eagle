@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.shop.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.constant.datadict.DeleteStatus;
 import in.hocg.eagle.mapstruct.ProductMapping;
 import in.hocg.eagle.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.base.entity.File;
@@ -92,6 +93,11 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     public IPage<ProductComplexVo> paging(ProductPagingQo qo) {
         IPage<Product> result = baseMapper.paging(qo, qo.page());
         return result.convert(this::convertProductComplex);
+    }
+
+    @Override
+    public Product selectOneByIdAndNotDeleted(Long id) {
+        return lambdaQuery().eq(Product::getId, id).eq(Product::getDeleteStatus, DeleteStatus.Off.getCode()).one();
     }
 
     public ProductComplexVo convertProductComplex(Product entity) {

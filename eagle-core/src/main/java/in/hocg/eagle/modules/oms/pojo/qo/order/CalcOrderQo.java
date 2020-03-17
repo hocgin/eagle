@@ -26,6 +26,11 @@ public class CalcOrderQo extends BaseQo {
     private List<Item> items = Lists.newArrayList();
     @ApiModelProperty("优惠券ID")
     private Long couponId;
+    /**
+     * @see in.hocg.eagle.basic.constant.datadict.OrderSourceType
+     */
+    @ApiModelProperty("订单来源")
+    private Integer sourceType;
 
     @Data
     public static class Item {

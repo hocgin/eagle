@@ -13,6 +13,7 @@ import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.entity.OrderReturnApply;
 import in.hocg.eagle.modules.oms.mapper.OrderMapper;
+import in.hocg.eagle.modules.oms.pojo.dto.order.OrderItemDto;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
@@ -63,58 +64,111 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     @Transactional(rollbackFor = Exception.class)
     public CalcOrderVo calcOrder(CalcOrderQo qo) {
         final CalcOrderVo result = new CalcOrderVo();
-        BigDecimal totalAmount = BigDecimal.ZERO;
-        BigDecimal payAmount = BigDecimal.ZERO;
-        List<CalcOrderVo.OrderItem> orderItems = Lists.newArrayList();
 
-        // 1. 检查商品状态
-        BigDecimal remainingCouponAmount = BigDecimal.ZERO;
-        final List<CalcOrderQo.Item> items = qo.getItems();
+        // 1. 检查商品 和 检查库存
+        final List<OrderItemDto> orderItems = qo.getItems().stream()
+            .map(item -> {
+                final Sku sku = skuService.getById(item.getSkuId());
+                ValidUtils.notNull(sku, "商品规格错误");
+                final Long productId = sku.getProductId();
+                final Product product = productService.selectOneByIdAndNotDeleted(productId);
+                ValidUtils.notNull(product, "未找到商品");
+                ValidUtils.isFalse(LangUtils.equals(product.getPublishStatus(), ProductPublishStatus.SoldOut.getCode()), "商品已下架");
+                OrderItemDto result1 = skuMapping.asOrderItemDto(sku, product);
+                result1.setProductQuantity(item.getQuantity());
+                return result1;
+            })
+            .collect(Collectors.toList());
+
+        // 2. 计算优惠券优惠金额
+        handleCouponAmount(orderItems, qo.getCouponId());
+
+        // 3. 确定价格
+        handleRealAmount(orderItems);
+
+        // 4. 获取需要支付的金额
+        BigDecimal payAmount = getPayAmount(orderItems);
+        final BigDecimal totalAmount = getItemsTotalAmount(orderItems);
+
+        result.setOrderItems(orderItems.parallelStream()
+            .map(mapping::asCalcOrderVoOrderItem)
+            .collect(Collectors.toList()));
+        result.setTotalAmount(totalAmount);
+        result.setPayAmount(payAmount);
+        return result;
+    }
+
+    /**
+     * 统计总支付金额
+     *
+     * @param items
+     * @return
+     */
+    private BigDecimal getPayAmount(List<OrderItemDto> items) {
+        return items.parallelStream()
+            .map(OrderItemDto::getRealAmount)
+            .reduce(BigDecimal::add)
+            .orElse(BigDecimal.ZERO);
+    }
+
+    /**
+     * 计算每个项目需要支付的金额
+     *
+     * @param items
+     */
+    private void handleRealAmount(List<OrderItemDto> items) {
+        for (OrderItemDto item : items) {
+            final BigDecimal realAmount = item.getProductPrice()
+                .multiply(new BigDecimal(item.getProductQuantity()))
+                .subtract(item.getCouponAmount());
+            item.setRealAmount(realAmount);
+        }
+    }
+
+    /**
+     * 处理优惠券
+     *
+     * @param items
+     * @param couponId
+     */
+    private void handleCouponAmount(List<OrderItemDto> items, Long couponId) {
+        // 1. 判断优惠券是否可用
+        // TODO..
+        // 2. 计算优惠金额
+        // = 优惠券优惠总金额
+        BigDecimal couponTotalAmount = BigDecimal.ZERO;
+        // = 优惠券剩余可优惠金额
+        BigDecimal remainingCouponAmount = couponTotalAmount;
+        // = 所有商品的总价
+        BigDecimal totalAmount = getItemsTotalAmount(items);
+
+        // 3. 进行优惠
+        BigDecimal couponAmount;
         for (int i = 0; i < items.size(); i++) {
-            final CalcOrderQo.Item item = items.get(i);
-            final Long skuId = item.getSkuId();
-            final Sku sku = skuService.getById(skuId);
-            ValidUtils.notNull(sku, "SKU不存在");
-            Product product = productService.getById(sku.getProductId());
-            ValidUtils.notNull(product, "商品不存在");
-            ValidUtils.isFalse(LangUtils.equals(product.getDeleteStatus(), DeleteStatus.On.getCode()), "商品不存在");
-            ValidUtils.isFalse(LangUtils.equals(product.getPublishStatus(), ProductPublishStatus.SoldOut.getCode()), "商品已下架");
-            final Integer quantity = item.getQuantity();
-            final BigDecimal price = sku.getPrice();
-            ValidUtils.isTrue(quantity <= sku.getStock(), "超出数量范围");
-
-            BigDecimal productTotalAmount = price.multiply(BigDecimal.valueOf(quantity));
-
-            // 【开始】计算商品使用优惠券的金额
-            BigDecimal couponAmount;
+            final OrderItemDto item = items.get(i);
             if (i < (items.size() - 1)) {
-                couponAmount = remainingCouponAmount.divide(BigDecimal.valueOf(items.size()), 2, RoundingMode.DOWN);
+                // = 商品总价
+                final BigDecimal productTotalAmount = item.getProductPrice().multiply(item.getProductPrice());
+                // = 优惠价格
+                couponAmount = couponTotalAmount.multiply(productTotalAmount).divide(totalAmount, 2, RoundingMode.DOWN);
             } else {
                 couponAmount = remainingCouponAmount;
             }
             remainingCouponAmount = remainingCouponAmount.subtract(couponAmount);
-            // 【结束】计算商品使用优惠券的金额
-
-            final BigDecimal realAmount = productTotalAmount.subtract(couponAmount);
-            totalAmount = totalAmount.add(productTotalAmount);
-            payAmount = payAmount.add(realAmount);
-            orderItems.add(new CalcOrderVo.OrderItem()
-                .setSkuCode(sku.getSkuCode())
-                .setProductId(product.getId())
-                .setTitle(product.getTitle())
-                .setRealAmount(realAmount)
-                .setCouponAmount(couponAmount)
-                .setImageUrl(sku.getImageUrl())
-                .setPrice(sku.getPrice())
-                .setQuantity(quantity)
-                .setSkuId(skuId)
-                .setSpecData(sku.getSpecData()));
+            item.setCouponAmount(couponAmount);
         }
+    }
 
-        result.setOrderItems(orderItems);
-        result.setTotalAmount(totalAmount);
-        result.setPayAmount(payAmount);
-        return result;
+    /**
+     * 获取商品总价
+     *
+     * @param orderItems
+     * @return
+     */
+    private BigDecimal getItemsTotalAmount(List<OrderItemDto> orderItems) {
+        return orderItems.parallelStream().map(dto -> dto.getProductPrice()
+            .multiply(new BigDecimal(dto.getProductQuantity())))
+            .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
     }
 
     @Override
@@ -129,7 +183,6 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
             .setCouponId(qo.getCouponId())
             .setSourceType(qo.getSourceType())
             .setAccountId(currentUserId)
-            .setOrderSn(snCode.getOrderSNCode())
             .setFreightAmount(BigDecimal.ZERO)
             .setTotalAmount(calcResult.getTotalAmount())
             .setPayAmount(calcResult.getPayAmount())
@@ -205,6 +258,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     @Transactional(rollbackFor = Exception.class)
     public void payOrder(PayOrderQo qo) {
         // TODO
+        //  支付成功后 生成 .setOrderSn(snCode.getOrderSNCode())
     }
 
     @Override

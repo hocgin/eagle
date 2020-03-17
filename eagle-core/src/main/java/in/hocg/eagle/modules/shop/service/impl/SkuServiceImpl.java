@@ -98,6 +98,15 @@ public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implemen
         return ((SkuService) AopContext.currentProxy()).casValidAndPlusStock(skuId, useStock);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Sku selectOneBySkuIdAndValidQuantity(Long skuId, Integer quantity) {
+        final Sku sku = getById(skuId);
+        ValidUtils.notNull(sku, "SKU不存在");
+        ValidUtils.isTrue(quantity <= sku.getStock(), "超出数量范围");
+        return sku;
+    }
+
     private SkuComplexVo convertSkuComplex(Sku entity) {
         if (Objects.isNull(entity)) {
             return null;

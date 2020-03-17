@@ -15,7 +15,4 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ProductCategoryMapper extends BaseMapper<ProductCategory> {
 
-    void updateOffStatusByRegexTreePath(String regexTreePath);
-
-    void updateTreePathByRegexTreePath(String regexTreePath, String oldTreePath, String newTreePath);
 }

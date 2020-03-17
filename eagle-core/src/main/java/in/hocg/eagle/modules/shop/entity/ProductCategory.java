@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("oms_product_category")
+@TableName("pms_product_category")
 public class ProductCategory extends TreeEntity<ProductCategory> {
 
     private static final long serialVersionUID = 1L;

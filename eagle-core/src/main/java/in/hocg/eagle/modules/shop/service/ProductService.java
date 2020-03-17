@@ -39,4 +39,5 @@ public interface ProductService extends AbstractService<Product> {
      */
     IPage<ProductComplexVo> paging(ProductPagingQo qo);
 
+    Product selectOneByIdAndNotDeleted(Long id);
 }

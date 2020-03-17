@@ -3,21 +3,21 @@
 <mapper namespace="in.hocg.eagle.modules.shop.mapper.SkuMapper">
 
     <delete id="deleteAllByProductId">
-        DELETE os FROM oms_sku os
-        WHERE os.product_id = #{productId}
+        DELETE ps FROM pms_sku ps
+        WHERE ps.product_id = #{productId}
     </delete>
     <select id="selectListByProductId2" resultType="in.hocg.eagle.modules.shop.entity.Sku">
-        SELECT os.* FROM oms_sku os
-        WHERE os.product_id = #{productId}
+        SELECT ps.* FROM pms_sku ps
+        WHERE ps.product_id = #{productId}
     </select>
 
     <update id="subtractStock">
-        UPDATE oms_sku
+        UPDATE pms_sku
         SET stock = (stock - #{useStock})
         WHERE id = #{skuId} AND stock = #{preStock}
     </update>
     <update id="plusStock">
-        UPDATE oms_sku
+        UPDATE pms_sku
         SET stock = (stock + #{useStock})
         WHERE id = #{skuId} AND stock = #{preStock}
     </update>

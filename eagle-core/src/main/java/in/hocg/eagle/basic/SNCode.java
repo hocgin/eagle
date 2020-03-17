@@ -27,6 +27,7 @@ public class SNCode {
 
     /**
      * 订单编号
+     * TODO :: 生成18位订单编号:8日期 + 2位平台 + 2位支付方式 + 6位自增ID
      *
      * @return
      */

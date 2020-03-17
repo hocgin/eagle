@@ -81,7 +81,7 @@ public class OrderItem extends AbstractEntity<OrderItem> {
     @TableField("real_amount")
     private BigDecimal realAmount;
     /**
-     * 商品销售属性:[{"key":"颜色","value":"颜色"},{"key":"容量","value":"4G"}]
+     * 商品规格:[{"key":"颜色","value":"颜色"},{"key":"容量","value":"4G"}]
      */
     @TableField("product_spec_data")
     private String productSpecData;
