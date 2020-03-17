@@ -1,10 +1,10 @@
 package in.hocg.eagle.mapstruct;
 
-import in.hocg.eagle.modules.comment.pojo.qo.comment.CommentPostQo;
-import in.hocg.eagle.modules.comment.pojo.qo.comment.CommentPutQo;
-import in.hocg.eagle.modules.comment.pojo.vo.comment.CommentComplexVo;
-import in.hocg.eagle.modules.comment.pojo.vo.comment.RootCommentComplexVo;
-import in.hocg.eagle.modules.comment.entity.Comment;
+import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPostQo;
+import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPutQo;
+import in.hocg.eagle.modules.crm.pojo.vo.comment.CommentComplexVo;
+import in.hocg.eagle.modules.crm.pojo.vo.comment.RootCommentComplexVo;
+import in.hocg.eagle.modules.crm.entity.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

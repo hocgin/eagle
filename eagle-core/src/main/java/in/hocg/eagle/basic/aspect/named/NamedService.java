@@ -1,9 +1,9 @@
 package in.hocg.eagle.basic.aspect.named;
 
-import in.hocg.eagle.modules.account.entity.Account;
-import in.hocg.eagle.modules.account.entity.Authority;
-import in.hocg.eagle.modules.account.service.AccountService;
-import in.hocg.eagle.modules.account.service.AuthorityService;
+import in.hocg.eagle.modules.ums.entity.Account;
+import in.hocg.eagle.modules.ums.entity.Authority;
+import in.hocg.eagle.modules.ums.service.AccountService;
+import in.hocg.eagle.modules.ums.service.AuthorityService;
 import in.hocg.eagle.modules.base.entity.DataDictItem;
 import in.hocg.eagle.modules.base.service.DataDictService;
 import in.hocg.eagle.utils.LangUtils;
@@ -24,12 +24,12 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class NamedService {
-    
+
     private final DataDictService service;
     private final AccountService accountService;
     private final AuthorityService authorityService;
-    
-    
+
+
     /**
      * 查询枚举值
      *
@@ -49,7 +49,7 @@ public class NamedService {
         final Optional<DataDictItem> dataDictItemOptional = service.selectOneByDictIdAndCode(type, item);
         return dataDictItemOptional.<Object>map(DataDictItem::getTitle).orElse(null);
     }
-    
+
     /**
      * 查询用户昵称
      *
@@ -67,7 +67,7 @@ public class NamedService {
         }
         return entity.getNickname();
     }
-    
+
     public Object selectOneAuthorityTitleByAuthorityId(Object id, String[] args) {
         if (Objects.isNull(id)) {
             return null;

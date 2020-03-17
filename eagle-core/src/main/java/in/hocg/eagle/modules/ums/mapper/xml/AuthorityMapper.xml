@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.eagle.modules.ums.mapper.AuthorityMapper">
+
+    <select id="search" resultType="in.hocg.eagle.modules.ums.entity.Authority">
+        SELECT ua.*
+        FROM ums_authority ua
+        <where>
+            <if test="qo.parentId != null">
+                AND ua.parent_id = #{parentId}
+            </if>
+            <if test="qo.platform != null">
+                AND ua.platform = #{qo.platform}
+            </if>
+        </where>
+        ORDER BY ua.sort DESC, ua.created_at DESC
+    </select>
+    <select id="selectListByRegexTreePath" resultType="in.hocg.eagle.modules.ums.entity.Authority">
+        SELECT ua.*
+        FROM ums_authority ua
+        WHERE ua.tree_path REGEXP #{regexTreePath}
+    </select>
+    <delete id="deleteListByRegexTreePath">
+        DELETE FROM ums_authority
+        WHERE tree_path REGEXP #{regexTreePath}
+    </delete>
+</mapper>

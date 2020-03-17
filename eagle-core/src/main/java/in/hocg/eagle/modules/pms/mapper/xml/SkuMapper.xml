@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.eagle.modules.pms.mapper.SkuMapper">
+
+    <delete id="deleteAllByProductId">
+        DELETE ps FROM pms_sku ps
+        WHERE ps.product_id = #{productId}
+    </delete>
+    <select id="selectListByProductId2" resultType="in.hocg.eagle.modules.pms.entity.Sku">
+        SELECT ps.* FROM pms_sku ps
+        WHERE ps.product_id = #{productId}
+    </select>
+
+    <update id="subtractStock">
+        UPDATE pms_sku
+        SET stock = (stock - #{useStock})
+        WHERE id = #{skuId} AND stock = #{preStock}
+    </update>
+    <update id="plusStock">
+        UPDATE pms_sku
+        SET stock = (stock + #{useStock})
+        WHERE id = #{skuId} AND stock = #{preStock}
+    </update>
+</mapper>

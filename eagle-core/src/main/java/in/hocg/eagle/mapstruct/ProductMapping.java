@@ -1,8 +1,8 @@
 package in.hocg.eagle.mapstruct;
 
-import in.hocg.eagle.modules.shop.entity.Product;
-import in.hocg.eagle.modules.shop.pojo.qo.ProductSaveQo;
-import in.hocg.eagle.modules.shop.pojo.vo.product.ProductComplexVo;
+import in.hocg.eagle.modules.pms.entity.Product;
+import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
+import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

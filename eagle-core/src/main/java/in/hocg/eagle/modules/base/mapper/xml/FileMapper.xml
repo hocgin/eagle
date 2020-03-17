@@ -5,13 +5,13 @@
     <select id="selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc"
             resultType="in.hocg.eagle.modules.base.entity.File">
         SELECT tf.*
-        FROM t_file tf
+        FROM com_file tf
         WHERE tf.rel_type = #{relType}
           AND tf.rel_id = #{relId}
         ORDER BY tf.sort DESC, tf.created_at DESC
     </select>
     <delete id="deleteAllByRelTypeAndRelId">
-        DELETE FROM t_file
+        DELETE FROM com_file
         WHERE rel_type = #{relType} AND rel_id = #{relId}
     </delete>
 </mapper>

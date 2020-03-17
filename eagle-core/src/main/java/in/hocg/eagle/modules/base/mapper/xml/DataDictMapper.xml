@@ -3,8 +3,8 @@
 <mapper namespace="in.hocg.eagle.modules.base.mapper.DataDictMapper">
 
     <select id="selectOneByDictIdAndCode" resultType="in.hocg.eagle.modules.base.entity.DataDictItem">
-        SELECT tddi.* FROM t_data_dict tdd
-        LEFT JOIN t_data_dict_item tddi ON tdd.id = tddi.dict_id
+        SELECT tddi.* FROM com_data_dict tdd
+        LEFT JOIN com_data_dict_item tddi ON tdd.id = tddi.dict_id
         <where>
 
             tdd.code = #{typeCode}
@@ -13,8 +13,8 @@
         LIMIT 1
     </select>
     <select id="selectListDictItemByCodeAndEnabled" resultType="in.hocg.eagle.modules.base.entity.DataDictItem">
-        SELECT tddi.* FROM t_data_dict_item tddi
-        LEFT JOIN t_data_dict tdd ON tdd.id = tddi.dict_id
+        SELECT tddi.* FROM com_data_dict_item tddi
+        LEFT JOIN com_data_dict tdd ON tdd.id = tddi.dict_id
         <where>
             tdd.code = #{typeCode}
             <if test="enabled != null">
@@ -26,7 +26,7 @@
     </select>
     <select id="search" resultType="in.hocg.eagle.modules.base.entity.DataDict">
         SELECT tdd.*
-        FROM t_data_dict tdd
+        FROM com_data_dict tdd
         <where>
             <if test="qo.keyword != null">
                 <bind name="keyword" value="'%'+qo.keyword+'%'"/>
@@ -35,7 +35,7 @@
         </where>
     </select>
     <select id="countByCodeIgnoreId" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM t_data_dict tdd
+        SELECT COUNT(1) FROM com_data_dict tdd
         <where>
             AND tdd.code = #{code}
             <if test="id != null">

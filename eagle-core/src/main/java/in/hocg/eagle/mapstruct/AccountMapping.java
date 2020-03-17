@@ -1,11 +1,11 @@
 package in.hocg.eagle.mapstruct;
 
 
-import in.hocg.eagle.modules.account.entity.Account;
-import in.hocg.eagle.modules.account.pojo.qo.account.AccountUpdateStatusQo;
-import in.hocg.eagle.modules.account.pojo.vo.account.AccountComplexVo;
-import in.hocg.eagle.modules.account.pojo.vo.account.IdAccountComplexVo;
-import in.hocg.eagle.modules.account.pojo.vo.role.RoleComplexAndAuthorityVo;
+import in.hocg.eagle.modules.ums.entity.Account;
+import in.hocg.eagle.modules.ums.pojo.qo.account.AccountUpdateStatusQo;
+import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
+import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
+import in.hocg.eagle.modules.ums.pojo.vo.role.RoleComplexAndAuthorityVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

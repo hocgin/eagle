@@ -3,7 +3,7 @@ package in.hocg.eagle.api;
 import in.hocg.eagle.api.pojo.ProductPagingApiQo;
 import in.hocg.eagle.api.pojo.SelfOrderPagingApiQo;
 import in.hocg.eagle.modules.oms.pojo.qo.order.OrderPagingQo;
-import in.hocg.eagle.modules.shop.pojo.qo.ProductPagingQo;
+import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

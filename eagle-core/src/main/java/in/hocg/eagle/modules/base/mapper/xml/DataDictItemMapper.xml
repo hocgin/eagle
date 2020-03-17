@@ -3,7 +3,7 @@
 <mapper namespace="in.hocg.eagle.modules.base.mapper.DataDictItemMapper">
 
     <select id="selectListByDictId" resultType="in.hocg.eagle.modules.base.entity.DataDictItem">
-        SELECT tddi.* FROM t_data_dict_item tddi
+        SELECT tddi.* FROM com_data_dict_item tddi
         <where>
             <if test="dictId != null">
                 AND tddi.dict_id = #{dictId}
@@ -11,11 +11,11 @@
         </where>
     </select>
     <delete id="deleteByDictId">
-        DELETE FROM t_data_dict_item
+        DELETE FROM com_data_dict_item
         WHERE dict_id = #{dictId}
     </delete>
     <select id="countDictIdAndCodeIgnoreId" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM t_data_dict_item tddi
+        SELECT COUNT(1) FROM com_data_dict_item tddi
         <where>
             tddi.code = #{code} AND tddi.dict_id = #{dictId}
             <if test="id != null">

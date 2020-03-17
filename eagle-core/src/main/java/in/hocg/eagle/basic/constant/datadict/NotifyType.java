@@ -19,7 +19,7 @@ public enum NotifyType implements IntEnum {
     // > 100 都是订阅范围
     Subscription(100, "订阅"),
     /**
-     * @see in.hocg.eagle.modules.comment.entity.Comment
+     * @see in.hocg.eagle.modules.crm.entity.Comment
      */
     SubscriptionComment(111, "订阅::评论");
     private final Integer code;

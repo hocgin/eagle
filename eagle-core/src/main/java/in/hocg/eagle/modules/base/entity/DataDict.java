@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("t_data_dict")
+@TableName("com_data_dict")
 public class DataDict extends AbstractEntity<DataDict> {
 
     private static final long serialVersionUID = 1L;

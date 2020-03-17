@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic;
 
-import in.hocg.eagle.modules.notify.message.event.SubscriptionEvent;
+import in.hocg.eagle.modules.mms.message.event.SubscriptionEvent;
 import org.springframework.context.ApplicationContext;
 
 /**

@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("t_file")
+@TableName("com_file")
 public class File extends AbstractEntity<File> {
 
     private static final long serialVersionUID = 1L;

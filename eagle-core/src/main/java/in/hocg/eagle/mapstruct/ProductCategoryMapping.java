@@ -1,7 +1,7 @@
 package in.hocg.eagle.mapstruct;
 
-import in.hocg.eagle.modules.shop.entity.ProductCategory;
-import in.hocg.eagle.modules.shop.pojo.qo.category.ProductCategorySaveQo;
+import in.hocg.eagle.modules.pms.entity.ProductCategory;
+import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySaveQo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
