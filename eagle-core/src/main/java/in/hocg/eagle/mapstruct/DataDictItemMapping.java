@@ -1,10 +1,10 @@
 package in.hocg.eagle.mapstruct;
 
-import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemInsertQo;
-import in.hocg.eagle.modules.base.pojo.qo.datadict.item.DataDictItemUpdateQo;
-import in.hocg.eagle.modules.base.pojo.vo.datadict.item.DataDictItemComplexVo;
-import in.hocg.eagle.modules.base.pojo.vo.datadict.item.DataDictItemVo;
-import in.hocg.eagle.modules.base.entity.DataDictItem;
+import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemInsertQo;
+import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemUpdateQo;
+import in.hocg.eagle.modules.com.pojo.vo.datadict.item.DataDictItemComplexVo;
+import in.hocg.eagle.modules.com.pojo.vo.datadict.item.DataDictItemVo;
+import in.hocg.eagle.modules.com.entity.DataDictItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
-import in.hocg.eagle.modules.base.pojo.vo.file.FileVo;
+import in.hocg.eagle.modules.com.pojo.vo.file.FileVo;
 import in.hocg.eagle.modules.pms.pojo.vo.sku.SkuComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.eagle.modules.com.mapper.FileMapper">
+
+    <select id="selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc"
+            resultType="in.hocg.eagle.modules.com.entity.File">
+        SELECT tf.*
+        FROM com_file tf
+        WHERE tf.rel_type = #{relType}
+          AND tf.rel_id = #{relId}
+        ORDER BY tf.sort DESC, tf.created_at DESC
+    </select>
+    <delete id="deleteAllByRelTypeAndRelId">
+        DELETE FROM com_file
+        WHERE rel_type = #{relType} AND rel_id = #{relId}
+    </delete>
+</mapper>

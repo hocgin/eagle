@@ -5,7 +5,7 @@ import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.basic.pojo.qo.Insert;
 import in.hocg.eagle.basic.pojo.qo.Update;
 import in.hocg.eagle.basic.valid.RangeEnum;
-import in.hocg.eagle.modules.base.pojo.qo.file.UploadFileDto;
+import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
