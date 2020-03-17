@@ -83,7 +83,9 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ProductComplexVo selectOne(Long id) {
-        return convertProductComplex(getById(id));
+        final Product entity = getById(id);
+        ValidUtils.notNull(entity, "商品不存在");
+        return convertProductComplex(entity);
     }
 
     @Override
@@ -93,9 +95,6 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     }
 
     public ProductComplexVo convertProductComplex(Product entity) {
-        if (Objects.isNull(entity)) {
-            return null;
-        }
         final Long productId = entity.getId();
         ProductComplexVo result = mapping.asProductComplex(entity);
         result.setPhotos(fileService.selectListByRelTypeAndRelId2(File.RelType.Product, productId));

@@ -1,6 +1,6 @@
 package in.hocg.eagle.api.controller;
 
-import in.hocg.eagle.api.pojo.SignUpQo;
+import in.hocg.eagle.api.pojo.SignUpApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.constant.AuthorizeConstant;
@@ -29,7 +29,7 @@ public class AppApi {
 
     @UseLogger("注册(APP)")
     @PostMapping("/account/sign-up")
-    public Result<Void> signUp(@Validated @RequestBody SignUpQo qo) {
+    public Result<Void> signUp(@Validated @RequestBody SignUpApiQo qo) {
         service.signUp(qo);
         return Result.success();
     }

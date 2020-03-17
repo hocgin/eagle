@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SignUpQo extends BaseQo {
+public class SignUpApiQo extends BaseQo {
     private String nickname;
     private String username;
     private String password;

@@ -3,7 +3,13 @@
 <mapper namespace="in.hocg.eagle.modules.shop.mapper.ProductMapper">
 
     <select id="paging" resultType="in.hocg.eagle.modules.shop.entity.Product">
-        SELECT *
+        SELECT op.*
         FROM oms_product op
+        <where>
+            op.delete_status = 0
+            <if test="qo.publishStatus != null ">
+                AND op.publish_status = #{qo.publishStatus}
+            </if>
+        </where>
     </select>
 </mapper>

@@ -1,9 +1,11 @@
 package in.hocg.eagle.modules.oms.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
+import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -38,12 +40,13 @@ public interface OrderService extends AbstractService<Order> {
      */
     void cancelOrder(CancelOrderQo qo);
 
-    @Transactional(rollbackFor = Exception.class)
     void payOrder(PayOrderQo qo);
 
-    @Transactional(rollbackFor = Exception.class)
     void confirmOrder(ConfirmOrderQo qo);
 
-    @Transactional(rollbackFor = Exception.class)
     void applyRefund(RefundApplyQo qo);
+
+    OrderComplexVo selectOne(Long id);
+
+    IPage<OrderComplexVo> paging(OrderPagingQo qo);
 }

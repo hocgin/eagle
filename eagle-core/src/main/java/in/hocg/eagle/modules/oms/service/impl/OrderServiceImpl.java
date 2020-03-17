@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.oms.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.SNCode;
@@ -206,14 +207,6 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         // TODO
     }
 
-    public void paySuccess(Long orderId) {
-        // TODO
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    public void payFail(Long orderId) {
-    }
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void confirmOrder(ConfirmOrderQo qo) {
@@ -263,12 +256,19 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         }
     }
 
-
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public OrderComplexVo selectOne(Long id) {
         final Order entity = getById(id);
         ValidUtils.notNull(entity, "未找到订单");
         return this.convertOrderComplex(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<OrderComplexVo> paging(OrderPagingQo qo) {
+        return baseMapper.paging(qo, qo.page())
+            .convert(this::convertOrderComplex);
     }
 
     private OrderComplexVo convertOrderComplex(Order entity) {

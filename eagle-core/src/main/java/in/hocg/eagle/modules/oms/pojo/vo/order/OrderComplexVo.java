@@ -20,6 +20,8 @@ import java.util.List;
 public class OrderComplexVo {
     @ApiModelProperty("订单ID")
     private String id;
+    @ApiModelProperty("订单拥有人ID")
+    private Long accountId;
     @ApiModelProperty("订单编号")
     private String orderSn;
     @ApiModelProperty("优惠券ID")
