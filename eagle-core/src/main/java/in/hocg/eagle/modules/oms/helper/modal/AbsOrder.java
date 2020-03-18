@@ -55,7 +55,7 @@ public abstract class AbsOrder<T extends Product>
     public Order use(Discount discount) {
         final List products = discount.match(this);
         if (products.isEmpty()) {
-            throw ServiceException.wrap("优惠券不满足使用条件");
+            throw ServiceException.wrap(discount.title() + "不满足使用条件");
         }
         discount.handle(this, products);
         return this;

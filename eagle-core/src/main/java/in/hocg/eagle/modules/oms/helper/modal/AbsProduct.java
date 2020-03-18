@@ -35,7 +35,7 @@ public abstract class AbsProduct implements Product {
     /**
      * 使用的优惠券
      */
-    private List<Discount<?, ?>> useDiscount = Lists.newArrayList();
+    private List<Discount> useDiscount = Lists.newArrayList();
 
 
     @Override
@@ -59,12 +59,12 @@ public abstract class AbsProduct implements Product {
     }
 
     @Override
-    public List<Discount<?, ?>> getUseDiscount() {
+    public List<Discount> getUseDiscount() {
         return this.useDiscount;
     }
 
     @Override
-    public void addUseDiscount(Discount<?, ?> discount) {
+    public void addUseDiscount(Discount discount) {
         this.useDiscount.add(discount);
     }
 }

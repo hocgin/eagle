@@ -54,13 +54,13 @@ public interface Product {
      *
      * @return
      */
-    List<Discount<?, ?>> getUseDiscount();
+    List<Discount> getUseDiscount();
 
     /**
      * 添加该商品使用的优惠券
      *
      * @param discount
      */
-    void addUseDiscount(Discount<?, ?> discount);
+    void addUseDiscount(Discount discount);
 
 }

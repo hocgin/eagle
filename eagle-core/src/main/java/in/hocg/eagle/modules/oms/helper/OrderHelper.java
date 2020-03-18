@@ -27,9 +27,9 @@ public abstract class OrderHelper<O extends Order> {
     /**
      * 匹配最优
      */
-    private List<AutoDiscountMatcher<O, ? extends Discount<?, ?>>> autoDiscountMatchers = Lists.newArrayList();
+    private List<AutoDiscountMatcher<O, ? extends Discount>> autoDiscountMatchers = Lists.newArrayList();
 
-    public OrderHelper setAutoDiscountMatchers(List<AutoDiscountMatcher<O, ? extends Discount<?, ?>>> autoDiscountMatchers) {
+    public OrderHelper setAutoDiscountMatchers(List<AutoDiscountMatcher<O, ? extends Discount>> autoDiscountMatchers) {
         this.autoDiscountMatchers = autoDiscountMatchers;
         return this;
     }

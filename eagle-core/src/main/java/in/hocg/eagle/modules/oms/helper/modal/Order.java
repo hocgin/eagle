@@ -48,7 +48,7 @@ public interface Order<T extends Product> {
      * @param discount
      * @return
      */
-    Order use(Discount<?, ?> discount);
+    Order use(Discount discount);
 
     /**
      * 获取商品列表

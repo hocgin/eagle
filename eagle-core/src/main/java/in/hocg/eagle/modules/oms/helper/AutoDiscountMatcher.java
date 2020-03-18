@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author hocgin
  */
-public interface AutoDiscountMatcher<O extends Order, T extends Discount<?, ?>> {
+public interface AutoDiscountMatcher<O extends Order, T extends Discount> {
 
     /**
      * 匹配算法
@@ -22,5 +22,5 @@ public interface AutoDiscountMatcher<O extends Order, T extends Discount<?, ?>> 
      * @param matchedDiscounts 已匹配的折扣
      * @return
      */
-    List<T> match(O order, List<Discount<?, ?>> matchedDiscounts);
+    List<T> match(O order, List<Discount> matchedDiscounts);
 }
