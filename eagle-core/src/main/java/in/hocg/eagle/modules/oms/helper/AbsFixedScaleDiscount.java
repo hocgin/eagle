@@ -1,7 +1,7 @@
-package in.hocg.eagle.basic.calc;
+package in.hocg.eagle.modules.oms.helper;
 
-import in.hocg.eagle.basic.calc.modal.AbsDiscount;
-import in.hocg.eagle.basic.calc.modal.AbsProduct;
+import in.hocg.eagle.modules.oms.helper.modal.AbsDiscount;
+import in.hocg.eagle.modules.oms.helper.modal.AbsProduct;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.Getter;
 

@@ -1,8 +1,8 @@
-package in.hocg.eagle.basic.calc.discount;
+package in.hocg.eagle.modules.oms.helper.discount;
 
-import in.hocg.eagle.basic.calc.discount.coupon.Coupon;
-import in.hocg.eagle.basic.calc.discount.coupon.FixedAmountCoupon;
-import in.hocg.eagle.basic.calc.discount.coupon.FixedScaleCoupon;
+import in.hocg.eagle.modules.oms.helper.discount.coupon.Coupon;
+import in.hocg.eagle.modules.oms.helper.discount.coupon.FixedAmountCoupon;
+import in.hocg.eagle.modules.oms.helper.discount.coupon.FixedScaleCoupon;
 import in.hocg.eagle.basic.constant.datadict.CouponType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.oms.pojo.vo.coupon.CouponAccountComplexVo;

@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic.calc;
+package in.hocg.eagle.modules.oms.helper;
 
 import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;

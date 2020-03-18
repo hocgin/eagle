@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic.calc.modal;
+package in.hocg.eagle.modules.oms.helper.modal;
 
 import in.hocg.eagle.utils.LangUtils;
 

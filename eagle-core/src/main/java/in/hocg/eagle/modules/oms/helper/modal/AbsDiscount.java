@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic.calc.modal;
+package in.hocg.eagle.modules.oms.helper.modal;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;

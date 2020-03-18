@@ -1,8 +1,8 @@
-package in.hocg.eagle.basic.calc;
+package in.hocg.eagle.modules.oms.helper;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.calc.modal.Discount;
-import in.hocg.eagle.basic.calc.modal.Order;
+import in.hocg.eagle.modules.oms.helper.modal.Discount;
+import in.hocg.eagle.modules.oms.helper.modal.Order;
 
 import java.util.Comparator;
 import java.util.List;

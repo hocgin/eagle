@@ -1,7 +1,7 @@
-package in.hocg.eagle.basic.calc;
+package in.hocg.eagle.modules.oms.helper;
 
-import in.hocg.eagle.basic.calc.discount.DiscountHelper;
-import in.hocg.eagle.basic.calc.discount.coupon.Coupon;
+import in.hocg.eagle.modules.oms.helper.discount.DiscountHelper;
+import in.hocg.eagle.modules.oms.helper.discount.coupon.Coupon;
 import in.hocg.eagle.basic.constant.datadict.CouponType;
 import in.hocg.eagle.basic.constant.datadict.CouponUseStatus;
 import in.hocg.eagle.basic.constant.datadict.CouponUseType;

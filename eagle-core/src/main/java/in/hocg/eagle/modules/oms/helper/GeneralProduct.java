@@ -1,7 +1,7 @@
-package in.hocg.eagle.basic.calc;
+package in.hocg.eagle.modules.oms.helper;
 
 
-import in.hocg.eagle.basic.calc.modal.AbsProduct;
+import in.hocg.eagle.modules.oms.helper.modal.AbsProduct;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
