@@ -1,7 +1,7 @@
-package in.hocg.eagle.modules.oms.helper;
+package in.hocg.eagle.modules.oms.helper.order;
 
-import in.hocg.eagle.modules.oms.helper.modal.AbsDiscount;
-import in.hocg.eagle.modules.oms.helper.modal.AbsProduct;
+import in.hocg.eagle.modules.oms.helper.order.modal.AbsDiscount;
+import in.hocg.eagle.modules.oms.helper.order.modal.AbsProduct;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.Getter;

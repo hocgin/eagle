@@ -1,8 +1,8 @@
-package in.hocg.eagle.modules.oms.helper.discount;
+package in.hocg.eagle.modules.oms.helper.order.discount;
 
-import in.hocg.eagle.modules.oms.helper.discount.coupon.Coupon;
-import in.hocg.eagle.modules.oms.helper.discount.coupon.FixedAmountCoupon;
-import in.hocg.eagle.modules.oms.helper.discount.coupon.FixedScaleCoupon;
+import in.hocg.eagle.modules.oms.helper.order.discount.coupon.Coupon;
+import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedAmountCoupon;
+import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedScaleCoupon;
 import in.hocg.eagle.basic.constant.datadict.CouponType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.oms.pojo.vo.coupon.CouponAccountComplexVo;

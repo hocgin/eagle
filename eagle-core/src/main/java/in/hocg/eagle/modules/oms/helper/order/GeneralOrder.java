@@ -1,6 +1,6 @@
-package in.hocg.eagle.modules.oms.helper;
+package in.hocg.eagle.modules.oms.helper.order;
 
-import in.hocg.eagle.modules.oms.helper.modal.AbsOrder;
+import in.hocg.eagle.modules.oms.helper.order.modal.AbsOrder;
 import in.hocg.eagle.basic.constant.datadict.OrderSourceType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

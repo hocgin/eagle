@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.oms.helper.modal;
+package in.hocg.eagle.modules.oms.helper.order.modal;
 
 import java.math.BigDecimal;
 import java.util.List;

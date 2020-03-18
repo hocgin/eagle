@@ -1,10 +1,10 @@
-package in.hocg.eagle.modules.oms.helper.discount.coupon;
+package in.hocg.eagle.modules.oms.helper.order.discount.coupon;
 
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.modules.oms.helper.AbsFixedScaleDiscount;
-import in.hocg.eagle.modules.oms.helper.GeneralOrder;
-import in.hocg.eagle.modules.oms.helper.GeneralProduct;
+import in.hocg.eagle.modules.oms.helper.order.AbsFixedAmountDiscount;
+import in.hocg.eagle.modules.oms.helper.order.GeneralOrder;
+import in.hocg.eagle.modules.oms.helper.order.GeneralProduct;
 import in.hocg.eagle.basic.constant.datadict.CouponUseStatus;
 import in.hocg.eagle.basic.constant.datadict.OrderSourceType;
 import in.hocg.eagle.utils.LangUtils;
@@ -28,8 +28,9 @@ import java.util.Objects;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class FixedScaleCoupon extends AbsFixedScaleDiscount
+public class FixedAmountCoupon extends AbsFixedAmountDiscount
     implements Coupon {
+
     @ApiModelProperty("用户优惠券ID")
     private Long id;
     @ApiModelProperty("优惠名称")
@@ -49,9 +50,11 @@ public class FixedScaleCoupon extends AbsFixedScaleDiscount
     @ApiModelProperty("可用商品")
     private List<Long> canUseProductId;
 
-    public FixedScaleCoupon(BigDecimal scale, BigDecimal discountLimit) {
-        super(scale, discountLimit);
+    public FixedAmountCoupon(BigDecimal val) {
+        super(val);
     }
+
+
 
     @Override
     public List<GeneralProduct> match(GeneralOrder order) {

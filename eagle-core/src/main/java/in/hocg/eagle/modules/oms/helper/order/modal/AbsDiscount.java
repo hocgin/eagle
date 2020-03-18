@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.oms.helper.modal;
+package in.hocg.eagle.modules.oms.helper.order.modal;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;

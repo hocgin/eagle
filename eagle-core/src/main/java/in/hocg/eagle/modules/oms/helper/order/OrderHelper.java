@@ -1,8 +1,8 @@
-package in.hocg.eagle.modules.oms.helper;
+package in.hocg.eagle.modules.oms.helper.order;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.modules.oms.helper.modal.Discount;
-import in.hocg.eagle.modules.oms.helper.modal.Order;
+import in.hocg.eagle.modules.oms.helper.order.modal.Discount;
+import in.hocg.eagle.modules.oms.helper.order.modal.Order;
 
 import java.util.Comparator;
 import java.util.List;

@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.oms.helper.modal;
+package in.hocg.eagle.modules.oms.helper.order.modal;
 
 import in.hocg.eagle.utils.LangUtils;
 
