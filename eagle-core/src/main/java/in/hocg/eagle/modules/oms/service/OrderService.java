@@ -6,7 +6,6 @@ import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -40,13 +39,40 @@ public interface OrderService extends AbstractService<Order> {
      */
     void cancelOrder(CancelOrderQo qo);
 
+    /**
+     * 支付订单
+     *
+     * @param qo
+     */
     void payOrder(PayOrderQo qo);
 
+    /**
+     * 确认收货
+     *
+     * @param qo
+     */
     void confirmOrder(ConfirmOrderQo qo);
 
+    /**
+     * 申请退款
+     *
+     * @param qo
+     */
     void applyRefund(RefundApplyQo qo);
 
+    /**
+     * 查看详情
+     *
+     * @param id
+     * @return
+     */
     OrderComplexVo selectOne(Long id);
 
+    /**
+     * 分页查询
+     *
+     * @param qo
+     * @return
+     */
     IPage<OrderComplexVo> paging(OrderPagingQo qo);
 }

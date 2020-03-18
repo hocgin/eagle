@@ -1,11 +1,14 @@
 package in.hocg.eagle.modules.oms.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.context.annotation.Lazy;
+import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.modules.oms.pojo.qo.order.OrderPagingQo;
+import in.hocg.eagle.modules.oms.service.OrderService;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -17,8 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/oms/order")
+@RequestMapping("/api/order")
 public class OrderController {
+    private final OrderService orderService;
 
+    @UseLogger("分页查询订单列表")
+    @PostMapping("/paging")
+    public Result paging(@Validated @RequestBody OrderPagingQo qo) {
+        return Result.success(orderService.paging(qo));
+    }
+
+    @UseLogger("获取订单详情")
+    @GetMapping("/{id}")
+    public Result selectOne(@PathVariable Long id) {
+        return Result.success(orderService.selectOne(id));
+    }
 }
 
