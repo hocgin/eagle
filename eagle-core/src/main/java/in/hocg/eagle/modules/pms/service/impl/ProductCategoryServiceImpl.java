@@ -1,17 +1,22 @@
 package in.hocg.eagle.modules.pms.service.impl;
 
+import in.hocg.eagle.basic.datastruct.tree.Tree;
 import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
 import in.hocg.eagle.mapstruct.ProductCategoryMapping;
 import in.hocg.eagle.modules.pms.entity.ProductCategory;
 import in.hocg.eagle.modules.pms.mapper.ProductCategoryMapper;
 import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySaveQo;
+import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySearchQo;
+import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryTreeVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -40,6 +45,15 @@ public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryM
         }
 
         validInsertOrUpdate(entity);
+    }
+
+    @Override
+    public List<ProductCategoryTreeVo> tree(ProductCategorySearchQo qo) {
+        final Long parentId = qo.getParentId();
+        List<ProductCategory> all = baseMapper.search(qo);
+        return Tree.getChild(parentId, all.stream()
+            .map(mapping::asProductCategoryTreeVo)
+            .collect(Collectors.toList()));
     }
 
 

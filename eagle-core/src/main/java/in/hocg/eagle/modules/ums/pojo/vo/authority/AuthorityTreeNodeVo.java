@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.pojo.vo.authority;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.Tree;
+import in.hocg.eagle.basic.datastruct.tree.Tree;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;

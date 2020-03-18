@@ -3,6 +3,10 @@ package in.hocg.eagle.modules.pms.service;
 import in.hocg.eagle.basic.mybatis.tree.TreeService;
 import in.hocg.eagle.modules.pms.entity.ProductCategory;
 import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySaveQo;
+import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySearchQo;
+import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryTreeVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -20,4 +24,12 @@ public interface ProductCategoryService extends TreeService<ProductCategory> {
      * @param qo
      */
     void saveOne(ProductCategorySaveQo qo);
+
+    /**
+     * 构建为树
+     *
+     * @return
+     * @param qo
+     */
+    List<ProductCategoryTreeVo> tree(ProductCategorySearchQo qo);
 }

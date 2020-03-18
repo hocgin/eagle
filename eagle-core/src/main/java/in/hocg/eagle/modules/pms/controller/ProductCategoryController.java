@@ -6,6 +6,7 @@ import in.hocg.eagle.basic.pojo.qo.Insert;
 import in.hocg.eagle.basic.pojo.qo.Update;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySaveQo;
+import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySearchQo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -32,6 +33,12 @@ public class ProductCategoryController {
         qo.setId(null);
         service.saveOne(qo);
         return Result.success();
+    }
+
+    @UseLogger("获取品类树")
+    @GetMapping
+    public Result tree(@Validated @RequestBody ProductCategorySearchQo qo) {
+        return Result.success(service.tree(qo));
     }
 
     @UseLogger("更新商品品类")

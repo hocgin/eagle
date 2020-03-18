@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.mybatis.tree;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import in.hocg.eagle.basic.AbstractServiceImpl;
@@ -10,6 +11,7 @@ import lombok.NonNull;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -135,6 +137,18 @@ public class TreeServiceImpl<M extends BaseMapper<T>, T extends TreeEntity<?>> e
         final UpdateWrapper<T> updateWrapper = new UpdateWrapper<>();
         updateWrapper.likeRight(TreeEntity.TREE_PATH, treePath);
         this.remove(updateWrapper);
+    }
+
+    @Override
+    public List<T> selectListByParentId(Serializable parentId, Integer enabled) {
+        QueryWrapper<T> queryWrapper = new QueryWrapper<>();
+        if (Objects.isNull(parentId)) {
+            queryWrapper.isNull(TreeEntity.PARENT_ID);
+        } else {
+            queryWrapper.eq(TreeEntity.PARENT_ID, parentId);
+        }
+        queryWrapper.eq(Objects.nonNull(enabled), TreeEntity.ENABLED, enabled);
+        return this.list(queryWrapper);
     }
 
     /**

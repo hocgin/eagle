@@ -2,7 +2,11 @@ package in.hocg.eagle.modules.pms.mapper;
 
 import in.hocg.eagle.modules.pms.entity.ProductCategory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySearchQo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +19,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ProductCategoryMapper extends BaseMapper<ProductCategory> {
 
+    List<ProductCategory> search(@Param("qo") ProductCategorySearchQo qo);
 }

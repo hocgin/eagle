@@ -3,6 +3,7 @@ package in.hocg.eagle.basic.mybatis.tree;
 import in.hocg.eagle.basic.AbstractService;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -27,4 +28,13 @@ public interface TreeService<T> extends AbstractService<T> {
      * @param id id
      */
     void deleteCurrentAndChildren(Serializable id);
+
+    /**
+     * 查询指定下级
+     *
+     * @param parentId
+     * @param enabled
+     * @return
+     */
+    List<T> selectListByParentId(Serializable parentId, Integer enabled);
 }

@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic;
+package in.hocg.eagle.basic.datastruct.tree;
 
 import com.google.common.collect.Lists;
 import in.hocg.eagle.utils.LangUtils;
@@ -14,7 +14,7 @@ import java.util.List;
  * @author hocgin
  */
 public final class Tree {
-    
+
     /**
      * 构建树的必须条件
      *
@@ -22,13 +22,13 @@ public final class Tree {
      */
     public interface Node<T extends Tree.Node> {
         Long getId();
-    
+
         Long getParentId();
-        
+
         void setChildren(List<T> children);
     }
-    
-    
+
+
     /**
      * 获取树
      *
