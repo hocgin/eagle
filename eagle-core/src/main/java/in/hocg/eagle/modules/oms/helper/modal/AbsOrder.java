@@ -26,7 +26,7 @@ public abstract class AbsOrder<T extends Product>
     }
 
     public AbsOrder(List<T> products) {
-        this.products = Collections.unmodifiableList(products);
+        this.products = products;
     }
 
     @Override
