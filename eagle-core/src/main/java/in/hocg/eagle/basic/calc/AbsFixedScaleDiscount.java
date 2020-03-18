@@ -81,17 +81,17 @@ public abstract class AbsFixedScaleDiscount extends AbsDiscount<GeneralOrder, Ge
                 cval = cval.subtract(useDiscountPrice);
 
                 GLog.addLog("\n折扣前金额：" + preferentialPrice
-                        + "\n折扣比例：" + scale
-                        + "\n商品折扣金额：" + preDiscountPrice.subtract(useDiscountPrice)
-                        + "\n商品折扣金额(向下取整后)：" + useDiscountPrice
+                    + "\n折扣比例：" + scale
+                    + "\n商品折扣金额：" + preDiscountPrice.subtract(useDiscountPrice)
+                    + "\n商品折扣金额(向下取整后)：" + useDiscountPrice
                 );
             } else {
                 useDiscountPrice = cval;
                 useDiscountPrice = useDiscountPrice.setScale(0, RoundingMode.DOWN);
 
                 GLog.addLog("\n折扣前金额：" + preferentialPrice
-                        + "\n商品折扣金额：" + cval
-                        + "\n折扣前金额(向下取整)：" + useDiscountPrice
+                    + "\n商品折扣金额：" + cval
+                    + "\n折扣前金额(向下取整)：" + useDiscountPrice
                 );
             }
 
@@ -118,7 +118,7 @@ public abstract class AbsFixedScaleDiscount extends AbsDiscount<GeneralOrder, Ge
      */
     private BigDecimal getPreferentialTotalPrice(List<GeneralProduct> usedProduct) {
         return usedProduct.stream().map(AbsProduct::getPreferentialPrice)
-                .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+            .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
     }
 
     public void updateProduct(GeneralProduct product, BigDecimal useDiscountPrice) {
@@ -136,10 +136,11 @@ public abstract class AbsFixedScaleDiscount extends AbsDiscount<GeneralOrder, Ge
         String space = LangUtils.getSpace(spaceCount);
         StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
         stringJoiner.add(String.format("%s=>固定比例优惠券", space))
-                .add(String.format("%s  优惠券ID: ", space) + id())
-                .add(String.format("%s  券类型: ", space) + getClass())
-                .add(String.format("%s  优惠券折扣比例: ", space) + getScale() + ", 折扣上限金额: " + getDiscountLimit())
-                .add(String.format("%s  优惠券的总优惠金额: ", space) + getDiscountTotalAmount());
+            .add(String.format("%s  优惠券ID: ", space) + id())
+            .add(String.format("%s  优惠券名称: ", space) + title())
+            .add(String.format("%s  券类型: ", space) + getClass())
+            .add(String.format("%s  优惠券折扣比例: ", space) + getScale() + ", 折扣上限金额: " + getDiscountLimit())
+            .add(String.format("%s  优惠券的总优惠金额: ", space) + getDiscountTotalAmount());
         return stringJoiner.toString();
     }
 }

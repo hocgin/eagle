@@ -26,6 +26,13 @@ public interface Discount<T extends Order, P extends Product> {
     }
 
     /**
+     * 优惠名称
+     *
+     * @return
+     */
+    String title();
+
+    /**
      * 获取使用该优惠券的商品
      *
      * @return
@@ -76,6 +83,12 @@ public interface Discount<T extends Order, P extends Product> {
         return 1;
     }
 
+    /**
+     * 打印信息
+     *
+     * @param spaceCount
+     * @return
+     */
     default String toStrings(int spaceCount) {
         String space = LangUtils.getSpace(spaceCount);
         return String.format("%s=>未知类型的优惠券", space);

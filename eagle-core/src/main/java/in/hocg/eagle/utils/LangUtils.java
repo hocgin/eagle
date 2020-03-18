@@ -173,7 +173,6 @@ public class LangUtils {
         return result;
     }
 
-
     /**
      * 获取空格数量
      *
@@ -181,6 +180,6 @@ public class LangUtils {
      * @return
      */
     public static String getSpace(int spaceCount) {
-        return String.join("  ", Collections.nCopies(spaceCount, "  "));
+        return String.join("", Collections.nCopies(spaceCount, " "));
     }
 }

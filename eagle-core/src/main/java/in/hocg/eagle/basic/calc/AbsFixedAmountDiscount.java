@@ -118,6 +118,7 @@ public abstract class AbsFixedAmountDiscount extends AbsDiscount<GeneralOrder, G
         StringJoiner stringJoiner = new StringJoiner(System.lineSeparator());
         stringJoiner.add(String.format("%s=>立减优惠券", space))
             .add(String.format("%s  优惠券ID: ", space) + id())
+            .add(String.format("%s  优惠券名称: ", space) + title())
             .add(String.format("%s  券类型: ", space) + getClass())
             .add(String.format("%s  优惠券立减金额: ", space) + getVal())
             .add(String.format("%s  优惠券的总优惠金额: ", space) + getDiscountTotalAmount());

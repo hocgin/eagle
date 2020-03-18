@@ -49,6 +49,7 @@ public class DiscountHelper {
             .setEndAt(vo.getEndAt())
             .setUseStatus(vo.getUseStatus())
             .setPlatform(vo.getPlatform())
+            .setTitle(vo.getTitle())
             .setId(vo.getId());
     }
 
@@ -67,6 +68,7 @@ public class DiscountHelper {
             .setEndAt(vo.getEndAt())
             .setUseStatus(vo.getUseStatus())
             .setPlatform(vo.getPlatform())
+            .setTitle(vo.getTitle())
             .setId(vo.getId());
     }
 

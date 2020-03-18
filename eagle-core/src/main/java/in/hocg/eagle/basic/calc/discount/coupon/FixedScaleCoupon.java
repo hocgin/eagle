@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,6 +32,8 @@ public class FixedScaleCoupon extends AbsFixedScaleDiscount
     implements Coupon {
     @ApiModelProperty("用户优惠券ID")
     private Long id;
+    @ApiModelProperty("优惠名称")
+    private String title;
     @ApiModelProperty("使用状态：[0:未使用；1:已使用；2:已过期]")
     private Integer useStatus;
     @ApiModelProperty("优惠券生效时间")
@@ -90,5 +93,15 @@ public class FixedScaleCoupon extends AbsFixedScaleDiscount
         }
 
         return Lists.newArrayList();
+    }
+
+    @Override
+    public Serializable id() {
+        return this.id;
+    }
+
+    @Override
+    public String title() {
+        return this.title;
     }
 }
