@@ -9,12 +9,15 @@ import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.mapstruct.OrderMapping;
 import in.hocg.eagle.mapstruct.OrderReturnApplyMapping;
 import in.hocg.eagle.mapstruct.SkuMapping;
+import in.hocg.eagle.modules.mkt.service.CouponAccountService;
+import in.hocg.eagle.modules.mkt.service.CouponService;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.entity.OrderReturnApply;
 import in.hocg.eagle.modules.oms.mapper.OrderMapper;
 import in.hocg.eagle.modules.oms.pojo.dto.order.OrderItemDto;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
+import in.hocg.eagle.modules.oms.pojo.vo.coupon.CouponAccountComplexVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
@@ -53,6 +56,8 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> implements OrderService {
     private final ProductService productService;
     private final OrderItemService orderItemService;
+    private final CouponService couponService;
+    private final CouponAccountService couponAccountService;
     private final OrderReturnApplyService orderReturnApplyService;
     private final SkuService skuService;
     private final SkuMapping skuMapping;
@@ -81,7 +86,9 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
             .collect(Collectors.toList());
 
         // 2. 计算优惠券优惠金额
-        handleCouponAmount(orderItems, qo.getCouponId());
+        final Long userCouponId = qo.getUserCouponId();
+        Optional<CouponAccountComplexVo> couponOpt = getAndValidCoupon(orderItems, userCouponId, CouponPlatformType.PC, qo.getCreatedAt());
+        couponOpt.ifPresent(couponAccountComplexVo -> handleCouponAmount(orderItems, couponAccountComplexVo));
 
         // 3. 确定价格
         handleRealAmount(orderItems);
@@ -125,22 +132,66 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         }
     }
 
+    private Optional<CouponAccountComplexVo> getAndValidCoupon(@NonNull List<OrderItemDto> items,
+                                                               Long userCouponId,
+                                                               CouponPlatformType platformType,
+                                                               @NonNull LocalDateTime now) {
+        CouponAccountComplexVo coupon = couponAccountService.selectOne(userCouponId);
+        if (Objects.isNull(coupon) || Objects.isNull(platformType)) {
+            return Optional.empty();
+        }
+        if (!LangUtils.equals(CouponUseStatus.Unused.getCode(), coupon.getUseStatus())) {
+            return Optional.empty();
+        }
+        final LocalDateTime startAt = coupon.getStartAt();
+        final LocalDateTime endAt = coupon.getEndAt();
+        if (!(now.isBefore(endAt) && now.isAfter(startAt))) {
+            return Optional.empty();
+        }
+
+        if (!LangUtils.equals(platformType.getCode(), coupon.getPlatform())) {
+            return Optional.empty();
+        }
+
+        final List<OrderItemDto> eligibleProducts = items.parallelStream()
+            .filter(dto -> LangUtils.equals(coupon.getUseType(), CouponUseType.Universal.getCode())
+                || coupon.getCanUseProductId().contains(dto.getProductId())
+                || coupon.getCanUseProductCategoryId().contains(dto.getProductCategoryId()))
+            .collect(Collectors.toList());
+
+        if (eligibleProducts.isEmpty()) {
+            return Optional.empty();
+        }
+        final BigDecimal totalAmount = getItemsTotalAmount(eligibleProducts);
+        if (totalAmount.compareTo(coupon.getMinPoint()) < 0) {
+            return Optional.empty();
+        }
+        return Optional.of(coupon);
+    }
+
     /**
      * 处理优惠券
-     *
-     * @param items
-     * @param couponId
+     *  @param items
+     * @param coupon 优惠券
      */
-    private void handleCouponAmount(List<OrderItemDto> items, Long couponId) {
-        // 1. 判断优惠券是否可用
-        // TODO..
-        // 2. 计算优惠金额
-        // = 优惠券优惠总金额
+    private void handleCouponAmount(List<OrderItemDto> items,
+                                    CouponAccountComplexVo coupon) {
+        final Integer couponType = coupon.getCouponType();
         BigDecimal couponTotalAmount = BigDecimal.ZERO;
-        // = 优惠券剩余可优惠金额
-        BigDecimal remainingCouponAmount = couponTotalAmount;
         // = 所有商品的总价
         BigDecimal totalAmount = getItemsTotalAmount(items);
+        if (LangUtils.equals(CouponType.Credit.getCode(), couponType)) {
+            couponTotalAmount = coupon.getCredit();
+        } else if (LangUtils.equals(CouponType.Discount.getCode(), couponType)) {
+//            couponTotalAmount = coupon.getCeiling().subtract(coupon.get);
+        } else {
+            throw ServiceException.wrap("优惠券类型错误");
+        }
+
+        // 2. 计算优惠金额
+        // = 优惠券优惠总金额
+        // = 优惠券剩余可优惠金额
+        BigDecimal remainingCouponAmount = couponTotalAmount;
 
         // 3. 进行优惠
         BigDecimal couponAmount;
@@ -180,7 +231,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
 
         final CreateOrderQo.Receiver receiver = qo.getReceiver();
         final Order order = new Order()
-            .setCouponId(qo.getCouponId())
+            .setCouponId(qo.getUserCouponId())
             .setSourceType(qo.getSourceType())
             .setAccountId(currentUserId)
             .setFreightAmount(BigDecimal.ZERO)

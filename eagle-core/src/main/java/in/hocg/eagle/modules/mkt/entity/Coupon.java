@@ -57,7 +57,7 @@ public class Coupon extends AbstractEntity<Coupon> {
     @TableField("credit")
     private BigDecimal credit;
     /**
-     * 优惠上限
+     * 优惠上限金额
      */
     @TableField("ceiling")
     private BigDecimal ceiling;

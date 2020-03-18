@@ -27,6 +27,8 @@ public class OrderItemDto {
     private String productSkuCode;
     @ApiModelProperty("商品规格")
     private String productSpecData;
+    @ApiModelProperty("商品品类ID")
+    private Long productCategoryId;
 
 
     @ApiModelProperty("购买数量")

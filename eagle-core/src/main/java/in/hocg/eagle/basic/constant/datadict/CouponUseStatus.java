@@ -11,16 +11,17 @@ import lombok.RequiredArgsConstructor;
  * @author hocgin
  */
 @Getter
-@ApiModel("订单来源")
+@ApiModel("使用状态")
 @RequiredArgsConstructor
-public enum OrderSourceType implements IntEnum {
-    APP(1, "APP"),
-    PC(2, "PC");
+public enum CouponUseStatus implements IntEnum {
+    Unused(0, "未使用"),
+    Used(1, "已使用"),
+    Expired(2, "已过期");
     private final Integer code;
     private final String name;
 
     @Override
     public Integer getCode() {
-        return code;
+        return this.code;
     }
 }

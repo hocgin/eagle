@@ -40,7 +40,7 @@ CREATE TABLE `mkt_coupon`
     instructions    VARCHAR(255)
         COMMENT '优惠券使用说明',
     min_point       DECIMAL(10, 2) NOT NULL DEFAULT 0
-        COMMENT '最低启用金额',
+        COMMENT '订单最低启用金额',
     credit          DECIMAL(10, 2) NOT NULL
         COMMENT '满减金额/折扣率',
     ceiling         DECIMAL(10, 2) NOT NULL DEFAULT 10000

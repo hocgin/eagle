@@ -1,7 +1,9 @@
 package in.hocg.eagle.modules.mkt.service;
 
-import in.hocg.eagle.modules.mkt.entity.CouponProductRelation;
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.modules.mkt.entity.CouponProductRelation;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +14,7 @@ import in.hocg.eagle.basic.AbstractService;
  * @since 2020-03-17
  */
 public interface CouponProductRelationService extends AbstractService<CouponProductRelation> {
+
+    List<CouponProductRelation> selectAllByCouponId(Long couponId);
 
 }

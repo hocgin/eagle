@@ -11,16 +11,17 @@ import lombok.RequiredArgsConstructor;
  * @author hocgin
  */
 @Getter
-@ApiModel("订单来源")
+@ApiModel("使用类型")
 @RequiredArgsConstructor
-public enum OrderSourceType implements IntEnum {
-    APP(1, "APP"),
-    PC(2, "PC");
+public enum CouponUseType implements IntEnum {
+    Universal(0, "全场通用"),
+    SpecifiedCategory(1, "指定品类"),
+    DesignatedProduct(2, "指定商品");
     private final Integer code;
     private final String name;
 
     @Override
     public Integer getCode() {
-        return code;
+        return this.code;
     }
 }

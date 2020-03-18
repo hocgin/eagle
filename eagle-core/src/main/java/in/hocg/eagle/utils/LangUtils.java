@@ -4,10 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.experimental.UtilityClass;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -174,5 +171,16 @@ public class LangUtils {
             }
         }
         return result;
+    }
+
+
+    /**
+     * 获取空格数量
+     *
+     * @param spaceCount
+     * @return
+     */
+    public static String getSpace(int spaceCount) {
+        return String.join("  ", Collections.nCopies(spaceCount, "  "));
     }
 }

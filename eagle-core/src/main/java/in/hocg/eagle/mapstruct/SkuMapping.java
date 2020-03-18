@@ -25,6 +25,7 @@ public interface SkuMapping {
     @Mapping(target = "specData", ignore = true)
     Sku asSku(ProductSaveQo.Sku entity);
 
+    @Mapping(target = "productCategoryId", source = "product.productCategoryId")
     @Mapping(target = "productId", source = "product.id")
     @Mapping(target = "productPrice", source = "entity.price")
     @Mapping(target = "productPic", source = "entity.imageUrl")

@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.mkt.service;
 
 import in.hocg.eagle.modules.mkt.entity.CouponAccount;
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.modules.oms.pojo.vo.coupon.CouponAccountComplexVo;
 
 /**
  * <p>
@@ -12,5 +13,7 @@ import in.hocg.eagle.basic.AbstractService;
  * @since 2020-03-17
  */
 public interface CouponAccountService extends AbstractService<CouponAccount> {
+
+    CouponAccountComplexVo selectOne(Long couponAccountId);
 
 }

@@ -1,19 +1,17 @@
 package in.hocg.eagle.modules.mkt.entity;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import in.hocg.eagle.basic.AbstractEntity;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import in.hocg.eagle.basic.AbstractEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -62,9 +60,9 @@ public class CouponAccount extends AbstractEntity<CouponAccount> {
      * 使用状态：[0:未使用；1:已使用；2:已过期]
      */
     @TableField("use_status")
-    private Boolean useStatus;
+    private Integer useStatus;
     /**
-     * 使用时间
+     * 优惠券使用时间
      */
     @TableField("used_at")
     private LocalDateTime usedAt;
