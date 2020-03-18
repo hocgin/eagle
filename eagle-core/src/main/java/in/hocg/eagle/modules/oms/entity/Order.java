@@ -43,9 +43,10 @@ public class Order extends AbstractEntity<Order> {
     private String orderSn;
     /**
      * 优惠券ID
+     * Coupon Account ID
      */
-    @TableField("coupon_id")
-    private Long couponId;
+    @TableField("coupon_account_id")
+    private Long couponAccountId;
     /**
      * 优惠券抵扣金额
      */

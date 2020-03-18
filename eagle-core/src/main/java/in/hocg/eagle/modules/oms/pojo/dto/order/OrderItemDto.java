@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.oms.pojo.dto.order;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
  * @author hocgin
  */
 @Data
+@Accessors(chain = true)
 public class OrderItemDto {
     @ApiModelProperty("商品ID")
     private Long productId;

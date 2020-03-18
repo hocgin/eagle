@@ -7,8 +7,8 @@ CREATE TABLE `oms_order`
         COMMENT '账号ID',
     order_sn                VARCHAR(64)    NOT NULL
         COMMENT '订单编号',
-    coupon_id               BIGINT         NULL
-        COMMENT '优惠券ID',
+    coupon_account_id       BIGINT         NULL
+        COMMENT '用户优惠券ID',
 
     coupon_amount           decimal(10, 2) NULL
         COMMENT '优惠券抵扣金额',
@@ -123,4 +123,4 @@ CREATE TABLE `oms_order_return_apply`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-  COMMENT ='订单退货申请';
+    COMMENT ='订单退货申请';

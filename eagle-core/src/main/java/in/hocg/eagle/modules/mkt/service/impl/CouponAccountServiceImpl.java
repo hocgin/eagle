@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.mkt.service.impl;
 
 import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.constant.datadict.CouponUseStatus;
 import in.hocg.eagle.basic.constant.datadict.CouponUseType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.mapstruct.CouponMapping;
@@ -20,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,5 +63,14 @@ public class CouponAccountServiceImpl extends AbstractServiceImpl<CouponAccountM
         }
 
         return result;
+    }
+
+    @Override
+    public boolean updateUsedStatus(Long id, BigDecimal actualAmount) {
+        return lambdaUpdate().set(CouponAccount::getUsedAt, LocalDateTime.now())
+            .set(CouponAccount::getUseStatus, CouponUseStatus.Used.getCode())
+            .set(CouponAccount::getActualAmount, actualAmount)
+            .eq(CouponAccount::getId, id)
+            .eq(CouponAccount::getUseStatus, CouponUseStatus.Unused.getCode()).update();
     }
 }

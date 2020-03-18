@@ -24,13 +24,13 @@ import java.util.StringJoiner;
 public class GeneralOrder extends AbsOrder<GeneralProduct> {
 
     @ApiModelProperty("账户ID")
-    private final Integer accountId;
+    private final Long accountId;
     @ApiModelProperty("订单来源")
     private final OrderSourceType sourceType;
     @ApiModelProperty("创建时间")
     private final LocalDateTime createAt;
 
-    public GeneralOrder(List<GeneralProduct> products, @NonNull Integer accountId, @NonNull OrderSourceType sourceType, @NonNull LocalDateTime createAt) {
+    public GeneralOrder(List<GeneralProduct> products, @NonNull Long accountId, @NonNull OrderSourceType sourceType, @NonNull LocalDateTime createAt) {
         super(products);
         this.accountId = accountId;
         this.sourceType = sourceType;

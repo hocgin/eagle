@@ -16,6 +16,7 @@ import org.mapstruct.Mapping;
 public interface CouponMapping {
     @Mapping(target = "canUseProductId", ignore = true)
     @Mapping(target = "canUseProductCategoryId", ignore = true)
+    @Mapping(target = "accountId", source = "couponAccount.accountId")
     @Mapping(target = "id", source = "couponAccount.id")
     @Mapping(target = "endAt", source = "couponAccount.endAt")
     @Mapping(target = "usedAt", source = "couponAccount.usedAt")

@@ -42,11 +42,6 @@ public class CouponAccount extends AbstractEntity<CouponAccount> {
     @TableField("coupon_id")
     private Long couponId;
     /**
-     * 使用该优惠券的订单ID
-     */
-    @TableField("order_id")
-    private Long orderId;
-    /**
      * 优惠券编号
      */
     @TableField("coupon_sn")

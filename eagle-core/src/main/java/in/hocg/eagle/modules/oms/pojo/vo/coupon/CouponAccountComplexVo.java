@@ -17,6 +17,8 @@ import java.util.List;
 public class CouponAccountComplexVo {
     @ApiModelProperty("用户优惠券ID")
     private Long id;
+    @ApiModelProperty("拥有人")
+    private Long accountId;
     @ApiModelProperty("优惠券编号")
     private String couponSn;
     @ApiModelProperty("优惠券标题")

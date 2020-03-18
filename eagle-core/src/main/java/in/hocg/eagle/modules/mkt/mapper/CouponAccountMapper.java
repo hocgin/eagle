@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.mkt.mapper;
 
-import in.hocg.eagle.modules.mkt.entity.CouponAccount;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.eagle.modules.mkt.entity.CouponAccount;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

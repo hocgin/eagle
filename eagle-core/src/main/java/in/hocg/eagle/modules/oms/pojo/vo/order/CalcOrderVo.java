@@ -57,5 +57,7 @@ public class CalcOrderVo {
         private Long id;
         @ApiModelProperty("优惠金额")
         private BigDecimal couponAmount;
+        @ApiModelProperty("优惠名称")
+        private String title;
     }
 }

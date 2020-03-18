@@ -70,8 +70,6 @@ CREATE TABLE `mkt_coupon_account`
         COMMENT '拥有人',
     coupon_id       BIGINT       NOT NULL
         COMMENT 'mkt_COUPON ID',
-    order_id        BIGINT
-        COMMENT '使用该优惠券的订单ID',
     --
     coupon_sn       VARCHAR(100) NOT NULL
         COMMENT '优惠券编号',

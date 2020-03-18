@@ -11,4 +11,5 @@ import in.hocg.eagle.modules.oms.helper.order.modal.Discount;
  * @author hocgin
  */
 public interface Coupon extends Discount<GeneralOrder, GeneralProduct> {
+
 }
