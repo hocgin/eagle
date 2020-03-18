@@ -14,3 +14,10 @@ trim_trailing_whitespace = false
 
 [Makefile]
 indent_style = tab
+
+[*.yml]
+indent_size = 2
+
+[*.xml]
+indent_size = 2
+

@@ -30,10 +30,7 @@ public class EagleGenerateTest {
     @Test
     public void generateByTables() {
         List<String> TABLES = Arrays.asList(
-            "mkt_coupon",
-            "mkt_coupon_product_relation",
-            "mkt_coupon_product_category_relation",
-            "mkt_coupon_account"
+            ""
         );
         String javaPath = "src/main/java";
         String dir = Paths.get(System.getProperty("user.dir"), javaPath).toString();
