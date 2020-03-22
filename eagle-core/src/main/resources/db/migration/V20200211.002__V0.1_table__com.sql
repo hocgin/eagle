@@ -2,19 +2,19 @@ DROP TABLE IF EXISTS `com_file`;
 CREATE TABLE `com_file`
 (
     id         BIGINT AUTO_INCREMENT,
-    filename   VARCHAR(200)         NOT NULL
+    filename   VARCHAR(200) NOT NULL DEFAULT 'Unknown'
         COMMENT '文件名',
-    file_url   VARCHAR(200)         NOT NULL
+    file_url   VARCHAR(200) NOT NULL
         COMMENT '链接地址',
-    rel_id     BIGINT               NOT NULL
+    rel_id     BIGINT       NOT NULL
         COMMENT '业务ID',
-    rel_type   INT(10)              NOT NULL
+    rel_type   INT(10)      NOT NULL
         COMMENT '业务类型',
-    sort       INT(10) DEFAULT 1000 NOT NULL
+    sort       INT(10)      NOT NULL DEFAULT 1000
         COMMENT '排序,默认:1000',
-    created_at TIMESTAMP(6)         NOT NULL
+    created_at TIMESTAMP(6) NOT NULL
         COMMENT '创建时间',
-    creator    BIGINT               NOT NULL
+    creator    BIGINT       NOT NULL
         COMMENT '创建人',
 
     UNIQUE KEY (rel_id, rel_type),

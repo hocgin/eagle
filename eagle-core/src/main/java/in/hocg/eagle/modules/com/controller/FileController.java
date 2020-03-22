@@ -27,7 +27,7 @@ public class FileController {
     @UseLogger("上传文件")
     @PostMapping("/upload")
     public Result<String> upload(@RequestPart("file") MultipartFile file) {
-        return Result.success("http://www.example/file-url/还没有实现");
+        return Result.success("https://dss0.baidu.com/73F1bjeh1BF3odCf/it/u=1130389758,912252089&fm=85&s=2C14ED13D83357A11999E4D3030080A2");
     }
 }
 

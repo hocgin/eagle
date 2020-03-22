@@ -16,8 +16,9 @@ import java.util.function.BiFunction;
 public enum NamedType {
     DataDict(SpringContext.getBean(NamedService.class)::selectOneByDataDict),
     Nickname(SpringContext.getBean(NamedService.class)::selectOneNicknameByAccountId),
+    ProductCategoryName(SpringContext.getBean(NamedService.class)::selectOneProductCategoryNameByProductCategoryId),
     AuthorityTitle(SpringContext.getBean(NamedService.class)::selectOneAuthorityTitleByAuthorityId);
-    
+
     @Getter
     private final BiFunction<Object, String[], Object> function;
 }

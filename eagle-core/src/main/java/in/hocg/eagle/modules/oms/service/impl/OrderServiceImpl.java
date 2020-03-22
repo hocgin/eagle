@@ -83,14 +83,12 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
                 final Product product = productService.selectOneByIdAndNotDeleted(productId);
                 ValidUtils.notNull(product, "未找到商品");
                 ValidUtils.isFalse(LangUtils.equals(product.getPublishStatus(), ProductPublishStatus.SoldOut.getCode()), "商品已下架");
-                return new GeneralProduct()
+                return new GeneralProduct(sku.getPrice(), item.getQuantity())
                     .setProductSpecData(sku.getSpecData())
                     .setProductCategoryId(product.getProductCategoryId())
                     .setProductPic(sku.getImageUrl())
                     .setProductSkuId(sku.getId())
                     .setProductSkuCode(sku.getSkuCode())
-                    .setProductQuantity(item.getQuantity())
-                    .setProductPrice(sku.getPrice())
                     .setProductName(product.getTitle())
                     .setProductId(product.getId());
             })

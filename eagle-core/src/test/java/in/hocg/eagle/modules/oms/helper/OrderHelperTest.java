@@ -35,7 +35,7 @@ class OrderHelperTest {
             .setProductSkuId(12L)
             .setProductSpecData("[]")
             .setProductName("商品A"));
-        final GeneralOrder order = new GeneralOrder(products, 1, OrderSourceType.APP, LocalDateTime.now());
+        final GeneralOrder order = new GeneralOrder(products, 1L, OrderSourceType.APP, LocalDateTime.now());
 
         final CouponAccountComplexVo couponVo = new CouponAccountComplexVo();
         couponVo.setCeiling(BigDecimal.valueOf(10000L));

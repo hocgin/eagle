@@ -7,7 +7,7 @@ CREATE TABLE pms_product
     --
     video_url           VARCHAR(255)
         COMMENT 'video url',
-    procurement         VARCHAR(255) NOT NULL
+    procurement         VARCHAR(255)
         COMMENT '采购地(中国,福建)',
     title               VARCHAR(255) NOT NULL
         COMMENT '产品名',

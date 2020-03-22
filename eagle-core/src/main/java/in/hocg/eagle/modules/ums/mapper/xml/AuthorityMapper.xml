@@ -7,7 +7,7 @@
         FROM ums_authority ua
         <where>
             <if test="qo.parentId != null">
-                AND ua.parent_id = #{parentId}
+                AND ua.parent_id = #{qo.parentId}
             </if>
             <if test="qo.platform != null">
                 AND ua.platform = #{qo.platform}

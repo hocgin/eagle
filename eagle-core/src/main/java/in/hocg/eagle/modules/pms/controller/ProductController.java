@@ -48,6 +48,16 @@ public class ProductController {
         return Result.success();
     }
 
+    @UseLogger("删除商品信息")
+    @DeleteMapping("/{id}")
+    public Result<Void> deleteOne(@PathVariable("id") Long id) {
+        final ProductSaveQo qo = new ProductSaveQo();
+        qo.setId(id);
+        qo.setDeleteStatus(1);
+        service.saveOne(qo);
+        return Result.success();
+    }
+
     @UseLogger("查看商品信息")
     @GetMapping("/{id}")
     public Result<ProductComplexVo> selectOne(@PathVariable("id") Long id) {

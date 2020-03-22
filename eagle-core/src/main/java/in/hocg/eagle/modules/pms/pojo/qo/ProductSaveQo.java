@@ -44,7 +44,8 @@ public class ProductSaveQo extends IdQo {
     @ApiModelProperty("主视频")
     private String videoUrl;
     @ApiModelProperty("品类ID")
-    private Integer productCategoryId;
+    @NotNull(groups = {Insert.class}, message = "品类不能为空")
+    private Long productCategoryId;
     @NotNull(groups = {Insert.class}, message = "商品状态错误")
     @RangeEnum(enumClass = ProductPublishStatus.class,
         groups = {Insert.class}, message = "商品上架状态错误")
@@ -60,17 +61,17 @@ public class ProductSaveQo extends IdQo {
     @Data
     @EqualsAndHashCode(callSuper = true)
     public static class Sku extends IdQo {
-        @NotNull(groups = {Insert.class}, message = "规格不能为空")
-        @Size(min = 1, groups = {Insert.class}, message = "规格不能为空")
+        @NotNull(groups = {Insert.class, Update.class}, message = "规格不能为空")
+        @Size(min = 1, groups = {Insert.class, Update.class}, message = "规格不能为空")
         @ApiModelProperty("规格列表")
         private List<Spec> spec;
-        @Min(value = 0L, groups = {Insert.class}, message = "库存数量错误")
+        @Min(value = 0L, groups = {Insert.class, Update.class}, message = "库存数量错误")
         @ApiModelProperty("库存数量")
         private Integer stock;
-        @NotBlank(groups = {Insert.class}, message = "SKU编码不能为空")
+        @NotBlank(groups = {Insert.class, Update.class}, message = "SKU编码不能为空")
         @ApiModelProperty("SKU编码")
         private String skuCode;
-        @Min(value = 0L, groups = {Insert.class}, message = "价格错误")
+        @Min(value = 0L, groups = {Insert.class, Update.class}, message = "价格错误")
         @ApiModelProperty("价格")
         private BigDecimal price;
         @ApiModelProperty("图片")

@@ -44,7 +44,7 @@
                 </foreach>
             </if>
             <if test="enabled != null">
-                AND ta.enabled = 1
+                AND ua.enabled = 1
             </if>
         </where>
     </select>

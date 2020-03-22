@@ -20,6 +20,9 @@ public interface ProductMapping {
     @Mapping(target = "creator", ignore = true)
     Product asProduct(ProductSaveQo qo);
 
+    @Mapping(target = "productCategoryName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
+    @Mapping(target = "lastUpdaterName", ignore = true)
     @Mapping(target = "photos", ignore = true)
     @Mapping(target = "publishStatusName", ignore = true)
     @Mapping(target = "sku", ignore = true)
