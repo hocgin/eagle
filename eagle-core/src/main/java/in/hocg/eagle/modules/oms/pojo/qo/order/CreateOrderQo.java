@@ -22,9 +22,6 @@ public class CreateOrderQo extends CalcOrderQo {
     @ApiModelProperty("订单备注")
     private String remark;
 
-    @ApiModelProperty("订单来源类型")
-    private Integer sourceType;
-
     @Data
     public static class Receiver {
         @ApiModelProperty("收货人姓名")

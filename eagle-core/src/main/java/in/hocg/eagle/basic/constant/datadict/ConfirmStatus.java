@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
  * @author hocgin
  */
 @Getter
-@ApiModel("确认收货状态")
+@ApiModel("确认状态")
 @RequiredArgsConstructor
-public enum OrderConfirmStatus implements IntEnum {
+public enum ConfirmStatus implements IntEnum {
     Unconfirmed(0, "未确认"),
     Confirmed(1, "已确认");
     private final Integer code;

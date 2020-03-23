@@ -2,6 +2,9 @@ package in.hocg.eagle.modules.oms.pojo.vo.order;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
+import in.hocg.eagle.basic.aspect.named.InjectNamed;
+import in.hocg.eagle.basic.aspect.named.Named;
+import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,11 +20,15 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@InjectNamed
 public class OrderComplexVo {
     @ApiModelProperty("订单ID")
     private String id;
     @ApiModelProperty("订单拥有人ID")
     private Long accountId;
+    @ApiModelProperty("订单拥有人")
+    @Named(idFor = "accountId", type = NamedType.Nickname)
+    private String accountName;
     @ApiModelProperty("订单编号")
     private String orderSn;
     @ApiModelProperty("优惠券ID")
@@ -38,12 +45,28 @@ public class OrderComplexVo {
     private BigDecimal payAmount;
     @ApiModelProperty("支付方式")
     private Integer payType;
+    @Named(idFor = "payType",
+        type = NamedType.DataDict, args = {"orderPayType"})
+    private String payTypeName;
+
     @ApiModelProperty("订单来源")
     private Integer sourceType;
+    @Named(idFor = "sourceType",
+        type = NamedType.DataDict, args = {"orderSourceType"})
+    private String sourceTypeName;
+
     @ApiModelProperty("订单状态")
     private Integer orderStatus;
+    @Named(idFor = "orderStatus",
+        type = NamedType.DataDict, args = {"orderStatus"})
+    private String orderStatusName;
+
     @ApiModelProperty("确认收货状态")
     private Integer confirmStatus;
+    @Named(idFor = "confirmStatus",
+        type = NamedType.DataDict, args = {"confirmStatus"})
+    private String confirmStatusName;
+
     @ApiModelProperty("收货人姓名")
     private String receiverName;
     @ApiModelProperty("收货人电话")

@@ -226,3 +226,80 @@ INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`
                                  `created_at`, `creator`)
     VALUE (10, '上架', '1', '上架状态:上架', 1,
            NOW(), 1);
+
+#  支付方式
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (11, '支付类型', 'orderPayType', '支付类型', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (11, '支付宝', '0', '支付类型:支付宝', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (11, '微信', '1', '支付类型:微信', 1,
+           NOW(), 1);
+
+#  订单来源
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (12, '订单来源', 'orderSourceType', '订单来源', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (12, 'Unknown', '0', '订单来源:未知', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (12, 'APP', '1', '订单来源:APP', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (12, 'PC', '2', '订单来源:PC', 1,
+           NOW(), 1);
+
+
+#  订单状态
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (13, '订单状态', 'orderStatus', '订单状态', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (13, '待付款', '0', '订单状态:待付款', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (13, '待发货', '1', '订单状态:待发货', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (13, '已发货', '2', '订单状态:已发货', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (13, '已完成', '3', '订单状态:已完成', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (13, '已关闭', '4', '订单状态:已关闭', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (13, '无效订单', '5', '订单状态:无效订单', 1,
+           NOW(), 1);
+
+#  支付方式
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (14, '确认状态', 'confirmStatus', '确认状态', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (14, '未确认', '0', '确认状态:未确认', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (14, '已确认', '1', '确认状态:已确认', 1,
+           NOW(), 1);

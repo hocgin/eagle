@@ -5,23 +5,22 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Created by hocgin on 2020/3/17.
+ * Created by hocgin on 2020/3/15.
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @Getter
-@ApiModel("订单来源")
+@ApiModel("支付类型")
 @RequiredArgsConstructor
-public enum OrderSourceType implements IntEnum {
-    Unknown(0, "未知"),
-    APP(1, "APP"),
-    PC(2, "PC");
+public enum OrderPayType implements IntEnum {
+    AliPay(0, "支付宝"),
+    WxPay(1, "微信");
     private final Integer code;
     private final String name;
 
     @Override
     public Integer getCode() {
-        return code;
+        return this.code;
     }
 }

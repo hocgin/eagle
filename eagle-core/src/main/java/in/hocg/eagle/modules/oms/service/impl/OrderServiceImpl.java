@@ -142,6 +142,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
 
         final CreateOrderQo.Receiver receiver = qo.getReceiver();
         final Order order = new Order()
+            .setOrderSn(snCode.getOrderSNCode())
             .setCouponAccountId(qo.getUserCouponId())
             .setSourceType(qo.getSourceType())
             .setAccountId(currentUserId)
@@ -245,7 +246,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         final Order updated = new Order();
         updated.setId(id);
         updated.setOrderStatus(OrderStatus.Completed.getCode());
-        updated.setConfirmStatus(OrderConfirmStatus.Confirmed.getCode());
+        updated.setConfirmStatus(ConfirmStatus.Confirmed.getCode());
         updated.setReceiveTime(createdAt);
         updated.setLastUpdater(userId);
         updated.setLastUpdatedAt(createdAt);
