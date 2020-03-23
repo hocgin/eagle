@@ -61,7 +61,7 @@ public class AppService {
 
     public ProductComplexVo getProductById(IdQo qo) {
         final ProductComplexVo result = productService.selectOne(qo.getId());
-        ValidUtils.isTrue(LangUtils.equals(result.getPublishStatus(), ProductPublishStatus.SoldOut.getCode()), "商品已下架");
+        ValidUtils.isTrue(LangUtils.equals(result.getPublishStatus(), ProductPublishStatus.Shelves.getCode()), "商品已下架");
         return result;
     }
 
