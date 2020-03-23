@@ -1,7 +1,11 @@
 package in.hocg.eagle.modules.oms.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.pojo.KeyValue;
+import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.mapstruct.OrderItemMapping;
+import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.entity.OrderReturnApply;
 import in.hocg.eagle.modules.oms.mapper.OrderItemMapper;
@@ -43,6 +47,7 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
             final OrderReturnApply apply = orderReturnApply.get();
             result.setReturnStatus(apply.getApplyStatus());
         }
+        result.setSpec(JSON.parseArray(entity.getProductSpecData(), KeyValue.class));
         return result;
     }
 

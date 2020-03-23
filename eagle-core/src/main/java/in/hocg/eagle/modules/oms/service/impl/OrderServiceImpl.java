@@ -8,6 +8,7 @@ import in.hocg.eagle.basic.SNCode;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.pojo.KeyValue;
+import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.mapstruct.OrderMapping;
 import in.hocg.eagle.mapstruct.OrderReturnApplyMapping;
 import in.hocg.eagle.mapstruct.SkuMapping;
@@ -357,5 +358,16 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
             updated.setUseStatus(CouponUseStatus.Unused.getCode());
             couponAccountService.validUpdateById(updated);
         }
+    }
+
+    @Override
+    public void deleteOne(IdQo qo) {
+        final Long id = qo.getId();
+        final Order updated = new Order();
+        updated.setId(id);
+        updated.setDeleteStatus(DeleteStatus.On.getCode());
+        updated.setLastUpdatedAt(qo.getCreatedAt());
+        updated.setLastUpdater(qo.getUserId());
+        this.validUpdateById(updated);
     }
 }

@@ -1,9 +1,11 @@
 package in.hocg.eagle.modules.oms.pojo.vo.order;
 
+import in.hocg.eagle.basic.pojo.KeyValue;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by hocgin on 2020/3/15.
@@ -29,6 +31,7 @@ public class OrderItemComplexVo {
     private Long productSkuId;
     @ApiModelProperty("商品购买时SKU 编码")
     private String productSkuCode;
+    private List<KeyValue> spec;
     @ApiModelProperty("商品购买规格")
     private String productSpecData;
     @ApiModelProperty("优惠券均摊金额")

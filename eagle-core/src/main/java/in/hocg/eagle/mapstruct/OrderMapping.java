@@ -17,9 +17,16 @@ import org.mapstruct.Mapping;
 public interface OrderMapping {
 
 
+    @Mapping(target = "couponId", ignore = true)
+    @Mapping(target = "orderStatusName", ignore = true)
+    @Mapping(target = "sourceTypeName", ignore = true)
+    @Mapping(target = "payTypeName", ignore = true)
+    @Mapping(target = "confirmStatusName", ignore = true)
+    @Mapping(target = "accountName", ignore = true)
     @Mapping(target = "orderItems", ignore = true)
     OrderComplexVo asOrderComplexVo(Order entity);
 
+    @Mapping(target = "spec", ignore = true)
     @Mapping(target = "title", source = "dto.productName")
     @Mapping(target = "specData", source = "dto.productSpecData")
     @Mapping(target = "skuId", source = "dto.productSkuId")
