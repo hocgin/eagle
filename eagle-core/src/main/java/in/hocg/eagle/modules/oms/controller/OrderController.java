@@ -25,7 +25,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @UseLogger("分页查询订单列表")
-    @PostMapping("/paging")
+    @PostMapping("/_paging")
     public Result paging(@Validated @RequestBody OrderPagingQo qo) {
         return Result.success(orderService.paging(qo));
     }
