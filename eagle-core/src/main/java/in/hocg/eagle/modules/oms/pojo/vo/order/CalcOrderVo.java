@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.oms.pojo.vo.order;
 
 import com.google.common.collect.Lists;
+import in.hocg.eagle.basic.pojo.KeyValue;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -40,6 +41,8 @@ public class CalcOrderVo {
         private String skuCode;
         @ApiModelProperty("规格")
         private String specData;
+        @ApiModelProperty("规格")
+        private List<KeyValue> spec = Lists.newArrayList();
         @ApiModelProperty("购买数量")
         private Integer quantity;
         @ApiModelProperty("商品单价")

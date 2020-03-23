@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author hocgin
  */
-@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
 @RestController
+@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api-mini")
 public class AppApi {

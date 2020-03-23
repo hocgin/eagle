@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author hocgin
  */
-@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
 @RestController
+@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api-mini/product")
 public class ProductApi {
@@ -37,7 +37,7 @@ public class ProductApi {
 
     @UseLogger("商品详情")
     @GetMapping("/{id:\\d+}")
-    private Result<ProductComplexVo> selectOne(@PathVariable Long id) {
+    public Result<ProductComplexVo> selectOne(@PathVariable Long id) {
         final IdQo qo = new IdQo();
         qo.setId(id);
         return Result.success(appService.getProductById(qo));

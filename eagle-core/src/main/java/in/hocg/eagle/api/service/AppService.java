@@ -7,7 +7,9 @@ import in.hocg.eagle.api.pojo.SelfOrderPagingApiQo;
 import in.hocg.eagle.api.pojo.SignUpApiQo;
 import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.manager.PaymentManager;
 import in.hocg.eagle.modules.oms.pojo.qo.order.OrderPagingQo;
+import in.hocg.eagle.modules.oms.pojo.qo.order.PayOrderQo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderService;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
@@ -31,7 +33,7 @@ public class AppService {
     private final OrderService orderService;
     private final AppMapping appMapping;
     private final ProductService productService;
-
+    private final PaymentManager paymentManager;
 
     public void signUp(SignUpApiQo qo) {
 
@@ -61,5 +63,13 @@ public class AppService {
         final ProductComplexVo result = productService.selectOne(qo.getId());
         ValidUtils.isTrue(LangUtils.equals(result.getPublishStatus(), ProductPublishStatus.SoldOut.getCode()), "商品已下架");
         return result;
+    }
+
+    public String payOrder(PayOrderQo qo) throws Throwable {
+        return paymentManager.payOrder(qo);
+    }
+
+    public String doPayResultMessage(Integer channel, Integer feature, String data) {
+        return paymentManager.doPayResultMessage(channel, feature, data);
     }
 }

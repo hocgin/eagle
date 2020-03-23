@@ -40,13 +40,6 @@ public interface OrderService extends AbstractService<Order> {
     void cancelOrder(CancelOrderQo qo);
 
     /**
-     * 支付订单
-     *
-     * @param qo
-     */
-    void payOrder(PayOrderQo qo);
-
-    /**
      * 确认收货
      *
      * @param qo
@@ -75,4 +68,7 @@ public interface OrderService extends AbstractService<Order> {
      * @return
      */
     IPage<OrderComplexVo> paging(OrderPagingQo qo);
+
+
+    void paySuccess(Integer payType, String outTradeNo);
 }

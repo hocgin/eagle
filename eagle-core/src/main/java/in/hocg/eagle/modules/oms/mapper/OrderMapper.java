@@ -20,4 +20,5 @@ import org.apache.ibatis.annotations.Param;
 public interface OrderMapper extends BaseMapper<Order> {
 
     IPage<Order> paging(@Param("qo") OrderPagingQo qo, @Param("page") Page page);
+
 }

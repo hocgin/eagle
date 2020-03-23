@@ -34,10 +34,10 @@ public class CalcOrderQo extends BaseQo {
 
     @Data
     public static class Item {
-        @NotNull
+        @NotNull(message = "请选择商品")
         @ApiModelProperty("购买商品的SKU")
         private Long skuId;
-        @NotNull
+        @NotNull(message = "请选择数量")
         @Min(value = 1)
         @ApiModelProperty("购买数量")
         private Integer quantity;

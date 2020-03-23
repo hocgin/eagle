@@ -1,11 +1,13 @@
 package in.hocg.eagle.modules.oms.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.SNCode;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.mapstruct.OrderMapping;
 import in.hocg.eagle.mapstruct.OrderReturnApplyMapping;
 import in.hocg.eagle.mapstruct.SkuMapping;
@@ -36,7 +38,9 @@ import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,6 +59,7 @@ import java.util.stream.Collectors;
  * @author hocgin
  * @since 2020-03-14
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> implements OrderService {
@@ -126,7 +131,11 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
             .setRealAmount(item.getPreferentialPrice()));
 
         result.setOrderItems(orderItems.parallelStream()
-            .map(mapping::asCalcOrderVoOrderItem)
+            .map((item) -> {
+                final String specData = item.getProductSpecData();
+                return mapping.asCalcOrderVoOrderItem(item)
+                    .setSpec(JSON.parseArray(specData, KeyValue.class));
+            })
             .collect(Collectors.toList()));
         result.setTotalAmount(totalAmount);
         result.setPayAmount(payAmount);
@@ -224,13 +233,6 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void payOrder(PayOrderQo qo) {
-        // TODO
-        //  支付成功后 生成 .setOrderSn(snCode.getOrderSNCode())
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
     public void confirmOrder(ConfirmOrderQo qo) {
         final Long userId = qo.getUserId();
         final Long id = qo.getId();
@@ -291,6 +293,34 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     public IPage<OrderComplexVo> paging(OrderPagingQo qo) {
         return baseMapper.paging(qo, qo.page())
             .convert(this::convertOrderComplex);
+    }
+
+    @Async
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void paySuccess(Integer payType, String orderSn) {
+        Optional<Order> orderOpl = this.selectOneByOrderSn(orderSn);
+        if (!orderOpl.isPresent()) {
+            throw ServiceException.wrap("订单不存在");
+        }
+        final Order order = orderOpl.get();
+        if (!LangUtils.equals(OrderStatus.PendingPayment.getCode(), order.getOrderStatus())) {
+            log.warn("订单{{}}状态[{}]非待付款时，被调用支付成功", orderSn, order.getOrderStatus());
+            return;
+        }
+
+        // 更改订单状态
+        final Order update = new Order();
+        update.setId(order.getId());
+        update.setOrderStatus(OrderStatus.PendingPayment.getCode());
+        update.setPaymentTime(LocalDateTime.now());
+        update.setPayType(payType);
+        validUpdateById(update);
+        // todo 写入流水
+    }
+
+    private Optional<Order> selectOneByOrderSn(String orderSn) {
+        return lambdaQuery().eq(Order::getOrderSn, orderSn).oneOpt();
     }
 
     private OrderComplexVo convertOrderComplex(Order entity) {
