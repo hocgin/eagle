@@ -83,7 +83,7 @@ CREATE TABLE `ums_authority`
         COMMENT '权限名称',
     `type`            tinyint(2)   NOT NULL
         COMMENT '权限类型 [按钮, 菜单]',
-    `authority_code`  varchar(20)  NOT NULL UNIQUE
+    `authority_code`  varchar(64)  NOT NULL UNIQUE
         COMMENT '权限授权码',
     `platform`        INT(10)      NOT NULL
         COMMENT '平台编号',
@@ -221,7 +221,7 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
     VALUE (12, '商品管理', 1, 'pms:product', 0, 11, '/11/12', NOW(), 1);
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
-    VALUE (13, '商品品类管理', 1, 'pms:product-category', 0, 11, '/11/13', NOW(), 1);
+    VALUE (13, '品类管理', 1, 'pms:product-category', 0, 11, '/11/13', NOW(), 1);
 
 -- 订单系统
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
@@ -232,7 +232,7 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
     VALUE (15, '订单管理', 1, 'oms:order', 0, 14, '/14/15', NOW(), 1);
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
-    VALUE (16, '退费管理', 1, 'oms:order-refund', 0, 14, '/14/16', NOW(), 1);
+    VALUE (16, '退费管理', 1, 'oms:order-refund-apply', 0, 14, '/14/16', NOW(), 1);
 
 
 # 角色
@@ -259,7 +259,8 @@ VALUES (1, 1),
        (1, 12),
        (1, 13),
        (1, 14),
-       (1, 15);
+       (1, 15),
+       (1, 16);
 
 # 赋予账号角色
 INSERT INTO ums_role_account(`role_id`, `account_id`)
