@@ -4,7 +4,10 @@ package in.hocg.eagle.modules.oms.controller;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.modules.oms.pojo.qo.order.CancelOrderQo;
 import in.hocg.eagle.modules.oms.pojo.qo.order.OrderPagingQo;
+import in.hocg.eagle.modules.oms.pojo.qo.order.ShippedOrderQo;
+import in.hocg.eagle.modules.oms.pojo.qo.order.UpdateOrderQo;
 import in.hocg.eagle.modules.oms.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -35,6 +38,29 @@ public class OrderController {
     @GetMapping("/{id}")
     public Result selectOne(@PathVariable Long id) {
         return Result.success(orderService.selectOne(id));
+    }
+
+    @UseLogger("关闭订单")
+    @PutMapping("/close")
+    public Result close(@Validated @RequestBody CancelOrderQo qo) {
+        orderService.cancelOrder(qo);
+        return Result.success();
+    }
+
+    @UseLogger("发货订单")
+    @PutMapping("/shipped")
+    public Result shipped(@Validated @RequestBody ShippedOrderQo qo) {
+        orderService.shippedOrder(qo);
+        return Result.success();
+    }
+
+    @UseLogger("修改订单")
+    @PutMapping("/{id}")
+    public Result updateOne(@PathVariable Long id,
+                            @Validated @RequestBody UpdateOrderQo qo) {
+        qo.setId(id);
+        orderService.updateOne(qo);
+        return Result.success();
     }
 
     @UseLogger("删除订单")

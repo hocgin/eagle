@@ -217,7 +217,6 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         final Long userId = qo.getUserId();
         final Long orderId = qo.getId();
         final Order order = getById(orderId);
-        ValidUtils.isTrue(LangUtils.equals(order.getAccountId(), userId), "非订单所有人，操作失败");
         ValidUtils.notNull(order, "未找到订单");
         if (!Lists.newArrayList(OrderStatus.PendingPayment.getCode()).contains(order.getOrderStatus())) {
             throw ServiceException.wrap("取消失败，请联系客服");
@@ -238,7 +237,6 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         final Long userId = qo.getUserId();
         final Long id = qo.getId();
         final Order order = getById(id);
-        ValidUtils.isTrue(LangUtils.equals(order.getAccountId(), userId), "非订单所有人，操作失败");
 
         ValidUtils.notNull(order, "未找到订单");
         if (!Lists.newArrayList(OrderStatus.Shipped.getCode()).contains(order.getOrderStatus())) {
@@ -258,14 +256,33 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void applyRefund(RefundApplyQo qo) {
+    public void shippedOrder(ShippedOrderQo qo) {
         final Long userId = qo.getUserId();
+        final Long id = qo.getId();
+        final Order order = getById(id);
+
+        ValidUtils.notNull(order, "未找到订单");
+        if (!Lists.newArrayList(OrderStatus.ToBeDelivered.getCode()).contains(order.getOrderStatus())) {
+            throw ServiceException.wrap("发货失败，订单状态错误");
+        }
+
+        final LocalDateTime createdAt = qo.getCreatedAt();
+        final Order updated = new Order();
+        updated.setId(id);
+        updated.setReceiveTime(qo.getCreatedAt());
+        updated.setOrderStatus(OrderStatus.Shipped.getCode());
+        updated.setLastUpdater(userId);
+        updated.setLastUpdatedAt(createdAt);
+        validUpdateById(updated);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void applyRefund(RefundApplyQo qo) {
         final Long orderItemId = qo.getId();
         final OrderItem orderItem = orderItemService.getById(orderItemId);
         ValidUtils.notNull(orderItem, "订单商品不存在");
         final Long orderId = orderItem.getOrderId();
-        final Order order = getById(orderId);
-        ValidUtils.isTrue(LangUtils.equals(order.getAccountId(), userId), "非订单所有人，操作失败");
         final Optional<OrderReturnApply> orderReturnApplyOpt = orderReturnApplyService.selectOneByOrderItemId(orderItemId);
         if (!orderReturnApplyOpt.isPresent()) {
             OrderReturnApply apply = orderReturnApplyMapping.asOrderReturnApply(qo, orderItem);
@@ -313,7 +330,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         // 更改订单状态
         final Order update = new Order();
         update.setId(order.getId());
-        update.setOrderStatus(OrderStatus.PendingPayment.getCode());
+        update.setOrderStatus(OrderStatus.ToBeDelivered.getCode());
         update.setPaymentTime(LocalDateTime.now());
         update.setPayType(payType);
         validUpdateById(update);
@@ -361,6 +378,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteOne(IdQo qo) {
         final Long id = qo.getId();
         final Order updated = new Order();
@@ -368,6 +386,37 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         updated.setDeleteStatus(DeleteStatus.On.getCode());
         updated.setLastUpdatedAt(qo.getCreatedAt());
         updated.setLastUpdater(qo.getUserId());
+        this.validUpdateById(updated);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateOne(UpdateOrderQo qo) {
+        final Long id = qo.getId();
+        final Order entity = getById(id);
+        ValidUtils.notNull(entity, "订单不存在");
+
+        Order updated = mapping.asOrder(qo);
+        updated.setLastUpdatedAt(qo.getCreatedAt());
+        updated.setLastUpdater(qo.getUserId());
+
+        final BigDecimal discountAmount = updated.getDiscountAmount();
+
+        // 如果需要重新计算价格
+        if (Objects.nonNull(discountAmount) && !discountAmount.equals(entity.getDiscountAmount())) {
+            if (!LangUtils.equals(OrderStatus.PendingPayment.getCode(), entity.getOrderStatus())) {
+                throw ServiceException.wrap("订单非待付款状态, 无法调整价格");
+            }
+
+            final BigDecimal payAmount = entity.getPayAmount()
+                .add(entity.getDiscountAmount())
+                .subtract(discountAmount);
+            if (payAmount.compareTo(BigDecimal.ZERO) < 0) {
+                throw ServiceException.wrap("应付价格不能为负数，价格调整失败");
+            }
+            updated.setPayAmount(payAmount);
+        }
+
         this.validUpdateById(updated);
     }
 }
