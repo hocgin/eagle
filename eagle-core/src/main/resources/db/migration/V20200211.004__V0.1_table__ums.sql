@@ -207,10 +207,10 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
 -- 用户中心
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
-    VALUE (9, '用户中心', 1, 'user', 0, null, '/9', NOW(), 1);
+    VALUE (9, '用户中心', 1, 'ums', 0, null, '/9', NOW(), 1);
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
-    VALUE (10, '账号管理', 1, 'account', 0, 9, '/9/10', NOW(), 1);
+    VALUE (10, '账号管理', 1, 'ums:account', 0, 9, '/9/10', NOW(), 1);
 
 -- 商品系统
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
