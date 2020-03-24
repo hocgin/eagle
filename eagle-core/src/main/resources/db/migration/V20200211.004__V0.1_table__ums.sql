@@ -181,6 +181,7 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
     VALUE (2, '控制台', 1, 'dashboard', 0, 1, '/1/2', NOW(), 1);
+
 # -- 开发工具
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
@@ -191,6 +192,7 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
     VALUE (5, '测试5', 1, 'test5', 0, 3, '/3/5', NOW(), 1);
+
 # -- 访问控制
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
@@ -201,6 +203,7 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
     VALUE (8, '角色管理', 1, 'role', 0, 6, '/6/8', NOW(), 1);
+
 -- 用户中心
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
@@ -216,15 +219,20 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
     VALUE (12, '商品管理', 1, 'pms:product', 0, 11, '/11/12', NOW(), 1);
-
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (13, '商品品类管理', 1, 'pms:product-category', 0, 11, '/11/13', NOW(), 1);
 
 -- 订单系统
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
-    VALUE (13, '订单系统', 1, 'oms', 0, null, '/13', NOW(), 1);
+    VALUE (14, '订单系统', 1, 'oms', 0, null, '/14', NOW(), 1);
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
-    VALUE (14, '订单管理', 1, 'oms:order', 0, 13, '/13/14', NOW(), 1);
+    VALUE (15, '订单管理', 1, 'oms:order', 0, 14, '/14/15', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (16, '退费管理', 1, 'oms:order-refund', 0, 14, '/14/16', NOW(), 1);
 
 
 # 角色
@@ -250,7 +258,8 @@ VALUES (1, 1),
        (1, 11),
        (1, 12),
        (1, 13),
-       (1, 14);
+       (1, 14),
+       (1, 15);
 
 # 赋予账号角色
 INSERT INTO ums_role_account(`role_id`, `account_id`)
