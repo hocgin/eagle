@@ -26,7 +26,4 @@ public class RefundApplyQo extends BaseQo {
     @NotNull
     @ApiModelProperty("备注")
     private String refundRemark;
-    @NotNull
-    @ApiModelProperty("退款金额")
-    private BigDecimal refundAmount;
 }

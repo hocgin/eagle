@@ -17,10 +17,10 @@ import org.mapstruct.Mapping;
 public interface OrderRefundApplyMapping {
 
 
+    @Mapping(target = "refundAmount", ignore = true)
     @Mapping(target = "refundQuantity", ignore = true)
     @Mapping(target = "applySn", ignore = true)
     @Mapping(target = "refundRemark", source = "qo.refundRemark")
-    @Mapping(target = "refundAmount", source = "qo.refundAmount")
     @Mapping(target = "refundReason", source = "qo.refundReason")
     @Mapping(target = "receiver", ignore = true)
     @Mapping(target = "receiveRemark", ignore = true)
@@ -38,5 +38,10 @@ public interface OrderRefundApplyMapping {
     @Mapping(target = "applyStatus", ignore = true)
     OrderRefundApply asOrderRefundApply(RefundApplyQo qo, OrderItem orderItem);
 
+    @Mapping(target = "creatorName", ignore = true)
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "receiverName", ignore = true)
+    @Mapping(target = "handlerName", ignore = true)
+    @Mapping(target = "applyStatusName", ignore = true)
     OrderRefundApplyComplexVo asOrderRefundApplyComplex(OrderRefundApply entity);
 }

@@ -1,12 +1,15 @@
 package in.hocg.eagle.modules.oms.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.SNCode;
 import in.hocg.eagle.basic.constant.datadict.IntEnum;
 import in.hocg.eagle.basic.constant.datadict.OrderRefundApplyStatus;
+import in.hocg.eagle.basic.constant.datadict.OrderStatus;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.mapstruct.OrderRefundApplyMapping;
+import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.entity.OrderRefundApply;
 import in.hocg.eagle.modules.oms.mapper.OrderRefundApplyMapper;
@@ -15,6 +18,7 @@ import in.hocg.eagle.modules.oms.pojo.qo.refund.OrderRefundApplyPagingQo;
 import in.hocg.eagle.modules.oms.pojo.vo.refund.OrderRefundApplyComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
 import in.hocg.eagle.modules.oms.service.OrderRefundApplyService;
+import in.hocg.eagle.modules.oms.service.OrderService;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -36,6 +40,7 @@ import java.util.Optional;
 public class OrderRefundApplyServiceImpl extends AbstractServiceImpl<OrderRefundApplyMapper, OrderRefundApply>
     implements OrderRefundApplyService {
     private final OrderItemService orderItemService;
+    private final OrderService orderService;
     private final OrderRefundApplyMapping mapping;
     private final SNCode snCode;
 
@@ -51,6 +56,13 @@ public class OrderRefundApplyServiceImpl extends AbstractServiceImpl<OrderRefund
         final Long orderItemId = qo.getOrderItemId();
         final OrderItem orderItem = orderItemService.getById(orderItemId);
         ValidUtils.notNull(orderItem, "订单商品不存在");
+        final Long orderId = orderItem.getOrderId();
+        final Order order = orderService.getById(orderId);
+        if (!Lists.newArrayList(OrderStatus.Shipped.getCode(),
+            OrderStatus.Completed.getCode()).contains(order.getOrderStatus())) {
+            throw ServiceException.wrap("订单当前状态无法进行退款操作");
+        }
+
         final Optional<OrderRefundApply> orderRefundApplyOpt = this.selectOneByOrderItemId(orderItemId);
         if (orderRefundApplyOpt.isPresent()) {
             final OrderRefundApply apply = orderRefundApplyOpt.get();
