@@ -18,4 +18,6 @@ public enum ConfirmStatus implements IntEnum {
     Confirmed(1, "已确认");
     private final Integer code;
     private final String name;
+
+    public static final String KEY = "confirmStatus";
 }

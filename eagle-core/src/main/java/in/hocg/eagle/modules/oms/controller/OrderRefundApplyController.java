@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/oms/order-return-apply")
-public class OrderReturnApplyController {
+@RequestMapping("/oms/order-refund-apply")
+public class OrderRefundApplyController {
 
 }
 

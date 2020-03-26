@@ -303,3 +303,25 @@ INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`
                                  `created_at`, `creator`)
     VALUE (14, '已确认', '1', '确认状态:已确认', 1,
            NOW(), 1);
+
+#  退款申请状态
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (15, '退款申请状态', 'refundApplyStatus', '退款申请状态', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (15, '待处理', '0', '退款申请状态:待处理', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (15, '退货中', '1', '退款申请状态:退货中', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (15, '已完成', '2', '退款申请状态:已完成', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (15, '已拒绝', '3', '退款申请状态:已拒绝', 1,
+           NOW(), 1);

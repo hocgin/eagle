@@ -19,8 +19,5 @@ public enum OrderPayType implements IntEnum {
     private final Integer code;
     private final String name;
 
-    @Override
-    public Integer getCode() {
-        return this.code;
-    }
+    public static final String KEY = "orderPayType";
 }

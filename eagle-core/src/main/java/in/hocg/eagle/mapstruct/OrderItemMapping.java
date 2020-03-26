@@ -15,6 +15,8 @@ import org.mapstruct.Mapping;
 public interface OrderItemMapping {
 
 
-    @Mapping(target = "returnStatus", ignore = true)
+    @Mapping(target = "spec", ignore = true)
+    @Mapping(target = "refundStatus", ignore = true)
+    @Mapping(target = "refundStatusName", ignore = true)
     OrderItemComplexVo asOrderItemComplexVo(OrderItem entity);
 }

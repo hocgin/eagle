@@ -7,13 +7,9 @@ import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
-import in.hocg.eagle.modules.oms.service.OrderService;
-import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
@@ -33,21 +29,18 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api-mini/order")
 public class OrderApi {
-    private final OrderService orderService;
     private final AppService appService;
 
     @UseLogger("计算订单价格")
     @PostMapping("/calc")
-    @Transactional(rollbackFor = Exception.class)
     public Result<CalcOrderVo> calcOrder(@Validated @RequestBody CalcOrderQo qo) {
-        return Result.success(orderService.calcOrder(qo));
+        return Result.success(appService.calcOrder(qo));
     }
 
     @UseLogger("创建订单")
     @PostMapping("/create")
-    @Transactional(rollbackFor = Exception.class)
     public Result<Void> createOrder(@Validated @RequestBody CreateOrderQo qo) {
-        orderService.createOrder(qo);
+        appService.createOrder(qo);
         return Result.success();
     }
 
@@ -62,11 +55,8 @@ public class OrderApi {
 
     @UseLogger("申请退款")
     @PostMapping("/refund")
-    @Transactional(rollbackFor = Exception.class)
-    private Result<Void> applyRefund(@Validated @RequestBody RefundApplyQo qo) {
-        final Order order = orderService.getById(qo.getId());
-        ValidUtils.isTrue(LangUtils.equals(order.getAccountId(), qo.getUserId()), "非订单所有人，操作失败");
-        orderService.applyRefund(qo);
+    public Result<Void> applyRefund(@Validated @RequestBody RefundApplyQo qo) {
+        appService.applyRefund(qo);
         return Result.success();
     }
 
@@ -74,32 +64,25 @@ public class OrderApi {
     @PostMapping("/cancel")
     @Transactional(rollbackFor = Exception.class)
     public Result<Void> cancelOrder(@Validated @RequestBody CancelOrderQo qo) {
-        final Order order = orderService.getById(qo.getId());
-        ValidUtils.isTrue(LangUtils.equals(order.getAccountId(), qo.getUserId()), "非订单所有人，操作失败");
-        orderService.cancelOrder(qo);
+        appService.cancelOrder(qo);
         return Result.success();
     }
 
     @UseLogger("确认订单")
     @PostMapping("/confirm")
-    @Transactional(rollbackFor = Exception.class)
     public Result<Void> confirmOrder(@Validated @RequestBody ConfirmOrderQo qo) {
-        final Order order = orderService.getById(qo.getId());
-        ValidUtils.isTrue(LangUtils.equals(order.getAccountId(), qo.getUserId()), "非订单所有人，操作失败");
-        orderService.confirmOrder(qo);
+        appService.confirmOrder(qo);
         return Result.success();
     }
 
     @UseLogger("支付订单")
     @PostMapping("/pay")
-    @Transactional(rollbackFor = Exception.class)
     public Result<String> payOrder(@Validated @RequestBody PayOrderQo qo) throws Throwable {
         return Result.success(appService.payOrder(qo));
     }
 
     @UseLogger("订单详情")
     @GetMapping("/{id}")
-    @Transactional(rollbackFor = Exception.class)
     public Result<OrderComplexVo> selectOne(@PathVariable("id") Long id) {
         final IdQo qo = new IdQo();
         qo.setId(id);
@@ -108,7 +91,6 @@ public class OrderApi {
 
     @UseLogger("搜索个人订单")
     @PostMapping("/_paging")
-    @Transactional(rollbackFor = Exception.class)
     public Result<IPage<OrderComplexVo>> paging(@Validated @RequestBody SelfOrderPagingApiQo qo) {
         return Result.success(appService.pagingSelfOrder(qo));
     }

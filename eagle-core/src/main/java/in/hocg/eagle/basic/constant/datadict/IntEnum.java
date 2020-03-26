@@ -28,6 +28,15 @@ public interface IntEnum {
         return Optional.empty();
     }
 
+    static <T extends IntEnum> T ofThrow(Integer code, Class<T> enumClass) {
+        final Optional<T> enumOpl = of(code, enumClass);
+        if (enumOpl.isPresent()) {
+            return enumOpl.get();
+        } else {
+            throw new IllegalArgumentException("未找到匹配的类型");
+        }
+    }
+
 
     static <T extends Enum<T>> Optional<T> of(String name, Class<T> enumClass) {
         return Optional.of(Enum.valueOf(enumClass, name));

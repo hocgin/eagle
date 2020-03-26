@@ -1,5 +1,9 @@
 package in.hocg.eagle.modules.oms.pojo.vo.order;
 
+import in.hocg.eagle.basic.aspect.named.InjectNamed;
+import in.hocg.eagle.basic.aspect.named.Named;
+import in.hocg.eagle.basic.aspect.named.NamedType;
+import in.hocg.eagle.basic.constant.datadict.OrderRefundApplyStatus;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,6 +18,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@InjectNamed
 public class OrderItemComplexVo {
     @ApiModelProperty("OrderItem ID")
     private Long id;
@@ -39,5 +44,8 @@ public class OrderItemComplexVo {
     @ApiModelProperty("优惠后金额")
     private BigDecimal realAmount;
     @ApiModelProperty("退款状态")
-    private Integer returnStatus;
+    private Integer refundStatus;
+    @Named(idFor = "refundStatus",
+        type = NamedType.DataDict, args = {OrderRefundApplyStatus.KEY})
+    private String refundStatusName;
 }

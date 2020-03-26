@@ -24,8 +24,8 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("oms_order_return_apply")
-public class OrderReturnApply extends AbstractEntity<OrderReturnApply> {
+@TableName("oms_order_refund_apply")
+public class OrderRefundApply extends AbstractEntity<OrderRefundApply> {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,50 +44,25 @@ public class OrderReturnApply extends AbstractEntity<OrderReturnApply> {
     @TableField("order_item_id")
     private Long orderItemId;
     /**
-     * 商品图片
-     */
-    @TableField("product_pic")
-    private String productPic;
-    /**
-     * 商品名称
-     */
-    @TableField("product_name")
-    private String productName;
-    /**
-     * 商品规格
-     */
-    @TableField("product_spec_data")
-    private String productSpecData;
-    /**
-     * 商品单价
-     */
-    @TableField("product_price")
-    private BigDecimal productPrice;
-    /**
-     * 商品实际支付价格(总价)
-     */
-    @TableField("product_real_amount")
-    private BigDecimal productRealAmount;
-    /**
      * 退货数量
      */
-    @TableField("return_quantity")
-    private Integer returnQuantity;
+    @TableField("refund_quantity")
+    private Integer refundQuantity;
     /**
      * 退款金额
      */
-    @TableField("return_amount")
-    private BigDecimal returnAmount;
+    @TableField("refund_amount")
+    private BigDecimal refundAmount;
     /**
      * 退货原因
      */
-    @TableField("return_reason")
-    private String returnReason;
+    @TableField("refund_reason")
+    private String refundReason;
     /**
      * 退货备注
      */
-    @TableField("return_remark")
-    private String returnRemark;
+    @TableField("refund_remark")
+    private String refundRemark;
     /**
      * 仓库收货地址表ID
      */

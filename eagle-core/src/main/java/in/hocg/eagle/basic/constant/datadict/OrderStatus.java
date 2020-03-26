@@ -22,4 +22,6 @@ public enum OrderStatus implements IntEnum {
     InvalidOrder(5, "无效订单");
     private final Integer code;
     private final String name;
+
+    public static final String KEY = "orderStatus";
 }

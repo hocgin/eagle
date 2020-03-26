@@ -21,8 +21,8 @@ public class SNCode {
      *
      * @return
      */
-    public String getOrderReturnApplySNCode() {
-        return getSNCode(Type.OrderReturnApply);
+    public String getOrderRefundApplySNCode() {
+        return getSNCode(Type.OrderRefundApply);
     }
 
     /**
@@ -39,7 +39,7 @@ public class SNCode {
     @RequiredArgsConstructor
     enum Type {
         Order("E1"),
-        OrderReturnApply("R1");
+        OrderRefundApply("R1");
         private final String code;
     }
 

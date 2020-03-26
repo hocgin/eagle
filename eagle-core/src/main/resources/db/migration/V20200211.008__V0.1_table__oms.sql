@@ -89,32 +89,27 @@ CREATE TABLE `oms_order_item`
     DEFAULT CHARSET = utf8mb4
     COMMENT '[订单模块] 订单商品表';
 --
-DROP TABLE IF EXISTS `oms_order_return_apply`;
-CREATE TABLE `oms_order_return_apply`
+DROP TABLE IF EXISTS `oms_order_refund_apply`;
+CREATE TABLE `oms_order_refund_apply`
 (
     `id`                  bigint(20)  NOT NULL AUTO_INCREMENT,
     apply_sn              VARCHAR(64) NOT NULL
         COMMENT '退款申请编号',
-    `apply_status`        int(1)         DEFAULT NULL COMMENT '申请状态：[0:待处理；1:退货中；2:已完成；3:已拒绝]',
+    `apply_status`        int(1)      NOT NULL DEFAULT 0 COMMENT '申请状态：[0:待处理；1:退货中；2:已完成；3:已拒绝]',
     -- #退货信息
-    `order_item_id`       bigint(20)     DEFAULT NULL COMMENT '订单商品ID',
-    `product_pic`         varchar(500)   DEFAULT NULL COMMENT '商品图片',
-    `product_name`        varchar(200)   DEFAULT NULL COMMENT '商品名称',
-    `product_spec_data`   varchar(500)   DEFAULT NULL COMMENT '商品规格',
-    `product_price`       decimal(10, 2) DEFAULT NULL COMMENT '商品单价',
-    `product_real_amount` decimal(10, 2) DEFAULT NULL COMMENT '商品实际支付单价',
-    `return_quantity`     int(11)        DEFAULT NULL COMMENT '退货数量',
-    `return_amount`       decimal(10, 2) DEFAULT NULL COMMENT '退款金额',
-    `return_reason`       varchar(200)   DEFAULT NULL COMMENT '退货原因',
-    `return_remark`       varchar(200)   DEFAULT NULL COMMENT '退货备注',
+    `order_item_id`       bigint(20)  NOT NULL  COMMENT '订单商品ID',
+    `refund_quantity`     int(11)              DEFAULT NULL COMMENT '退货数量',
+    `refund_amount`       decimal(10, 2)       DEFAULT NULL COMMENT '退款金额',
+    `refund_reason`       varchar(200)         DEFAULT NULL COMMENT '退货原因',
+    `refund_remark`       varchar(200)         DEFAULT NULL COMMENT '退货备注',
     -- #处理信息
-    company_address_id    bigint(20)     DEFAULT NULL COMMENT '仓库收货地址表ID',
+    company_address_id    bigint(20)           DEFAULT NULL COMMENT '仓库收货地址表ID',
     handler               BIGINT      NULL COMMENT '处理人',
     handle_at             DATETIME(6) NULL COMMENT '处理时间',
-    handle_remark         varchar(512)   DEFAULT NULL COMMENT '收货备注',
+    handle_remark         varchar(512)         DEFAULT NULL COMMENT '收货备注',
     receiver              BIGINT      NULL COMMENT '收货人',
     receive_at            DATETIME(6) NULL COMMENT '收货时间',
-    receive_remark        varchar(512)   DEFAULT NULL COMMENT '收货备注',
+    receive_remark        varchar(512)         DEFAULT NULL COMMENT '收货备注',
     --
     creator               BIGINT      NOT NULL,
     created_at            DATETIME(6) NOT NULL,

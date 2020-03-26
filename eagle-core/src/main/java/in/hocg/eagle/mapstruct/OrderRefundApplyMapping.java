@@ -1,7 +1,7 @@
 package in.hocg.eagle.mapstruct;
 
 import in.hocg.eagle.modules.oms.entity.OrderItem;
-import in.hocg.eagle.modules.oms.entity.OrderReturnApply;
+import in.hocg.eagle.modules.oms.entity.OrderRefundApply;
 import in.hocg.eagle.modules.oms.pojo.qo.order.RefundApplyQo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,21 +13,17 @@ import org.mapstruct.Mapping;
  * @author hocgin
  */
 @Mapper(componentModel = "spring")
-public interface OrderReturnApplyMapping {
+public interface OrderRefundApplyMapping {
 
 
-    @Mapping(target = "returnRemark", source = "qo.returnRemark")
-    @Mapping(target = "returnQuantity", source = "qo.returnQuantity")
-    @Mapping(target = "returnAmount", source = "qo.returnAmount")
-    @Mapping(target = "returnReason", source = "qo.returnReason")
+    @Mapping(target = "refundQuantity", ignore = true)
+    @Mapping(target = "applySn", ignore = true)
+    @Mapping(target = "refundRemark", source = "qo.refundRemark")
+    @Mapping(target = "refundAmount", source = "qo.refundAmount")
+    @Mapping(target = "refundReason", source = "qo.refundReason")
     @Mapping(target = "receiver", ignore = true)
     @Mapping(target = "receiveRemark", ignore = true)
-    @Mapping(target = "productSpecData", source = "orderItem.productSpecData")
     @Mapping(target = "receiveAt", ignore = true)
-    @Mapping(target = "productRealAmount", source = "orderItem.realAmount")
-    @Mapping(target = "productPrice", source = "orderItem.productPrice")
-    @Mapping(target = "productPic", source = "orderItem.productPic")
-    @Mapping(target = "productName", source = "orderItem.productName")
     @Mapping(target = "orderItemId", source = "orderItem.id")
     @Mapping(target = "handler", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
@@ -39,5 +35,5 @@ public interface OrderReturnApplyMapping {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "companyAddressId", ignore = true)
     @Mapping(target = "applyStatus", ignore = true)
-    OrderReturnApply asOrderReturnApply(RefundApplyQo qo, OrderItem orderItem);
+    OrderRefundApply asOrderRefundApply(RefundApplyQo qo, OrderItem orderItem);
 }

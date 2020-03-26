@@ -55,13 +55,6 @@ public interface OrderService extends AbstractService<Order> {
     void shippedOrder(ShippedOrderQo qo);
 
     /**
-     * 申请退款
-     *
-     * @param qo
-     */
-    void applyRefund(RefundApplyQo qo);
-
-    /**
      * 查看详情
      *
      * @param id

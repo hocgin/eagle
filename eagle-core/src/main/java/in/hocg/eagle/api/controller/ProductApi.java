@@ -8,7 +8,6 @@ import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
-import in.hocg.eagle.modules.pms.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api-mini/product")
 public class ProductApi {
     private final AppService appService;
-    private final ProductService productService;
 
     @UseLogger("搜索商品")
     @PostMapping("/_paging")

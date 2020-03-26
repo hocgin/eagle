@@ -3,15 +3,13 @@ package in.hocg.eagle.modules.oms.service.impl;
 import com.alibaba.fastjson.JSON;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.pojo.KeyValue;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.mapstruct.OrderItemMapping;
-import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
-import in.hocg.eagle.modules.oms.entity.OrderReturnApply;
+import in.hocg.eagle.modules.oms.entity.OrderRefundApply;
 import in.hocg.eagle.modules.oms.mapper.OrderItemMapper;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderItemComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
-import in.hocg.eagle.modules.oms.service.OrderReturnApplyService;
+import in.hocg.eagle.modules.oms.service.OrderRefundApplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -32,7 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, OrderItem> implements OrderItemService {
     private final OrderItemMapping mapping;
-    private final OrderReturnApplyService orderReturnApplyService;
+    private final OrderRefundApplyService orderRefundApplyService;
 
     @Override
     public List<OrderItemComplexVo> selectListByOrderId(Long orderId) {
@@ -42,10 +40,10 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
     private OrderItemComplexVo convertOrderItemComplex(OrderItem entity) {
         final OrderItemComplexVo result = mapping.asOrderItemComplexVo(entity);
         final Long id = entity.getId();
-        final Optional<OrderReturnApply> orderReturnApply = orderReturnApplyService.selectOneByOrderItemId(id);
-        if (orderReturnApply.isPresent()) {
-            final OrderReturnApply apply = orderReturnApply.get();
-            result.setReturnStatus(apply.getApplyStatus());
+        final Optional<OrderRefundApply> orderRefundApply = orderRefundApplyService.selectOneByOrderItemId(id);
+        if (orderRefundApply.isPresent()) {
+            final OrderRefundApply apply = orderRefundApply.get();
+            result.setRefundStatus(apply.getApplyStatus());
         }
         result.setSpec(JSON.parseArray(entity.getProductSpecData(), KeyValue.class));
         return result;

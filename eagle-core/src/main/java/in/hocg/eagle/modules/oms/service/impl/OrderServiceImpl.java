@@ -10,14 +10,12 @@ import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.mapstruct.OrderMapping;
-import in.hocg.eagle.mapstruct.OrderReturnApplyMapping;
 import in.hocg.eagle.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.mkt.entity.CouponAccount;
 import in.hocg.eagle.modules.mkt.service.CouponAccountService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
-import in.hocg.eagle.modules.oms.entity.OrderReturnApply;
 import in.hocg.eagle.modules.oms.helper.order.GeneralOrder;
 import in.hocg.eagle.modules.oms.helper.order.GeneralProduct;
 import in.hocg.eagle.modules.oms.helper.order.discount.DiscountHelper;
@@ -29,7 +27,6 @@ import in.hocg.eagle.modules.oms.pojo.vo.coupon.CouponAccountComplexVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
-import in.hocg.eagle.modules.oms.service.OrderReturnApplyService;
 import in.hocg.eagle.modules.oms.service.OrderService;
 import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.entity.Sku;
@@ -63,15 +60,14 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> implements OrderService {
+public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
+    implements OrderService {
     private final ProductService productService;
     private final OrderItemService orderItemService;
     private final CouponService couponService;
     private final CouponAccountService couponAccountService;
-    private final OrderReturnApplyService orderReturnApplyService;
     private final SkuService skuService;
     private final SkuMapping skuMapping;
-    private final OrderReturnApplyMapping orderReturnApplyMapping;
     private final OrderMapping mapping;
     private final SNCode snCode;
 
@@ -274,28 +270,6 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order> im
         updated.setLastUpdater(userId);
         updated.setLastUpdatedAt(createdAt);
         validUpdateById(updated);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void applyRefund(RefundApplyQo qo) {
-        final Long orderItemId = qo.getId();
-        final OrderItem orderItem = orderItemService.getById(orderItemId);
-        ValidUtils.notNull(orderItem, "订单商品不存在");
-        final Long orderId = orderItem.getOrderId();
-        final Optional<OrderReturnApply> orderReturnApplyOpt = orderReturnApplyService.selectOneByOrderItemId(orderItemId);
-        if (!orderReturnApplyOpt.isPresent()) {
-            OrderReturnApply apply = orderReturnApplyMapping.asOrderReturnApply(qo, orderItem);
-            apply.setApplySn(snCode.getOrderReturnApplySNCode());
-            orderReturnApplyService.validInsert(apply);
-        } else {
-            final OrderReturnApply apply = orderReturnApplyOpt.get();
-            final Optional<OrderReturnApplyStatus> applyStatusOpt = IntEnum.of(apply.getApplyStatus(), OrderReturnApplyStatus.class);
-            if (applyStatusOpt.isPresent()) {
-                final OrderReturnApplyStatus applyStatus = applyStatusOpt.get();
-                throw ServiceException.wrap("已进行退款申请，申请状态为" + applyStatus.getName());
-            }
-        }
     }
 
     @Override
