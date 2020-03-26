@@ -78,8 +78,8 @@ public class OrderRefundApply extends AbstractEntity<OrderRefundApply> {
      */
     @TableField("handle_at")
     private LocalDateTime handleAt;
-    /**
-     * 收货备注
+     /**
+     * 处理备注
      */
     @TableField("handle_remark")
     private String handleRemark;

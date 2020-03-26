@@ -3,6 +3,7 @@ package in.hocg.eagle.mapstruct;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.entity.OrderRefundApply;
 import in.hocg.eagle.modules.oms.pojo.qo.order.RefundApplyQo;
+import in.hocg.eagle.modules.oms.pojo.vo.refund.OrderRefundApplyComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -36,4 +37,6 @@ public interface OrderRefundApplyMapping {
     @Mapping(target = "companyAddressId", ignore = true)
     @Mapping(target = "applyStatus", ignore = true)
     OrderRefundApply asOrderRefundApply(RefundApplyQo qo, OrderItem orderItem);
+
+    OrderRefundApplyComplexVo asOrderRefundApplyComplex(OrderRefundApply entity);
 }

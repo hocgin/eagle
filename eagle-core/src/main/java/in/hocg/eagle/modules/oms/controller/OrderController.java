@@ -26,31 +26,31 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api/order")
 public class OrderController {
-    private final OrderService orderService;
+    private final OrderService service;
 
     @UseLogger("分页查询订单列表")
     @PostMapping("/_paging")
     public Result paging(@Validated @RequestBody OrderPagingQo qo) {
-        return Result.success(orderService.paging(qo));
+        return Result.success(service.paging(qo));
     }
 
     @UseLogger("获取订单详情")
     @GetMapping("/{id}")
     public Result selectOne(@PathVariable Long id) {
-        return Result.success(orderService.selectOne(id));
+        return Result.success(service.selectOne(id));
     }
 
     @UseLogger("关闭订单")
     @PutMapping("/close")
     public Result close(@Validated @RequestBody CancelOrderQo qo) {
-        orderService.cancelOrder(qo);
+        service.cancelOrder(qo);
         return Result.success();
     }
 
     @UseLogger("发货订单")
     @PutMapping("/shipped")
     public Result shipped(@Validated @RequestBody ShippedOrderQo qo) {
-        orderService.shippedOrder(qo);
+        service.shippedOrder(qo);
         return Result.success();
     }
 
@@ -59,7 +59,7 @@ public class OrderController {
     public Result updateOne(@PathVariable Long id,
                             @Validated @RequestBody UpdateOrderQo qo) {
         qo.setId(id);
-        orderService.updateOne(qo);
+        service.updateOne(qo);
         return Result.success();
     }
 
@@ -68,7 +68,7 @@ public class OrderController {
     public Result deleteOne(@PathVariable Long id) {
         final IdQo qo = new IdQo();
         qo.setId(id);
-        orderService.deleteOne(qo);
+        service.deleteOne(qo);
         return Result.success();
     }
 }

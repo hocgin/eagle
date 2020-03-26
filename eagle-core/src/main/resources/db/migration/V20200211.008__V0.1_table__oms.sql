@@ -106,7 +106,7 @@ CREATE TABLE `oms_order_refund_apply`
     company_address_id    bigint(20)           DEFAULT NULL COMMENT '仓库收货地址表ID',
     handler               BIGINT      NULL COMMENT '处理人',
     handle_at             DATETIME(6) NULL COMMENT '处理时间',
-    handle_remark         varchar(512)         DEFAULT NULL COMMENT '收货备注',
+    handle_remark         varchar(512)         DEFAULT NULL COMMENT '处理备注',
     receiver              BIGINT      NULL COMMENT '收货人',
     receive_at            DATETIME(6) NULL COMMENT '收货时间',
     receive_remark        varchar(512)         DEFAULT NULL COMMENT '收货备注',
