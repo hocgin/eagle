@@ -17,4 +17,6 @@ public enum Platform implements IntEnum {
     Eagle(0, "Eagle 后台");
     private final Integer code;
     private final String name;
+
+    public static final String KEY = "platform";
 }

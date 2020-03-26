@@ -5,6 +5,9 @@ import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
+import in.hocg.eagle.basic.constant.datadict.AuthorityType;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.eagle.basic.constant.datadict.Platform;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
 import in.hocg.eagle.modules.ums.entity.Role;
 import io.swagger.annotations.ApiModelProperty;
@@ -29,7 +32,7 @@ public class AuthorityComplexAndRoleVo implements Serializable {
     private String title;
     @ApiModelProperty("权限类型")
     private Integer type;
-    @Named(idFor = "type", type = NamedType.DataDict, args = {"authorityType"})
+    @Named(idFor = "type", type = NamedType.DataDict, args = {AuthorityType.KEY})
     private String typeName;
     @ApiModelProperty("权限码")
     private String authorityCode;
@@ -39,11 +42,11 @@ public class AuthorityComplexAndRoleVo implements Serializable {
     private String parentName;
     @ApiModelProperty("开启状态")
     private Integer enabled;
-    @Named(idFor = "enabled", type = NamedType.DataDict)
+    @Named(idFor = "enabled", type = NamedType.DataDict, args = {Enabled.KEY})
     private String enabledName;
     @ApiModelProperty("平台")
     private Integer platform;
-    @Named(idFor = "platform", type = NamedType.DataDict)
+    @Named(idFor = "platform", type = NamedType.DataDict, args = {Platform.KEY})
     private String platformName;
     @ApiModelProperty("权重")
     private Long sort;

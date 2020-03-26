@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
 import in.hocg.eagle.modules.com.pojo.vo.datadict.item.DataDictItemVo;
 import lombok.Data;
@@ -27,7 +28,7 @@ public class DataDictSearchVo implements Serializable {
     private String code;
     private String remark;
     private Integer enabled;
-    @Named(idFor = "enabled", type = NamedType.DataDict)
+    @Named(idFor = "enabled", type = NamedType.DataDict, args = {Enabled.KEY})
     private String enabledName;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;

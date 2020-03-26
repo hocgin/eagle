@@ -5,6 +5,8 @@ import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.eagle.basic.constant.datadict.Platform;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -32,11 +34,11 @@ public class RoleComplexAndAuthorityVo implements Serializable {
     private String remark;
     @ApiModelProperty("启用状态[0:为禁用状态;1:为正常状态]")
     private Integer enabled;
-    @Named(idFor = "enabled", type = NamedType.DataDict)
+    @Named(idFor = "enabled", type = NamedType.DataDict, args = {Enabled.KEY})
     private String enabledName;
     @ApiModelProperty("平台")
     private Integer platform;
-    @Named(idFor = "platform", type = NamedType.DataDict)
+    @Named(idFor = "platform", type = NamedType.DataDict, args = {Platform.KEY})
     private String platformName;
     @ApiModelProperty("创建时间")
     @JsonSerialize(using = LocalDateTimeSerializer.class)

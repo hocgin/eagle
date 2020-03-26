@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderRefundApplyController {
     private final OrderRefundApplyService service;
 
-    @UseLogger("分页查询订单退费申请列表")
+    @UseLogger("分页查询 - 订单退费申请列表")
     @PostMapping("/_paging")
     public Result paging(@Validated @RequestBody OrderRefundApplyPagingQo qo) {
         return Result.success(service.paging(qo));

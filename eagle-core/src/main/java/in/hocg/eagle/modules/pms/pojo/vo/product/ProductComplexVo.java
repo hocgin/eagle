@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
+import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
 import in.hocg.eagle.modules.com.pojo.vo.file.FileVo;
 import in.hocg.eagle.modules.pms.pojo.vo.sku.SkuComplexVo;
@@ -44,7 +45,7 @@ public class ProductComplexVo {
     private String unit;
     @ApiModelProperty("商品重量(克)")
     private BigDecimal weight;
-    @Named(idFor = "publishStatus", type = NamedType.DataDict)
+    @Named(idFor = "publishStatus", type = NamedType.DataDict, args = {ProductPublishStatus.KEY})
     private String publishStatusName;
 
     @ApiModelProperty("创建时间")

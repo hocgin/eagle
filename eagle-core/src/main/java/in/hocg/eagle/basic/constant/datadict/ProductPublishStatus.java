@@ -18,4 +18,6 @@ public enum ProductPublishStatus implements IntEnum {
     Shelves(1, "上架");
     private final Integer code;
     private final String name;
+
+    public static final String KEY = "publishStatus";
 }

@@ -1,6 +1,10 @@
 package in.hocg.eagle.modules.oms.pojo.vo.refund;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import in.hocg.eagle.basic.aspect.named.InjectNamed;
+import in.hocg.eagle.basic.aspect.named.Named;
+import in.hocg.eagle.basic.aspect.named.NamedType;
+import in.hocg.eagle.basic.constant.datadict.OrderRefundApplyStatus;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,12 +19,16 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
+@InjectNamed
 public class OrderRefundApplyComplexVo {
     private Long id;
     @ApiModelProperty("申请编号")
     private String applySn;
     @ApiModelProperty("申请状态")
     private Integer applyStatus;
+    @Named(idFor = "applyStatus",
+        type = NamedType.DataDict, args = {OrderRefundApplyStatus.KEY})
+    private String applyStatusName;
     @ApiModelProperty("订单商品ID")
     private Long orderItemId;
     @ApiModelProperty("退货数量")
@@ -38,18 +46,33 @@ public class OrderRefundApplyComplexVo {
 
     @ApiModelProperty("处理人")
     private Long handler;
+    @Named(idFor = "handler", type = NamedType.Nickname)
+    private String handlerName;
+
     @ApiModelProperty("处理时间")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime handleAt;
+
     @ApiModelProperty("收货人")
     private Long receiver;
+    @Named(idFor = "receiver", type = NamedType.Nickname)
+    private String receiverName;
+
     @ApiModelProperty("收货时间")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime receiveAt;
+
     private Long creator;
+    @Named(idFor = "creator", type = NamedType.Nickname)
+    private String creatorName;
+
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
     private Long lastUpdater;
+    
+    @Named(idFor = "lastUpdater", type = NamedType.Nickname)
+    private String lastUpdaterName;
+
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime lastUpdatedAt;
 }
