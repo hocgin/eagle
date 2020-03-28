@@ -3,7 +3,7 @@ package in.hocg.eagle.basic.aspect.logger;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.security.SecurityContext;
-import in.hocg.eagle.utils.RequestUtility;
+import in.hocg.eagle.utils.RequestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -80,9 +80,9 @@ public class LoggerAspect {
                 final HttpServletRequest request = requestOpt.get();
                 uri = request.getRequestURI();
                 requestMethod = request.getMethod();
-                userAgent = RequestUtility.getUserAgent(request);
-                host = RequestUtility.getHost(request);
-                clientIp = RequestUtility.getClientIP(request);
+                userAgent = RequestUtils.getUserAgent(request);
+                host = RequestUtils.getHost(request);
+                clientIp = RequestUtils.getClientIP(request);
             }
             final Logger logger = new Logger();
             final String enterRemark = annotation.value();

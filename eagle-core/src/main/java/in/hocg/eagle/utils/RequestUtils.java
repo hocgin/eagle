@@ -15,7 +15,7 @@ import java.util.Arrays;
  */
 @Slf4j
 @UtilityClass
-public class RequestUtility {
+public class RequestUtils {
     /**
      * 获取客户端真实IP
      *
@@ -38,7 +38,7 @@ public class RequestUtility {
                 && !"unKnown".equalsIgnoreCase(ip)) {
             return ip;
         }
-        
+
         // 本地名单
         if (Arrays.asList(new String[]{
                 "0:0:0:0:0:0:0:1",
@@ -48,7 +48,7 @@ public class RequestUtility {
         }
         return request.getRemoteAddr();
     }
-    
+
     /**
      * 获取 User-Agent
      * User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.89 Safari/537.36
@@ -59,11 +59,11 @@ public class RequestUtility {
     public static String getUserAgent(HttpServletRequest request) {
         return request.getHeader("User-Agent");
     }
-    
+
     public static String getHost(HttpServletRequest request) {
         return request.getHeader("Host");
     }
-    
+
     public static boolean isAJAX(HttpServletRequest request) {
         return "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With"));
     }

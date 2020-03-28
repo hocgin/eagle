@@ -1,5 +1,6 @@
-package in.hocg.eagle.basic;
+package in.hocg.eagle.basic.lang;
 
+import in.hocg.eagle.basic.SnowFlake;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

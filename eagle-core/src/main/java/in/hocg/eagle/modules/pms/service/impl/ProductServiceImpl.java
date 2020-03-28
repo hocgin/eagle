@@ -16,7 +16,7 @@ import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.pms.service.SkuService;
-import in.hocg.eagle.utils.JSONUtility;
+import in.hocg.eagle.utils.JsonUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -66,7 +66,7 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
             skuService.validInsertOrUpdateByProductId(productId, allSku.parallelStream()
                 .map(sku -> skuMapping.asSku(sku)
                     .setProductId(productId)
-                    .setSpecData(JSONUtility.toJSONString(sku.getSpec())))
+                    .setSpecData(JsonUtils.toJSONString(sku.getSpec())))
                 .collect(Collectors.toList()));
         }
 

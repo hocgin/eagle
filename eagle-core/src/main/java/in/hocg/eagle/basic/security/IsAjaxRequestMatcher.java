@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.security;
 
-import in.hocg.eagle.utils.RequestUtility;
+import in.hocg.eagle.utils.RequestUtils;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author hocgin
  */
 public class IsAjaxRequestMatcher implements RequestMatcher {
-    
+
     @Override
     public boolean matches(HttpServletRequest request) {
-        return RequestUtility.isAJAX(request);
+        return RequestUtils.isAJAX(request);
     }
-    
+
 }

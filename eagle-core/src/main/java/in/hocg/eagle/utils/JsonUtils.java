@@ -10,8 +10,8 @@ import lombok.experimental.UtilityClass;
  * @author hocgin
  */
 @UtilityClass
-public class JSONUtility {
-    
+public class JsonUtils {
+
     /**
      * JSON 字符串
      *
@@ -19,11 +19,11 @@ public class JSONUtility {
      * @return
      */
     public static String toJSONString(Object object) {
-        return JSONUtility.toJSONString(object, false);
+        return JsonUtils.toJSONString(object, false);
     }
-    
+
     public static String toJSONString(Object object, boolean pretty) {
         return JSON.toJSONString(object, pretty);
     }
-    
+
 }

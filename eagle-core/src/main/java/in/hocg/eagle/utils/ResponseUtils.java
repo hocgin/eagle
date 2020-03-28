@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 @UtilityClass
-public class ResponseUtility {
-    
+public class ResponseUtils {
+
     /**
      * 指定输出 UTF-8
      *

@@ -24,5 +24,7 @@ public interface OrderItemService extends AbstractService<OrderItem> {
      */
     List<OrderItemComplexVo> selectListByOrderId(Long orderId);
 
+    OrderItemComplexVo selectOne(Long id);
+
     List<OrderItem> selectListByOrderId2(Long orderId);
 }

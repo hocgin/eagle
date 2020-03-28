@@ -232,7 +232,13 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
     VALUE (15, '订单管理', 1, 'oms:order', 0, 14, '/14/15', NOW(), 1);
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
-    VALUE (16, '退费管理', 1, 'oms:order-refund-apply', 0, 14, '/14/16', NOW(), 1);
+    VALUE (16, '订单详情', 1, 'oms:order:detail', 0, 15, '/14/15/16', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (17, '退费管理', 1, 'oms:order-refund-apply', 0, 14, '/14/17', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (18, '退费申请详情', 1, 'oms:order-refund-apply:detail', 0, 17, '/14/17/18', NOW(), 1);
 
 
 # 角色
@@ -260,7 +266,9 @@ VALUES (1, 1),
        (1, 13),
        (1, 14),
        (1, 15),
-       (1, 16);
+       (1, 16),
+       (1, 17),
+       (1, 18);
 
 # 赋予账号角色
 INSERT INTO ums_role_account(`role_id`, `account_id`)

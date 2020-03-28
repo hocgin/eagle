@@ -10,6 +10,7 @@ import in.hocg.eagle.modules.oms.mapper.OrderItemMapper;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderItemComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
 import in.hocg.eagle.modules.oms.service.OrderRefundApplyService;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,18 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
         return selectListByOrderId2(orderId).stream().map(this::convertOrderItemComplex).collect(Collectors.toList());
     }
 
+    @Override
+    public OrderItemComplexVo selectOne(Long id) {
+        final OrderItem entity = getById(id);
+        ValidUtils.notNull(entity);
+        return convertOrderItemComplex(entity);
+    }
+
+    @Override
+    public List<OrderItem> selectListByOrderId2(Long orderId) {
+        return lambdaQuery().eq(OrderItem::getOrderId, orderId).list();
+    }
+
     private OrderItemComplexVo convertOrderItemComplex(OrderItem entity) {
         final OrderItemComplexVo result = mapping.asOrderItemComplexVo(entity);
         final Long id = entity.getId();
@@ -47,10 +60,5 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
         }
         result.setSpec(JSON.parseArray(entity.getProductSpecData(), KeyValue.class));
         return result;
-    }
-
-    @Override
-    public List<OrderItem> selectListByOrderId2(Long orderId) {
-        return lambdaQuery().eq(OrderItem::getOrderId, orderId).list();
     }
 }

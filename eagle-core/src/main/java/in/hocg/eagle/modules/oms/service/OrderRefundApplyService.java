@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.modules.oms.entity.OrderRefundApply;
 import in.hocg.eagle.modules.oms.pojo.qo.order.RefundApplyQo;
+import in.hocg.eagle.modules.oms.pojo.qo.refund.HandleQo;
 import in.hocg.eagle.modules.oms.pojo.qo.refund.OrderRefundApplyPagingQo;
 import in.hocg.eagle.modules.oms.pojo.vo.refund.OrderRefundApplyComplexVo;
 
@@ -29,4 +30,8 @@ public interface OrderRefundApplyService extends AbstractService<OrderRefundAppl
     void applyRefund(RefundApplyQo qo);
 
     IPage<OrderRefundApplyComplexVo> paging(OrderRefundApplyPagingQo qo);
+
+    OrderRefundApplyComplexVo selectOne(Long id);
+
+    void handle(HandleQo qo);
 }

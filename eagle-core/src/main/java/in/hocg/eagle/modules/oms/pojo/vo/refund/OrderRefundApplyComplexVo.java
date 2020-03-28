@@ -6,6 +6,7 @@ import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.constant.datadict.OrderRefundApplyStatus;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
+import in.hocg.eagle.modules.oms.pojo.vo.order.OrderItemComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -31,6 +32,8 @@ public class OrderRefundApplyComplexVo {
     private String applyStatusName;
     @ApiModelProperty("订单商品ID")
     private Long orderItemId;
+    @ApiModelProperty("订单商品详情")
+    private OrderItemComplexVo orderItem;
     @ApiModelProperty("退货数量")
     private Integer refundQuantity;
     @ApiModelProperty("退款金额")
@@ -69,7 +72,7 @@ public class OrderRefundApplyComplexVo {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
     private Long lastUpdater;
-    
+
     @Named(idFor = "lastUpdater", type = NamedType.Nickname)
     private String lastUpdaterName;
 

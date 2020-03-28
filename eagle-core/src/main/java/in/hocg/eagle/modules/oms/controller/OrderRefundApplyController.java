@@ -3,15 +3,13 @@ package in.hocg.eagle.modules.oms.controller;
 
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.modules.oms.pojo.qo.refund.HandleQo;
 import in.hocg.eagle.modules.oms.pojo.qo.refund.OrderRefundApplyPagingQo;
 import in.hocg.eagle.modules.oms.service.OrderRefundApplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -31,6 +29,21 @@ public class OrderRefundApplyController {
     @PostMapping("/_paging")
     public Result paging(@Validated @RequestBody OrderRefundApplyPagingQo qo) {
         return Result.success(service.paging(qo));
+    }
+
+    @UseLogger("获取订单退费申请详情")
+    @GetMapping("/{id}")
+    public Result selectOne(@PathVariable Long id) {
+        return Result.success(service.selectOne(id));
+    }
+
+    @UseLogger("处理退费申请")
+    @PostMapping("/{id}/handle")
+    public Result handle(@PathVariable Long id,
+                         @Validated @RequestBody HandleQo qo) {
+        qo.setId(id);
+        service.handle(qo);
+        return Result.success();
     }
 
 }

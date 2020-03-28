@@ -3,7 +3,7 @@ package in.hocg.eagle.basic.aspect.logger;
 import in.hocg.eagle.basic.security.SecurityContext;
 import in.hocg.eagle.basic.security.User;
 import in.hocg.eagle.utils.DateUtils;
-import in.hocg.eagle.utils.JSONUtility;
+import in.hocg.eagle.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -18,12 +18,12 @@ import java.util.StringJoiner;
  */
 @Slf4j
 public class DefaultLoggerService implements LoggerService {
-    
+
     @Override
     public void handle(Logger logger) {
         printlnPrettyLogger(logger);
     }
-    
+
     private void printlnPrettyLogger(Logger logger) {
         StringJoiner stringJoiner = new StringJoiner("\n")
                 .add("")
@@ -42,11 +42,11 @@ public class DefaultLoggerService implements LoggerService {
                 String.format("%s %s", logger.getMethod(), logger.getUri()),
                 logger.getEnterRemark(),
                 logger.getMapping(),
-                JSONUtility.toJSONString(logger.getArgs(), true).replaceAll("\n", "\n║ "),
-                JSONUtility.toJSONString(logger.getRet(), true).replaceAll("\n", "\n║ "),
+                JsonUtils.toJSONString(logger.getArgs(), true).replaceAll("\n", "\n║ "),
+                JsonUtils.toJSONString(logger.getRet(), true).replaceAll("\n", "\n║ "),
                 logger.getTotalTimeMillis());
     }
-    
+
     private String getUserStringThrow(User user) {
         try {
             return getUserString(user);
@@ -55,7 +55,7 @@ public class DefaultLoggerService implements LoggerService {
             return "数据异常";
         }
     }
-    
+
     private String getUserString(User user) {
         final Optional<User> currentUser = SecurityContext.getCurrentUser();
         if (currentUser.isPresent()) {

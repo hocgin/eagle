@@ -3,17 +3,18 @@ package in.hocg.eagle.modules.oms.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.SNCode;
 import in.hocg.eagle.basic.constant.datadict.IntEnum;
 import in.hocg.eagle.basic.constant.datadict.OrderRefundApplyStatus;
 import in.hocg.eagle.basic.constant.datadict.OrderStatus;
 import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.basic.lang.SNCode;
 import in.hocg.eagle.mapstruct.OrderRefundApplyMapping;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.entity.OrderRefundApply;
 import in.hocg.eagle.modules.oms.mapper.OrderRefundApplyMapper;
 import in.hocg.eagle.modules.oms.pojo.qo.order.RefundApplyQo;
+import in.hocg.eagle.modules.oms.pojo.qo.refund.HandleQo;
 import in.hocg.eagle.modules.oms.pojo.qo.refund.OrderRefundApplyPagingQo;
 import in.hocg.eagle.modules.oms.pojo.vo.refund.OrderRefundApplyComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
@@ -25,6 +26,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -80,10 +82,12 @@ public class OrderRefundApplyServiceImpl extends AbstractServiceImpl<OrderRefund
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public IPage<OrderRefundApplyComplexVo> paging(OrderRefundApplyPagingQo qo) {
         return baseMapper.paging(qo, qo.page()).convert(this::convertOrderRefundApplyComplex);
     }
 
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public OrderRefundApplyComplexVo selectOne(Long id) {
         final OrderRefundApply entity = getById(id);
@@ -91,7 +95,37 @@ public class OrderRefundApplyServiceImpl extends AbstractServiceImpl<OrderRefund
         return convertOrderRefundApplyComplex(entity);
     }
 
-    public OrderRefundApplyComplexVo convertOrderRefundApplyComplex(OrderRefundApply entity) {
-        return mapping.asOrderRefundApplyComplex(entity);
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void handle(HandleQo qo) {
+        final LocalDateTime createdAt = qo.getCreatedAt();
+        final Long userId = qo.getUserId();
+        final Long id = qo.getId();
+        final String handleRemark = qo.getHandleRemark();
+        final Boolean isPass = qo.getIsPass();
+        OrderRefundApplyStatus targetStatus = isPass ? OrderRefundApplyStatus.Returning : OrderRefundApplyStatus.Rejected;
+
+        final OrderRefundApply entity = getById(id);
+        ValidUtils.notNull(entity, "未找到申请单");
+        final OrderRefundApplyStatus applyStatus = IntEnum.ofThrow(entity.getApplyStatus(), OrderRefundApplyStatus.class);
+        if (!OrderRefundApplyStatus.Pending.equals(applyStatus)) {
+            throw ServiceException.wrap("申请单已被处理");
+        }
+
+        final OrderRefundApply updated = new OrderRefundApply();
+        updated.setHandleRemark(handleRemark);
+        updated.setHandleAt(createdAt);
+        updated.setHandler(userId);
+        updated.setApplyStatus(targetStatus.getCode());
+        updated.setLastUpdatedAt(createdAt);
+        updated.setLastUpdater(userId);
+        validUpdateById(updated);
+    }
+
+    private OrderRefundApplyComplexVo convertOrderRefundApplyComplex(OrderRefundApply entity) {
+        final Long orderItemId = entity.getOrderItemId();
+        final OrderRefundApplyComplexVo result = mapping.asOrderRefundApplyComplex(entity);
+        result.setOrderItem(orderItemService.selectOne(orderItemId));
+        return result;
     }
 }
