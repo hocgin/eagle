@@ -13,4 +13,5 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ProductCategoryTreeVo extends AbstractTreeNode<ProductCategoryTreeVo> {
+
 }

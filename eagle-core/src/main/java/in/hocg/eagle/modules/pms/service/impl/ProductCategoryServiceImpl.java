@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.pms.service.impl;
 
+import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.datastruct.tree.Tree;
 import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
 import in.hocg.eagle.mapstruct.ProductCategoryMapping;
@@ -7,8 +8,11 @@ import in.hocg.eagle.modules.pms.entity.ProductCategory;
 import in.hocg.eagle.modules.pms.mapper.ProductCategoryMapper;
 import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySaveQo;
 import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySearchQo;
+import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
 import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryTreeVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
+import in.hocg.eagle.utils.LangUtils;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -48,14 +52,28 @@ public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryM
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<ProductCategoryTreeVo> tree(ProductCategorySearchQo qo) {
         final Long parentId = qo.getParentId();
         List<ProductCategory> all = baseMapper.search(qo);
-        return Tree.getChild(parentId, all.stream()
+        return Tree.getChild(parentId, all.parallelStream()
             .map(mapping::asProductCategoryTreeVo)
             .collect(Collectors.toList()));
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ProductCategoryComplexVo selectOne(Long id) {
+        final ProductCategory entity = getById(id);
+        ValidUtils.notNull(entity);
+        return convertProductCategoryComplex(entity);
+    }
+
+    private ProductCategoryComplexVo convertProductCategoryComplex(ProductCategory entity) {
+        final ProductCategoryComplexVo result = mapping.asProductCategoryComplexVo(entity);
+        result.setKeywords((List<String>) LangUtils.getOrDefault(entity.getKeywords(), Lists.newArrayList()));
+        return result;
+    }
 
     @Override
     public void validEntity(ProductCategory entity) {

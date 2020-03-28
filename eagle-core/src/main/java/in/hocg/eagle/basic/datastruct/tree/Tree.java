@@ -1,6 +1,5 @@
 package in.hocg.eagle.basic.datastruct.tree;
 
-import com.google.common.collect.Lists;
 import in.hocg.eagle.utils.LangUtils;
 
 import java.util.ArrayList;
@@ -39,22 +38,22 @@ public final class Tree {
      */
     public static <T extends Tree.Node> List<T> getChild(Long id, Collection<T> rootMenu) {
         // 子菜单
-        List<T> childList = new ArrayList<>();
+        List<T> children = new ArrayList<>();
         for (T menu : rootMenu) {
             final Long parentId = menu.getParentId();
             // 遍历所有节点，将父菜单id与传过来的id比较
             if (LangUtils.equals(id, parentId)) {
-                childList.add(menu);
+                children.add(menu);
             }
         }
         // 把子菜单的子菜单再循环一遍
-        for (T menu : childList) {
+        for (T menu : children) {
             menu.setChildren(getChild(menu.getId(), rootMenu));
         }
         // 递归退出条件
-        if (childList.isEmpty()) {
-            return Lists.newArrayList();
+        if (children.isEmpty()) {
+            return children;
         }
-        return childList;
+        return children;
     }
 }

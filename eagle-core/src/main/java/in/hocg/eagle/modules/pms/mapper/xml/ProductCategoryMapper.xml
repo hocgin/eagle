@@ -3,11 +3,12 @@
 <mapper namespace="in.hocg.eagle.modules.pms.mapper.ProductCategoryMapper">
 
     <select id="search" resultType="in.hocg.eagle.modules.pms.entity.ProductCategory">
-        SELECT * FROM pms_product_category ppc
+        SELECT ppc.* FROM pms_product_category ppc
         <where>
             <if test="qo.parentId != null ">
                 AND ppc.parent_id = #{qo.parentId}
             </if>
         </where>
+      ORDER BY ppc.sort DESC, ppc.created_at DESC
     </select>
 </mapper>

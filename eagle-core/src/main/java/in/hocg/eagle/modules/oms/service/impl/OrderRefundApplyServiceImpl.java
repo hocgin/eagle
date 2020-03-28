@@ -113,6 +113,7 @@ public class OrderRefundApplyServiceImpl extends AbstractServiceImpl<OrderRefund
         }
 
         final OrderRefundApply updated = new OrderRefundApply();
+        updated.setId(id);
         updated.setHandleRemark(handleRemark);
         updated.setHandleAt(createdAt);
         updated.setHandler(userId);

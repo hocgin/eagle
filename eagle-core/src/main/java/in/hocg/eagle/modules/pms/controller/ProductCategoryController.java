@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/shop/product-category")
+@RequestMapping("/api/product-category")
 public class ProductCategoryController {
     private final ProductCategoryService service;
 
@@ -36,7 +36,7 @@ public class ProductCategoryController {
     }
 
     @UseLogger("获取品类树")
-    @GetMapping
+    @PostMapping("/tree")
     public Result tree(@Validated @RequestBody ProductCategorySearchQo qo) {
         return Result.success(service.tree(qo));
     }
@@ -48,6 +48,12 @@ public class ProductCategoryController {
         qo.setId(id);
         service.saveOne(qo);
         return Result.success();
+    }
+
+    @UseLogger("查看商品品类详情")
+    @GetMapping("/{id:\\d+}:complex")
+    public Result selectOne(@PathVariable("id") Long id) {
+        return Result.success(service.selectOne(id));
     }
 
     @UseLogger("删除商品品类及其子品类")

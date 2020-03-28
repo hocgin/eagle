@@ -2,6 +2,7 @@ package in.hocg.eagle.mapstruct;
 
 import in.hocg.eagle.modules.pms.entity.ProductCategory;
 import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySaveQo;
+import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
 import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryTreeVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,4 +25,10 @@ public interface ProductCategoryMapping {
 
     @Mapping(target = "children", ignore = true)
     ProductCategoryTreeVo asProductCategoryTreeVo(ProductCategory entity);
+
+    @Mapping(target = "enabledName", ignore = true)
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
+    @Mapping(target = "keywords", ignore = true)
+    ProductCategoryComplexVo asProductCategoryComplexVo(ProductCategory entity);
 }

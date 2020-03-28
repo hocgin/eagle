@@ -1,13 +1,12 @@
 package in.hocg.eagle.modules.ums.pojo.vo.authority;
 
-import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.datastruct.tree.Tree;
+import in.hocg.eagle.basic.datastruct.tree.AbstractTreeNode;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by hocgin on 2020/2/15.
@@ -16,29 +15,12 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class AuthorityTreeNodeVo
-        implements Serializable, Tree.Node<AuthorityTreeNodeVo> {
+public class AuthorityTreeNodeVo extends AbstractTreeNode<AuthorityTreeNodeVo>
+    implements Serializable {
 
-    @ApiModelProperty("ID")
-    private Long id;
-    @ApiModelProperty("名称")
-    private String title;
     @ApiModelProperty("code")
     private String authorityCode;
-    @ApiModelProperty("父ID")
-    private Long parentId;
 
-    @ApiModelProperty("树节点")
-    private List<AuthorityTreeNodeVo> children = Lists.newArrayList();
-
-    @Override
-    public Long getParentId() {
-        return this.parentId;
-    }
-
-    @Override
-    public void setChildren(List<AuthorityTreeNodeVo> children) {
-        this.children = children;
-    }
 }

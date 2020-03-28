@@ -35,6 +35,6 @@ public abstract class AbstractTreeNode<T extends AbstractTreeNode> implements Tr
 
     @Override
     public void setChildren(List<T> children) {
-        this.setChildren(children);
+        this.children = children;
     }
 }

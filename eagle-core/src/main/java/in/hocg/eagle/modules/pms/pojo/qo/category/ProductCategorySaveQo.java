@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Created by hocgin on 2020/3/14.
@@ -28,8 +29,8 @@ public class ProductCategorySaveQo extends IdQo {
     private String remark;
     @ApiModelProperty("商品品类图片")
     private String imageUrl;
-//    @ApiModelProperty("商品品类关键词")
-//    private List<String> keywords;
+    @ApiModelProperty("商品品类关键词")
+    private List<String> keywords;
     @ApiModelProperty("启用状态")
     @RangeEnum(enumClass = Enabled.class)
     private Integer enabled;
