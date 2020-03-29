@@ -1,11 +1,18 @@
 package in.hocg.eagle.modules.mkt.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.context.annotation.Lazy;
+import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.qo.Insert;
+import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.modules.mkt.pojo.qo.CouponPagingQo;
+import in.hocg.eagle.modules.mkt.pojo.qo.CouponSaveQo;
+import in.hocg.eagle.modules.mkt.pojo.qo.GiveCouponQo;
+import in.hocg.eagle.modules.mkt.service.CouponService;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -17,8 +24,38 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/mkt/coupon")
+@RequestMapping("/api/coupon")
 public class CouponController {
+    private final CouponService service;
 
+    @UseLogger("分页查询 - 优惠券模版")
+    @PostMapping("/_paging")
+    public Result paging(@Validated @RequestBody CouponPagingQo qo) {
+        return Result.success(service.paging(qo));
+    }
+
+    @UseLogger("创建 - 优惠券模版")
+    @PostMapping
+    public Result insertOne(@Validated({Insert.class}) @RequestBody CouponSaveQo qo) {
+        service.saveOne(qo);
+        return Result.success();
+    }
+
+    @UseLogger("查看详情 - 优惠券")
+    @GetMapping("/{id:\\d+}:complex")
+    public Result selectOne(@PathVariable Long id) {
+        final IdQo qo = new IdQo();
+        qo.setId(id);
+        return Result.success(service.selectOne(qo));
+    }
+
+    @UseLogger("赠送优惠券 - 优惠券")
+    @PostMapping("/{id:\\d+}/give")
+    public Result give(@PathVariable Long id,
+                       @Validated @RequestBody GiveCouponQo qo) {
+        qo.setId(id);
+        service.giveToUsers(qo);
+        return Result.success();
+    }
 }
 

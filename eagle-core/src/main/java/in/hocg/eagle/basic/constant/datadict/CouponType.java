@@ -18,9 +18,5 @@ public enum CouponType implements IntEnum {
     Discount(1, "折扣");
     private final Integer code;
     private final String name;
-
-    @Override
-    public Integer getCode() {
-        return this.code;
-    }
+    public static final String KEY = "couponType";
 }

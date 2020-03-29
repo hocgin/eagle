@@ -47,6 +47,11 @@ public class Coupon extends AbstractEntity<Coupon> {
     @TableField("instructions")
     private String instructions;
     /**
+     * 优惠券备注
+     */
+    @TableField("remark")
+    private String remark;
+    /**
      * 最低启用金额
      */
     @TableField("min_point")

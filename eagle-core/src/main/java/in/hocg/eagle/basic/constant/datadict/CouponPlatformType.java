@@ -18,9 +18,5 @@ public enum CouponPlatformType implements IntEnum {
     PC(2, "PC");
     private final Integer code;
     private final String name;
-
-    @Override
-    public Integer getCode() {
-        return code;
-    }
+    public static final String KEY = "couponPlatformType";
 }

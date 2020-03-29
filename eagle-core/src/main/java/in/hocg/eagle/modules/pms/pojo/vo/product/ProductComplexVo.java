@@ -48,6 +48,12 @@ public class ProductComplexVo {
     @Named(idFor = "publishStatus", type = NamedType.DataDict, args = {ProductPublishStatus.KEY})
     private String publishStatusName;
 
+    @ApiModelProperty("SKU")
+    private List<SkuComplexVo> sku = Lists.newArrayList();
+
+    @ApiModelProperty("图片列表")
+    private List<FileVo> photos = Lists.newArrayList();
+
     @ApiModelProperty("创建时间")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
@@ -62,10 +68,4 @@ public class ProductComplexVo {
     private Long lastUpdater;
     @Named(idFor = "lastUpdater", type = NamedType.Nickname)
     private String lastUpdaterName;
-
-    @ApiModelProperty("SKU")
-    private List<SkuComplexVo> sku = Lists.newArrayList();
-
-    @ApiModelProperty("图片列表")
-    private List<FileVo> photos = Lists.newArrayList();
 }

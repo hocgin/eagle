@@ -16,4 +16,6 @@ import java.util.List;
 public interface CouponProductCategoryRelationService extends AbstractService<CouponProductCategoryRelation> {
 
     List<CouponProductCategoryRelation> selectAllByCouponId(Long couponId);
+
+    void validInsertOrUpdateByCouponId(Long couponId, List<CouponProductCategoryRelation> entities);
 }

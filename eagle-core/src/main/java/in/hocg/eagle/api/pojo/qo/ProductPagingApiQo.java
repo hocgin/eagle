@@ -1,4 +1,4 @@
-package in.hocg.eagle.api.pojo;
+package in.hocg.eagle.api.pojo.qo;
 
 import in.hocg.eagle.basic.pojo.qo.PageQo;
 import lombok.Data;
@@ -12,6 +12,6 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SelfOrderPagingApiQo extends PageQo {
+public class ProductPagingApiQo extends PageQo {
 
 }

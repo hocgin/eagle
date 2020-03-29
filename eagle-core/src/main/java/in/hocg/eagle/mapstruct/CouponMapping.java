@@ -2,7 +2,9 @@ package in.hocg.eagle.mapstruct;
 
 import in.hocg.eagle.modules.mkt.entity.Coupon;
 import in.hocg.eagle.modules.mkt.entity.CouponAccount;
-import in.hocg.eagle.modules.oms.pojo.vo.coupon.CouponAccountComplexVo;
+import in.hocg.eagle.modules.mkt.pojo.qo.CouponSaveQo;
+import in.hocg.eagle.modules.mkt.pojo.vo.CouponComplexVo;
+import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -14,6 +16,10 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface CouponMapping {
+    @Mapping(target = "useTypeName", ignore = true)
+    @Mapping(target = "useStatusName", ignore = true)
+    @Mapping(target = "platformName", ignore = true)
+    @Mapping(target = "couponTypeName", ignore = true)
     @Mapping(target = "canUseProductId", ignore = true)
     @Mapping(target = "canUseProductCategoryId", ignore = true)
     @Mapping(target = "accountId", source = "couponAccount.accountId")
@@ -32,4 +38,17 @@ public interface CouponMapping {
     @Mapping(target = "couponType", source = "coupon.couponType")
     @Mapping(target = "ceiling", source = "coupon.ceiling")
     CouponAccountComplexVo asCouponAccountComplexVo(CouponAccount couponAccount, Coupon coupon);
+
+
+    @Mapping(target = "lastUpdater", ignore = true)
+    @Mapping(target = "lastUpdatedAt", ignore = true)
+    @Mapping(target = "creator", ignore = true)
+    Coupon asCoupon(CouponSaveQo qo);
+
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "useTypeName", ignore = true)
+    @Mapping(target = "platformName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
+    @Mapping(target = "couponTypeName", ignore = true)
+    CouponComplexVo asCouponComplex(Coupon entity);
 }

@@ -1,7 +1,7 @@
 package in.hocg.eagle.api.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.api.pojo.SelfOrderPagingApiQo;
+import in.hocg.eagle.api.pojo.qo.SelfOrderPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.constant.AuthorizeConstant;

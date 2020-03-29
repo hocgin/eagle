@@ -62,4 +62,7 @@ public class ValidUtils {
         isFalse(expression, ResultCode.SERVICE_ERROR.getMessage());
     }
 
+    public static void fail(String message) {
+        throw ServiceException.wrap(message);
+    }
 }

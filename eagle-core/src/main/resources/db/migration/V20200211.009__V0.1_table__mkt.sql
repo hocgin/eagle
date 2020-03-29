@@ -1,6 +1,6 @@
 -- 营销活动表
 # DROP TABLE IF EXISTS `mkt_activity`;
-# CREATE TABLE `mkt_coupon`
+# CREATE TABLE `mkt_activity`
 # (
 #     id            BIGINT AUTO_INCREMENT,
 #     title         VARCHAR(100) NOT NULL
@@ -17,6 +17,8 @@
 #         COMMENT '活动失效时间',
 #     sort          INT          NOT NULL DEFAULT 1000
 #         COMMENT '活动优先级',
+# upper_limit           TINYINT(10)    DEFAULT 1
+#         COMMENT '可同时拥有上限',
 #     --
 #     creator         BIGINT       NOT NULL,
 #     created_at      DATETIME(6)  NOT NULL,
@@ -36,14 +38,16 @@ CREATE TABLE `mkt_coupon`
     title           VARCHAR(100)   NOT NULL
         COMMENT '优惠券名称',
     coupon_type     TINYINT(1)     NOT NULL
-        COMMENT '使用方式：[0:满减；1:折扣]',
+        COMMENT '折扣方式：[0:满减；1:折扣]',
     instructions    VARCHAR(255)
         COMMENT '优惠券使用说明',
-    min_point       DECIMAL(10, 2) NOT NULL DEFAULT 0
+    remark          VARCHAR(255)
+        COMMENT '优惠券备注',
+    min_point       DECIMAL(10, 2) DEFAULT 0
         COMMENT '订单最低启用金额',
     credit          DECIMAL(10, 2) NOT NULL
         COMMENT '满减金额/折扣率',
-    ceiling         DECIMAL(10, 2) NOT NULL DEFAULT 10000
+    ceiling         DECIMAL(10, 2) DEFAULT 10000
         COMMENT '优惠上限',
 
     platform        TINYINT(1)     NOT NULL

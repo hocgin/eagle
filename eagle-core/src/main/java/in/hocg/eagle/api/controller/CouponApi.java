@@ -1,6 +1,6 @@
 package in.hocg.eagle.api.controller;
 
-import in.hocg.eagle.api.pojo.qo.SignUpApiQo;
+import in.hocg.eagle.api.pojo.qo.SelfCouponPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.constant.AuthorizeConstant;
@@ -23,15 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/api-mini")
-public class AppApi {
+@RequestMapping("/api-mini/coupon")
+public class CouponApi {
     private final AppService service;
 
-    @UseLogger("注册(APP)")
-    @PostMapping("/account/sign-up")
-    public Result<Void> signUp(@Validated @RequestBody SignUpApiQo qo) {
-        service.signUp(qo);
-        return Result.success();
+    @UseLogger("搜索个人优惠券")
+    @PostMapping("/_paging")
+    public Result paging(@Validated @RequestBody SelfCouponPagingApiQo qo) {
+        return Result.success(service.pagingSelfCoupon(qo));
     }
-
 }

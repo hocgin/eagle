@@ -17,4 +17,5 @@ public interface CouponProductRelationService extends AbstractService<CouponProd
 
     List<CouponProductRelation> selectAllByCouponId(Long couponId);
 
+    void validInsertOrUpdateByCouponId(Long couponId, List<CouponProductRelation> entities);
 }

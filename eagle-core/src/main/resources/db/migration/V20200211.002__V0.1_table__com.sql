@@ -325,3 +325,57 @@ INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`
                                  `created_at`, `creator`)
     VALUE (15, '已拒绝', '3', '退款申请状态:已拒绝', 1,
            NOW(), 1);
+
+
+#  支付方式
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (16, '折扣方式', 'couponType', '折扣方式', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (16, '满减', '0', '折扣方式:满减', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (16, '折扣', '1', '折扣方式:折扣', 1, NOW(), 1);
+
+#  可用平台
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (17, '可用平台', 'couponPlatformType', '可用平台', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (17, '全部', '0', '可用平台:全部', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (17, '移动', '1', '可用平台:移动', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (17, 'PC', '2', '可用平台:PC', 1, NOW(), 1);
+
+#  可用类型
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (18, '可用类型', 'couponUseType', '可用类型', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (18, '全场通用', '0', '可用类型:全场通用', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (18, '指定品类', '1', '可用类型:指定品类', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (18, '指定商品', '2', '可用类型:指定商品', 1, NOW(), 1);
+
+#  可用类型
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (19, '优惠券使用状态', 'couponUseStatus', '优惠券使用状态', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (19, '未使用', '0', '优惠券使用状态:未使用', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (19, '已使用', '1', '优惠券使用状态:已使用', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (19, '已过期', '2', '优惠券使用状态:已过期', 1, NOW(), 1);

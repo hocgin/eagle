@@ -1,7 +1,9 @@
 package in.hocg.eagle.api;
 
-import in.hocg.eagle.api.pojo.ProductPagingApiQo;
-import in.hocg.eagle.api.pojo.SelfOrderPagingApiQo;
+import in.hocg.eagle.api.pojo.qo.ProductPagingApiQo;
+import in.hocg.eagle.api.pojo.qo.SelfCouponPagingApiQo;
+import in.hocg.eagle.api.pojo.qo.SelfOrderPagingApiQo;
+import in.hocg.eagle.modules.mkt.pojo.qo.CouponAccountPagingQo;
 import in.hocg.eagle.modules.oms.pojo.qo.order.OrderPagingQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import org.mapstruct.Mapper;
@@ -20,4 +22,7 @@ public interface AppMapping {
 
     @Mapping(target = "publishStatus", ignore = true)
     ProductPagingQo asProductPagingQo(ProductPagingApiQo qo);
+
+    @Mapping(target = "accountId", ignore = true)
+    CouponAccountPagingQo asCouponAccountPagingQo(SelfCouponPagingApiQo qo);
 }

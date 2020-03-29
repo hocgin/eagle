@@ -36,11 +36,17 @@ public class SNCode {
         return getSNCode(Type.Order);
     }
 
+    public String getCouponAccountSNCode() {
+        return getSNCode(Type.CouponAccount);
+
+    }
+
     @Getter
     @RequiredArgsConstructor
     enum Type {
         Order("E1"),
-        OrderRefundApply("R1");
+        OrderRefundApply("R1"),
+        CouponAccount("C1");
         private final String code;
     }
 

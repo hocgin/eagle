@@ -5,7 +5,7 @@ import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedAmountCoupon;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedScaleCoupon;
 import in.hocg.eagle.basic.constant.datadict.CouponType;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.modules.oms.pojo.vo.coupon.CouponAccountComplexVo;
+import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.experimental.UtilityClass;
 

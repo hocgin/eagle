@@ -2,15 +2,19 @@ package in.hocg.eagle.api.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.api.AppMapping;
-import in.hocg.eagle.api.pojo.ProductPagingApiQo;
-import in.hocg.eagle.api.pojo.SelfOrderPagingApiQo;
-import in.hocg.eagle.api.pojo.SignUpApiQo;
+import in.hocg.eagle.api.pojo.qo.ProductPagingApiQo;
+import in.hocg.eagle.api.pojo.qo.SelfCouponPagingApiQo;
+import in.hocg.eagle.api.pojo.qo.SelfOrderPagingApiQo;
+import in.hocg.eagle.api.pojo.qo.SignUpApiQo;
 import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.manager.PaymentManager;
+import in.hocg.eagle.modules.mkt.pojo.qo.CouponAccountPagingQo;
+import in.hocg.eagle.modules.mkt.service.CouponAccountService;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
+import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
@@ -37,8 +41,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class AppService {
     private final OrderService orderService;
     private final OrderRefundApplyService orderRefundApplyService;
+    private final CouponAccountService couponAccountService;
     private final OrderItemService orderItemService;
-    private final AppMapping appMapping;
+    private final AppMapping mapping;
     private final ProductService productService;
     private final PaymentManager paymentManager;
 
@@ -57,14 +62,14 @@ public class AppService {
 
     @Transactional(rollbackFor = Exception.class)
     public IPage<OrderComplexVo> pagingSelfOrder(SelfOrderPagingApiQo qo) {
-        OrderPagingQo newQo = appMapping.asOrderPagingQo(qo);
+        OrderPagingQo newQo = mapping.asOrderPagingQo(qo);
         newQo.setAccountId(qo.getUserId());
         return orderService.paging(newQo);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public IPage<ProductComplexVo> pagingProduct(ProductPagingApiQo qo) {
-        ProductPagingQo newQo = appMapping.asProductPagingQo(qo);
+        ProductPagingQo newQo = mapping.asProductPagingQo(qo);
         newQo.setPublishStatus(ProductPublishStatus.Shelves.getCode());
         return productService.paging(newQo);
     }
@@ -119,5 +124,12 @@ public class AppService {
     @Transactional(rollbackFor = Exception.class)
     public void createOrder(CreateOrderQo qo) {
         orderService.createOrder(qo);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<CouponAccountComplexVo> pagingSelfCoupon(SelfCouponPagingApiQo qo) {
+        CouponAccountPagingQo newQo = mapping.asCouponAccountPagingQo(qo);
+        newQo.setAccountId(qo.getUserId());
+        return couponAccountService.paging(newQo);
     }
 }
