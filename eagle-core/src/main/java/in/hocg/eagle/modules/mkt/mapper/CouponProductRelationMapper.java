@@ -1,8 +1,12 @@
 package in.hocg.eagle.modules.mkt.mapper;
 
-import in.hocg.eagle.modules.mkt.entity.CouponProductRelation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.eagle.modules.mkt.entity.CouponProductRelation;
+import in.hocg.eagle.modules.pms.entity.Product;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +19,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CouponProductRelationMapper extends BaseMapper<CouponProductRelation> {
 
+    List<Product> selectAllProductByCouponId(@Param("couponId") Long couponId);
 }

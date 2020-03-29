@@ -5,6 +5,7 @@ import in.hocg.eagle.modules.mkt.entity.CouponProductCategoryRelation;
 import in.hocg.eagle.modules.mkt.mapper.CouponProductCategoryRelationMapper;
 import in.hocg.eagle.modules.mkt.service.CouponProductCategoryRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
+import in.hocg.eagle.modules.pms.entity.ProductCategory;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +59,11 @@ public class CouponProductCategoryRelationServiceImpl extends AbstractServiceImp
             .filter(id -> !updateIds.contains(id)).collect(Collectors.toList());
         this.removeByIds(deleteIds);
         entities.forEach(this::validInsertOrUpdate);
+    }
+
+    @Override
+    public List<ProductCategory> selectAllProductCategoryByCouponId(Long couponId) {
+        return baseMapper.selectAllProductCategoryByCouponId(couponId);
     }
 
     @Override

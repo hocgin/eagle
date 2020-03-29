@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.CouponUseType;
 import in.hocg.eagle.basic.constant.datadict.IntEnum;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.mapstruct.CouponMapping;
 import in.hocg.eagle.modules.mkt.entity.Coupon;
 import in.hocg.eagle.modules.mkt.entity.CouponProductCategoryRelation;
@@ -18,6 +18,11 @@ import in.hocg.eagle.modules.mkt.service.CouponAccountService;
 import in.hocg.eagle.modules.mkt.service.CouponProductCategoryRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponProductRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
+import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
+import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
+import in.hocg.eagle.modules.pms.service.ProductCategoryService;
+import in.hocg.eagle.modules.pms.service.ProductService;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -43,6 +48,8 @@ import java.util.stream.Collectors;
 public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon> implements CouponService {
     private final CouponMapping mapping;
     private final CouponAccountService couponAccountService;
+    private final ProductService productService;
+    private final ProductCategoryService productCategoryService;
     private final CouponProductCategoryRelationService couponProductCategoryRelationService;
     private final CouponProductRelationService couponProductRelationService;
 
@@ -53,8 +60,7 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
     }
 
     @Override
-    public CouponComplexVo selectOne(IdQo qo) {
-        final Long id = qo.getId();
+    public CouponComplexVo selectOne(Long id) {
         final Coupon entity = getById(id);
         ValidUtils.notNull(entity, "未找到优惠券");
         return convertCouponComplex(entity);
@@ -122,6 +128,26 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
     }
 
     private CouponComplexVo convertCouponComplex(Coupon entity) {
-        return mapping.asCouponComplex(entity);
+        final Integer useType = entity.getUseType();
+        final Long id = entity.getId();
+        final CouponComplexVo result = mapping.asCouponComplex(entity);
+
+        // 指定商品
+        if (LangUtils.equals(CouponUseType.DesignatedProduct.getCode(), useType)) {
+            final List<ProductComplexVo> products = couponProductRelationService.selectAllProductByCouponId(id).stream()
+                .map(productService::convertProductComplex).collect(Collectors.toList());
+            result.setCanUseProduct(products);
+        }
+        // 指定品类
+        else if (LangUtils.equals(CouponUseType.SpecifiedCategory.getCode(), useType)) {
+            final List<ProductCategoryComplexVo> productCategory = couponProductCategoryRelationService.selectAllProductCategoryByCouponId(id)
+                .stream().map(productCategoryService::convertProductCategoryComplex).collect(Collectors.toList());
+            result.setCanUseProductCategory(productCategory);
+        } else if (LangUtils.equals(CouponUseType.Universal.getCode(), useType)) {
+            // 通用类型的优惠券
+        } else {
+            throw ServiceException.wrap("优惠券使用类型异常");
+        }
+        return result;
     }
 }

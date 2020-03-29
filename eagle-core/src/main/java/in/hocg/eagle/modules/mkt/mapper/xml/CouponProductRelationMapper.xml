@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.eagle.modules.mkt.mapper.CouponProductRelationMapper">
 
+    <select id="selectAllProductByCouponId"
+            resultType="in.hocg.eagle.modules.pms.entity.Product">
+      SELECT * FROM mkt_coupon_product_relation mcpr
+        LEFT JOIN pms_product pp ON pp.id = mcpr.product_id
+      WHERE mcpr.coupon_id = #{couponId}
+    </select>
 </mapper>

@@ -44,9 +44,7 @@ public class CouponController {
     @UseLogger("查看详情 - 优惠券")
     @GetMapping("/{id:\\d+}:complex")
     public Result selectOne(@PathVariable Long id) {
-        final IdQo qo = new IdQo();
-        qo.setId(id);
-        return Result.success(service.selectOne(qo));
+        return Result.success(service.selectOne(id));
     }
 
     @UseLogger("赠送优惠券 - 优惠券")

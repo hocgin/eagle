@@ -16,12 +16,14 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface CouponMapping {
+    @Mapping(target = "createdAt", source = "couponAccount.createdAt")
+    @Mapping(target = "accountName", ignore = true)
     @Mapping(target = "useTypeName", ignore = true)
     @Mapping(target = "useStatusName", ignore = true)
     @Mapping(target = "platformName", ignore = true)
     @Mapping(target = "couponTypeName", ignore = true)
-    @Mapping(target = "canUseProductId", ignore = true)
-    @Mapping(target = "canUseProductCategoryId", ignore = true)
+    @Mapping(target = "canUseProduct", source = "coupon.canUseProduct")
+    @Mapping(target = "canUseProductCategory", source = "coupon.canUseProductCategory")
     @Mapping(target = "accountId", source = "couponAccount.accountId")
     @Mapping(target = "id", source = "couponAccount.id")
     @Mapping(target = "endAt", source = "couponAccount.endAt")
@@ -37,7 +39,7 @@ public interface CouponMapping {
     @Mapping(target = "credit", source = "coupon.credit")
     @Mapping(target = "couponType", source = "coupon.couponType")
     @Mapping(target = "ceiling", source = "coupon.ceiling")
-    CouponAccountComplexVo asCouponAccountComplexVo(CouponAccount couponAccount, Coupon coupon);
+    CouponAccountComplexVo asCouponAccountComplexVo(CouponAccount couponAccount, CouponComplexVo coupon);
 
 
     @Mapping(target = "lastUpdater", ignore = true)

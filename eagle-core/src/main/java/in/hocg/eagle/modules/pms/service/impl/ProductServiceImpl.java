@@ -100,6 +100,7 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
         return lambdaQuery().eq(Product::getId, id).eq(Product::getDeleteStatus, DeleteStatus.Off.getCode()).one();
     }
 
+    @Override
     public ProductComplexVo convertProductComplex(Product entity) {
         final Long productId = entity.getId();
         ProductComplexVo result = mapping.asProductComplex(entity);

@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.mkt.pojo.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
@@ -9,6 +10,8 @@ import in.hocg.eagle.basic.constant.datadict.CouponType;
 import in.hocg.eagle.basic.constant.datadict.CouponUseStatus;
 import in.hocg.eagle.basic.constant.datadict.CouponUseType;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
+import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
+import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -29,6 +32,9 @@ public class CouponAccountComplexVo {
     private Long id;
     @ApiModelProperty("拥有人")
     private Long accountId;
+    @Named(idFor = "accountId", type = NamedType.Nickname)
+    private String accountName;
+
     @ApiModelProperty("优惠券编号")
     private String couponSn;
     @ApiModelProperty("优惠券标题")
@@ -49,6 +55,9 @@ public class CouponAccountComplexVo {
     @ApiModelProperty("优惠券使用时间")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime usedAt;
+    @ApiModelProperty("领取时间")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime createdAt;
 
     /**
      * 金额相关
@@ -79,7 +88,7 @@ public class CouponAccountComplexVo {
     private String useTypeName;
 
     @ApiModelProperty("可用商品品类")
-    private List<Long> canUseProductCategoryId;
+    private List<ProductCategoryComplexVo> canUseProductCategory = Lists.newArrayList();
     @ApiModelProperty("可用商品")
-    private List<Long> canUseProductId;
+    private List<ProductComplexVo> canUseProduct = Lists.newArrayList();
 }

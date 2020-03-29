@@ -35,4 +35,6 @@ public interface ProductCategoryService extends TreeService<ProductCategory> {
     List<ProductCategoryTreeVo> tree(ProductCategorySearchQo qo);
 
     ProductCategoryComplexVo selectOne(Long id);
+
+    ProductCategoryComplexVo convertProductCategoryComplex(ProductCategory entity);
 }

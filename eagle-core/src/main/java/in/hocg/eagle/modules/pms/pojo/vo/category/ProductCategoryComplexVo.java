@@ -22,9 +22,9 @@ import java.util.List;
 @InjectNamed
 public class ProductCategoryComplexVo {
     @ApiModelProperty
-    private String id;
+    private Long id;
     @ApiModelProperty
-    private String parentId;
+    private Long parentId;
     @ApiModelProperty
     private String title;
     @ApiModelProperty

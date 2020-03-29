@@ -5,6 +5,7 @@ import in.hocg.eagle.modules.mkt.entity.CouponProductRelation;
 import in.hocg.eagle.modules.mkt.mapper.CouponProductRelationMapper;
 import in.hocg.eagle.modules.mkt.service.CouponProductRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
+import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,11 @@ public class CouponProductRelationServiceImpl extends AbstractServiceImpl<Coupon
     @Override
     public List<CouponProductRelation> selectAllByCouponId(Long couponId) {
         return lambdaQuery().eq(CouponProductRelation::getCouponId, couponId).list();
+    }
+
+    @Override
+    public List<Product> selectAllProductByCouponId(Long couponId) {
+        return baseMapper.selectAllProductByCouponId(couponId);
     }
 
     @Override

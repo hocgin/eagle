@@ -1,13 +1,19 @@
 package in.hocg.eagle.modules.oms.helper.order.discount;
 
+import com.google.common.collect.Lists;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.Coupon;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedAmountCoupon;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedScaleCoupon;
 import in.hocg.eagle.basic.constant.datadict.CouponType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
+import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
+import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.experimental.UtilityClass;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by hocgin on 2020/3/17.
@@ -41,9 +47,11 @@ public class DiscountHelper {
      * @return
      */
     private static FixedAmountCoupon createFixedAmountCoupon(CouponAccountComplexVo vo) {
+        final List<Long> canUseProductId = ((List<ProductComplexVo>) LangUtils.getOrDefault(vo.getCanUseProduct(), Lists.newArrayList())).parallelStream().map(ProductComplexVo::getId).collect(Collectors.toList());
+        final List<Long> canUseProductCategoryId = ((List<ProductCategoryComplexVo>) LangUtils.getOrDefault(vo.getCanUseProductCategory(), Lists.newArrayList())).parallelStream().map(ProductCategoryComplexVo::getId).collect(Collectors.toList());
         return new FixedAmountCoupon(vo.getCredit())
-            .setCanUseProductCategoryId(vo.getCanUseProductCategoryId())
-            .setCanUseProductId(vo.getCanUseProductId())
+            .setCanUseProductCategoryId(canUseProductCategoryId)
+            .setCanUseProductId(canUseProductId)
             .setMinPoint(vo.getMinPoint())
             .setStartAt(vo.getStartAt())
             .setEndAt(vo.getEndAt())
@@ -60,9 +68,11 @@ public class DiscountHelper {
      * @return
      */
     private static FixedScaleCoupon createFixedScaleCoupon(CouponAccountComplexVo vo) {
+        final List<Long> canUseProductId = ((List<ProductComplexVo>) LangUtils.getOrDefault(vo.getCanUseProduct(), Lists.newArrayList())).parallelStream().map(ProductComplexVo::getId).collect(Collectors.toList());
+        final List<Long> canUseProductCategoryId = ((List<ProductCategoryComplexVo>) LangUtils.getOrDefault(vo.getCanUseProductCategory(), Lists.newArrayList())).parallelStream().map(ProductCategoryComplexVo::getId).collect(Collectors.toList());
         return new FixedScaleCoupon(vo.getCredit(), vo.getCeiling())
-            .setCanUseProductCategoryId(vo.getCanUseProductCategoryId())
-            .setCanUseProductId(vo.getCanUseProductId())
+            .setCanUseProductCategoryId(canUseProductCategoryId)
+            .setCanUseProductId(canUseProductId)
             .setMinPoint(vo.getMinPoint())
             .setStartAt(vo.getStartAt())
             .setEndAt(vo.getEndAt())

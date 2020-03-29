@@ -69,7 +69,8 @@ public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryM
         return convertProductCategoryComplex(entity);
     }
 
-    private ProductCategoryComplexVo convertProductCategoryComplex(ProductCategory entity) {
+    @Override
+    public ProductCategoryComplexVo convertProductCategoryComplex(ProductCategory entity) {
         final ProductCategoryComplexVo result = mapping.asProductCategoryComplexVo(entity);
         result.setKeywords((List<String>) LangUtils.getOrDefault(entity.getKeywords(), Lists.newArrayList()));
         return result;

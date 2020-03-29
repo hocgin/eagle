@@ -2,7 +2,6 @@ package in.hocg.eagle.modules.mkt.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.modules.mkt.entity.Coupon;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponPagingQo;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponSaveQo;
@@ -30,10 +29,10 @@ public interface CouponService extends AbstractService<Coupon> {
     /**
      * 查看详情
      *
-     * @param qo
+     * @param id
      * @return
      */
-    CouponComplexVo selectOne(IdQo qo);
+    CouponComplexVo selectOne(Long id);
 
     /**
      * 赠送优惠券
