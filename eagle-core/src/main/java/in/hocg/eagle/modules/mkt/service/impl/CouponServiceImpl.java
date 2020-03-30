@@ -88,7 +88,17 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
         validInsertOrUpdate(entity);
 
         final CouponUseType useType = IntEnum.ofThrow(qo.getUseType(), CouponUseType.class);
-        handleCouponUseType(entity.getId(), useType, qo.getUseTargetId());
+        List<Long> targetId = null;
+        if (CouponUseType.Universal.equals(useType)) {
+            targetId = null;
+        } else if (CouponUseType.SpecifiedCategory.equals(useType)) {
+            targetId = qo.getUseProductCategoryId();
+            ValidUtils.notNull(targetId);
+        } else if (CouponUseType.DesignatedProduct.equals(useType)) {
+            targetId = qo.getUseProductId();
+            ValidUtils.notNull(targetId);
+        }
+        handleCouponUseType(entity.getId(), useType, targetId);
     }
 
     /**

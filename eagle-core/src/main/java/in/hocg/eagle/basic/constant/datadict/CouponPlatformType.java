@@ -11,9 +11,10 @@ import lombok.RequiredArgsConstructor;
  * @author hocgin
  */
 @Getter
-@ApiModel("订单来源")
+@ApiModel("优惠券适用平台")
 @RequiredArgsConstructor
 public enum CouponPlatformType implements IntEnum {
+    All(0, "所有"),
     APP(1, "APP"),
     PC(2, "PC");
     private final Integer code;

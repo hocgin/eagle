@@ -1,6 +1,5 @@
 package in.hocg.eagle.modules.mkt.pojo.qo;
 
-import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.constant.datadict.CouponPlatformType;
 import in.hocg.eagle.basic.constant.datadict.CouponType;
 import in.hocg.eagle.basic.constant.datadict.CouponUseType;
@@ -11,9 +10,9 @@ import in.hocg.eagle.basic.valid.RangeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -63,8 +62,12 @@ public class CouponSaveQo extends BaseQo {
     @RangeEnum(groups = {Insert.class, Update.class}, enumClass = {CouponUseType.class})
     @ApiModelProperty("可用类型")
     private Integer useType;
-    @Valid
-    @ApiModelProperty("可用对象")
-    private List<Long> useTargetId;
+
+    @Size(min = 1, message = "请选择可用商品")
+    @ApiModelProperty("可用商品")
+    private List<Long> useProductId;
+    @Size(min = 1, message = "请选择可用品类")
+    @ApiModelProperty("可用品类")
+    private List<Long> useProductCategoryId;
 
 }
