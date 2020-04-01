@@ -2,20 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.eagle.modules.ums.mapper.AccountMapper">
 
-    <select id="selectOneByUsername" resultType="in.hocg.eagle.modules.ums.entity.Account">
-        SELECT ua.* FROM ums_account ua
-        <where>
-            ua.username = #{username}
-        </where>
-    </select>
-    <select id="search" resultType="in.hocg.eagle.modules.ums.entity.Account">
-        SELECT ua.* FROM ums_account ua
-        <where>
-            <if test="qo.keyword != null ">
-                <bind name="keyword" value="'%'+qo.keyword+'%'"/>
-                AND (ua.nickname LIKE #{keyword} OR ua.username LIKE #{keyword} OR ua.phone LIKE #{keyword} OR ua.email
-                LIKE #{keyword})
-            </if>
-        </where>
-    </select>
+  <select id="selectOneByUsername" resultType="in.hocg.eagle.modules.ums.entity.Account">
+    SELECT ua.* FROM ums_account ua
+    <where>
+      ua.username = #{username}
+    </where>
+  </select>
+  <select id="paging" resultType="in.hocg.eagle.modules.ums.entity.Account">
+    SELECT ua.* FROM ums_account ua
+    <where>
+      <if test="qo.keyword != null ">
+        <bind name="keyword" value="'%'+qo.keyword+'%'"/>
+        AND (ua.nickname LIKE #{keyword} OR ua.username LIKE #{keyword} OR ua.phone LIKE #{keyword} OR ua.email
+        LIKE #{keyword})
+      </if>
+    </where>
+  </select>
+
+  <select id="pagingWithComplete" resultType="in.hocg.eagle.modules.ums.entity.Account">
+    SELECT ua.* FROM ums_account ua
+    <where>
+      <if test="qo.keyword != null ">
+        <bind name="keyword" value="'%'+qo.keyword+'%'"/>
+        AND (ua.nickname LIKE #{keyword} OR ua.username LIKE #{keyword} OR ua.phone LIKE #{keyword} OR ua.email
+        LIKE #{keyword})
+      </if>
+    </where>
+  </select>
 </mapper>

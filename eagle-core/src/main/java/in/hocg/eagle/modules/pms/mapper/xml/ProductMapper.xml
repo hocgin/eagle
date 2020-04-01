@@ -2,14 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.eagle.modules.pms.mapper.ProductMapper">
 
-    <select id="paging" resultType="in.hocg.eagle.modules.pms.entity.Product">
-        SELECT pp.*
-        FROM pms_product pp
-        <where>
-            pp.delete_status = 0
-            <if test="qo.publishStatus != null ">
-                AND pp.publish_status = #{qo.publishStatus}
-            </if>
-        </where>
-    </select>
+  <select id="paging" resultType="in.hocg.eagle.modules.pms.entity.Product">
+    SELECT pp.*
+    FROM pms_product pp
+    <where>
+      pp.delete_status = 0
+      <if test="qo.publishStatus != null ">
+        AND pp.publish_status = #{qo.publishStatus}
+      </if>
+    </where>
+  </select>
+
+  <select id="pagingWithComplete" resultType="in.hocg.eagle.modules.pms.entity.Product">
+    SELECT pp.*
+    FROM pms_product pp
+    <where>
+      <if test="qo.keyword != null ">
+        <bind name="keyword" value="'%'+qo.keyword+'%'"/>
+        AND (pp.title LIKE #{keyword} OR pp.id LIKE #{keyword})
+      </if>
+    </where>
+  </select>
 </mapper>

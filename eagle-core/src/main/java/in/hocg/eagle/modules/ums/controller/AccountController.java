@@ -7,12 +7,13 @@ import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.basic.security.SecurityContext;
-import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
-import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
-import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
+import in.hocg.eagle.modules.ums.pojo.qo.account.AccountCompleteQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSearchQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountUpdateStatusQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.GrantRoleQo;
+import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
+import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
+import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.ums.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -78,8 +79,13 @@ public class AccountController {
     @PostMapping("/_search")
     @UseLogger("查询账号列表")
     public Result<IPage<AccountComplexVo>> search(@Validated @RequestBody AccountSearchQo qo) {
-        return Result.success(service.search(qo));
+        return Result.success(service.paging(qo));
     }
 
+    @PostMapping("/_complete")
+    @UseLogger("查询列表 - 账号")
+    public Result complete(@Validated @RequestBody AccountCompleteQo qo) {
+        return Result.success(service.pagingWithComplete(qo).getRecords());
+    }
 }
 

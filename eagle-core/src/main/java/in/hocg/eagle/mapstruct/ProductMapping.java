@@ -27,4 +27,5 @@ public interface ProductMapping {
     @Mapping(target = "publishStatusName", ignore = true)
     @Mapping(target = "sku", ignore = true)
     ProductComplexVo asProductComplex(Product entity);
+
 }

@@ -3,24 +3,25 @@ package in.hocg.eagle.modules.ums.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.datastruct.tree.Tree;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.Platform;
+import in.hocg.eagle.basic.datastruct.tree.Tree;
 import in.hocg.eagle.mapstruct.AccountMapping;
 import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.RoleMapping;
-import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
-import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
-import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
-import in.hocg.eagle.modules.ums.pojo.vo.role.RoleComplexAndAuthorityVo;
 import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.entity.Role;
 import in.hocg.eagle.modules.ums.mapper.AccountMapper;
+import in.hocg.eagle.modules.ums.pojo.qo.account.AccountCompleteQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSearchQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountUpdateStatusQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.GrantRoleQo;
+import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
+import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
+import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
+import in.hocg.eagle.modules.ums.pojo.vo.role.RoleComplexAndAuthorityVo;
 import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.modules.ums.service.RoleAccountService;
 import in.hocg.eagle.modules.ums.service.RoleAuthorityService;
@@ -126,8 +127,8 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     }
 
     @Override
-    public IPage<AccountComplexVo> search(AccountSearchQo qo) {
-        return baseMapper.search(qo, qo.page())
+    public IPage<AccountComplexVo> paging(AccountSearchQo qo) {
+        return baseMapper.paging(qo, qo.page())
             .convert(this::convertComplex);
     }
 
@@ -138,6 +139,12 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         entity.setLastUpdatedAt(qo.getCreatedAt());
         entity.setLastUpdater(qo.getUserId());
         validUpdateById(entity);
+    }
+
+    @Override
+    public IPage<AccountComplexVo> pagingWithComplete(AccountCompleteQo qo) {
+        return baseMapper.pagingWithComplete(qo, qo.page())
+            .convert(this::convertComplex);
     }
 
     private AccountComplexVo convertComplex(Account entity) {

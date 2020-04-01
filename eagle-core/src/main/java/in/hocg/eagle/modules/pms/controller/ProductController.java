@@ -6,6 +6,7 @@ import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.pojo.qo.Insert;
 import in.hocg.eagle.basic.pojo.qo.Update;
 import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.modules.pms.pojo.qo.ProductCompleteQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
 import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
@@ -70,12 +71,11 @@ public class ProductController {
         return Result.success(service.paging(qo));
     }
 
-    @UseLogger("查询所有 - 商品")
-    @PostMapping("/all")
-    public Result selectAll() {
-        final ProductPagingQo qo = new ProductPagingQo();
-        return Result.success(service.paging(qo).getRecords());
-    }
 
+    @PostMapping("/_complete")
+    @UseLogger("查询列表 - 商品")
+    public Result complete(@Validated @RequestBody ProductCompleteQo qo) {
+        return Result.success(service.pagingWithComplete(qo).getRecords());
+    }
 }
 

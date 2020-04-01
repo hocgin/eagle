@@ -145,7 +145,7 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
         // 指定商品
         if (LangUtils.equals(CouponUseType.DesignatedProduct.getCode(), useType)) {
             final List<ProductComplexVo> products = couponProductRelationService.selectAllProductByCouponId(id).stream()
-                .map(productService::convertProductComplex).collect(Collectors.toList());
+                .map(productService::convertComplex).collect(Collectors.toList());
             result.setCanUseProduct(products);
         }
         // 指定品类

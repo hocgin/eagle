@@ -3,6 +3,7 @@ package in.hocg.eagle.modules.ums.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.modules.ums.pojo.qo.account.AccountCompleteQo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
@@ -86,7 +87,9 @@ public interface AccountService extends AbstractService<Account> {
      * @param qo
      * @return
      */
-    IPage<AccountComplexVo> search(AccountSearchQo qo);
+    IPage<AccountComplexVo> paging(AccountSearchQo qo);
 
     void updateStatus(AccountUpdateStatusQo qo);
+
+    IPage<AccountComplexVo> pagingWithComplete(AccountCompleteQo qo);
 }

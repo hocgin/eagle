@@ -10,6 +10,7 @@ import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
 import in.hocg.eagle.modules.com.service.FileService;
 import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.mapper.ProductMapper;
+import in.hocg.eagle.modules.pms.pojo.qo.ProductCompleteQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
 import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
@@ -86,13 +87,13 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     public ProductComplexVo selectOne(Long id) {
         final Product entity = getById(id);
         ValidUtils.notNull(entity, "商品不存在");
-        return convertProductComplex(entity);
+        return convertComplex(entity);
     }
 
     @Override
     public IPage<ProductComplexVo> paging(ProductPagingQo qo) {
         IPage<Product> result = baseMapper.paging(qo, qo.page());
-        return result.convert(this::convertProductComplex);
+        return result.convert(this::convertComplex);
     }
 
     @Override
@@ -101,12 +102,18 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     }
 
     @Override
-    public ProductComplexVo convertProductComplex(Product entity) {
+    public ProductComplexVo convertComplex(Product entity) {
         final Long productId = entity.getId();
         ProductComplexVo result = mapping.asProductComplex(entity);
         result.setPhotos(fileService.selectListByRelTypeAndRelId2(File.RelType.Product, productId));
         result.setSku(skuService.selectListByProductId(productId));
         return result;
+    }
+
+    @Override
+    public IPage<ProductComplexVo> pagingWithComplete(ProductCompleteQo qo) {
+        return baseMapper.pagingWithComplete(qo, qo.page())
+            .convert(this::convertComplex);
     }
 
     @Override

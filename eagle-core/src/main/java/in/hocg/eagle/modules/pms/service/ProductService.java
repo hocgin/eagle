@@ -3,6 +3,7 @@ package in.hocg.eagle.modules.pms.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.modules.pms.entity.Product;
+import in.hocg.eagle.modules.pms.pojo.qo.ProductCompleteQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
 import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
@@ -41,5 +42,7 @@ public interface ProductService extends AbstractService<Product> {
 
     Product selectOneByIdAndNotDeleted(Long id);
 
-    ProductComplexVo convertProductComplex(Product entity);
+    ProductComplexVo convertComplex(Product entity);
+
+    IPage<ProductComplexVo> pagingWithComplete(ProductCompleteQo qo);
 }
