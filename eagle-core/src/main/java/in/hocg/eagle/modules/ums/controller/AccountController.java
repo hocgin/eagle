@@ -76,7 +76,7 @@ public class AccountController {
         return Result.success();
     }
 
-    @PostMapping("/_search")
+    @PostMapping({"/_search", "/_paging"})
     @UseLogger("查询账号列表")
     public Result<IPage<AccountComplexVo>> search(@Validated @RequestBody AccountSearchQo qo) {
         return Result.success(service.paging(qo));

@@ -33,33 +33,33 @@ import java.util.List;
 public class DataDictController {
     private final DataDictService service;
 
-    @UseLogger("查询数据字典项")
+    @UseLogger("查询 - 数据字典项")
     @GetMapping("/{code:\\w+}")
     public Result<List<KeyValue>> selectListDataDictItem(@PathVariable("code") String code) {
         return Result.success(service.selectListDictItemByCode(code));
     }
 
-    @UseLogger("查询数据字典详情")
+    @UseLogger("查询 - 数据字典详情")
     @GetMapping("/{id:\\d+}:complex")
     public Result<DataDictComplexVo> selectOne(@PathVariable("id") Long id) {
         return Result.success(service.selectOne(id));
     }
 
-    @UseLogger("删除数据字典")
+    @UseLogger("批量删除 - 数据字典")
     @DeleteMapping
     public Result<Void> batchDelete(@Validated @RequestBody DataDictDeleteQo qo) {
         service.batchDelete(qo);
         return Result.success();
     }
 
-    @UseLogger("新增数据字典")
+    @UseLogger("新增 - 数据字典")
     @PostMapping
     public Result<Void> insertOne(@Validated @RequestBody DataDictInsertQo qo) {
         service.insertOne(qo);
         return Result.success();
     }
 
-    @UseLogger("更新数据字典")
+    @UseLogger("更新 - 数据字典")
     @PutMapping("/{id}")
     public Result<Void> updateOne(@PathVariable Long id,
                                   @Validated @RequestBody DataDictUpdateQo qo) {
@@ -68,8 +68,8 @@ public class DataDictController {
         return Result.success();
     }
 
-    @UseLogger("搜索数据字典列表")
-    @PostMapping("/_search")
+    @UseLogger("分页查询 - 数据字典列表")
+    @PostMapping({"/_search", "/_paging"})
     public Result<IPage<DataDictSearchVo>> search(@Validated @RequestBody DataDictSearchQo qo) {
         return Result.success(service.search(qo));
     }

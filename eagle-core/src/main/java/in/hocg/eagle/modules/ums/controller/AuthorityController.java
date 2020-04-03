@@ -70,7 +70,7 @@ public class AuthorityController {
         return Result.success();
     }
 
-    @PostMapping("/_search")
+    @PostMapping({"/_search", "/_paging"})
     @UseLogger("查询权限列表")
     public Result<List<Authority>> search(@Validated @RequestBody AuthoritySearchQo qo) {
         return Result.success(service.search(qo));

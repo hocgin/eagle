@@ -62,7 +62,7 @@ public class RoleController {
         return Result.success();
     }
 
-    @PostMapping("/_search")
+    @PostMapping({"/_search", "/_paging"})
     @UseLogger("分页查询角色列表")
     public Result<IPage<RoleComplexVo>> search(@Validated @RequestBody RoleSearchQo qo) {
         return Result.success(service.search(qo));
