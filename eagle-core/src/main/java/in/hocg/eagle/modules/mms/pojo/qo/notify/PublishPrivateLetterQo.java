@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -25,7 +26,8 @@ public class PublishPrivateLetterQo extends BaseQo {
     @ApiModelProperty("触发者ID")
     private Long actorId;
 
-    @Size(min = 1, message = "接收人不能为空")
+    @NotNull(message = "请选择接收人")
+    @Size(min = 1, message = "请选择接收人")
     @ApiModelProperty("接收人IDs")
     private List<Long> receivers = Lists.newArrayList();
 

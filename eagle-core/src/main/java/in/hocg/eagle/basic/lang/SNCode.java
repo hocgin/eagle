@@ -36,6 +36,11 @@ public class SNCode {
         return getSNCode(Type.Order);
     }
 
+    /**
+     * 优惠券编号
+     *
+     * @return
+     */
     public String getCouponAccountSNCode() {
         return getSNCode(Type.CouponAccount);
 

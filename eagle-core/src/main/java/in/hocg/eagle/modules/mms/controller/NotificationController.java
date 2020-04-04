@@ -45,7 +45,7 @@ public class NotificationController {
 
     @UseLogger("发布 - 私信")
     @PostMapping("/private-letter/publish")
-    public Result<Void> publishPrivateLetter(@RequestBody PublishPrivateLetterQo qo) {
+    public Result<Void> publishPrivateLetter(@Validated @RequestBody PublishPrivateLetterQo qo) {
         qo.setActorId(qo.getUserId());
         service.publishPrivateLetter(qo);
         return Result.success();

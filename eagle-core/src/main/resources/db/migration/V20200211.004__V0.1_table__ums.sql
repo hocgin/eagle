@@ -188,10 +188,10 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
     VALUE (3, '开发工具', 1, 'devtools', 0, null, '/3', NOW(), 1);
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`, `sort`)
-    VALUE (4, '数据字典', 1, 'data-dict', 0, 3, '/3/4', NOW(), 1, 0);
+    VALUE (4, '数据字典', 1, 'devtools:data-dict', 0, 3, '/3/4', NOW(), 1, 0);
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
-    VALUE (5, '测试5', 1, 'test5', 0, 3, '/3/5', NOW(), 1);
+    VALUE (5, '请求日志', 1, 'devtools:request-log', 0, 3, '/3/5', NOW(), 1);
 
 # -- 访问控制
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,

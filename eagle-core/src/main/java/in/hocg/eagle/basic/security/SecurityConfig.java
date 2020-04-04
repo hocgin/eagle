@@ -59,6 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .authorizeRequests()
             .antMatchers(
+                // 短链接
+                "/s/*",
                 TokenAuthenticationEndpoint.ACCOUNT_TOKEN_URI).permitAll()
             .anyRequest().authenticated()
         ;

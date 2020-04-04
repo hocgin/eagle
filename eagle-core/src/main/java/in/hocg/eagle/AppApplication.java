@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @author hocgin
  */
 @EnableAsync
-@EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableAspectJAutoProxy(exposeProxy = true)
 @SpringBootApplication
 public class AppApplication {
 
