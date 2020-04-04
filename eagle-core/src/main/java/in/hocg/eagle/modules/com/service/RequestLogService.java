@@ -1,9 +1,11 @@
 package in.hocg.eagle.modules.com.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.basic.aspect.logger.Logger;
 import in.hocg.eagle.modules.com.entity.RequestLog;
-import in.hocg.eagle.basic.AbstractService;
-import org.springframework.scheduling.annotation.Async;
+import in.hocg.eagle.modules.com.pojo.qo.requestlog.RequestLogPagingQo;
+import in.hocg.eagle.modules.com.pojo.vo.requestlog.RequestLogComplexVo;
 
 /**
  * <p>
@@ -15,6 +17,7 @@ import org.springframework.scheduling.annotation.Async;
  */
 public interface RequestLogService extends AbstractService<RequestLog> {
 
-    @Async
     void asyncSave(Logger logger);
+
+    IPage<RequestLogComplexVo> pagingWithComplex(RequestLogPagingQo qo);
 }
