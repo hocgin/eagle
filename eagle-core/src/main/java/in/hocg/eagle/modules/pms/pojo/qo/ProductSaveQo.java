@@ -40,6 +40,8 @@ public class ProductSaveQo extends IdQo {
     @ApiModelProperty("采购地")
     private String procurement;
     @ApiModelProperty("图片")
+    @NotNull(groups = {Insert.class}, message = "图片不能为空")
+    @Size(min = 1, groups = {Insert.class, Update.class}, message = "图片不能为空")
     private List<UploadFileDto.FileDto> photos;
     @ApiModelProperty("主视频")
     private String videoUrl;
