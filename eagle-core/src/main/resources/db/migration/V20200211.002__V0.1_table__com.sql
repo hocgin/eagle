@@ -17,7 +17,6 @@ CREATE TABLE `com_file`
     creator    BIGINT       NOT NULL
         COMMENT '创建人',
 
-    UNIQUE KEY (rel_id, rel_type),
     PRIMARY KEY (id)
 )
     ENGINE = InnoDB

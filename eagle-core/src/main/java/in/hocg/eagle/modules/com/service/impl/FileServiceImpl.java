@@ -42,7 +42,7 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File>
         deleteAllByRelTypeAndRelId(relType, relId);
         final LocalDateTime now = LocalDateTime.now();
         if (!CollectionUtils.isEmpty(files)) {
-            files.parallelStream()
+            files.stream()
                 .map(item -> new File()
                     .setRelId(relId)
                     .setRelType(relType.getCode())
