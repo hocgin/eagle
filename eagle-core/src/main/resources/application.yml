@@ -1,10 +1,11 @@
+jasypt.encryptor.password: hocgin
 spring:
   profiles:
     active: local
   swagger2:
     enabled: false
-#aliyun:
-#  oss:
-#    endpoint: http://endpoint.com
-#    secret-access: <secret-access/>
-#    access-key: <access-key/>
+aliyun:
+  oss:
+    endpoint: http://oss-cn-beijing.aliyuncs.com
+    secret-access: ENC(lRjG5ydrDnl5oRIGUaQNIdyut+mNoxvkVj2oekmbgN80i93FLfl+cA==)
+    access-key: ENC(w1e6RkiL4tuTbasWXZL85UIVvXjfplXuTqV259ztRZ8=)

@@ -2,6 +2,7 @@ package in.hocg.eagle.utils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.hash.Hashing;
 import lombok.experimental.UtilityClass;
 
 import java.util.*;
@@ -181,5 +182,9 @@ public class LangUtils {
      */
     public static String getSpace(int spaceCount) {
         return String.join("", Collections.nCopies(spaceCount, " "));
+    }
+
+    public static String md5(byte[] bytes) {
+        return Hashing.md5().newHasher().putBytes(bytes).hash().toString();
     }
 }

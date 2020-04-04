@@ -100,7 +100,7 @@ public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryM
             throw ServiceException.wrap("商品品类正在被商品使用");
         }
         if (isUsedCoupon(regexTreePath)) {
-            throw ServiceException.wrap("优惠券正在被商品使用");
+            throw ServiceException.wrap("商品品类正在被优惠券使用");
         }
     }
 
