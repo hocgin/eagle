@@ -35,7 +35,7 @@ public class EagleGenerateTest {
         String javaPath = "src/main/java";
         String dir = Paths.get(System.getProperty("user.dir"), javaPath).toString();
         eagleGenerate.generateByTables("in.hocg.eagle.modules",
-            "mkt",
+            "com",
             dir, TABLES.toArray(new String[]{}));
     }
 }

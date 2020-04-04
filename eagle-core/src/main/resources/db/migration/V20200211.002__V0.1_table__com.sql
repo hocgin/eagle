@@ -1,3 +1,43 @@
+DROP TABLE IF EXISTS `com_request_log`;
+CREATE TABLE `com_request_log`
+(
+    id                BIGINT AUTO_INCREMENT,
+    method            VARCHAR(8)   NOT NULL
+        COMMENT '请求方式',
+    uri               VARCHAR(512) NOT NULL
+        COMMENT '请求URI',
+    args              TEXT         NOT NULL
+        COMMENT '请求体',
+    ret               TEXT
+        COMMENT '响应体',
+    exception         TEXT
+        COMMENT '异常信息',
+    logs              TEXT
+        COMMENT '线程内日志',
+    total_time_millis INT(5)       NOT NULL DEFAULT 0
+        COMMENT '请求耗时(ms)',
+    mapping           VARCHAR(200) NOT NULL
+        COMMENT '代码位置',
+    host              VARCHAR(200) NOT NULL
+        COMMENT '请求头:host',
+    user_agent        VARCHAR(200) NOT NULL
+        COMMENT '请求头:user-agent',
+    client_ip         VARCHAR(32)
+        COMMENT '请求IP',
+    enter_remark      VARCHAR(200)
+        COMMENT '入口描述',
+    created_at        TIMESTAMP(6) NOT NULL
+        COMMENT '创建时间',
+    creator           BIGINT
+        COMMENT '创建人',
+
+    PRIMARY KEY (id)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COMMENT '[基础模块] 请求日志表';
+
+
 DROP TABLE IF EXISTS `com_file`;
 CREATE TABLE `com_file`
 (
