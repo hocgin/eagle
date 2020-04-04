@@ -31,13 +31,13 @@ public class OrderRefundApplyController {
         return Result.success(service.paging(qo));
     }
 
-    @UseLogger("获取订单退费申请详情")
+    @UseLogger("获取 - 订单退费申请详情")
     @GetMapping("/{id}")
     public Result selectOne(@PathVariable Long id) {
         return Result.success(service.selectOne(id));
     }
 
-    @UseLogger("处理退费申请")
+    @UseLogger("处理 - 退费申请")
     @PostMapping("/{id}/handle")
     public Result handle(@PathVariable Long id,
                          @Validated @RequestBody HandleQo qo) {

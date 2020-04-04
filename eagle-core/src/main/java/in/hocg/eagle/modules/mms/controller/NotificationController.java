@@ -29,21 +29,21 @@ import org.springframework.web.bind.annotation.*;
 public class NotificationController {
     private final NotificationService service;
 
-    @UseLogger("查询我的消息列表")
+    @UseLogger("分页查询 - 我的消息列表")
     @PostMapping
     public Result<IPage<NotifyComplexVo>> _search(@Validated @RequestBody SearchNotifyPagingQo qo) {
         qo.setReceiverId(qo.getUserId());
         return Result.success(service.search(qo));
     }
 
-    @UseLogger("我的消息概要")
+    @UseLogger("查看 - 我的消息概要")
     @GetMapping("/summary")
     public Result<SummaryVo> summary() {
         final Long currentUserId = SecurityContext.getCurrentUserId();
         return Result.success(service.selectSummary(currentUserId));
     }
 
-    @UseLogger("发布私信")
+    @UseLogger("发布 - 私信")
     @PostMapping("/private-letter/publish")
     public Result<Void> publishPrivateLetter(@RequestBody PublishPrivateLetterQo qo) {
         qo.setActorId(qo.getUserId());

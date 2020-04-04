@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.pms.service.impl;
 
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.datastruct.tree.Tree;
+import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
 import in.hocg.eagle.mapstruct.ProductCategoryMapping;
 import in.hocg.eagle.modules.pms.entity.ProductCategory;
@@ -11,6 +12,7 @@ import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySearchQo;
 import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
 import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryTreeVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
+import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,7 @@ import java.util.stream.Collectors;
 public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryMapper, ProductCategory>
     implements ProductCategoryService {
     private final ProductCategoryMapping mapping;
+    private final ProductService productService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -74,6 +77,39 @@ public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryM
         final ProductCategoryComplexVo result = mapping.asProductCategoryComplexVo(entity);
         result.setKeywords((List<String>) LangUtils.getOrDefault(entity.getKeywords(), Lists.newArrayList()));
         return result;
+    }
+
+    @Override
+    public void deleteAll(Long id) {
+        if (Objects.isNull(id)) {
+            return;
+        }
+        final ProductCategory entity = getById(id);
+        if (Objects.isNull(entity)) {
+            return;
+        }
+
+        final String regexTreePath = String.format("%s.*?", entity.getTreePath());
+        checkUsedThrowMessage(regexTreePath);
+
+        super.deleteCurrentAndChildren(id);
+    }
+
+    public void checkUsedThrowMessage(String regexTreePath) {
+        if (isUsedProduct(regexTreePath)) {
+            throw ServiceException.wrap("商品品类正在被商品使用");
+        }
+        if (isUsedCoupon(regexTreePath)) {
+            throw ServiceException.wrap("优惠券正在被商品使用");
+        }
+    }
+
+    public boolean isUsedProduct(String regexTreePath) {
+        return baseMapper.countUsedProduct(regexTreePath) > 0;
+    }
+
+    public boolean isUsedCoupon(String regexTreePath) {
+        return baseMapper.countUsedCoupon(regexTreePath) > 0;
     }
 
     @Override

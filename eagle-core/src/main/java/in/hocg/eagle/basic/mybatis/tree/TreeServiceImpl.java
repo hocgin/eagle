@@ -134,9 +134,9 @@ public class TreeServiceImpl<M extends BaseMapper<T>, T extends TreeEntity<?>> e
             return;
         }
         final String treePath = entity.getTreePath();
-        final UpdateWrapper<T> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.likeRight(TreeEntity.TREE_PATH, treePath);
-        this.remove(updateWrapper);
+        final UpdateWrapper<T> deleteWrapper = new UpdateWrapper<>();
+        deleteWrapper.likeRight(TreeEntity.TREE_PATH, treePath);
+        this.remove(deleteWrapper);
     }
 
     @Override

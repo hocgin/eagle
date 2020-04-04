@@ -28,33 +28,33 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     private final OrderService service;
 
-    @UseLogger("分页查询订单列表")
+    @UseLogger("分页查询 - 订单列表")
     @PostMapping("/_paging")
     public Result paging(@Validated @RequestBody OrderPagingQo qo) {
         return Result.success(service.paging(qo));
     }
 
-    @UseLogger("获取订单详情")
+    @UseLogger("获取 - 订单详情")
     @GetMapping("/{id}")
     public Result selectOne(@PathVariable Long id) {
         return Result.success(service.selectOne(id));
     }
 
-    @UseLogger("关闭订单")
+    @UseLogger("关闭 - 订单")
     @PutMapping("/close")
     public Result close(@Validated @RequestBody CancelOrderQo qo) {
         service.cancelOrder(qo);
         return Result.success();
     }
 
-    @UseLogger("发货订单")
+    @UseLogger("发货 - 订单")
     @PutMapping("/shipped")
     public Result shipped(@Validated @RequestBody ShippedOrderQo qo) {
         service.shippedOrder(qo);
         return Result.success();
     }
 
-    @UseLogger("修改订单")
+    @UseLogger("修改 - 订单")
     @PutMapping("/{id}")
     public Result updateOne(@PathVariable Long id,
                             @Validated @RequestBody UpdateOrderQo qo) {
@@ -63,7 +63,7 @@ public class OrderController {
         return Result.success();
     }
 
-    @UseLogger("删除订单")
+    @UseLogger("删除 - 订单")
     @DeleteMapping("/{id}")
     public Result deleteOne(@PathVariable Long id) {
         final IdQo qo = new IdQo();

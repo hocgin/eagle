@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductCategoryController {
     private final ProductCategoryService service;
 
-    @UseLogger("新增商品品类")
+    @UseLogger("新增 - 商品品类")
     @PostMapping
     public Result insertOne(@Validated({Insert.class}) @RequestBody ProductCategorySaveQo qo) {
         qo.setId(null);
@@ -35,14 +35,14 @@ public class ProductCategoryController {
         return Result.success();
     }
 
-    @UseLogger("获取品类树")
+    @UseLogger("获取 - 商品品类树")
     @PostMapping("/tree")
     public Result tree(@Validated @RequestBody ProductCategorySearchQo qo) {
         return Result.success(service.tree(qo));
     }
 
-    @UseLogger("更新商品品类")
-    @PutMapping("/{id}")
+    @UseLogger("更新 - 商品品类")
+    @PutMapping("/{id:\\d+}")
     public Result updateOne(@PathVariable("id") Long id,
                             @Validated({Update.class}) @RequestBody ProductCategorySaveQo qo) {
         qo.setId(id);
@@ -50,16 +50,16 @@ public class ProductCategoryController {
         return Result.success();
     }
 
-    @UseLogger("查看商品品类详情")
+    @UseLogger("查看 - 商品品类详情")
     @GetMapping("/{id:\\d+}:complex")
     public Result selectOne(@PathVariable("id") Long id) {
         return Result.success(service.selectOne(id));
     }
 
-    @UseLogger("删除商品品类及其子品类")
-    @DeleteMapping("/{id}")
+    @UseLogger("删除 - 商品品类及其子品类")
+    @DeleteMapping("/{id:\\d+}")
     public Result deleteAll(@PathVariable("id") Long id) {
-        service.deleteCurrentAndChildren(id);
+        service.deleteAll(id);
         return Result.success();
     }
 

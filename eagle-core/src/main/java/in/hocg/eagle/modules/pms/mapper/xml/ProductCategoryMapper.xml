@@ -11,4 +11,16 @@
         </where>
       ORDER BY ppc.sort DESC, ppc.created_at DESC
     </select>
+    <select id="countUsedProduct" resultType="java.lang.Integer">
+      SELECT COUNT(1)
+      FROM pms_product_category ppc
+        LEFT JOIN pms_product pp ON pp.product_category_id = ppc.id
+      WHERE ppc.tree_path REGEXP #{regexTreePath}
+    </select>
+  <select id="countUsedCoupon" resultType="java.lang.Integer">
+    SELECT COUNT(1)
+    FROM pms_product_category ppc
+        LEFT JOIN mkt_coupon_product_category_relation mcpcr ON mcpcr.product_category_id = ppc.id
+    WHERE ppc.tree_path REGEXP #{regexTreePath}
+  </select>
 </mapper>
