@@ -24,7 +24,10 @@ public class DefaultLoggerService implements LoggerService {
     @Override
     public void handle(Logger logger) {
         printlnPrettyLogger(logger);
-        SpringContext.getBean(RequestLogService.class).asyncSave(logger);
+        try {
+            SpringContext.getBean(RequestLogService.class).asyncSave(logger);
+        } catch (Exception ignored) {
+        }
     }
 
     private void printlnPrettyLogger(Logger logger) {

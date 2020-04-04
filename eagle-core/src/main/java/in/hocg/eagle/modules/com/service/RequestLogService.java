@@ -20,4 +20,6 @@ public interface RequestLogService extends AbstractService<RequestLog> {
     void asyncSave(Logger logger);
 
     IPage<RequestLogComplexVo> pagingWithComplex(RequestLogPagingQo qo);
+
+    RequestLogComplexVo selectOne(Long id);
 }

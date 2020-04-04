@@ -9,10 +9,7 @@ import in.hocg.eagle.modules.com.service.RequestLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by hocgin on 2020/4/4.
@@ -30,5 +27,11 @@ public class RequestLogController {
     @UseLogger("分页查询 - 请求日志")
     public Result<IPage<RequestLogComplexVo>> paging(@Validated @RequestBody RequestLogPagingQo qo) {
         return Result.success(service.pagingWithComplex(qo));
+    }
+
+    @GetMapping("/{id:\\d+}:complex")
+    @UseLogger("详情 - 请求日志")
+    public Result<RequestLogComplexVo> selectOne(@PathVariable Long id) {
+        return Result.success(service.selectOne(id));
     }
 }
