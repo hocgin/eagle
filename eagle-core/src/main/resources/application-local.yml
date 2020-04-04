@@ -11,7 +11,7 @@ spring:
     store-type: none
   flyway:
     baseline-on-migrate: true
-    enabled: false
+    enabled: true
 
 mybatis-plus:
   global-config:

@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.com.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.com.pojo.qo.shorturl.ShortUrlPagingQo;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,5 +19,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface ShortUrlMapper extends BaseMapper<ShortUrl> {
 
-    IPage<ShortUrl> pagingWithComplex(@Param("qo") ShortUrlPagingQo qo);
+    IPage<ShortUrl> pagingWithComplex(@Param("qo") ShortUrlPagingQo qo, @Param("page") Page page);
 }

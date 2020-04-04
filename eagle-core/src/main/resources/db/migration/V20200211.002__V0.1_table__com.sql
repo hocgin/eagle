@@ -15,6 +15,7 @@ CREATE TABLE `com_short_url`
 
     PRIMARY KEY (id)
 )
+    AUTO_INCREMENT = 10000
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     COMMENT '[基础模块] 短链接表';

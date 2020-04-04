@@ -192,6 +192,9 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
     VALUE (5, '请求日志', 1, 'devtools:request-log', 0, 3, '/3/5', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (22, '短链接列表', 1, 'devtools:short-url', 0, 3, '/3/22', NOW(), 1);
 
 # -- 访问控制
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
@@ -282,7 +285,8 @@ VALUES (1, 1),
        (1, 18),
        (1, 19),
        (1, 20),
-       (1, 21);
+       (1, 21),
+       (1, 22);
 
 # 赋予账号角色
 INSERT INTO ums_role_account(`role_id`, `account_id`)

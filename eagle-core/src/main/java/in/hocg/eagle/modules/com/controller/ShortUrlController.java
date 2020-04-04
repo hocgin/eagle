@@ -43,7 +43,7 @@ public class ShortUrlController {
         return Result.success();
     }
 
-    @PutMapping
+    @PutMapping("/{id:\\d+}")
     @UseLogger("修改 - 短链接")
     public Result updateOne(@PathVariable Long id, @Validated({Update.class}) @RequestBody ShortUrlSaveQo qo) {
         qo.setId(id);
