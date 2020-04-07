@@ -3,10 +3,13 @@ package in.hocg.eagle.modules.ums.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.Env;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.Platform;
 import in.hocg.eagle.basic.datastruct.tree.Tree;
+import in.hocg.eagle.manager.MailManager;
+import in.hocg.eagle.manager.RedisManager;
 import in.hocg.eagle.mapstruct.AccountMapping;
 import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.RoleMapping;
@@ -14,10 +17,7 @@ import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.entity.Role;
 import in.hocg.eagle.modules.ums.mapper.AccountMapper;
-import in.hocg.eagle.modules.ums.pojo.qo.account.AccountCompleteQo;
-import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSearchQo;
-import in.hocg.eagle.modules.ums.pojo.qo.account.AccountUpdateStatusQo;
-import in.hocg.eagle.modules.ums.pojo.qo.account.GrantRoleQo;
+import in.hocg.eagle.modules.ums.pojo.qo.account.*;
 import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
@@ -28,6 +28,7 @@ import in.hocg.eagle.modules.ums.service.RoleAuthorityService;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,9 +51,12 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
 
     private final RoleAccountService roleAccountService;
     private final RoleAuthorityService roleAuthorityService;
+    private final MailManager mailManager;
+    private final RedisManager redisManager;
     private final AccountMapping mapping;
     private final RoleMapping roleMapping;
     private final AuthorityMapping authorityMapping;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -80,6 +84,10 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     @Override
     public Optional<Account> selectOneByUsername(String username) {
         return baseMapper.selectOneByUsername(username);
+    }
+
+    public Optional<Account> selectOneByEmail(String email) {
+        return lambdaQuery().eq(Account::getEmail, email).oneOpt();
     }
 
     @Override
@@ -145,6 +153,43 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     public IPage<AccountComplexVo> pagingWithComplete(AccountCompleteQo qo) {
         return baseMapper.pagingWithComplete(qo, qo.page())
             .convert(this::convertComplex);
+    }
+
+    @Override
+    public void resetPassword(Long id) {
+        final Account entity = getById(id);
+        ValidUtils.notNull(entity, "账号不存在");
+        final String email = entity.getEmail();
+        ValidUtils.notNull(email, "该账号未配置邮箱");
+        final String token = "xx";
+        redisManager.setResetPasswordToken(email, token, 5);
+        String url = String.format("%s/%s", Env.hostname(), token);
+        mailManager.sendResetPasswordMail(entity.getNickname(), email, url);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void changePassword(ChangePasswordQo qo) {
+        final String mail = qo.getMail();
+        String token = qo.getToken();
+        final String newPassword = qo.getNewPassword();
+        final boolean isOk = redisManager.validResetPasswordToken(mail, token);
+        ValidUtils.isTrue(isOk, "Token 已经失效");
+        final Optional<Account> accountOpt = selectOneByEmail(mail);
+        if (!accountOpt.isPresent()) {
+            ValidUtils.fail(mail + " 未注册");
+        }
+        final Account update = new Account();
+        update.setId(accountOpt.get().getId());
+        update.setLastUpdatedAt(qo.getCreatedAt());
+        update.setLastUpdater(qo.getUserId());
+        update.setPassword(passwordEncoder.encode(newPassword));
+        validUpdateById(update);
+    }
+
+    public void validResetPasswordToken(String email, String token) {
+        final boolean isOk = redisManager.validResetPasswordToken(email, token);
+        ValidUtils.isTrue(isOk, "Token 已经失效");
     }
 
     private AccountComplexVo convertComplex(Account entity) {

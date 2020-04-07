@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by hocgin on 2018/8/20.
@@ -25,7 +26,7 @@ public class ResponseUtils {
     public static HttpServletResponse setUtf8(ServletResponse response) {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.setContentType("text/html;charset=utf-8");
-        httpServletResponse.setCharacterEncoding("UTF-8");
+        httpServletResponse.setCharacterEncoding(StandardCharsets.UTF_8.name());
         return httpServletResponse;
     }
 }

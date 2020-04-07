@@ -3,16 +3,13 @@ package in.hocg.eagle.modules.ums.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.modules.ums.pojo.qo.account.AccountCompleteQo;
+import in.hocg.eagle.modules.ums.pojo.qo.account.*;
 import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.entity.Role;
-import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSearchQo;
-import in.hocg.eagle.modules.ums.pojo.qo.account.AccountUpdateStatusQo;
-import in.hocg.eagle.modules.ums.pojo.qo.account.GrantRoleQo;
 
 import java.util.List;
 import java.util.Optional;
@@ -92,4 +89,8 @@ public interface AccountService extends AbstractService<Account> {
     void updateStatus(AccountUpdateStatusQo qo);
 
     IPage<AccountComplexVo> pagingWithComplete(AccountCompleteQo qo);
+
+    void resetPassword(Long id);
+
+    void changePassword(ChangePasswordQo qo);
 }

@@ -20,3 +20,7 @@ aliyun:
     endpoint: http://oss-cn-beijing.aliyuncs.com
     secret-access: ENC(lRjG5ydrDnl5oRIGUaQNIdyut+mNoxvkVj2oekmbgN80i93FLfl+cA==)
     access-key: ENC(w1e6RkiL4tuTbasWXZL85UIVvXjfplXuTqV259ztRZ8=)
+
+# EAGLE
+eagle:
+  hostname: http://127.0.0.1:8080

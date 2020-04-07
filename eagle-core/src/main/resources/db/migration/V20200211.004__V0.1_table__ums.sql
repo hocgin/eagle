@@ -68,7 +68,7 @@ CREATE TABLE `ums_member`
  */
 INSERT INTO `ums_account`(`id`, `nickname`, `username`, `email`, `phone`, `password`, `avatar`, `gender`, `created_ip`,
                           `created_at`, `creator`)
-    VALUE (1, 'admin', 'admin', 'admin@example.com', '13600747016', '{noop}hocgin',
+    VALUE (1, 'admin', 'admin', 'hocgin@gmai.com', '13600747016', '{noop}hocgin',
            'https://avataaars.io/?avatarStyle=Circle&topType=WinterHat4&accessoriesType=Prescription02&hatColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Blue02&eyeType=Wink&eyebrowType=UpDown&mouthType=Smile&skinColor=Pale',
            1,
            '127.0.0.1',

@@ -27,4 +27,5 @@ public interface AccountMapper extends BaseMapper<Account> {
     IPage<Account> paging(@Param("qo") AccountSearchQo qo, @Param("page") Page page);
 
     IPage<Account> pagingWithComplete(@Param("qo") AccountCompleteQo qo, @Param("page") Page page);
+
 }

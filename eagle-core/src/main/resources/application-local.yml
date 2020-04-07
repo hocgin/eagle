@@ -7,6 +7,9 @@ spring:
     druid:
       validation-query: SELECT 1
       test-while-idle: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
   session:
     store-type: none
   flyway:

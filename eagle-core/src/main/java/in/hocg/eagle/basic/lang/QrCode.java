@@ -11,6 +11,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import lombok.experimental.UtilityClass;
 
 import java.awt.image.BufferedImage;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -25,7 +26,7 @@ public class QrCode {
 
     static {
         // 字符编码
-        DEFAULT_HINTS.put(EncodeHintType.CHARACTER_SET, "utf-8");
+        DEFAULT_HINTS.put(EncodeHintType.CHARACTER_SET, StandardCharsets.UTF_8.name());
         // 容错等级 L、M、Q、H 其中 L 为最低, H 为最高
         DEFAULT_HINTS.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
         // 二维码与图片边距

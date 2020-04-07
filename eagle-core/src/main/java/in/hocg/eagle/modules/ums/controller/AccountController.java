@@ -7,10 +7,7 @@ import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.basic.security.SecurityContext;
-import in.hocg.eagle.modules.ums.pojo.qo.account.AccountCompleteQo;
-import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSearchQo;
-import in.hocg.eagle.modules.ums.pojo.qo.account.AccountUpdateStatusQo;
-import in.hocg.eagle.modules.ums.pojo.qo.account.GrantRoleQo;
+import in.hocg.eagle.modules.ums.pojo.qo.account.*;
 import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
@@ -52,13 +49,13 @@ public class AccountController {
         return Result.success(service.selectAuthorityTreeByCurrentAccount(accountId, GlobalConstant.CURRENT_PLATFORM.getCode()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:\\d+}")
     @UseLogger("获取账号信息")
     public Result<IdAccountComplexVo> selectOneById(@PathVariable Long id) {
         return Result.success(service.selectOneComplexAndRole(id));
     }
 
-    @PostMapping("/{id}/grant/role")
+    @PostMapping("/{id:\\d+}/grant/role")
     @UseLogger("给账号授权角色")
     public Result<Void> grantRole(@PathVariable Long id,
                                   @Validated @RequestBody GrantRoleQo qo) {
@@ -67,7 +64,7 @@ public class AccountController {
         return Result.success();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id:\\d+}")
     @UseLogger("更改账户状态")
     public Result<Void> updateAccountStatus(@PathVariable Long id,
                                             @Validated @RequestBody AccountUpdateStatusQo qo) {
@@ -86,6 +83,20 @@ public class AccountController {
     @UseLogger("查询列表 - 账号")
     public Result complete(@Validated @RequestBody AccountCompleteQo qo) {
         return Result.success(service.pagingWithComplete(qo).getRecords());
+    }
+
+    @PostMapping("/{id:\\d+}/reset-password")
+    @UseLogger("重置密码 - 账号")
+    public Result resetPassword(@PathVariable Long id) {
+        service.resetPassword(id);
+        return Result.success();
+    }
+
+    @PostMapping("/change-password")
+    @UseLogger("修改密码 - 账号")
+    public Result changePassword(@Validated @RequestBody ChangePasswordQo qo) {
+        service.changePassword(qo);
+        return Result.success();
     }
 }
 

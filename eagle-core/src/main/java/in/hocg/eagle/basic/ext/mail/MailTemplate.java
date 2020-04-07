@@ -20,7 +20,7 @@ import java.util.Objects;
  * @author hocgin
  */
 @Slf4j
-public final class MailTemplate {
+public class MailTemplate {
     private String username;
     private String personal;
 
