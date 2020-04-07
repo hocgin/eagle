@@ -2,13 +2,13 @@ package in.hocg.eagle.modules.crm.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.modules.crm.entity.Comment;
+import in.hocg.eagle.modules.crm.pojo.qo.comment.ChildCommentPagingQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPostQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPutQo;
-import in.hocg.eagle.modules.crm.pojo.qo.comment.G2ndAfterCommentPagingQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.RootCommentPagingQo;
 import in.hocg.eagle.modules.crm.pojo.vo.comment.CommentComplexVo;
 import in.hocg.eagle.modules.crm.pojo.vo.comment.RootCommentComplexVo;
-import in.hocg.eagle.modules.crm.entity.Comment;
 
 /**
  * <p>
@@ -50,5 +50,5 @@ public interface CommentService extends AbstractService<Comment> {
      * @param qo 父级评论ID
      * @return
      */
-    IPage<CommentComplexVo> paging2ndAfterComment(G2ndAfterCommentPagingQo qo);
+    IPage<CommentComplexVo> pagingChildComment(ChildCommentPagingQo qo);
 }

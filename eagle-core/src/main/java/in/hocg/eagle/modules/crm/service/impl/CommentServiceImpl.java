@@ -6,18 +6,18 @@ import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
 import in.hocg.eagle.mapstruct.CommentMapping;
-import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.modules.crm.entity.Comment;
 import in.hocg.eagle.modules.crm.mapper.CommentMapper;
+import in.hocg.eagle.modules.crm.pojo.qo.comment.ChildCommentPagingQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPostQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPutQo;
-import in.hocg.eagle.modules.crm.pojo.qo.comment.G2ndAfterCommentPagingQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.RootCommentPagingQo;
 import in.hocg.eagle.modules.crm.pojo.vo.comment.CommentComplexVo;
 import in.hocg.eagle.modules.crm.pojo.vo.comment.RootCommentComplexVo;
 import in.hocg.eagle.modules.crm.service.CommentService;
 import in.hocg.eagle.modules.crm.service.CommentTargetService;
 import in.hocg.eagle.modules.mms.message.event.SubscriptionEvent;
+import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ResultUtils;
 import in.hocg.eagle.utils.ValidUtils;
@@ -58,11 +58,11 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
     @Transactional(rollbackFor = Exception.class)
     public void insertOne(CommentPostQo qo) throws Throwable {
         final Long creatorId = qo.getUserId();
-        final String targetTypeCode = qo.getTargetTypeCode();
-        final Long id = qo.getId();
+        final Integer targetTypeCode = qo.getTargetType();
+        final Long refId = qo.getRefId();
         final CommentTargetType targetType = IntEnum.of(targetTypeCode, CommentTargetType.class)
             .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("参数错误"));
-        final Long targetId = commentTargetService.getOrCreateCommentTarget(targetType, id);
+        final Long targetId = commentTargetService.getOrCreateCommentTarget(targetType, refId);
 
         final Comment entity = mapping.asComment(qo);
         entity.setEnabled(Enabled.On.getCode());
@@ -82,11 +82,11 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<RootCommentComplexVo> pagingRootComment(RootCommentPagingQo qo) throws Throwable {
-        final String targetTypeCode = qo.getTargetTypeCode();
-        final Long id = qo.getId();
+        final Integer targetTypeCode = qo.getTargetType();
+        final Long refId = qo.getRefId();
         final CommentTargetType targetType = IntEnum.of(targetTypeCode, CommentTargetType.class)
             .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("参数错误"));
-        final Long targetId = commentTargetService.getCommentTarget(targetType, id)
+        final Long targetId = commentTargetService.getCommentTarget(targetType, refId)
             .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("未找到评论"));
         final IPage<Comment> result = baseMapper.pagingRootCommend(targetId, Enabled.On.getCode(), qo.page());
         return result.convert(entity -> {
@@ -99,7 +99,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public IPage<CommentComplexVo> paging2ndAfterComment(G2ndAfterCommentPagingQo qo) {
+    public IPage<CommentComplexVo> pagingChildComment(ChildCommentPagingQo qo) {
         final Comment pComment = baseMapper.selectById(qo.getParentId());
         if (LangUtils.equals(pComment.getEnabled(), Enabled.Off.getCode())) {
             return ResultUtils.emptyPage(qo);

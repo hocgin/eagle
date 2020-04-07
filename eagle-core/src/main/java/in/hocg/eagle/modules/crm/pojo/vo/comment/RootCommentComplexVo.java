@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.crm.pojo.vo.comment;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Created by hocgin on 2020/3/8.
@@ -10,6 +11,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class RootCommentComplexVo extends CommentComplexVo {
     @ApiModelProperty(value = "子评论条数")
     private Integer childrenTotal = 0;

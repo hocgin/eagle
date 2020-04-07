@@ -26,11 +26,12 @@ public interface CommentMapping {
     @Mapping(target = "childrenTotal", ignore = true)
     RootCommentComplexVo asRootCommentComplexVo(CommentComplexVo entity);
 
+    @Mapping(target = "targetId", ignore = true)
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "enabled", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    @Mapping(target = "targetId", ignore = true)
     @Mapping(target = "treePath", ignore = true)
     Comment asComment(CommentPostQo qo);
 

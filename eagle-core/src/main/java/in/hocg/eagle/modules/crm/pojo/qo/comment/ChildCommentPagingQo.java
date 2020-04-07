@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class G2ndAfterCommentPagingQo extends PageQo {
+public class ChildCommentPagingQo extends PageQo {
     @ApiModelProperty("父级评论ID")
     private Long parentId;
 }
