@@ -22,7 +22,10 @@ import java.util.Objects;
 @Data
 @Accessors(chain = true)
 public class Logger {
+    @ApiModelProperty("代码位置")
     private String mapping;
+    @ApiModelProperty("来源(需使用请求参数, 如: source=eagle)")
+    private String source;
     @ApiModelProperty("请求头:host")
     private String host;
     @ApiModelProperty("请求头:user-agent")
@@ -72,6 +75,7 @@ public class Logger {
         final RequestLog entity = new RequestLog();
         entity.setArgs(JSON.toJSONString(args));
         entity.setRet(JSON.toJSONString(ret));
+        entity.setSource(source);
         entity.setClientIp(clientIp);
         entity.setCreatedAt(createdAt);
         entity.setMapping(mapping);

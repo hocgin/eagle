@@ -58,7 +58,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
     @Transactional(rollbackFor = Exception.class)
     public void insertOne(CommentPostQo qo) throws Throwable {
         final Long creatorId = qo.getUserId();
-        final Integer targetTypeCode = qo.getTargetType();
+        final Integer targetTypeCode = qo.getRefType();
         final Long refId = qo.getRefId();
         final CommentTargetType targetType = IntEnum.of(targetTypeCode, CommentTargetType.class)
             .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("参数错误"));
@@ -82,7 +82,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<RootCommentComplexVo> pagingRootComment(RootCommentPagingQo qo) throws Throwable {
-        final Integer targetTypeCode = qo.getTargetType();
+        final Integer targetTypeCode = qo.getRefType();
         final Long refId = qo.getRefId();
         final CommentTargetType targetType = IntEnum.of(targetTypeCode, CommentTargetType.class)
             .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("参数错误"));
@@ -91,7 +91,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
         final IPage<Comment> result = baseMapper.pagingRootCommend(targetId, Enabled.On.getCode(), qo.page());
         return result.convert(entity -> {
             final RootCommentComplexVo item = mapping.asRootCommentComplexVo(this.convertComplex(entity));
-            final String treePath = entity.getTreePath();
+            final String treePath = entity.getTreePath() + "/";
             item.setChildrenTotal(countRightLikeTreePath(treePath));
             return item;
         });

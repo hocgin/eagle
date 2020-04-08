@@ -21,7 +21,7 @@ public class RootCommentPagingQo extends PageQo {
      */
     @ApiModelProperty("评论对象")
     @RangeEnum(enumClass = CommentTargetType.class, message = "评论对象类型")
-    private Integer targetType;
+    private Integer refType;
     @ApiModelProperty("评论对象的原ID,如:文章ID")
     private Long refId;
 }

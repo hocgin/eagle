@@ -71,6 +71,11 @@ public class RequestLog extends AbstractEntity<RequestLog> {
     @TableField("mapping")
     private String mapping;
     /**
+     * 请求来源标记
+     */
+    @TableField("source")
+    private String source;
+    /**
      * 请求头:host
      */
     @TableField("host")

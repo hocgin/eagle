@@ -40,6 +40,8 @@ CREATE TABLE `com_request_log`
         COMMENT '请求耗时(ms)',
     mapping           VARCHAR(200) NOT NULL
         COMMENT '代码位置',
+    source            VARCHAR(200)
+        COMMENT '请求来源,URL上的参数source来标记',
     host              VARCHAR(200) NOT NULL
         COMMENT '请求头:host',
     user_agent        VARCHAR(200) NOT NULL
