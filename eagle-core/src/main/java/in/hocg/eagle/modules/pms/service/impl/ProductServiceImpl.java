@@ -17,7 +17,7 @@ import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.pms.service.SkuService;
-import in.hocg.eagle.utils.JsonUtils;
+import in.hocg.eagle.utils.string.JsonUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

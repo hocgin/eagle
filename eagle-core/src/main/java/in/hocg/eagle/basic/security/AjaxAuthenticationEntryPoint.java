@@ -2,7 +2,7 @@ package in.hocg.eagle.basic.security;
 
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.basic.result.ResultCode;
-import in.hocg.eagle.utils.ResponseUtils;
+import in.hocg.eagle.utils.web.ResponseUtils;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 

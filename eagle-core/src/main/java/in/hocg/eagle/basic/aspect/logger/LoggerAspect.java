@@ -3,7 +3,7 @@ package in.hocg.eagle.basic.aspect.logger;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.security.SecurityContext;
-import in.hocg.eagle.utils.RequestUtils;
+import in.hocg.eagle.utils.web.RequestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

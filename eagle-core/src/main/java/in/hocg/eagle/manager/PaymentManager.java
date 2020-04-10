@@ -9,7 +9,7 @@ import in.hocg.eagle.modules.oms.pojo.qo.order.PayOrderQo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderService;
 import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.RequestUtils;
+import in.hocg.eagle.utils.web.RequestUtils;
 import in.hocg.payment.wxpay.v2.WxPayService;
 import in.hocg.payment.wxpay.v2.message.PayRefundMessage;
 import in.hocg.payment.wxpay.v2.request.UnifiedOrderRequest;

@@ -1,4 +1,4 @@
-package in.hocg.eagle.utils;
+package in.hocg.eagle.utils.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

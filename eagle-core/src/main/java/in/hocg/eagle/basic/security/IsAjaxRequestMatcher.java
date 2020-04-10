@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.security;
 
-import in.hocg.eagle.utils.RequestUtils;
+import in.hocg.eagle.utils.web.RequestUtils;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;

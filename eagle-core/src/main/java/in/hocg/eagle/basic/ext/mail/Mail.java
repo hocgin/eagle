@@ -3,7 +3,7 @@ package in.hocg.eagle.basic.ext.mail;
 import com.google.common.collect.Maps;
 import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.ext.mail.vars.SysVars;
-import in.hocg.eagle.utils.RequestUtils;
+import in.hocg.eagle.utils.web.RequestUtils;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

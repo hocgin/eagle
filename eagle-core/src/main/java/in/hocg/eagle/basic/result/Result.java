@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.result;
 
-import in.hocg.eagle.utils.JsonUtils;
+import in.hocg.eagle.utils.string.JsonUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.http.ResponseEntity;

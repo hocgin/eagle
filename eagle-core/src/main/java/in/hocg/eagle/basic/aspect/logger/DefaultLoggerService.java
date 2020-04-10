@@ -5,7 +5,7 @@ import in.hocg.eagle.basic.security.SecurityContext;
 import in.hocg.eagle.basic.security.User;
 import in.hocg.eagle.modules.com.service.RequestLogService;
 import in.hocg.eagle.utils.DateUtils;
-import in.hocg.eagle.utils.JsonUtils;
+import in.hocg.eagle.utils.string.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;

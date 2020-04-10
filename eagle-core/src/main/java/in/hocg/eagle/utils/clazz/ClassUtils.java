@@ -1,4 +1,4 @@
-package in.hocg.eagle.utils;
+package in.hocg.eagle.utils.clazz;
 
 import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
@@ -16,7 +16,7 @@ import java.util.*;
  */
 @UtilityClass
 public class ClassUtils {
-    
+
     /**
      * 获取对象字段的值
      *
@@ -31,7 +31,7 @@ public class ClassUtils {
                 || Objects.isNull(field)) {
             return def;
         }
-        
+
         boolean accessible = field.isAccessible();
         try {
             field.setAccessible(true);
@@ -42,12 +42,12 @@ public class ClassUtils {
             field.setAccessible(accessible);
         }
     }
-    
+
     public static <T> T getObjectValue(Object fieldObject, Field field,
                                        Object def) {
         return ((T) getFieldValue(fieldObject, field, def));
     }
-    
+
     /**
      * 设置对象某字段的值
      *
@@ -66,7 +66,7 @@ public class ClassUtils {
             field.setAccessible(accessible);
         }
     }
-    
+
     /**
      * 获取所有函数
      *
@@ -80,10 +80,10 @@ public class ClassUtils {
             return result;
         }
         result.addAll(ClassUtils.getAllMethod(superclass));
-        
+
         return result;
     }
-    
+
     /**
      * 获取所有字段
      *
@@ -92,7 +92,7 @@ public class ClassUtils {
     public static List<Field> getAllField(Class<?> clazz) {
         ArrayList<Field> result = Lists.newArrayList();
         result.addAll(Arrays.asList(clazz.getDeclaredFields()));
-        
+
         Class<?> superclass = clazz.getSuperclass();
         if (Object.class.equals(superclass)) {
             return result;
@@ -100,7 +100,7 @@ public class ClassUtils {
         result.addAll(ClassUtils.getAllField(superclass));
         return result;
     }
-    
+
     /**
      * 查找字段
      *
@@ -119,7 +119,7 @@ public class ClassUtils {
         }
         return Optional.ofNullable(field);
     }
-    
+
     /**
      * 通过函数名称获取 Class 对应的函数
      *
@@ -134,10 +134,10 @@ public class ClassUtils {
                 return method;
             }
         }
-        
+
         throw new IllegalArgumentException(clazz + "未找到函数名为 " + methodName + " 的函数");
     }
-    
+
     /**
      * 检查是否是基础类型
      * Integer => true
@@ -153,7 +153,7 @@ public class ClassUtils {
             return false;
         }
     }
-    
+
     /**
      * 判断是否基础类型
      *
@@ -170,7 +170,7 @@ public class ClassUtils {
                 clazz.equals(Short.class) ||
                 clazz.equals(Boolean.class);
     }
-    
+
     /**
      * 判断是否数组
      *
@@ -180,7 +180,7 @@ public class ClassUtils {
     public static boolean isArray(Class clazz) {
         return clazz.isArray();
     }
-    
+
     /**
      * 获取范型的具体类型
      *

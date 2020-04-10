@@ -4,7 +4,7 @@ import com.beust.jcommander.internal.Sets;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.ext.mail.Mail;
 import in.hocg.eagle.basic.ext.mail.MailTemplate;
-import in.hocg.eagle.utils.SpelParser;
+import in.hocg.eagle.utils.web.SpelParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;

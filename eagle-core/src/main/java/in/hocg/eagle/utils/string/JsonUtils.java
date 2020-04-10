@@ -1,4 +1,4 @@
-package in.hocg.eagle.utils;
+package in.hocg.eagle.utils.string;
 
 import com.alibaba.fastjson.JSON;
 import lombok.experimental.UtilityClass;

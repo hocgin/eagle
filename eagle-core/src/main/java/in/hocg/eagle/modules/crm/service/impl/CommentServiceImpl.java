@@ -19,7 +19,7 @@ import in.hocg.eagle.modules.crm.service.CommentTargetService;
 import in.hocg.eagle.modules.mms.message.event.SubscriptionEvent;
 import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.ResultUtils;
+import in.hocg.eagle.utils.web.ResultUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

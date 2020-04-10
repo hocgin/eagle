@@ -1,4 +1,4 @@
-package in.hocg.eagle.utils;
+package in.hocg.eagle.utils.file;
 
 import lombok.experimental.UtilityClass;
 

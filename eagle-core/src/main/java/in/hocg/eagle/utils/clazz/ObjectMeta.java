@@ -1,4 +1,4 @@
-package in.hocg.eagle.utils;
+package in.hocg.eagle.utils.clazz;
 
 import com.google.common.collect.Maps;
 import lombok.Getter;
@@ -20,18 +20,18 @@ public class ObjectMeta {
     @Getter
     private final Map<String, Field> fieldMap = Maps.newHashMap();
     private final static Map<Class<?>, ObjectMeta> CACHED = Maps.newHashMap();
-    
+
     private ObjectMeta(Class<?> clazz) {
         this.clazz = clazz;
         ClassUtils.getAllField(clazz).forEach(field -> {
             fieldMap.put(field.getName(), field);
         });
     }
-    
+
     public static ObjectMeta from(Class<?> clazz) {
         return CACHED.computeIfAbsent(clazz, ObjectMeta::new);
     }
-    
+
     public void setIfExist(Object target, String key, Object val) {
         try {
             Field field = fieldMap.get(key);
@@ -43,7 +43,7 @@ public class ObjectMeta {
         } catch (IllegalAccessException ignored) {
         }
     }
-    
+
     public <R> Optional<R> get(Object target, String key) {
         Field field = fieldMap.get(key);
         if (Objects.isNull(field)) {
