@@ -30,7 +30,8 @@ public class EagleGenerateTest {
     @Test
     public void generateByTables() {
         List<String> TABLES = Arrays.asList(
-            "com_short_url"
+            "com_change_log",
+            "com_field_change"
         );
         String javaPath = "src/main/java";
         String dir = Paths.get(System.getProperty("user.dir"), javaPath).toString();

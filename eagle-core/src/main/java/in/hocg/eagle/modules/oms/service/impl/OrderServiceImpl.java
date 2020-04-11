@@ -4,14 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.lang.SNCode;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.basic.lang.SNCode;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.mapstruct.OrderMapping;
 import in.hocg.eagle.mapstruct.SkuMapping;
+import in.hocg.eagle.modules.com.service.ChangeLogService;
 import in.hocg.eagle.modules.mkt.entity.CouponAccount;
+import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import in.hocg.eagle.modules.mkt.service.CouponAccountService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
 import in.hocg.eagle.modules.oms.entity.Order;
@@ -23,7 +25,6 @@ import in.hocg.eagle.modules.oms.helper.order.discount.coupon.Coupon;
 import in.hocg.eagle.modules.oms.mapper.OrderMapper;
 import in.hocg.eagle.modules.oms.pojo.dto.order.OrderItemDto;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
-import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
@@ -34,6 +35,8 @@ import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.pms.service.SkuService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.eagle.utils.compare.EntityCompare;
+import in.hocg.eagle.utils.compare.FieldChangeDto;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -69,6 +72,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     private final SkuService skuService;
     private final SkuMapping skuMapping;
     private final OrderMapping mapping;
+    private final ChangeLogService changeLogService;
     private final SNCode snCode;
 
     @Override
@@ -392,5 +396,16 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         }
 
         this.validUpdateById(updated);
+    }
+
+    @Override
+    public boolean validUpdateById(Order entity) {
+        final Long orderId = entity.getId();
+        final Order oldOrder = getById(orderId);
+        final EntityCompare<Order> compare = new EntityCompare<>();
+        final List<FieldChangeDto> changes = compare.diffUseLambda(oldOrder, entity, true,
+            Order::getId, Order::getCreatedAt, Order::getCreator, Order::getLastUpdatedAt, Order::getLastUpdater);
+        changeLogService.updateLog(ChangeLogRefType.OrderLog, entity.getId(), changes);
+        return super.validUpdateById(entity);
     }
 }

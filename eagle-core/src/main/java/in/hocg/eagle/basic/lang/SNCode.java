@@ -46,12 +46,22 @@ public class SNCode {
 
     }
 
+    /**
+     * 业务日志编码
+     *
+     * @return
+     */
+    public String getBusinessSNCode() {
+        return getSNCode(Type.BusinessLog);
+    }
+
     @Getter
     @RequiredArgsConstructor
     enum Type {
         Order("E1"),
         OrderRefundApply("R1"),
-        CouponAccount("C1");
+        CouponAccount("C1"),
+        BusinessLog("B1");
         private final String code;
     }
 
