@@ -43,6 +43,7 @@ public class NotifyServiceImpl extends AbstractServiceImpl<NotifyMapper, Notify>
         entity.setNotifyType(notifyType.orElse(null));
         entity.setCreator(dto.getUserId());
         entity.setCreatedAt(dto.getCreatedAt());
+        entity.setContent(dto.getNotifyType().getMessage());
         validInsert(entity);
 
         Notification notification;

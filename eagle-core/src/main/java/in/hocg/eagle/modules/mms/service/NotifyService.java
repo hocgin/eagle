@@ -15,6 +15,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface NotifyService extends AbstractService<Notify> {
 
-    @Transactional(rollbackFor = Exception.class)
     void published(PublishNotifyDto dto);
 }

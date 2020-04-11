@@ -19,14 +19,15 @@ import in.hocg.eagle.modules.crm.service.CommentTargetService;
 import in.hocg.eagle.modules.mms.message.event.SubscriptionEvent;
 import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.web.ResultUtils;
 import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.eagle.utils.web.ResultUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -84,10 +85,18 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
     public IPage<RootCommentComplexVo> pagingRootComment(RootCommentPagingQo qo) throws Throwable {
         final Integer targetTypeCode = qo.getRefType();
         final Long refId = qo.getRefId();
-        final CommentTargetType targetType = IntEnum.of(targetTypeCode, CommentTargetType.class)
-            .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("参数错误"));
-        final Long targetId = commentTargetService.getCommentTarget(targetType, refId)
-            .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("未找到评论"));
+        final Optional<CommentTargetType> targetTypeOpt = IntEnum.of(targetTypeCode, CommentTargetType.class);
+        if (!targetTypeOpt.isPresent()) {
+            return ResultUtils.emptyPage(qo);
+        }
+
+        final CommentTargetType targetType = targetTypeOpt.get();
+        final Optional<Long> targetIdOpt = commentTargetService.getCommentTarget(targetType, refId);
+        if (!targetIdOpt.isPresent()) {
+            return ResultUtils.emptyPage(qo);
+        }
+
+        final Long targetId = targetIdOpt.get();
         final IPage<Comment> result = baseMapper.pagingRootCommend(targetId, Enabled.On.getCode(), qo.page());
         return result.convert(entity -> {
             final RootCommentComplexVo item = mapping.asRootCommentComplexVo(this.convertComplex(entity));
@@ -101,12 +110,12 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
     @Transactional(rollbackFor = Exception.class)
     public IPage<CommentComplexVo> pagingChildComment(ChildCommentPagingQo qo) {
         final Comment pComment = baseMapper.selectById(qo.getParentId());
-        if (LangUtils.equals(pComment.getEnabled(), Enabled.Off.getCode())) {
+        if (Objects.isNull(pComment)
+            || Objects.isNull(pComment.getParentId())
+            || LangUtils.equals(pComment.getEnabled(), Enabled.Off.getCode())) {
             return ResultUtils.emptyPage(qo);
         }
 
-        ValidUtils.notNull(pComment);
-        ValidUtils.isNull(pComment.getParentId(), "非根评论");
         final String treePath = pComment.getTreePath();
         final String regexTreePath = String.format("%s/.*", treePath);
         final IPage<Comment> result = baseMapper.pagingByRegexTreePath(regexTreePath, qo.page());
