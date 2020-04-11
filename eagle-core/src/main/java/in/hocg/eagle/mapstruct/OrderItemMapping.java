@@ -15,6 +15,8 @@ import org.mapstruct.Mapping;
 public interface OrderItemMapping {
 
 
+    @Mapping(target = "refundApplySn", ignore = true)
+    @Mapping(target = "refundApplyId", ignore = true)
     @Mapping(target = "spec", ignore = true)
     @Mapping(target = "refundStatus", ignore = true)
     @Mapping(target = "refundStatusName", ignore = true)

@@ -43,6 +43,13 @@ public class OrderItemComplexVo {
     private BigDecimal couponAmount;
     @ApiModelProperty("优惠后金额")
     private BigDecimal realAmount;
+
+
+    @ApiModelProperty("退费申请ID")
+    private Long refundApplyId;
+    @ApiModelProperty("退费申请编号")
+    private String refundApplySn;
+
     @ApiModelProperty("退款状态")
     private Integer refundStatus;
     @Named(idFor = "refundStatus",

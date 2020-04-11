@@ -35,7 +35,9 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
 
     @Override
     public List<OrderItemComplexVo> selectListByOrderId(Long orderId) {
-        return selectListByOrderId2(orderId).stream().map(this::convertOrderItemComplex).collect(Collectors.toList());
+        return selectListByOrderId2(orderId).stream()
+            .map(this::convertOrderItemComplex)
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -56,6 +58,8 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
         final Optional<OrderRefundApply> orderRefundApply = orderRefundApplyService.selectOneByOrderItemId(id);
         if (orderRefundApply.isPresent()) {
             final OrderRefundApply apply = orderRefundApply.get();
+            result.setRefundApplySn(apply.getApplySn());
+            result.setRefundApplyId(apply.getId());
             result.setRefundStatus(apply.getApplyStatus());
         }
         result.setSpec(JSON.parseArray(entity.getProductSpecData(), KeyValue.class));
