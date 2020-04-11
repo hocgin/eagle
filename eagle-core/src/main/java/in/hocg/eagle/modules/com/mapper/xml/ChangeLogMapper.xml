@@ -4,6 +4,14 @@
 
   <select id="pagingWithComplex" resultType="in.hocg.eagle.modules.com.entity.ChangeLog">
     SELECT ccl.* FROM com_change_log ccl
+    <where>
+      <if test="qo.refId">
+        AND ccl.ref_id = #{qo.refId}
+      </if>
+      <if test="qo.refType">
+        AND ccl.ref_type = #{qo.refType}
+      </if>
+    </where>
     ORDER BY ccl.created_at DESC
   </select>
 </mapper>

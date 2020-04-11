@@ -18,4 +18,5 @@ public enum ChangeLogRefType implements IntEnum {
     private final Integer code;
     private final String name;
 
+    public static final String KEY = "changeLogRefType";
 }

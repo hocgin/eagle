@@ -487,3 +487,27 @@ INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`
 INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
                                  `created_at`, `creator`)
     VALUE (19, '已过期', '2', '优惠券使用状态:已过期', 1, NOW(), 1);
+
+## 业务日志 - 变更类型
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (20, '业务日志 - 变更类型', 'changeLogChangeType', '业务日志 - 变更类型', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (20, '新增', '0', '业务日志 - 变更类型:新增', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (20, '更新', '1', '业务日志 - 变更类型:更新', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (20, '删除', '2', '业务日志 - 变更类型:删除', 1, NOW(), 1);
+
+## 业务日志 - 业务类型
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (21, '业务日志 - 业务类型', 'changeLogRefType', '业务日志 - 业务类型', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (21, '订单日志', '0', '业务日志 - 业务类型:订单日志', 1, NOW(), 1);
+
+

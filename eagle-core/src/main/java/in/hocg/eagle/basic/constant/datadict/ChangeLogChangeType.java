@@ -19,4 +19,6 @@ public enum ChangeLogChangeType implements IntEnum {
     Delete(2, "删除");
     private final Integer code;
     private final String name;
+
+    public static final String KEY = "changeLogChangeType";
 }
