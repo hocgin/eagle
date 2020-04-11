@@ -1,8 +1,12 @@
 package in.hocg.eagle.modules.com.mapper;
 
-import in.hocg.eagle.modules.com.entity.ChangeLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import in.hocg.eagle.modules.com.entity.ChangeLog;
+import in.hocg.eagle.modules.com.pojo.qo.changelog.ChangeLogPagingQo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -15,4 +19,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ChangeLogMapper extends BaseMapper<ChangeLog> {
 
+    IPage<ChangeLog> pagingWithComplex(@Param("qo") ChangeLogPagingQo qo, @Param("page") Page page);
 }

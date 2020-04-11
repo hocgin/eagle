@@ -2,4 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.eagle.modules.com.mapper.FieldChangeMapper">
 
+  <select id="selectAllByChangeLogId" resultType="in.hocg.eagle.modules.com.entity.FieldChange">
+    SELECT cfc.* FROM com_field_change cfc
+    WHERE cfc.change_log_id = #{changeLogId}
+  </select>
+
 </mapper>

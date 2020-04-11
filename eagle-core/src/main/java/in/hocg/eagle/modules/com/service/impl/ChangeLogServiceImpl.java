@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.com.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.ChangeLogChangeType;
@@ -11,6 +12,8 @@ import in.hocg.eagle.mapstruct.ChangeLogMapping;
 import in.hocg.eagle.mapstruct.FieldChangeMapping;
 import in.hocg.eagle.modules.com.entity.ChangeLog;
 import in.hocg.eagle.modules.com.mapper.ChangeLogMapper;
+import in.hocg.eagle.modules.com.pojo.qo.changelog.ChangeLogPagingQo;
+import in.hocg.eagle.modules.com.pojo.vo.changelog.ChangeLogComplexVo;
 import in.hocg.eagle.modules.com.service.ChangeLogService;
 import in.hocg.eagle.modules.com.service.FieldChangeService;
 import in.hocg.eagle.utils.compare.ChangeLogDto;
@@ -97,6 +100,18 @@ public class ChangeLogServiceImpl extends AbstractServiceImpl<ChangeLogMapper, C
         userOpt.ifPresent(user -> result.setCreator(user.getId()));
         result.setChange(Lists.newArrayList());
         this.insert(result);
+    }
+
+    @Override
+    public IPage<ChangeLogComplexVo> pagingWithComplex(ChangeLogPagingQo qo) {
+        return baseMapper.pagingWithComplex(qo, qo.page())
+            .convert(this::convertComplex);
+    }
+
+    private ChangeLogComplexVo convertComplex(ChangeLog entity) {
+        final Long id = entity.getId();
+        ChangeLogComplexVo result = mapping.asChangeLogComplexVo(entity);
+        return result.setChanges(fieldChangeService.selectAllByChangeLogId(id));
     }
 
 }

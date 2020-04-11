@@ -1,8 +1,11 @@
 package in.hocg.eagle.modules.com.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.basic.constant.datadict.ChangeLogRefType;
 import in.hocg.eagle.modules.com.entity.ChangeLog;
+import in.hocg.eagle.modules.com.pojo.qo.changelog.ChangeLogPagingQo;
+import in.hocg.eagle.modules.com.pojo.vo.changelog.ChangeLogComplexVo;
 import in.hocg.eagle.utils.compare.FieldChangeDto;
 import lombok.NonNull;
 
@@ -23,4 +26,6 @@ public interface ChangeLogService extends AbstractService<ChangeLog> {
     void deleteLog(@NonNull ChangeLogRefType refType, @NonNull Long refId);
 
     void insertLog(@NonNull ChangeLogRefType refType, @NonNull Long refId);
+
+    IPage<ChangeLogComplexVo> pagingWithComplex(ChangeLogPagingQo qo);
 }

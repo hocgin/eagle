@@ -3,6 +3,9 @@ package in.hocg.eagle.modules.com.mapper;
 import in.hocg.eagle.modules.com.entity.FieldChange;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface FieldChangeMapper extends BaseMapper<FieldChange> {
 
+    List<FieldChange> selectAllByChangeLogId(@Param("changeLogId") Long changeLogId);
 }
