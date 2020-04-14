@@ -1,4 +1,4 @@
-jasypt.encryptor.password: hocgin
+jasypt.encryptor.password: ${JASYPT_ENCRYPTOR_PASSWORD}
 spring:
   profiles:
     active: local
