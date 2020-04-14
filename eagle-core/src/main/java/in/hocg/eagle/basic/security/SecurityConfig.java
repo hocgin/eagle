@@ -61,6 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(
                 // 短链接
                 "/s/*",
+                "/",
+                "/captcha",
                 TokenAuthenticationEndpoint.ACCOUNT_TOKEN_URI).permitAll()
             .anyRequest().authenticated()
         ;
