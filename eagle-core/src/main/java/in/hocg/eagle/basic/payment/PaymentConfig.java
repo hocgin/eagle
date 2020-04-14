@@ -36,10 +36,10 @@ public class PaymentConfig {
     @Bean
     WxPayService wxPayService() {
         final WxPayConfigStorage configStorage = ConfigStorages.createConfigStorage(WxPayConfigStorage.class)
-                .setAppId(System.getenv("wx_pay_app_id"))
-                .setKey(System.getenv("wx_pay_key"))
-                .setMchId(System.getenv("wx_mch_id"))
-                .setCertFile(new File(System.getenv("wx_cert_file")))
+                .setAppId(System.getenv("WX_PAY_APP_ID"))
+                .setKey(System.getenv("WX_PAY_KEY"))
+                .setMchId(System.getenv("WX_MCH_ID"))
+                .setCertFile(new File(System.getenv("WX_CERT_FILE")))
                 .setSignType(WxSignType.HMAC_SHA256)
                 .setIsDev(false);
         return PaymentServices.createPaymentService(WxPayService.class, configStorage);
