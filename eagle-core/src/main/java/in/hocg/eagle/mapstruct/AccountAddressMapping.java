@@ -19,5 +19,6 @@ public interface AccountAddressMapping {
     @Mapping(target = "accountId", ignore = true)
     AccountAddress asAccountAddress(AccountAddressSaveQo qo);
 
+    @Mapping(target = "isDefaultName", ignore = true)
     AccountAddressComplexVo asAccountAddressComplexVo(AccountAddress entity);
 }

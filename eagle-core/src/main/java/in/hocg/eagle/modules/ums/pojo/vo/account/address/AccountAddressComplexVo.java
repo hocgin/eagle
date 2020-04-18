@@ -17,7 +17,7 @@ import lombok.Data;
 @InjectNamed
 public class AccountAddressComplexVo {
     @ApiModelProperty("ID")
-    private Long accountId;
+    private Long id;
     @ApiModelProperty("收件人姓名")
     private String name;
     @ApiModelProperty("收件人手机号")
@@ -34,7 +34,6 @@ public class AccountAddressComplexVo {
     private String detailAddress;
     @ApiModelProperty("是否默认")
     private Integer isDefault;
-    @Named(idFor = "isDefault",
-        type = NamedType.DataDict, args = {IsDefault.KEY})
-    private Integer isDefaultName;
+    @Named(idFor = "isDefault", type = NamedType.DataDict, args = {IsDefault.KEY})
+    private String isDefaultName;
 }

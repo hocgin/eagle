@@ -1,7 +1,10 @@
 package in.hocg.eagle.modules.ums.pojo.qo.account.address;
 
+import in.hocg.eagle.basic.constant.datadict.IsDefault;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
 import in.hocg.eagle.basic.pojo.qo.Insert;
+import in.hocg.eagle.basic.pojo.qo.Update;
+import in.hocg.eagle.basic.valid.RangeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -40,6 +43,7 @@ public class AccountAddressSaveQo extends BaseQo {
     private String region;
     @ApiModelProperty("详细地址(街道)")
     private String detailAddress;
+    @RangeEnum(groups = {Insert.class, Update.class}, enumClass = IsDefault.class)
     private Integer isDefault;
 
 }

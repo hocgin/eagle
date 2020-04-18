@@ -24,6 +24,10 @@ import in.hocg.eagle.modules.oms.service.OrderService;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductService;
+import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressPageQo;
+import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressSaveQo;
+import in.hocg.eagle.modules.ums.pojo.vo.account.address.AccountAddressComplexVo;
+import in.hocg.eagle.modules.ums.service.AccountAddressService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +52,7 @@ public class AppService {
     private final AppMapping mapping;
     private final ProductService productService;
     private final PaymentManager paymentManager;
+    private final AccountAddressService accountAddressService;
 
     public void signUp(SignUpApiQo qo) {
 
@@ -150,5 +155,22 @@ public class AppService {
     @Transactional(rollbackFor = Exception.class)
     public void deleteOneWithCartItem(IdQo qo) {
         cartItemService.deleteOne(qo);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void saveOneWithAccountAddress(AccountAddressSaveQo qo) {
+        accountAddressService.saveOne(qo);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<AccountAddressComplexVo> pagingWithAccountAddress(SelfAccountAddressPagingApiQo qo) {
+        final AccountAddressPageQo newQo = new AccountAddressPageQo();
+        newQo.setAccountId(qo.getUserId());
+        return accountAddressService.paging(newQo);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteOneWithAccountAddress(IdQo qo) {
+        accountAddressService.deleteOne(qo);
     }
 }
