@@ -1,3 +1,34 @@
+DROP TABLE IF EXISTS `com_system_settings`;
+CREATE TABLE `com_system_settings`
+(
+    `id`              BIGINT AUTO_INCREMENT
+        COMMENT 'ID',
+    --
+    `title`           VARCHAR(32)  NOT NULL
+        COMMENT '配置名称',
+    `remark`          VARCHAR(255) NOT NULL
+        COMMENT '配置备注',
+    `config_code`     VARCHAR(32)  NOT NULL
+        COMMENT '配置码',
+    `value`           VARCHAR(1024)
+        COMMENT '配置值',
+    --
+    `created_at`      DATETIME(6)  NOT NULL
+        COMMENT '创建时间',
+    `creator`         BIGINT       NOT NULL
+        COMMENT '创建者',
+    `last_updated_at` DATETIME(6)
+        COMMENT '更新时间',
+    `last_updater`    BIGINT
+        COMMENT '更新者',
+
+    UNIQUE KEY (`config_code`),
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COMMENT = '[基础模块] 系统配置表';
+--
 DROP TABLE IF EXISTS `com_district`;
 CREATE TABLE `com_district`
 (

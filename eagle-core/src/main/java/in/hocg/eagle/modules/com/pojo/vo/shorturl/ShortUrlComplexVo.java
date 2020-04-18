@@ -34,7 +34,7 @@ public class ShortUrlComplexVo {
     private LocalDateTime createdAt;
     @ApiModelProperty("创建人")
     private Long creator;
-    @ApiModelProperty("创建人名")
+    @ApiModelProperty("创建人")
     @Named(idFor = "creator", type = NamedType.Nickname)
     private String creatorName;
 }
