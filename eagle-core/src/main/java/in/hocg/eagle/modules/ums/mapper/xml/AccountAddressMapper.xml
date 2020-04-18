@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.eagle.modules.ums.mapper.AccountAddressMapper">
+
+  <update id="updateAllUnDefaultByAccountId">
+    UPDATE ums_account_address
+    SET is_default = 0
+    WHERE account_id = #{accountId}
+  </update>
+  <select id="paging" resultType="in.hocg.eagle.modules.ums.entity.AccountAddress">
+    SELECT uaa.* FROM ums_account_address uaa
+  </select>
+</mapper>
