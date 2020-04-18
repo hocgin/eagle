@@ -41,6 +41,58 @@ CREATE TABLE `ums_account`
     DEFAULT CHARSET = utf8mb4
     COMMENT = '[用户模块] 账号表';
 --
+DROP TABLE IF EXISTS `ums_account_group`;
+CREATE TABLE `ums_account_group`
+(
+    `id`              BIGINT AUTO_INCREMENT
+        COMMENT 'ID',
+    --
+    `title`           VARCHAR(16) NOT NULL
+        COMMENT '组名',
+    `remark`          VARCHAR(32) NOT NULL
+        COMMENT '组描述',
+    `group_type`      INT(4)      NOT NULL
+        COMMENT '分组类型, 如: 通用',
+    `member_source`   INT(4)      NOT NULL
+        COMMENT '成员来源: 0->所有, 1->自定义组员列表',
+    --
+    `created_at`      DATETIME(6) NOT NULL
+        COMMENT '创建时间',
+    `creator`         BIGINT      NOT NULL
+        COMMENT '创建者',
+    `last_updated_at` DATETIME(6)
+        COMMENT '更新时间',
+    `last_updater`    BIGINT
+        COMMENT '更新者',
+
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COMMENT = '[用户模块] 账号分组表';
+--
+DROP TABLE IF EXISTS `ums_account_group_member`;
+CREATE TABLE `ums_account_group_member`
+(
+    `id`         BIGINT AUTO_INCREMENT
+        COMMENT 'ID',
+    --
+    `group_id`   BIGINT      NOT NULL
+        COMMENT '组ID',
+    `account_id` BIGINT      NOT NULL
+        COMMENT '成员ID',
+    --
+    `created_at` DATETIME(6) NOT NULL
+        COMMENT '创建时间',
+    `creator`    BIGINT      NOT NULL
+        COMMENT '创建者',
+    UNIQUE KEY (`group_id`, `account_id`),
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COMMENT = '[用户模块] 账号分组成员表';
+--
 DROP TABLE IF EXISTS `ums_account_address`;
 CREATE TABLE `ums_account_address`
 (

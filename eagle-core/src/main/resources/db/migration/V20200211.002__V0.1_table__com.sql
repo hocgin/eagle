@@ -594,4 +594,23 @@ INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`
                                  `created_at`, `creator`)
     VALUE (23, '是', '1', '是否默认:是', 1, NOW(), 1);
 
+## 是否默认
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (24, '群成员来源', 'groupMemberSource', '群成员来源', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (24, '所有', '0', '群成员来源:所有', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (24, '自定义组员列表', '1', '群成员来源:自定义组员列表', 1, NOW(), 1);
+
+## 账号群组类型
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (25, '账号群组类型', 'accountGroupType', '账号群组类型', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (25, '通用', '0', '账号群组类型:通用', 1, NOW(), 1);
+
 
