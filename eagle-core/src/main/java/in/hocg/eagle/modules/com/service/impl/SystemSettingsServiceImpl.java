@@ -69,6 +69,14 @@ public class SystemSettingsServiceImpl extends AbstractServiceImpl<SystemSetting
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public SystemSettingsComplexVo selectOne(Long id) {
+        final SystemSettings entity = getById(id);
+        ValidUtils.notNull(entity, "数据不存在");
+        return convertComplex(entity);
+    }
+
+    @Override
     public void validEntity(SystemSettings entity) {
         super.validEntity(entity);
 

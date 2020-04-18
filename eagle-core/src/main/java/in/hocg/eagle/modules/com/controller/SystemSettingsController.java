@@ -35,6 +35,12 @@ public class SystemSettingsController {
         return Result.success(service.pagingWithComplex(qo));
     }
 
+    @GetMapping("/{id:\\d+}:complex")
+    @UseLogger("详情 - 系统配置")
+    public Result<SystemSettingsComplexVo> selectOne(@PathVariable Long id) {
+        return Result.success(service.selectOne(id));
+    }
+
     @PostMapping
     @UseLogger("新增 - 系统配置")
     public Result insertOne(@Validated({Insert.class}) @RequestBody SystemSettingsSaveQo qo) {
