@@ -510,4 +510,18 @@ INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`
                                  `created_at`, `creator`)
     VALUE (21, '订单日志', '0', '业务日志 - 业务类型:订单日志', 1, NOW(), 1);
 
+## 购物车 - 购物车商品状态
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (21, '购物车 - 购物车商品状态', 'cartItemStatus', '购物车 - 购物车商品状态', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (21, '正常', '0', '购物车 - 购物车商品状态:正常', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (21, '已过期', '1', '购物车 - 购物车商品状态:已过期', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (21, '库存不足', '2', '购物车 - 购物车商品状态:库存不足', 1, NOW(), 1);
+
 

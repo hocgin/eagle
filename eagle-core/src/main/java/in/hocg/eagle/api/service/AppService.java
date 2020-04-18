@@ -2,21 +2,22 @@ package in.hocg.eagle.api.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.api.AppMapping;
-import in.hocg.eagle.api.pojo.qo.ProductPagingApiQo;
-import in.hocg.eagle.api.pojo.qo.SelfCouponPagingApiQo;
-import in.hocg.eagle.api.pojo.qo.SelfOrderPagingApiQo;
-import in.hocg.eagle.api.pojo.qo.SignUpApiQo;
+import in.hocg.eagle.api.pojo.qo.*;
 import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.manager.PaymentManager;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponAccountPagingQo;
+import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import in.hocg.eagle.modules.mkt.service.CouponAccountService;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
+import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemPagingQo;
+import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemSaveQo;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
-import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
+import in.hocg.eagle.modules.oms.pojo.vo.cart.CartItemComplexVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
+import in.hocg.eagle.modules.oms.service.CartItemService;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
 import in.hocg.eagle.modules.oms.service.OrderRefundApplyService;
 import in.hocg.eagle.modules.oms.service.OrderService;
@@ -41,6 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AppService {
     private final OrderService orderService;
     private final OrderRefundApplyService orderRefundApplyService;
+    private final CartItemService cartItemService;
     private final CouponAccountService couponAccountService;
     private final OrderItemService orderItemService;
     private final AppMapping mapping;
@@ -131,5 +133,22 @@ public class AppService {
         CouponAccountPagingQo newQo = mapping.asCouponAccountPagingQo(qo);
         newQo.setAccountId(qo.getUserId());
         return couponAccountService.paging(newQo);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<CartItemComplexVo> pagingSelfCartItem(SelfCartItemPagingApiQo qo) {
+        CartItemPagingQo newQo = mapping.asCartItemPagingQo(qo);
+        newQo.setAccountId(qo.getUserId());
+        return cartItemService.paging(newQo);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void saveOneWithCartItem(CartItemSaveQo qo) {
+        cartItemService.saveOne(qo);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteOneWithCartItem(IdQo qo) {
+        cartItemService.deleteOne(qo);
     }
 }

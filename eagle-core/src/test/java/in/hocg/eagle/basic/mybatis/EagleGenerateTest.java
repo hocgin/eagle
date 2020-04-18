@@ -30,13 +30,13 @@ public class EagleGenerateTest {
     @Test
     public void generateByTables() {
         List<String> TABLES = Arrays.asList(
-            "com_change_log",
-            "com_field_change"
+            "oms_cart_item",
+            ""
         );
         String javaPath = "src/main/java";
         String dir = Paths.get(System.getProperty("user.dir"), javaPath).toString();
         eagleGenerate.generateByTables("in.hocg.eagle.modules",
-            "com",
+            "oms",
             dir, TABLES.toArray(new String[]{}));
     }
 }

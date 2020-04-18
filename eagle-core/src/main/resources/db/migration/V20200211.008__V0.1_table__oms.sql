@@ -92,30 +92,63 @@ CREATE TABLE `oms_order_item`
 DROP TABLE IF EXISTS `oms_order_refund_apply`;
 CREATE TABLE `oms_order_refund_apply`
 (
-    `id`                  bigint(20)  NOT NULL AUTO_INCREMENT,
-    apply_sn              VARCHAR(64) NOT NULL
+    `id`               bigint(20)  NOT NULL AUTO_INCREMENT,
+    apply_sn           VARCHAR(64) NOT NULL
         COMMENT '退款申请编号',
-    `apply_status`        int(1)      NOT NULL DEFAULT 0 COMMENT '申请状态：[0:待处理；1:退货中；2:已完成；3:已拒绝]',
+    `apply_status`     int(1)      NOT NULL DEFAULT 0 COMMENT '申请状态：[0:待处理；1:退货中；2:已完成；3:已拒绝]',
     -- #退货信息
-    `order_item_id`       bigint(20)  NOT NULL  COMMENT '订单商品ID',
-    `refund_quantity`     int(11)              DEFAULT NULL COMMENT '退货数量',
-    `refund_amount`       decimal(10, 2)       DEFAULT NULL COMMENT '退款金额',
-    `refund_reason`       varchar(200)         DEFAULT NULL COMMENT '退货原因',
-    `refund_remark`       varchar(200)         DEFAULT NULL COMMENT '退货备注',
+    `order_item_id`    bigint(20)  NOT NULL COMMENT '订单商品ID',
+    `refund_quantity`  int(11)              DEFAULT NULL COMMENT '退货数量',
+    `refund_amount`    decimal(10, 2)       DEFAULT NULL COMMENT '退款金额',
+    `refund_reason`    varchar(200)         DEFAULT NULL COMMENT '退货原因',
+    `refund_remark`    varchar(200)         DEFAULT NULL COMMENT '退货备注',
     -- #处理信息
-    company_address_id    bigint(20)           DEFAULT NULL COMMENT '仓库收货地址表ID',
-    handler               BIGINT      NULL COMMENT '处理人',
-    handle_at             DATETIME(6) NULL COMMENT '处理时间',
-    handle_remark         varchar(512)         DEFAULT NULL COMMENT '处理备注',
-    receiver              BIGINT      NULL COMMENT '收货人',
-    receive_at            DATETIME(6) NULL COMMENT '收货时间',
-    receive_remark        varchar(512)         DEFAULT NULL COMMENT '收货备注',
+    company_address_id bigint(20)           DEFAULT NULL COMMENT '仓库收货地址表ID',
+    handler            BIGINT      NULL COMMENT '处理人',
+    handle_at          DATETIME(6) NULL COMMENT '处理时间',
+    handle_remark      varchar(512)         DEFAULT NULL COMMENT '处理备注',
+    receiver           BIGINT      NULL COMMENT '收货人',
+    receive_at         DATETIME(6) NULL COMMENT '收货时间',
+    receive_remark     varchar(512)         DEFAULT NULL COMMENT '收货备注',
     --
-    creator               BIGINT      NOT NULL,
-    created_at            DATETIME(6) NOT NULL,
-    last_updater          BIGINT      NULL,
-    last_updated_at       DATETIME(6) NULL,
+    creator            BIGINT      NOT NULL,
+    created_at         DATETIME(6) NOT NULL,
+    last_updater       BIGINT      NULL,
+    last_updated_at    DATETIME(6) NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
     COMMENT ='订单退货申请';
+--
+DROP TABLE IF EXISTS `oms_cart_item`;
+CREATE TABLE `oms_cart_item`
+(
+    id                    BIGINT AUTO_INCREMENT,
+    --
+    account_id            BIGINT         NOT NULL
+        COMMENT '账号ID',
+    product_id            BIGINT         NOT NULL
+        COMMENT '商品ID',
+    add_product_price     DECIMAL(10, 2) NOT NULL
+        COMMENT '加入时，商品价格',
+    add_product_title     VARCHAR(128)   NOT NULL
+        COMMENT '加入时，商品标题',
+    add_product_image_url VARCHAR(255)   NOT NULL
+        COMMENT '加入时，商品图片',
+    sku_id                BIGINT         NOT NULL
+        COMMENT 'SKU ID',
+    sku_spec_data         varchar(512)   NOT NULL
+        COMMENT '规格属性',
+    quantity              INT(8)         NOT NULL DEFAULT 1
+        COMMENT '加入的数量',
+    --
+    creator               BIGINT         NOT NULL,
+    created_at            DATETIME(6)    NOT NULL,
+    last_updater          BIGINT         NULL,
+    last_updated_at       DATETIME(6)    NULL,
+    UNIQUE KEY (account_id, sku_id),
+    PRIMARY KEY (id)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COMMENT '[订单模块] 购物车表');

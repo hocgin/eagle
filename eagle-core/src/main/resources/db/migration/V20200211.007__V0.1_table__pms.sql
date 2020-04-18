@@ -69,7 +69,7 @@ CREATE TABLE `pms_sku`
     id         BIGINT AUTO_INCREMENT,
     product_id BIGINT,
     --
-    sku_code   VARCHAR(126)   NOT NULL
+    sku_code   VARCHAR(128)   NOT NULL
         COMMENT 'SKU 编码',
     price      DECIMAL(10, 2) NOT NULL
         COMMENT '商品价格(如: 12.00)',
