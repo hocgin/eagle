@@ -1,6 +1,7 @@
 package in.hocg.eagle.manager;
 
 import com.alibaba.fastjson.JSON;
+import in.hocg.eagle.basic.Env;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.manager.dto.AMapDistrictResultDto;
 import in.hocg.eagle.manager.dto.IpAndAddressDto;
@@ -33,7 +34,7 @@ public class LangManager {
      * @return
      */
     public IpAndAddressDto getAddressByIp(String ip) {
-        String token = "34579df219c0eadf6c9f02f610c8169b";
+        String token = Env.getConfigs().getIp138();
         String url = String.format("http://api.ip138.com/query/?ip=%s&token=%s&datatype=jsonp", ip, token);
         return restTemplate.getForObject(url, IpAndAddressDto.class);
     }
@@ -44,17 +45,13 @@ public class LangManager {
      * @return
      */
     public List<AMapDistrictDto> getDistrict() {
-        String token = "a17f4063f58d7fc70de9a205e22f2450";
+        String token = Env.getConfigs().getAmap();
         String subdistrict = "3";
         String url = String.format("https://restapi.amap.com/v3/config/district?key=%s&subdistrict=%s", token, subdistrict);
         String resultText = restTemplate.getForObject(url, String.class);
-        if (Objects.isNull(resultText)) {
-            throw ServiceException.wrap("连接高德失败");
-        }
         final AMapDistrictResultDto result = JSON.parseObject(resultText, AMapDistrictResultDto.class);
-
-        if (!result.isOk()) {
-            throw ServiceException.wrap("连接高德失败");
+        if (Objects.isNull(result) || !result.isOk()) {
+            throw ServiceException.wrap("请求高德数据失败");
         }
         return result.getDistricts();
     }

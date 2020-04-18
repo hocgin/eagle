@@ -1,13 +1,12 @@
 package in.hocg.eagle.basic;
 
-import com.google.common.collect.Maps;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.experimental.UtilityClass;
+import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.core.env.Environment;
 
 import java.util.Arrays;
-import java.util.Map;
 
 /**
  * Created by hocgin on 2019/5/26.
@@ -17,19 +16,23 @@ import java.util.Map;
  */
 @UtilityClass
 public class Env {
-    private final Map<String, String> DEFAULT_VALUES = Maps.newHashMap();
-    private final String PREFIX = "eagle";
     private final Environment ENVIRONMENT;
+    private final Configs configs;
 
     static {
         ENVIRONMENT = SpringContext.getBean(Environment.class);
-        DEFAULT_VALUES.put(Keys.HOSTNAME, "http://127.0.0.1:8080");
+        configs = Binder.get(ENVIRONMENT).bind(Configs.PREFIX, Configs.class).orElse(new Configs());
     }
 
-    @ApiModel("配置KEY")
-    static class Keys {
+    @Data
+    public class Configs {
+        public static final String PREFIX = "eagle";
         @ApiModelProperty("服务域名")
-        public static final String HOSTNAME = PREFIX + ".hostname";
+        private String hostname = "http://127.0.0.1:8080";
+        @ApiModelProperty("amap")
+        private String amap;
+        @ApiModelProperty("ip138")
+        private String ip138;
     }
 
     /**
@@ -43,15 +46,20 @@ public class Env {
     }
 
     /**
+     * 配置
+     *
+     * @return
+     */
+    public static Configs getConfigs() {
+        return configs;
+    }
+
+    /**
      * 获取当前服务器的域名
      *
      * @return
      */
     public static String hostname() {
-        return get(Keys.HOSTNAME);
-    }
-
-    private static <T> T get(String key) {
-        return ((T) ENVIRONMENT.getProperty(key, DEFAULT_VALUES.get(key)));
+        return getConfigs().getHostname();
     }
 }

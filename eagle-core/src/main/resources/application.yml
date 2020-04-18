@@ -24,3 +24,5 @@ aliyun:
 # EAGLE
 eagle:
   hostname: http://127.0.0.1:8080
+  amap: ENC(773e44N8XZaDGUKtmj3btJztElbCAhWYNCkSRMhj/wUiYtPs5nKQ3/JsTg9LzCGF)
+  ip138: ENC(qcTFZLAY+7tDV4gKQ7xcl3vXs/ypMFx/wBUE0zf15SUBLKqB7xu3FsVpwOIktiiE)
