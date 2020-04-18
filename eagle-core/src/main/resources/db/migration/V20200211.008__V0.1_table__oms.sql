@@ -133,7 +133,7 @@ CREATE TABLE `oms_cart_item`
         COMMENT '加入时，商品价格',
     add_product_title     VARCHAR(128)   NOT NULL
         COMMENT '加入时，商品标题',
-    add_product_image_url VARCHAR(255)   NOT NULL
+    add_product_image_url VARCHAR(255)
         COMMENT '加入时，商品图片',
     sku_id                BIGINT         NOT NULL
         COMMENT 'SKU ID',

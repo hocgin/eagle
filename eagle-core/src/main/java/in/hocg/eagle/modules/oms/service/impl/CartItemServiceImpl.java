@@ -91,7 +91,7 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<CartItemComplexVo> paging(CartItemPagingQo qo) {
-        return baseMapper.paging(qo)
+        return baseMapper.paging(qo, qo.page())
             .convert(this::convertComplex);
     }
 
@@ -108,6 +108,11 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
         if (Objects.isNull(product)
             || LangUtils.equals(product.getPublishStatus(), ProductPublishStatus.SoldOut.getCode())
             || LangUtils.equals(product.getDeleteStatus(), DeleteStatus.On.getCode())) {
+            result.setCartItemStatus(CartItemStatus.Expired.getCode());
+            return result;
+        }
+
+        if (!LangUtils.equals(sku.getSpecData(), entity.getSkuSpecData())) {
             result.setCartItemStatus(CartItemStatus.Expired.getCode());
             return result;
         }

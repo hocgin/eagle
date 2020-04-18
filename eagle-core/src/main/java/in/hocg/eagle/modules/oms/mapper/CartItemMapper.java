@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.oms.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.eagle.modules.oms.entity.CartItem;
 import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemPagingQo;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,5 +19,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface CartItemMapper extends BaseMapper<CartItem> {
 
-    IPage<CartItem> paging(@Param("qo") CartItemPagingQo qo);
+    IPage<CartItem> paging(@Param("qo") CartItemPagingQo qo, @Param("page") Page page);
 }

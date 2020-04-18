@@ -13,5 +13,5 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CartItemPagingQo extends PageQo {
-    private Integer accountId;
+    private Long accountId;
 }

@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.oms.pojo.vo.cart;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.constant.datadict.CartItemStatus;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
+@InjectNamed
 public class CartItemComplexVo {
     private Long id;
     @ApiModelProperty("商品ID")
