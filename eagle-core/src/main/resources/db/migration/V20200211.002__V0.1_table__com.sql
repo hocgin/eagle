@@ -552,4 +552,15 @@ INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`
                                  `created_at`, `creator`)
     VALUE (22, '库存不足', '2', '购物车 - 购物车商品状态:库存不足', 1, NOW(), 1);
 
+## 是否默认
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (23, '是否默认', 'isDefault', '是否默认', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (23, '否', '0', '是否默认:否', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (23, '是', '1', '是否默认:是', 1, NOW(), 1);
+
 
