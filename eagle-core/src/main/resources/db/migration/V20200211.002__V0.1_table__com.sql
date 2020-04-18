@@ -1,3 +1,31 @@
+DROP TABLE IF EXISTS `com_district`;
+CREATE TABLE `com_district`
+(
+    id        BIGINT AUTO_INCREMENT,
+    parent_id bigint,
+    --
+    tree_path varchar(255)        NOT NULL
+        COMMENT '树路径，组成方式: /父路径/当前ID',
+    enabled   TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+        COMMENT '启用状态[0:为禁用状态;1:为正常状态]',
+    ad_code   VARCHAR(32)         NOT NULL
+        COMMENT '区域编码',
+    city_code VARCHAR(32)
+        COMMENT '城市编码',
+    lat       decimal(10, 6)
+        COMMENT '中心(纬度)',
+    lng       decimal(10, 6)
+        COMMENT '中心(经度)',
+    title     VARCHAR(32)         NOT NULL
+        COMMENT '名称',
+    --
+    UNIQUE KEY (tree_path),
+    PRIMARY KEY (id)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COMMENT '[基础模块] 城市规划表';
+--
 DROP TABLE IF EXISTS `com_change_log`;
 CREATE TABLE `com_change_log`
 (
@@ -513,15 +541,15 @@ INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`
 ## 购物车 - 购物车商品状态
 INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
                             `created_at`, `creator`)
-    VALUE (21, '购物车 - 购物车商品状态', 'cartItemStatus', '购物车 - 购物车商品状态', 1, NOW(), 1);
+    VALUE (22, '购物车 - 购物车商品状态', 'cartItemStatus', '购物车 - 购物车商品状态', 1, NOW(), 1);
 INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
                                  `created_at`, `creator`)
-    VALUE (21, '正常', '0', '购物车 - 购物车商品状态:正常', 1, NOW(), 1);
+    VALUE (22, '正常', '0', '购物车 - 购物车商品状态:正常', 1, NOW(), 1);
 INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
                                  `created_at`, `creator`)
-    VALUE (21, '已过期', '1', '购物车 - 购物车商品状态:已过期', 1, NOW(), 1);
+    VALUE (22, '已过期', '1', '购物车 - 购物车商品状态:已过期', 1, NOW(), 1);
 INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
                                  `created_at`, `creator`)
-    VALUE (21, '库存不足', '2', '购物车 - 购物车商品状态:库存不足', 1, NOW(), 1);
+    VALUE (22, '库存不足', '2', '购物车 - 购物车商品状态:库存不足', 1, NOW(), 1);
 
 

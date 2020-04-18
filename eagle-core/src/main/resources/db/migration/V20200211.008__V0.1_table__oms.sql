@@ -151,4 +151,4 @@ CREATE TABLE `oms_cart_item`
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
-    COMMENT '[订单模块] 购物车表');
+    COMMENT '[订单模块] 购物车表';
