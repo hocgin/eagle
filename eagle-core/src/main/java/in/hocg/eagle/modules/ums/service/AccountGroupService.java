@@ -29,4 +29,6 @@ public interface AccountGroupService extends AbstractService<AccountGroup> {
     void deleteListWithMember(AccountGroupMemberDeleteQo qo);
 
     void deleteOne(IdQo qo);
+
+    AccountGroupComplexVo selectOne(Long id);
 }

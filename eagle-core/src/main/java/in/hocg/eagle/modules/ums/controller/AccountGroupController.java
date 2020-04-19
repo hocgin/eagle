@@ -46,41 +46,49 @@ public class AccountGroupController {
         return Result.success();
     }
 
+    @GetMapping({"/{id:\\d+}:complex"})
+    @UseLogger("分页查询 - 账号组")
+    public Result<AccountGroupComplexVo> selectOne(@PathVariable Long id) {
+        return Result.success(service.selectOne(id));
+    }
+
     @PostMapping({"/_paging"})
     @UseLogger("分页查询 - 账号组")
     public Result<IPage<AccountGroupComplexVo>> paging(@Validated @RequestBody AccountGroupPageQo qo) {
         return Result.success(service.pagingWithComplex(qo));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id:\\d+}")
     @UseLogger("删除 - 账号组")
-    public Result deleteOne(@Validated @RequestBody IdQo qo) {
+    public Result deleteOne(@PathVariable Long id) {
+        final IdQo qo = new IdQo();
+        qo.setId(id);
         service.deleteOne(qo);
         return Result.success();
     }
 
-    @PostMapping("/{id:\\d+}/join")
+    @PostMapping("/{groupId:\\d+}/join")
     @UseLogger("添加成员 - 账号组")
-    public Result join(@PathVariable Long id,
+    public Result join(@PathVariable Long groupId,
                        @Validated @RequestBody JoinMemberQo qo) {
-        qo.setGroupId(id);
+        qo.setGroupId(groupId);
         service.join(qo);
         return Result.success();
     }
 
-    @PostMapping("/{id:\\d+}/member/_paging")
+    @PostMapping("/{groupId:\\d+}/member/_paging")
     @UseLogger("分页查询成员 - 账号组")
-    public Result pagingWithMember(@PathVariable Long id,
+    public Result pagingWithMember(@PathVariable Long groupId,
                                    @Validated @RequestBody AccountGroupMemberPageQo qo) {
-        qo.setGroupId(id);
+        qo.setGroupId(groupId);
         return Result.success(service.pagingWithMember(qo));
     }
 
-    @DeleteMapping("/{id:\\d+}/member")
+    @DeleteMapping("/{groupId:\\d+}/member")
     @UseLogger("删除成员 - 账号组")
-    public Result deleteOneWithMember(@PathVariable Long id,
+    public Result deleteOneWithMember(@PathVariable Long groupId,
                                       @Validated @RequestBody AccountGroupMemberDeleteQo qo) {
-        qo.setGroupId(id);
+        qo.setGroupId(groupId);
         service.deleteListWithMember(qo);
         return Result.success();
     }

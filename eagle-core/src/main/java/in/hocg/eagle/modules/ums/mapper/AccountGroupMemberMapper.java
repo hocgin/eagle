@@ -3,12 +3,11 @@ package in.hocg.eagle.modules.ums.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.entity.AccountGroupMember;
 import in.hocg.eagle.modules.ums.pojo.qo.account.group.AccountGroupMemberPageQo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 /**
  * <p>
@@ -21,9 +20,8 @@ import java.util.List;
 @Mapper
 public interface AccountGroupMemberMapper extends BaseMapper<AccountGroupMember> {
 
-    List<AccountGroupMember> selectAllByGroupId(@Param("groupId") Long groupId);
-
     void deleteAllByGroupId(@Param("groupId") Long groupId);
 
-    IPage<AccountGroupMember> pagingWithComplex(@Param("qo") AccountGroupMemberPageQo qo, @Param("page") Page page);
+    IPage<Account> pagingWithComplex(@Param("qo") AccountGroupMemberPageQo qo, @Param("page") Page page);
+
 }

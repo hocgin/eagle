@@ -11,6 +11,7 @@ import in.hocg.eagle.modules.ums.pojo.vo.account.group.AccountGroupComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.group.AccountGroupMemberComplexVo;
 import in.hocg.eagle.modules.ums.service.AccountGroupMemberService;
 import in.hocg.eagle.modules.ums.service.AccountGroupService;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,14 @@ public class AccountGroupServiceImpl extends AbstractServiceImpl<AccountGroupMap
         final Long groupId = qo.getId();
         removeById(groupId);
         accountGroupMemberService.deleteAllByGroupId(groupId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public AccountGroupComplexVo selectOne(Long id) {
+        final AccountGroup entity = getById(id);
+        ValidUtils.notNull(entity, "数据不存在");
+        return convertComplex(entity);
     }
 
     @Override

@@ -3,7 +3,10 @@ package in.hocg.eagle.modules.ums.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.GroupMemberSource;
+import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.mapstruct.AccountGroupMemberMapping;
+import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.entity.AccountGroup;
 import in.hocg.eagle.modules.ums.entity.AccountGroupMember;
 import in.hocg.eagle.modules.ums.mapper.AccountGroupMemberMapper;
@@ -13,8 +16,10 @@ import in.hocg.eagle.modules.ums.pojo.qo.account.group.JoinMemberQo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.group.AccountGroupMemberComplexVo;
 import in.hocg.eagle.modules.ums.service.AccountGroupMemberService;
 import in.hocg.eagle.modules.ums.service.AccountGroupService;
+import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.eagle.utils.web.ResultUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -22,8 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -39,6 +44,7 @@ import java.util.Optional;
 public class AccountGroupMemberServiceImpl extends AbstractServiceImpl<AccountGroupMemberMapper, AccountGroupMember> implements AccountGroupMemberService {
     private final AccountGroupMemberMapping mapping;
     private final AccountGroupService accountGroupService;
+    private final AccountService accountService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -49,11 +55,27 @@ public class AccountGroupMemberServiceImpl extends AbstractServiceImpl<AccountGr
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<AccountGroupMemberComplexVo> pagingWithComplex(AccountGroupMemberPageQo qo) {
-        return baseMapper.pagingWithComplex(qo, qo.page())
-            .convert(this::convertComplex);
+        final Long groupId = qo.getGroupId();
+        final AccountGroup group = accountGroupService.getById(groupId);
+        if (Objects.isNull(group)) {
+            return ResultUtils.emptyPage(qo);
+        }
+        Optional<GroupMemberSource> memberSourceOpt = IntEnum.of(group.getMemberSource(), GroupMemberSource.class);
+        if (!memberSourceOpt.isPresent()) {
+            return ResultUtils.emptyPage(qo);
+        }
+        final GroupMemberSource memberSource = memberSourceOpt.get();
+        IPage<Account> result = ResultUtils.emptyPage(qo);
+        if (memberSource.equals(GroupMemberSource.All)) {
+            result = accountService.page(qo.page());
+        } else if (memberSource.equals(GroupMemberSource.Custom)) {
+            result = baseMapper.pagingWithComplex(qo, qo.page());
+        }
+
+        return result.convert(this::convertComplex);
     }
 
-    private AccountGroupMemberComplexVo convertComplex(AccountGroupMember entity) {
+    private AccountGroupMemberComplexVo convertComplex(Account entity) {
         return mapping.asAccountGroupMemberComplexVo(entity);
     }
 
@@ -61,6 +83,11 @@ public class AccountGroupMemberServiceImpl extends AbstractServiceImpl<AccountGr
     @Transactional(rollbackFor = Exception.class)
     public void deleteListWithMember(AccountGroupMemberDeleteQo qo) {
         final Long groupId = qo.getGroupId();
+        final AccountGroup group = accountGroupService.getById(groupId);
+        if (!LangUtils.equals(GroupMemberSource.Custom.getCode(), group.getMemberSource())) {
+            throw ServiceException.wrap("群组不支持移出成员");
+        }
+
         for (Long memberId : qo.getMembers()) {
             final Optional<AccountGroupMember> accountGroupMemberOpt = selectOneByGroupIdAndAccountId(groupId, memberId);
             accountGroupMemberOpt.ifPresent(accountGroupMember -> removeById(accountGroupMember.getId()));
@@ -88,7 +115,7 @@ public class AccountGroupMemberServiceImpl extends AbstractServiceImpl<AccountGr
                     .setGroupId(groupId)
                     .setCreator(userId)
                     .setCreatedAt(createdAt)
-                    .setAccountId(userId));
+                    .setAccountId(memberId));
             }
         }
     }
@@ -96,10 +123,6 @@ public class AccountGroupMemberServiceImpl extends AbstractServiceImpl<AccountGr
     private Optional<AccountGroupMember> selectOneByGroupIdAndAccountId(Long groupId, Long accountId) {
         return lambdaQuery().eq(AccountGroupMember::getGroupId, groupId)
             .eq(AccountGroupMember::getAccountId, accountId).oneOpt();
-    }
-
-    private Collection<AccountGroupMember> selectAllByGroupId(Long groupId) {
-        return baseMapper.selectAllByGroupId(groupId);
     }
 
 }

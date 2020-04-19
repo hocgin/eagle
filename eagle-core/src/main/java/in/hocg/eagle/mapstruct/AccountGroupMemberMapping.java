@@ -1,6 +1,6 @@
 package in.hocg.eagle.mapstruct;
 
-import in.hocg.eagle.modules.ums.entity.AccountGroupMember;
+import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.pojo.vo.account.group.AccountGroupMemberComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,7 +15,11 @@ import org.mapstruct.Mapping;
 public interface AccountGroupMemberMapping {
 
 
-    @Mapping(target = "accountName", ignore = true)
-    @Mapping(target = "creatorName", ignore = true)
-    AccountGroupMemberComplexVo asAccountGroupMemberComplexVo(AccountGroupMember entity);
+    @Mapping(target = "expiredName", ignore = true)
+    @Mapping(target = "genderName", ignore = true)
+    @Mapping(target = "lockedName", ignore = true)
+    @Mapping(target = "enabledName", ignore = true)
+    @Mapping(target = "accountName", source = "entity.nickname")
+    @Mapping(target = "accountId", source = "entity.id")
+    AccountGroupMemberComplexVo asAccountGroupMemberComplexVo(Account entity);
 }

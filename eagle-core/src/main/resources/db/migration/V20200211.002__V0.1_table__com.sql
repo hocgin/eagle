@@ -594,7 +594,7 @@ INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`
                                  `created_at`, `creator`)
     VALUE (23, '是', '1', '是否默认:是', 1, NOW(), 1);
 
-## 是否默认
+## 群成员来源
 INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
                             `created_at`, `creator`)
     VALUE (24, '群成员来源', 'groupMemberSource', '群成员来源', 1, NOW(), 1);

@@ -192,7 +192,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         ValidUtils.isTrue(isOk, "Token 已经失效");
     }
 
-    private AccountComplexVo convertComplex(Account entity) {
+    public AccountComplexVo convertComplex(Account entity) {
         return mapping.asAccountComplexVo(entity);
     }
 

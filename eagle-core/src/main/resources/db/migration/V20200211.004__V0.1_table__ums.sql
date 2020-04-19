@@ -308,7 +308,10 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
     VALUE (10, '账号管理', 1, 'ums:account', 0, 9, '/9/10', NOW(), 1);
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
-    VALUE (26, '群组管理', 1, 'ums:group', 0, 9, '/9/26', NOW(), 1);
+    VALUE (26, '组管理', 1, 'ums:group', 0, 9, '/9/26', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (27, '组详情', 1, 'ums:group:detail', 0, 26, '/9/26/27', NOW(), 1);
 
 -- 商品系统
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
@@ -347,7 +350,10 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
     VALUE (20, '优惠券模版', 1, 'mkt:coupon', 0, 19, '/19/20', NOW(), 1);
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
-    VALUE (21, '活动管理', 1, 'mkt:activity', 0, 20, '/19/21', NOW(), 1);
+    VALUE (21, '活动管理', 1, 'mkt:activity', 0, 19, '/19/21', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (28, '优惠券模版详情', 1, 'mkt:coupon:detail', 0, 20, '/19/20/28', NOW(), 1);
 
 
 # 角色
@@ -385,7 +391,9 @@ VALUES (1, 1),
        (1, 23),
        (1, 24),
        (1, 25),
-       (1, 26);
+       (1, 26),
+       (1, 27),
+       (1, 28);
 
 # 赋予账号角色
 INSERT INTO ums_role_account(`role_id`, `account_id`)
