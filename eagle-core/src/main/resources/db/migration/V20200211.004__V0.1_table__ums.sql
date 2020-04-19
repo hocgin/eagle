@@ -306,6 +306,9 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
     VALUE (10, '账号管理', 1, 'ums:account', 0, 9, '/9/10', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (26, '群组管理', 1, 'ums:group', 0, 9, '/9/26', NOW(), 1);
 
 -- 商品系统
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
@@ -381,7 +384,8 @@ VALUES (1, 1),
        (1, 22),
        (1, 23),
        (1, 24),
-       (1, 25);
+       (1, 25),
+       (1, 26);
 
 # 赋予账号角色
 INSERT INTO ums_role_account(`role_id`, `account_id`)
