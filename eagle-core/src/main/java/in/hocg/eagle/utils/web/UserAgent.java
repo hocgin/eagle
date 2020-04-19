@@ -36,6 +36,8 @@ public class UserAgent {
     private Shell shell = Shell.Unknown;
     @ApiModelProperty("外壳版本")
     private String shellVersion = "Unknown";
+    @ApiModelProperty("网络类型")
+    private String netType = "Unknown";
 
     public UserAgent(String userAgent) {
         this.userAgent = userAgent.toLowerCase();
@@ -135,7 +137,7 @@ public class UserAgent {
             supporterVersion = testVs("edge\\/[\\d._]+");
         }
 
-        // 外壳和外壳版本
+        // ==== 外壳和外壳版本 ====
         if (testUa("micromessenger")) {
             shell = Shell.WeChat;
             shellVersion = testVs("micromessenger\\/[\\d._]+");
@@ -158,21 +160,58 @@ public class UserAgent {
             shell = Shell.Maxthon;
             shellVersion = testVs("maxthon\\/[\\d._]+");
         }
+
+        // ==== 网络类型 ====
+        if (testUa("nettype")) {
+            netType = testNetTypeVs("nettype\\/[\\w\\d\\+]+");
+        }
     }
 
+    /**
+     * 是否匹配
+     *
+     * @param regex
+     * @return
+     */
     private boolean testUa(String regex) {
         return Pattern.compile(regex).matcher(userAgent).find();
     }
 
-    private String testVs(String regex) {
+    /**
+     * 匹配并返回值
+     *
+     * @param regex
+     * @return
+     */
+    private String matchOne(String regex) {
         final Pattern pattern = Pattern.compile(regex);
         final Matcher matcher = pattern.matcher(userAgent);
         String result = "";
         if (matcher.find()) {
             result = matcher.group();
         }
-        return result.replaceAll("[^0-9|_.]", "")
+        return result;
+    }
+
+    /**
+     * 匹配版本号
+     *
+     * @param regex
+     * @return
+     */
+    private String testVs(String regex) {
+        return matchOne(regex).replaceAll("[^0-9|_.]", "")
             .replaceAll("_", ".");
+    }
+
+    /**
+     * 匹配网络类型
+     *
+     * @param regex
+     * @return
+     */
+    private String testNetTypeVs(String regex) {
+        return matchOne(regex).replaceAll("nettype\\/", "");
     }
 
     @Getter
@@ -235,4 +274,10 @@ public class UserAgent {
         private final String name;
     }
 
+
+    public static void main(String[] args) {
+        final String userAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 likeMac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12A365MicroMessenger/6.0 NetType/WIFI";
+        final UserAgent ua = new UserAgent(userAgent);
+        String s = "";
+    }
 }
