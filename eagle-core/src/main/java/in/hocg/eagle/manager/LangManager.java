@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created by hocgin on 2020/4/14.
@@ -26,6 +27,7 @@ import java.util.Objects;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class LangManager {
     private final RestTemplate restTemplate;
+    private final RedisManager redisManager;
 
     /**
      * 根据IP获取地址
@@ -34,9 +36,15 @@ public class LangManager {
      * @return
      */
     public IpAndAddressDto getAddressByIp(String ip) {
+        final Optional<IpAndAddressDto> resultOpt = redisManager.getIpAndAddress(ip);
+        if (resultOpt.isPresent()) {
+            return resultOpt.get();
+        }
         String token = Env.getConfigs().getIp138();
         String url = String.format("http://api.ip138.com/query/?ip=%s&token=%s&datatype=jsonp", ip, token);
-        return restTemplate.getForObject(url, IpAndAddressDto.class);
+        final IpAndAddressDto result = restTemplate.getForObject(url, IpAndAddressDto.class);
+        redisManager.setIpAndAddress(ip, result);
+        return result;
     }
 
     /**

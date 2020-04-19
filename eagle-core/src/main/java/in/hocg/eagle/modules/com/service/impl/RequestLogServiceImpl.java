@@ -1,9 +1,12 @@
 package in.hocg.eagle.modules.com.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.aspect.logger.Logger;
+import in.hocg.eagle.manager.LangManager;
+import in.hocg.eagle.manager.dto.IpAndAddressDto;
 import in.hocg.eagle.mapstruct.RequestLogMapping;
 import in.hocg.eagle.modules.com.entity.RequestLog;
 import in.hocg.eagle.modules.com.mapper.RequestLogMapper;
@@ -11,7 +14,9 @@ import in.hocg.eagle.modules.com.pojo.qo.requestlog.RequestLogPagingQo;
 import in.hocg.eagle.modules.com.pojo.vo.requestlog.RequestLogComplexVo;
 import in.hocg.eagle.modules.com.service.RequestLogService;
 import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.eagle.utils.web.UserAgent;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -28,11 +33,13 @@ import java.util.List;
  * @author hocgin
  * @since 2020-04-04
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class RequestLogServiceImpl extends AbstractServiceImpl<RequestLogMapper, RequestLog>
     implements RequestLogService {
     private final RequestLogMapping mapping;
+    private final LangManager langManager;
     private static final AntPathMatcher MATCHER = new AntPathMatcher();
     private static final List<String> IGNORE_URI = Lists.newArrayList("/api/request-log/*");
 
@@ -43,6 +50,10 @@ public class RequestLogServiceImpl extends AbstractServiceImpl<RequestLogMapper,
         final String uri = logger.getUri();
         if (IGNORE_URI.parallelStream().noneMatch(pattern -> MATCHER.match(pattern, uri))) {
             RequestLog entity = logger.asRequestLog();
+            final UserAgent userAgent = new UserAgent(entity.getUserAgent());
+            final IpAndAddressDto address = langManager.getAddressByIp(entity.getClientIp());
+            log.info("JSON: {}", JSON.toJSON(userAgent));
+            log.info("IP Address JSON: {}", JSON.toJSON(address));
             baseMapper.insert(entity);
         }
     }

@@ -19,7 +19,6 @@ public class IpAndAddressDto {
      * ip : 106.122.172.244
      * data : ["中国","福建","厦门","电信","",""]
      */
-
     private String ret;
     private String ip;
     private List<String> data;
