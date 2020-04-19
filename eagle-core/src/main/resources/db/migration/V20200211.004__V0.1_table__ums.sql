@@ -277,7 +277,7 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
     VALUE (5, '请求日志', 1, 'devtools:request-log', 0, 3, '/3/5', NOW(), 1);
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
-    VALUE (22, '短链接列表', 1, 'devtools:short-url', 0, 3, '/3/22', NOW(), 1);
+    VALUE (22, '短链接', 1, 'devtools:short-url', 0, 3, '/3/22', NOW(), 1);
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
     VALUE (23, '功能调试', 1, 'devtools:debug', 0, 3, '/3/23', NOW(), 1);
