@@ -61,7 +61,7 @@ public class IpAndAddressDto {
      *
      * @return
      */
-    public Optional<String> getAreaCode() {
+    public Optional<String> getCityCode() {
         return get(5, 6);
     }
 

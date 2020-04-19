@@ -1,6 +1,5 @@
 package in.hocg.eagle.modules.com.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
@@ -51,9 +50,25 @@ public class RequestLogServiceImpl extends AbstractServiceImpl<RequestLogMapper,
         if (IGNORE_URI.parallelStream().noneMatch(pattern -> MATCHER.match(pattern, uri))) {
             RequestLog entity = logger.asRequestLog();
             final UserAgent userAgent = new UserAgent(entity.getUserAgent());
+            entity.setShell(userAgent.getShell().getName());
+            entity.setShellVersion(userAgent.getShellVersion());
+            entity.setSupporter(userAgent.getSupporter().getName());
+            entity.setSupporterVersion(userAgent.getSupporterVersion());
+            entity.setSystemOs(userAgent.getSystem().getName());
+            entity.setSystemVersion(userAgent.getShellVersion());
+            entity.setEngine(userAgent.getEngine().getName());
+            entity.setEngineVersion(userAgent.getEngineVersion());
+            entity.setNetType(userAgent.getNetType());
+            entity.setPlatform(userAgent.getPlatform().getName());
+
             final IpAndAddressDto address = langManager.getAddressByIp(entity.getClientIp());
-            log.info("JSON: {}", JSON.toJSON(userAgent));
-            log.info("IP Address JSON: {}", JSON.toJSON(address));
+            entity.setNation(address.getData().get(0));
+            entity.setProvince(address.getData().get(1));
+            entity.setCity(address.getData().get(2));
+            entity.setZipCode(address.getZipCode().orElse(null));
+            entity.setOperator(address.getOperator().orElse(null));
+            entity.setCityCode(address.getCityCode().orElse(null));
+
             baseMapper.insert(entity);
         }
     }

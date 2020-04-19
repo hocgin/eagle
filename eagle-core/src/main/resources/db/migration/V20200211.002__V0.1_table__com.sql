@@ -153,6 +153,38 @@ CREATE TABLE `com_request_log`
         COMMENT '请求头:user-agent',
     client_ip         VARCHAR(32)
         COMMENT '请求IP',
+    nation            VARCHAR(32)
+        COMMENT '国家',
+    province          VARCHAR(32)
+        COMMENT '省份',
+    city              VARCHAR(32)
+        COMMENT '城市',
+    operator          VARCHAR(32)
+        COMMENT '运营商',
+    zip_code          VARCHAR(32)
+        COMMENT '邮编',
+    city_code         VARCHAR(32)
+        COMMENT '城市编号',
+    system_os         VARCHAR(32)
+        COMMENT '系统',
+    system_version    VARCHAR(32)
+        COMMENT '系统版本',
+    platform          VARCHAR(32)
+        COMMENT '平台',
+    engine            VARCHAR(32)
+        COMMENT '内核',
+    engine_version    VARCHAR(32)
+        COMMENT '内核版本',
+    supporter         VARCHAR(32)
+        COMMENT '载体',
+    supporter_version VARCHAR(32)
+        COMMENT '载体版本',
+    shell             VARCHAR(32)
+        COMMENT '外壳',
+    shell_version     VARCHAR(32)
+        COMMENT '外壳版本',
+    net_type          VARCHAR(32)
+        COMMENT '网络类型',
     enter_remark      VARCHAR(200)
         COMMENT '入口描述',
     created_at        TIMESTAMP(6) NOT NULL

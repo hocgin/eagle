@@ -216,7 +216,7 @@ public class UserAgent {
 
     @Getter
     @RequiredArgsConstructor
-    enum Platform {
+    public enum Platform {
         Desktop("Desktop"),
         Mobile("Desktop"),
         Unknown("Unknown");
@@ -225,7 +225,7 @@ public class UserAgent {
 
     @Getter
     @RequiredArgsConstructor
-    enum System {
+    public enum System {
         Windows("Windows"),
         MacOS("MacOS"),
         Android("Android"),
@@ -237,7 +237,7 @@ public class UserAgent {
 
     @Getter
     @RequiredArgsConstructor
-    enum Engine {
+    public enum Engine {
         Webkit("Webkit"),
         Gecko("Gecko"),
         Presto("Presto"),
@@ -248,7 +248,7 @@ public class UserAgent {
 
     @Getter
     @RequiredArgsConstructor
-    enum Supporter {
+    public enum Supporter {
         Edge("Edge"),
         Opera("Opera"),
         Chrome("Chrome"),
@@ -261,7 +261,7 @@ public class UserAgent {
 
     @Getter
     @RequiredArgsConstructor
-    enum Shell {
+    public enum Shell {
         WeChat("360浏览器"),
         UC("360浏览器"),
         _360("360浏览器"),
@@ -274,10 +274,4 @@ public class UserAgent {
         private final String name;
     }
 
-
-    public static void main(String[] args) {
-        final String userAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 likeMac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12A365MicroMessenger/6.0 NetType/WIFI";
-        final UserAgent ua = new UserAgent(userAgent);
-        String s = "";
-    }
 }

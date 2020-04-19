@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.eagle.basic.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -30,79 +31,97 @@ public class RequestLog extends AbstractEntity<RequestLog> {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
-    /**
-     * 请求方式
-     */
+    @ApiModelProperty("请求方式")
     @TableField("method")
     private String method;
-    /**
-     * 请求URI
-     */
+    @ApiModelProperty("请求URI")
     @TableField("uri")
     private String uri;
-    /**
-     * 请求体
-     */
+    @ApiModelProperty("请求体")
     @TableField("args")
     private String args;
-    /**
-     * 响应体
-     */
+    @ApiModelProperty("响应体")
     @TableField("ret")
     private String ret;
-    /**
-     * 异常信息
-     */
+    @ApiModelProperty("异常信息")
     @TableField("exception")
     private String exception;
-    /**
-     * 线程内日志
-     */
+    @ApiModelProperty("线程内日志")
     @TableField("logs")
     private String logs;
-    /**
-     * 请求耗时(ms)
-     */
+    @ApiModelProperty("请求耗时(ms)")
     @TableField("total_time_millis")
     private Long totalTimeMillis;
-    /**
-     * 代码位置
-     */
+    @ApiModelProperty("代码位置")
     @TableField("mapping")
     private String mapping;
-    /**
-     * 请求来源标记
-     */
+    @ApiModelProperty("请求来源标记")
     @TableField("source")
     private String source;
-    /**
-     * 请求头:host
-     */
+    @ApiModelProperty("请求头:host")
     @TableField("host")
     private String host;
-    /**
-     * 请求头:user-agent
-     */
+    @ApiModelProperty("请求头:user-agent")
     @TableField("user_agent")
     private String userAgent;
-    /**
-     * 请求IP
-     */
+    @ApiModelProperty("请求IP")
     @TableField("client_ip")
     private String clientIp;
-    /**
-     * 入口描述
-     */
+    @ApiModelProperty("国家")
+    @TableField("nation")
+    private String nation;
+    @ApiModelProperty("省份")
+    @TableField("province")
+    private String province;
+    @ApiModelProperty("城市")
+    @TableField("city")
+    private String city;
+    @ApiModelProperty("运营商")
+    @TableField("operator")
+    private String operator;
+    @ApiModelProperty("邮编")
+    @TableField("zip_code")
+    private String zipCode;
+    @ApiModelProperty("城市编号")
+    @TableField("city_code")
+    private String cityCode;
+    @ApiModelProperty("系统")
+    @TableField("system_os")
+    private String systemOs;
+    @ApiModelProperty("系统版本")
+    @TableField("system_version")
+    private String systemVersion;
+    @ApiModelProperty("平台")
+    @TableField("platform")
+    private String platform;
+    @ApiModelProperty("内核")
+    @TableField("engine")
+    private String engine;
+    @ApiModelProperty("内核版本")
+    @TableField("engine_version")
+    private String engineVersion;
+    @ApiModelProperty("载体")
+    @TableField("supporter")
+    private String supporter;
+    @ApiModelProperty("载体版本")
+    @TableField("supporter_version")
+    private String supporterVersion;
+    @ApiModelProperty("外壳")
+    @TableField("shell")
+    private String shell;
+    @ApiModelProperty("外壳版本")
+    @TableField("shell_version")
+    private String shellVersion;
+    @ApiModelProperty("网络类型")
+    @TableField("net_type")
+    private String netType;
+    @ApiModelProperty("入口描述")
     @TableField("enter_remark")
     private String enterRemark;
-    /**
-     * 创建时间
-     */
+    @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;
-    /**
-     * 创建人
-     */
+    @ApiModelProperty("创建人")
     @TableField("creator")
     private Long creator;
 
