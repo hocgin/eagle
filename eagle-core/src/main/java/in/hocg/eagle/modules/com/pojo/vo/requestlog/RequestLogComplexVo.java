@@ -43,6 +43,38 @@ public class RequestLogComplexVo {
     private String userAgent;
     @ApiModelProperty("请求IP")
     private String clientIp;
+    @ApiModelProperty("国家")
+    private String nation;
+    @ApiModelProperty("省份")
+    private String province;
+    @ApiModelProperty("城市")
+    private String city;
+    @ApiModelProperty("运营商")
+    private String operator;
+    @ApiModelProperty("邮编")
+    private String zipCode;
+    @ApiModelProperty("城市编号")
+    private String cityCode;
+    @ApiModelProperty("系统")
+    private String systemOs;
+    @ApiModelProperty("系统版本")
+    private String systemVersion;
+    @ApiModelProperty("平台")
+    private String platform;
+    @ApiModelProperty("内核")
+    private String engine;
+    @ApiModelProperty("内核版本")
+    private String engineVersion;
+    @ApiModelProperty("载体")
+    private String supporter;
+    @ApiModelProperty("载体版本")
+    private String supporterVersion;
+    @ApiModelProperty("外壳")
+    private String shell;
+    @ApiModelProperty("外壳版本")
+    private String shellVersion;
+    @ApiModelProperty("网络类型")
+    private String netType;
     @ApiModelProperty("入口描述")
     private String enterRemark;
     @ApiModelProperty("创建时间")
