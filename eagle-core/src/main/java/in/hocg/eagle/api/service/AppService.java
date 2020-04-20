@@ -115,7 +115,9 @@ public class AppService {
             throw ServiceException.wrap("操作失败，请检查订单的支付状态");
         }
         return paymentManager.payOrder(new PayOrderDto()
-            .setOrder(orderComplex).setPayType(payType).setClientIp(clientIp));
+            .setOrder(orderComplex)
+            .setPayType(payType)
+            .setClientIp(clientIp));
     }
 
     @Transactional(rollbackFor = Exception.class)
