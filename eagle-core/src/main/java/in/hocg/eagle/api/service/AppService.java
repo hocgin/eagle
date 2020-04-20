@@ -3,9 +3,15 @@ package in.hocg.eagle.api.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.api.AppMapping;
 import in.hocg.eagle.api.pojo.qo.*;
+import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.datadict.OrderPayType;
+import in.hocg.eagle.basic.constant.datadict.OrderStatus;
 import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
+import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.manager.PaymentManager;
+import in.hocg.eagle.manager.payment.PaymentManager;
+import in.hocg.eagle.manager.payment.dto.PayOrderDto;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponAccountPagingQo;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import in.hocg.eagle.modules.mkt.service.CouponAccountService;
@@ -30,10 +36,15 @@ import in.hocg.eagle.modules.ums.pojo.vo.account.address.AccountAddressComplexVo
 import in.hocg.eagle.modules.ums.service.AccountAddressService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.eagle.utils.web.RequestUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * Created by hocgin on 2020/3/14.
@@ -90,7 +101,21 @@ public class AppService {
 
     @Transactional(rollbackFor = Exception.class)
     public String payOrder(PayOrderQo qo) throws Throwable {
-        return paymentManager.payOrder(qo);
+        final Optional<HttpServletRequest> request = SpringContext.getRequest();
+        String clientIp = "127.0.0.1";
+        if (request.isPresent()) {
+            clientIp = RequestUtils.getClientIP(request.get());
+        }
+        final Long id = qo.getId();
+        final Optional<OrderPayType> payTypeOpl = IntEnum.of(qo.getPayType(), OrderPayType.class);
+        final OrderPayType payType = payTypeOpl.orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("错误的支付方式"));
+
+        final OrderComplexVo orderComplex = orderService.selectOne(id);
+        if (!LangUtils.equals(OrderStatus.PendingPayment.getCode(), orderComplex.getOrderStatus())) {
+            throw ServiceException.wrap("操作失败，请检查订单的支付状态");
+        }
+        return paymentManager.payOrder(new PayOrderDto()
+            .setOrder(orderComplex).setPayType(payType).setClientIp(clientIp));
     }
 
     @Transactional(rollbackFor = Exception.class)
