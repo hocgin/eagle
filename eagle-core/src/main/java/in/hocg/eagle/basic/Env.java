@@ -33,6 +33,22 @@ public class Env {
         private String amap;
         @ApiModelProperty("ip138")
         private String ip138;
+
+        @ApiModelProperty("微信 APP ID")
+        private String wxAppId;
+        @ApiModelProperty("微信 KEY")
+        private String wxKey;
+        @ApiModelProperty("微信商户号")
+        private String wxMchId;
+        @ApiModelProperty("微信证书绝对路径")
+        private String wxCertFile;
+
+        @ApiModelProperty("支付宝 公钥")
+        private String aliPayPublicKey;
+        @ApiModelProperty("支付宝 私钥")
+        private String aliPayPrivateKey;
+        @ApiModelProperty("支付宝 APPID")
+        private String aliPayAppId;
     }
 
     /**
