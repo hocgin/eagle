@@ -82,6 +82,11 @@
       </dependency>
       <!--三方库-->
       <dependency>
+        <groupId>com.github.binarywang</groupId>
+        <artifactId>weixin-java-mp</artifactId>
+        <version>3.7.0</version>
+      </dependency>
+      <dependency>
         <groupId>cn.afterturn</groupId>
         <artifactId>easypoi-base</artifactId>
         <version>${easypoi.version}</version>

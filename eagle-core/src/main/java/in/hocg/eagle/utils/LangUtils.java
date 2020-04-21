@@ -1,13 +1,19 @@
 package in.hocg.eagle.utils;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.hash.Hashing;
+import in.hocg.eagle.utils.clazz.ClassUtils;
 import lombok.experimental.UtilityClass;
+import org.apache.logging.log4j.util.Strings;
 
+import java.net.*;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by hocgin on 2020/1/5.
@@ -186,5 +192,58 @@ public class LangUtils {
 
     public static String md5(byte[] bytes) {
         return Hashing.md5().newHasher().putBytes(bytes).hash().toString();
+    }
+
+
+    public static <T> Optional<T> parse(String text, Class<T> clazz) {
+        if (Strings.isBlank(text)) {
+            return Optional.empty();
+        }
+
+        if (ClassUtils.isBaseType(clazz)) {
+            return Optional.of((T) text);
+        }
+        return Optional.of(JSON.parseObject(text, clazz));
+    }
+
+    /**
+     * 获取当前所在的 IPv4
+     *
+     * @return
+     */
+    public List<String> getIpv4Addresses() {
+        List<NetworkInterface> is = Collections.emptyList();
+        try {
+            is = Collections.list(NetworkInterface.getNetworkInterfaces()).stream()
+                .filter(i -> {
+                    try {
+                        return !i.isLoopback();
+                    } catch (SocketException ignored) {
+                    }
+                    return false;
+                })
+                .collect(Collectors.toList());
+        } catch (SocketException ignored) {
+        }
+
+        return is.stream().flatMap(i -> {
+            final Enumeration<InetAddress> addresses = i.getInetAddresses();
+            final Stream.Builder<String> builder = Stream.builder();
+            while (addresses.hasMoreElements()) {
+                final InetAddress ip = addresses.nextElement();
+                if (!ip.isLoopbackAddress()) {
+                    if (ip.getHostAddress().equalsIgnoreCase("127.0.0.1")) {
+                        continue;
+                    }
+                    if (ip instanceof Inet6Address) {
+                        continue;
+                    }
+                    if (ip instanceof Inet4Address) {
+                        builder.add(ip.getHostAddress());
+                    }
+                }
+            }
+            return builder.build();
+        }).collect(Collectors.toList());
     }
 }

@@ -49,6 +49,15 @@ public class Env {
         private String aliPayPrivateKey;
         @ApiModelProperty("支付宝 APPID")
         private String aliPayAppId;
+
+        @ApiModelProperty("微信公众号 APPID")
+        private String wxMpAppId;
+        @ApiModelProperty("微信公众号 Secret")
+        private String wxMpSecret;
+        @ApiModelProperty("微信公众号 Token")
+        private String wxMpToken;
+        @ApiModelProperty("微信公众号 AesKey")
+        private String wxMpAesKey;
     }
 
     /**
@@ -56,9 +65,13 @@ public class Env {
      *
      * @return
      */
-    public static boolean isDev() {
-        String[] profiles = ENVIRONMENT.getActiveProfiles();
+    public boolean isDev() {
+        String[] profiles = getActiveProfiles();
         return Arrays.asList(profiles).contains("dev");
+    }
+
+    public String[] getActiveProfiles() {
+        return ENVIRONMENT.getActiveProfiles();
     }
 
     /**

@@ -152,6 +152,10 @@
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.github.binarywang</groupId>
+      <artifactId>weixin-java-mp</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
