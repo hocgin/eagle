@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.support.handle;
 
-import in.hocg.eagle.basic.Env;
+import in.hocg.eagle.basic.env.Env;
 import in.hocg.eagle.utils.LangUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -23,7 +23,7 @@ import java.util.StringJoiner;
  * @author hocgin
  */
 @Component
-public class ReplyHandle extends AbstractHandler {
+public class ReplyHandler extends AbstractHandler {
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService, WxSessionManager sessionManager) throws WxErrorException {
@@ -39,6 +39,8 @@ public class ReplyHandle extends AbstractHandler {
             msg = e.getMessage();
         }
         return new TextBuilder()
+            .fromUser(wxMessage.getToUser())
+            .toUser(wxMessage.getFromUser())
             .content(msg)
             .build();
     }

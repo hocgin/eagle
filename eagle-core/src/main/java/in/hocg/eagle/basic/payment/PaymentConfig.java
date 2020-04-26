@@ -1,6 +1,7 @@
 package in.hocg.eagle.basic.payment;
 
-import in.hocg.eagle.basic.Env;
+import in.hocg.eagle.basic.env.Env;
+import in.hocg.eagle.basic.env.EnvConfigs;
 import in.hocg.payment.ConfigStorages;
 import in.hocg.payment.PaymentServices;
 import in.hocg.payment.alipay.v2.AliPayConfigStorage;
@@ -25,7 +26,7 @@ public class PaymentConfig {
 
     @Bean
     AliPayService aliPayService() {
-        final Env.Configs configs = Env.getConfigs();
+        final EnvConfigs configs = Env.getConfigs();
         final AliPayConfigStorage configStorage = ConfigStorages.createConfigStorage(AliPayConfigStorage.class)
                 .setAliPayPublicKey(configs.getAliPayPublicKey())
                 .setPrivateKey(configs.getAliPayPrivateKey())
@@ -37,7 +38,7 @@ public class PaymentConfig {
 
     @Bean
     WxPayService wxPayService() {
-        final Env.Configs configs = Env.getConfigs();
+        final EnvConfigs configs = Env.getConfigs();
         final WxPayConfigStorage configStorage = ConfigStorages.createConfigStorage(WxPayConfigStorage.class)
                 .setAppId(configs.getWxAppId())
                 .setKey(configs.getWxKey())

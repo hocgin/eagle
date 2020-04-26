@@ -21,17 +21,22 @@ import java.util.Objects;
 @Slf4j
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/wx-mp")
+@RequestMapping("/wx-mp/{appid}")
 public class WxMpController {
     private final WxMpService wxMpService;
     private final WxMpMessageRouter wxMpMessageRouter;
 
 
     @GetMapping(produces = "text/plain;charset=utf-8")
-    public String connect(@RequestParam(name = "signature", required = false) String signature,
+    public String connect(@PathVariable String appid,
+                          @RequestParam(name = "signature", required = false) String signature,
                           @RequestParam(name = "timestamp", required = false) String timestamp,
                           @RequestParam(name = "nonce", required = false) String nonce,
                           @RequestParam(name = "echostr", required = false) String echostr) {
+        if (!wxMpService.switchover(appid)) {
+            return String.format("未找到对应appid=[%s]的配置，请核实！", appid);
+        }
+
         if (StringUtils.isAnyBlank(signature, timestamp, nonce, echostr)) {
             return "非法参数";
         }
@@ -44,15 +49,20 @@ public class WxMpController {
     }
 
     @PostMapping(produces = "application/xml; charset=UTF-8")
-    public String connect(@RequestBody String requestBody,
+    public String connect(@PathVariable String appid,
+                          @RequestBody String requestBody,
                           @RequestParam("signature") String signature,
                           @RequestParam("timestamp") String timestamp,
                           @RequestParam("nonce") String nonce,
                           @RequestParam("openid") String openid,
                           @RequestParam(name = "encrypt_type", required = false) String encType,
                           @RequestParam(name = "msg_signature", required = false) String msgSignature) {
+        if (!wxMpService.switchover(appid)) {
+            return String.format("未找到对应appid=[%s]的配置，请核实！", appid);
+        }
+
         if (!wxMpService.checkSignature(timestamp, nonce, signature)) {
-            return  "非法请求";
+            return "非法请求";
         }
 
         String result = null;
