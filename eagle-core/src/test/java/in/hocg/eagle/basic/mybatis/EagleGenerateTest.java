@@ -30,7 +30,8 @@ public class EagleGenerateTest {
     @Test
     public void generateByTables() {
         List<String> TABLES = Arrays.asList(
-            "wx_mp_config",
+            "",
+            "",
             ""
         );
         String javaPath = "src/main/java";

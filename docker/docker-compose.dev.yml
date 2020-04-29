@@ -7,15 +7,15 @@ services:
     ports:
       - "6379:6379"
 
-  mariadb:
-    image: mariadb:latest
-    container_name: mariadb
+  mysql:
+    image: mysql:latest
+    container_name: mysql
     restart: always
     ports:
       - "3306:3306"
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
-      - ./conf/mariadb:/etc/mysql/conf.d
+      - ./conf/mysql:/etc/mysql/conf.d
     environment:
       TZ: Asia/Shanghai
       MYSQL_ROOT_PASSWORD: hocgin

@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.wx.manager;
 
+import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
 import in.hocg.eagle.modules.wx.entity.WxUser;
 import in.hocg.eagle.utils.DateUtils;
@@ -9,8 +10,10 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMaterialService;
+import me.chanjar.weixin.mp.api.WxMpMenuService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserService;
+import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
@@ -39,12 +42,36 @@ public class WxMpManager {
         materialService.materialNewsBatchGet(0, 20);
     }
 
-    public Optional<WxUser> getWxUser(@NotNull String appId, @NotNull String openId) {
+    /**
+     * 获取微信菜单
+     *
+     * @param appid
+     * @return
+     */
+    public Optional<WxMpMenu> getWxMenus(@NotNull String appid) {
+        checkAndSwitchover(appid);
+        final WxMpMenuService menuService = wxMpService.getMenuService();
+        try {
+            return Optional.ofNullable(menuService.menuGet());
+        } catch (WxErrorException e) {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * 获取微信用户信息
+     *
+     * @param appid
+     * @param openId
+     * @return
+     */
+    public Optional<WxUser> getWxUser(@NotNull String appid, @NotNull String openId) {
+        checkAndSwitchover(appid);
         final WxMpUserService userService = wxMpService.getUserService();
         try {
             final WxMpUser wxMpUser = userService.userInfo(openId);
             return Optional.of(new WxUser()
-                .setAppid(appId)
+                .setAppid(appid)
                 .setUnionid(wxMpUser.getUnionId())
                 .setSubscribeScene(wxMpUser.getSubscribeScene())
                 .setSubscribeTime(DateUtils.ofLong(wxMpUser.getSubscribeTime()))
@@ -88,4 +115,9 @@ public class WxMpManager {
         return configStorage;
     }
 
+    private void checkAndSwitchover(String appid) {
+        if (!wxMpService.switchover(appid)) {
+            throw ServiceException.wrap("切换公众号配置失败[appid={}]", appid);
+        }
+    }
 }
