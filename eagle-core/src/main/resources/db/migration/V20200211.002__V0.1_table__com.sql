@@ -109,7 +109,7 @@ CREATE TABLE `com_short_url`
     id           BIGINT AUTO_INCREMENT,
     code         VARCHAR(8)    NOT NULL UNIQUE
         COMMENT '短链码',
-    original_url VARCHAR(1024) NOT NULL UNIQUE
+    original_url VARCHAR(1024) NOT NULL
         COMMENT '原链',
     `enabled`    TINYINT(2)    NOT NULL DEFAULT 1
         COMMENT '启用状态[0:为禁用状态;1:为正常状态]',
