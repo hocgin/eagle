@@ -1,40 +1,3 @@
-DROP TABLE IF EXISTS `wx_mp_reply_rule`;
-CREATE TABLE `wx_mp_reply_rule`
-(
-    `id`              BIGINT AUTO_INCREMENT,
-    `appid`           VARCHAR(32)  NOT NULL
-        COMMENT '开发者ID(AppID)',
-    `title`           VARCHAR(32)  NOT NULL
-        COMMENT '规则名称',
-    `enabled`         TINYINT(1) UNSIGNED   DEFAULT 1
-        COMMENT '启用状态(0:为禁用状态;1:为正常状态)',
-    `reply_type`      TINYINT(1) UNSIGNED   DEFAULT 1
-        COMMENT '回复类型',
-    `reply_content`   VARCHAR(255)
-        COMMENT '回复内容',
-    `sort`            INT(10)      NOT NULL DEFAULT 1000
-        COMMENT '排序, 从大到小降序',
-    `keywords`        VARCHAR(255) NOT NULL
-        COMMENT '关键词列表',
-    `match_mode`      TINYINT(1) UNSIGNED   DEFAULT 1
-        COMMENT '匹配模式: 0=>完全匹配, 1=>部分匹配',
-    --
-    `created_at`      DATETIME(6)  NOT NULL
-        COMMENT '创建时间',
-    `creator`         BIGINT       NOT NULL
-        COMMENT '创建者',
-    `last_updated_at` DATETIME(6)
-        COMMENT '更新时间',
-    `last_updater`    BIGINT
-        COMMENT '更新者',
-    PRIMARY KEY (id)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-    COMMENT ='微信自动回复配置表';
--- 被关注自动回复
--- 默认自动回复
--- 关键词自动回复
-
 DROP TABLE IF EXISTS `wx_mp_config`;
 CREATE TABLE `wx_mp_config`
 (
@@ -108,75 +71,70 @@ CREATE TABLE `wx_user`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
     COMMENT ='[微信模块] 用户表';
-
-
---
-DROP TABLE IF EXISTS `wx_menu_match_rule`;
-CREATE TABLE `wx_menu_match_rule`
-(
-    `id`                   BIGINT AUTO_INCREMENT,
-    `appid`                VARCHAR(32) NOT NULL
-        COMMENT '开发者ID(AppID)',
-    `tag_id`               VARCHAR(16)
-        COMMENT '用户标签的id，可通过用户标签管理接口获取',
-    `sex`                  VARCHAR(16)
-        COMMENT '性别：男（1）女（2），不填则不做匹配',
-    `client_platform_type` VARCHAR(16)
-        COMMENT 'IOS(1), Android(2),Others(3)，不填则不做匹配',
-    `language`             VARCHAR(16)
-        COMMENT '语言',
-    `country`              VARCHAR(16)
-        COMMENT '国家',
-    `province`             VARCHAR(16)
-        COMMENT '省份',
-    `city`                 VARCHAR(16)
-        COMMENT '城市',
-    --
-    creator             bigint       not null,
-    created_at          datetime(6)  not null,
-    last_updater        bigint       null,
-    last_updated_at     datetime(6)  null,
-    UNIQUE KEY (`tag_id`, `sex`, `client_platform_type`, `language`, `country`, `province`, `city`),
-    PRIMARY KEY (id)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-    COMMENT ='[微信模块] 菜单匹配规则表';
-
+-- ################################################################################################
 DROP TABLE IF EXISTS `wx_menu`;
 CREATE TABLE `wx_menu`
 (
-    id            BIGINT AUTO_INCREMENT,
-    parent_id       bigint,
+    id              BIGINT AUTO_INCREMENT,
+    appid           VARCHAR(32)         NOT NULL
+        COMMENT 'APP ID',
     --
-    match_rule_id BIGINT      NOT NULL
-        COMMENT '菜单匹配规则',
-    name          VARCHAR(64) NOT NULL
-        COMMENT '菜单标题，不超过16个字节，子菜单不超过60个字节',
-    type          VARCHAR(16) NOT NULL
-        COMMENT '菜单的响应动作类型，view表示网页类型，click表示点击类型，miniprogram表示小程序类型',
-    `key`         VARCHAR(128)
-        COMMENT 'click等点击类型必须，菜单KEY值，用于消息接口推送，不超过128字节',
-    `url`         VARCHAR(1024)
-        COMMENT 'view、miniprogram类型必须, 网页链接',
-    `media_id`    VARCHAR(1024)
-        COMMENT 'media_id类型和view_limited类型必须, 调用新增永久素材接口返回的合法 media_id',
-    `appid`       VARCHAR(1024)
-        COMMENT 'miniprogram类型必须, 小程序的appid（仅认证公众号可配置）',
-    `pagepath`    VARCHAR(1024)
-        COMMENT 'miniprogram类型必须, 小程序的页面路径',
-    tree_path       varchar(255) NOT NULL
-        COMMENT '树路径，组成方式: /父路径/当前ID',
-    enabled         TINYINT(1) UNSIGNED   DEFAULT 1
+    menu_type       TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+        COMMENT '菜单类型, 0->通用菜单; 1->个性化菜单',
+    menu_id         VARCHAR(32)
+        COMMENT '上传个性化菜单后的 menu_id (仅菜单类型为: 个性化菜单)',
+    button          JSON                NOT NULL
+        COMMENT '菜单对象数组',
+    match_rule      JSON
+        COMMENT '菜单匹配规则(仅菜单类型为: 个性化菜单)',
+    enabled         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态[0:为禁用状态;1:为正常状态]',
-    sort            INT(10)      NOT NULL DEFAULT 1000
-        COMMENT '排序, 从大到小降序',
     --
-    creator             bigint       not null,
-    created_at          datetime(6)  not null,
-    last_updater        bigint       null,
-    last_updated_at     datetime(6)  null,
+    uploader        BIGINT              NULL,
+    uploaded_at     DATETIME(6)         NULL,
+    creator         BIGINT              NOT NULL,
+    created_at      DATETIME(6)         NOT NULL,
+    last_updater    BIGINT              NULL,
+    last_updated_at DATETIME(6)         NULL,
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
     COMMENT ='[微信模块] 菜单表';
+-- ################################################################################################
+DROP TABLE IF EXISTS `wx_mp_reply_rule`;
+CREATE TABLE `wx_mp_reply_rule`
+(
+    `id`              BIGINT AUTO_INCREMENT,
+    `appid`           VARCHAR(32)  NOT NULL
+        COMMENT '开发者ID(AppID)',
+    `title`           VARCHAR(32)  NOT NULL
+        COMMENT '规则名称',
+    `enabled`         TINYINT(1) UNSIGNED   DEFAULT 1
+        COMMENT '启用状态(0:为禁用状态;1:为正常状态)',
+    `reply_type`      TINYINT(1) UNSIGNED   DEFAULT 1
+        COMMENT '回复类型',
+    `reply_content`   VARCHAR(255)
+        COMMENT '回复内容',
+    `sort`            INT(10)      NOT NULL DEFAULT 1000
+        COMMENT '排序, 从大到小降序',
+    `keywords`        VARCHAR(255) NOT NULL
+        COMMENT '关键词列表',
+    `match_mode`      TINYINT(1) UNSIGNED   DEFAULT 1
+        COMMENT '匹配模式: 0=>完全匹配, 1=>部分匹配',
+    --
+    `created_at`      DATETIME(6)  NOT NULL
+        COMMENT '创建时间',
+    `creator`         BIGINT       NOT NULL
+        COMMENT '创建者',
+    `last_updated_at` DATETIME(6)
+        COMMENT '更新时间',
+    `last_updater`    BIGINT
+        COMMENT '更新者',
+    PRIMARY KEY (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+    COMMENT ='微信自动回复配置表';
+-- 被关注自动回复
+-- 默认自动回复
+-- 关键词自动回复
 --

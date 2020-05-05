@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/api/wx-mp")
+@RequestMapping("/api/wx/config")
 public class WxMpConfigController {
     private final WxMpConfigService service;
 

@@ -1,27 +1,32 @@
 package in.hocg.eagle.modules.wx.manager;
 
 import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.modules.wx.entity.WxMenu;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
 import in.hocg.eagle.modules.wx.entity.WxUser;
+import in.hocg.eagle.modules.wx.mapstruct.WxMpMapping;
 import in.hocg.eagle.utils.DateUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMaterialService;
 import me.chanjar.weixin.mp.api.WxMpMenuService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserService;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
-import me.chanjar.weixin.mp.config.WxMpConfigStorage;
-import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
+import java.io.File;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -35,11 +40,73 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class WxMpManager {
     private final WxMpService wxMpService;
+    private final WxMpMapping wxMpMapping;
 
     @SneakyThrows
-    public void up() {
+    public WxMpMaterialUploadResult materialImageUpload(@NotNull String appid,
+                                                        @NotNull File file) {
+        checkAndSwitchover(appid);
+        final WxMpMaterial material = new WxMpMaterial();
+        material.setFile(file);
+        material.setName(file.getName());
         final WxMpMaterialService materialService = wxMpService.getMaterialService();
-        materialService.materialNewsBatchGet(0, 20);
+        return materialService.materialFileUpload(WxConsts.MaterialType.IMAGE, material);
+    }
+
+    /**
+     * 设置通用微信菜单
+     *
+     * @param entity
+     */
+    @SneakyThrows
+    public void setWxGeneralMenu(WxMenu entity) {
+        final String appid = entity.getAppid();
+        checkAndSwitchover(appid);
+        final WxMpMenuService menuService = wxMpService.getMenuService();
+        menuService.menuCreate(wxMpMapping.asWxMenu(entity));
+    }
+
+    /**
+     * 删除通用微信菜单
+     *
+     * @param entity
+     */
+    @SneakyThrows
+    public void removeWxGeneralMenu(WxMenu entity) {
+        final String appid = entity.getAppid();
+        final WxMpMenuService menuService = wxMpService.getMenuService();
+        checkAndSwitchover(appid);
+        menuService.menuDelete();
+    }
+
+    /**
+     * 设置个性化微信菜单
+     *
+     * @param entity
+     */
+    @SneakyThrows
+    public void setWxIndividuationMenu(WxMenu entity) {
+        final String appid = entity.getAppid();
+        checkAndSwitchover(appid);
+        final WxMpMenuService menuService = wxMpService.getMenuService();
+        menuService.menuCreate(wxMpMapping.asWxMenu(entity));
+    }
+
+    /**
+     * 删除个性化微信菜单
+     *
+     * @param entity
+     */
+    @SneakyThrows
+    public void removeWxIndividuationMenu(WxMenu entity) {
+        final String appid = entity.getAppid();
+        final String menuId = entity.getMenuId();
+        if (Objects.isNull(menuId)) {
+            return;
+        }
+        final WxMpMenuService menuService = wxMpService.getMenuService();
+        checkAndSwitchover(appid);
+        menuService.menuDelete(menuId);
     }
 
     /**
@@ -94,7 +161,7 @@ public class WxMpManager {
 
     @Async
     public void insertOrUpdateWithMpConfig(@NonNull WxMpConfig config) {
-        wxMpService.addConfigStorage(config.getAppid(), this.asWxMpConfigStorage(config));
+        wxMpService.addConfigStorage(config.getAppid(), wxMpMapping.asWxMpConfigStorage(config));
     }
 
     @Async
@@ -106,14 +173,6 @@ public class WxMpManager {
         return this.wxMpService;
     }
 
-    public WxMpConfigStorage asWxMpConfigStorage(WxMpConfig config) {
-        WxMpDefaultConfigImpl configStorage = new WxMpDefaultConfigImpl();
-        configStorage.setAppId(config.getAppid());
-        configStorage.setSecret(config.getAppSecret());
-        configStorage.setToken(config.getToken());
-        configStorage.setAesKey(config.getAesKey());
-        return configStorage;
-    }
 
     private void checkAndSwitchover(String appid) {
         if (!wxMpService.switchover(appid)) {

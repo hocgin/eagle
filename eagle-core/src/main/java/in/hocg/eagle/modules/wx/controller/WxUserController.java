@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/api/wx-user")
+@RequestMapping("/api/wx/user")
 public class WxUserController {
 
 }
