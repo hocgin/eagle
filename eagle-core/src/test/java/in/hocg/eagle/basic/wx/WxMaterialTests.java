@@ -1,9 +1,11 @@
 package in.hocg.eagle.basic.wx;
 
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMaterialService;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
 import org.junit.Test;
@@ -27,8 +29,36 @@ public class WxMaterialTests extends WxTests {
     }
 
     @Test
+    public void testUploadAudioFile() throws WxErrorException {
+        final File file = new File("/Users/hocgin/Downloads/Day5-实用价值.mp3");
+        final WxMpService wxMpService = wxMpManager.getWxMpService();
+        wxMpService.switchover(appid);
+        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+
+        final WxMpMaterial material = new WxMpMaterial();
+        material.setFile(file);
+        material.setName(file.getName());
+        material.setVideoIntroduction("svi");
+        material.setVideoTitle("svt");
+        final WxMpMaterialUploadResult result = materialService.materialFileUpload(WxConsts.MediaFileType.VOICE, material);
+        log.info("上传结果: {}", result);
+    }
+
+
+    @Test
+    public void testUploadFile2() {
+        final WxMpService wxMpService = wxMpManager.getWxMpService();
+        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+//        materialService.mediaImgUpload()
+//        materialService.mediaUpload()
+//        materialService.materialFileUpload()
+//        materialService.materialNewsUpload()
+    }
+
+    @Test
     public void testUploadNews() throws WxErrorException {
         final WxMpService wxMpService = wxMpManager.getWxMpService();
+        wxMpService.switchover(appid);
         final WxMpMaterialService materialService = wxMpService.getMaterialService();
         WxMpMaterialNews material = new WxMpMaterialNews();
         final WxMpMaterialNews.WxMpMaterialNewsArticle article = new WxMpMaterialNews.WxMpMaterialNewsArticle();

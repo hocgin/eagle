@@ -1,11 +1,13 @@
 package in.hocg.eagle.utils.file;
 
+import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -24,7 +26,7 @@ public class FileUtils {
      * @param bi
      * @return
      */
-    public static File toFile(BufferedImage bi) {
+    public File toFile(BufferedImage bi) {
         Path file;
         try {
             file = Files.createTempFile("img", ".png");
@@ -34,4 +36,18 @@ public class FileUtils {
             throw new RuntimeException(e);
         }
     }
+
+    public File toFile(URL url) throws IOException {
+        final String path = url.getPath();
+        final String filename = path.substring(path.lastIndexOf("/") + 1);
+        final File result = createTempFile(filename).toFile();
+        org.apache.commons.io.FileUtils.copyURLToFile(url, result);
+        return result;
+    }
+
+    public Path createTempFile(@NonNull String filename) throws IOException {
+        return Files.createTempDirectory("temp_file")
+            .resolve(filename);
+    }
+
 }

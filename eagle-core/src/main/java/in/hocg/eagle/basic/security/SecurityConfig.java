@@ -62,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 短链接
                 "/s/*",
                 "/wx-mp/*",
+                "/api/wx/material/**",
                 "/",
                 "/captcha",
                 TokenAuthenticationEndpoint.ACCOUNT_TOKEN_URI).permitAll()

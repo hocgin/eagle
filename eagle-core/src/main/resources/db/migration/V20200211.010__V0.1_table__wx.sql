@@ -25,7 +25,7 @@ CREATE TABLE `wx_mp_config`
     PRIMARY KEY (appid)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-    COMMENT ='[微信模块] 公众号配置表';
+    COMMENT ='[微信模块] 微信公众号配置表';
 
 DROP TABLE IF EXISTS `wx_user`;
 CREATE TABLE `wx_user`
@@ -70,7 +70,7 @@ CREATE TABLE `wx_user`
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-    COMMENT ='[微信模块] 用户表';
+    COMMENT ='[微信模块] 微信用户表';
 -- ################################################################################################
 DROP TABLE IF EXISTS `wx_menu`;
 CREATE TABLE `wx_menu`
@@ -99,7 +99,32 @@ CREATE TABLE `wx_menu`
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-    COMMENT ='[微信模块] 菜单表';
+    COMMENT ='[微信模块] 微信菜单表';
+
+DROP TABLE IF EXISTS `wx_material`;
+CREATE TABLE `wx_material`
+(
+    id               BIGINT AUTO_INCREMENT,
+    appid            VARCHAR(32)         NOT NULL
+        COMMENT 'APP ID',
+    --
+    material_type    TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+        COMMENT '素材类型: 0->图片; 1->语音; 2->视频; 3->缩略图; 4->图文',
+    material_id      VARCHAR(32)
+        COMMENT '素材ID，上传后获得',
+    material_content JSON                NOT NULL
+        COMMENT '素材内容',
+    --
+    uploader         BIGINT              NULL,
+    uploaded_at      DATETIME(6)         NULL,
+    creator          BIGINT              NOT NULL,
+    created_at       DATETIME(6)         NOT NULL,
+    last_updater     BIGINT              NULL,
+    last_updated_at  DATETIME(6)         NULL,
+    PRIMARY KEY (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+    COMMENT ='[微信模块] 微信素材库';
 -- ################################################################################################
 DROP TABLE IF EXISTS `wx_mp_reply_rule`;
 CREATE TABLE `wx_mp_reply_rule`

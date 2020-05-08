@@ -3,6 +3,7 @@ package in.hocg.eagle.manager;
 import com.aliyun.oss.OSSClient;
 import com.google.common.io.Files;
 import in.hocg.eagle.utils.LangUtils;
+import in.hocg.eagle.utils.file.FileUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -34,9 +35,9 @@ public class OssManager {
      */
     public String uploadToOss(MultipartFile file) {
         try {
-            final File uploadFile = java.nio.file.Files.createTempFile("f", "tmp").toFile();
+            final File uploadFile = FileUtils.createTempFile(file.getOriginalFilename()).toFile();
             file.transferTo(uploadFile);
-            final String fileName = LangUtils.md5(Files.toByteArray(uploadFile));
+            final String fileName = LangUtils.md5(Files.toByteArray(uploadFile)) + "/" + uploadFile.getName();
             return uploadToOss(uploadFile, fileName);
         } catch (IOException e) {
             throw new RuntimeException(e);
