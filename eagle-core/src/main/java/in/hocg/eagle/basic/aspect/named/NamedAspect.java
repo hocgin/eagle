@@ -26,7 +26,7 @@ import java.util.*;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class NamedAspect {
-    private ThreadLocal<Map<String, Object>> cache = ThreadLocal.withInitial(WeakHashMap::new);
+    private final ThreadLocal<Map<String, Object>> cache = ThreadLocal.withInitial(WeakHashMap::new);
 
     @Pointcut("@within(org.springframework.stereotype.Service) && execution((*) *(..))")
     public void pointcut() {
