@@ -1,11 +1,13 @@
 package in.hocg.eagle.modules.wx.manager;
 
+import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.wx.entity.WxMenu;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
 import in.hocg.eagle.modules.wx.entity.WxUser;
 import in.hocg.eagle.modules.wx.mapstruct.WxMpMapping;
 import in.hocg.eagle.utils.DateUtils;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -17,6 +19,7 @@ import me.chanjar.weixin.mp.api.WxMpMenuService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserService;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
@@ -42,15 +45,72 @@ public class WxMpManager {
     private final WxMpService wxMpService;
     private final WxMpMapping wxMpMapping;
 
-    @SneakyThrows
-    public WxMpMaterialUploadResult materialImageUpload(@NotNull String appid,
-                                                        @NotNull File file) {
+    public WxMpMaterialUploadResult uploadMaterialNews() {
+        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+        final WxMpMaterialNews material = new WxMpMaterialNews();
+        final WxMpMaterialNews.WxMpMaterialNewsArticle article = new WxMpMaterialNews.WxMpMaterialNewsArticle();
+        // article.setThumbUrl();
+        try {
+            return materialService.materialNewsUpload(material);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
+     * 上传永久素材(视频)
+     *
+     * @param appid
+     * @param file
+     * @param videoTitle
+     * @param videoIntroduction
+     * @return
+     */
+    public WxMpMaterialUploadResult uploadMaterialVideo(@NotNull String appid,
+                                                        @NotNull File file,
+                                                        String videoTitle,
+                                                        String videoIntroduction) {
+        checkAndSwitchover(appid);
+        final WxMpMaterial material = new WxMpMaterial();
+        material.setFile(file);
+        material.setName(file.getName());
+        material.setVideoTitle(videoTitle);
+        material.setVideoIntroduction(videoIntroduction);
+        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+        try {
+            return materialService.materialFileUpload(WxConsts.MediaFileType.VIDEO, material);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
+     * 上传永久素材, 获取 media Id/url
+     * 注: 非图文/非视频
+     *
+     * @param appid
+     * @param mediaType
+     * @param file
+     * @return
+     */
+    public WxMpMaterialUploadResult uploadMaterialFile(@NotNull String appid,
+                                                       @NotNull String mediaType,
+                                                       @NotNull File file) {
+        ValidUtils.isTrue(Lists.newArrayList(WxConsts.MediaFileType.THUMB,
+            WxConsts.MediaFileType.VOICE,
+            WxConsts.MediaFileType.IMAGE,
+            WxConsts.MediaFileType.FILE).contains(mediaType), "文件类型不支持");
+
         checkAndSwitchover(appid);
         final WxMpMaterial material = new WxMpMaterial();
         material.setFile(file);
         material.setName(file.getName());
         final WxMpMaterialService materialService = wxMpService.getMaterialService();
-        return materialService.materialFileUpload(WxConsts.MaterialType.IMAGE, material);
+        try {
+            return materialService.materialFileUpload(mediaType, material);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
     }
 
     /**

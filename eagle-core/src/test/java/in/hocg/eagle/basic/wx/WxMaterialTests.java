@@ -24,7 +24,7 @@ public class WxMaterialTests extends WxTests {
     @Test
     public void testUploadFile() {
         final File file = new File("/Users/hocgin/Pictures/hocgin/hocgin.png");
-        final WxMpMaterialUploadResult result = wxMpManager.materialImageUpload(appid, file);
+        final WxMpMaterialUploadResult result = wxMpManager.uploadMaterialFile(appid, WxConsts.MediaFileType.IMAGE, file);
         log.info("上传结果: {}", result);
     }
 

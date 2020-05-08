@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,17 @@ public enum WxMaterialType implements IntEnum {
         return JsonUtils.parseObject(json, clazz);
     }
 
+    /**
+     * 转为媒体文件类型
+     *
+     * @return
+     */
+    public String asMediaFileType() {
+        return getName().toLowerCase();
+    }
+
     @Data
+    @Accessors(chain = true)
     @ApiModel("上传::通用文件")
     public static class File {
         private String url;
@@ -59,6 +70,7 @@ public enum WxMaterialType implements IntEnum {
 
     @Data
     @ApiModel("上传::图文")
+    @Accessors(chain = true)
     @EqualsAndHashCode(callSuper = true)
     public static class News extends ArrayList<WxMaterialType.News.NewsItem> {
 
@@ -79,6 +91,7 @@ public enum WxMaterialType implements IntEnum {
 
     @Data
     @ApiModel("上传::视频")
+    @Accessors(chain = true)
     public static class Video {
         private String url;
         private String filename;
@@ -88,13 +101,17 @@ public enum WxMaterialType implements IntEnum {
 
     @Data
     @ApiModel("上传结果::通用")
+    @Accessors(chain = true)
     public static class Result {
         private String mediaId;
+        private String url;
     }
 
     @Data
     @ApiModel("上传结果::图片")
+    @Accessors(chain = true)
     public static class ImageResult {
         private String url;
     }
+
 }

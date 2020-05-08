@@ -5,6 +5,8 @@ import in.hocg.eagle.basic.result.ResultCode;
 import io.jsonwebtoken.lang.Assert;
 import lombok.experimental.UtilityClass;
 
+import java.io.IOException;
+
 /**
  * Created by hocgin on 2020/2/15.
  * email: hocgin@gmail.com
@@ -14,7 +16,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ValidUtils {
 
-    public static void notNull(Object object, String message) {
+    public void notNull(Object object, String message) {
         try {
             Assert.notNull(object, message);
         } catch (Exception e) {
@@ -22,11 +24,11 @@ public class ValidUtils {
         }
     }
 
-    public static void notNull(Object object) {
+    public void notNull(Object object) {
         notNull(object, ResultCode.SERVICE_ERROR.getMessage());
     }
 
-    public static void isNull(Object object, String message) {
+    public void isNull(Object object, String message) {
         try {
             Assert.isNull(object, message);
         } catch (Exception e) {
@@ -34,11 +36,11 @@ public class ValidUtils {
         }
     }
 
-    public static void isNull(Object object) {
+    public void isNull(Object object) {
         isNull(object, ResultCode.SERVICE_ERROR.getMessage());
     }
 
-    public static void isTrue(boolean expression, String message) {
+    public void isTrue(boolean expression, String message) {
         try {
             Assert.isTrue(expression, message);
         } catch (Exception e) {
@@ -46,11 +48,11 @@ public class ValidUtils {
         }
     }
 
-    public static void isTrue(boolean expression) {
+    public void isTrue(boolean expression) {
         isTrue(expression, ResultCode.SERVICE_ERROR.getMessage());
     }
 
-    public static void isFalse(boolean expression, String message) {
+    public void isFalse(boolean expression, String message) {
         try {
             Assert.isTrue(!expression, message);
         } catch (Exception e) {
@@ -58,11 +60,15 @@ public class ValidUtils {
         }
     }
 
-    public static void isFalse(boolean expression) {
+    public void isFalse(boolean expression) {
         isFalse(expression, ResultCode.SERVICE_ERROR.getMessage());
     }
 
-    public static void fail(String message) {
+    public void fail(String message) {
         throw ServiceException.wrap(message);
+    }
+
+    public void fail(IOException e) {
+        fail(e.getMessage());
     }
 }

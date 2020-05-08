@@ -4,11 +4,14 @@ package in.hocg.eagle.modules;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.eagle.basic.cache.CacheKeys;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.com.service.ShortUrlService;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 /**
@@ -31,16 +36,20 @@ import java.util.Optional;
  * @author hocgin
  * @since 2020-04-04
  */
+@Slf4j
 @Controller
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping
 public class IndexController {
     private final ShortUrlService shortUrlService;
 
+    @Cacheable(value = CacheKeys.DEMO)
     @GetMapping
     @ResponseBody
     public String index() {
-        return "worked";
+        final String now = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
+        log.info("请求时间" + now);
+        return "worked " + now;
     }
 
     @GetMapping("/captcha")
