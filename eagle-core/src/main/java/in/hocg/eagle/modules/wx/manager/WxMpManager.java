@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.wx.manager;
 
 import com.google.common.collect.Lists;
+import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.wx.entity.WxMenu;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
@@ -21,6 +22,7 @@ import me.chanjar.weixin.mp.api.WxMpUserService;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialVideoInfoResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.context.annotation.Lazy;
@@ -29,6 +31,10 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -43,15 +49,78 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class WxMpManager {
     private final WxMpService wxMpService;
-    private final WxMpMapping wxMpMapping;
+    private final WxMpMapping mapping;
 
-    public WxMpMaterialUploadResult uploadMaterialNews() {
+    /**
+     * 获取图片或音频文件流
+     *
+     * @param appid
+     * @param mediaId
+     * @return
+     */
+    public InputStream getMaterialImageOrVoice(@NonNull String appid, String mediaId) {
+        checkAndSwitchover(appid);
+        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+        try {
+            return materialService.materialImageOrVoiceDownload(mediaId);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
+     * 获取视频文件流
+     *
+     * @param appid
+     * @param mediaId
+     * @return
+     */
+    public InputStream getMaterialVideo(@NonNull String appid, String mediaId) {
+        checkAndSwitchover(appid);
+        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+        try {
+            final WxMpMaterialVideoInfoResult result = materialService.materialVideoInfo(mediaId);
+            return new URL(result.getDownUrl()).openStream();
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        } catch (IOException e) {
+            throw ServiceException.wrap(e.getMessage());
+        }
+    }
+
+    /**
+     * 上传图文素材
+     *
+     * @param appid
+     * @param inArticles
+     * @return
+     */
+    public WxMpMaterialUploadResult uploadMaterialNews(@NonNull String appid, List<WxMaterialType.News.NewsItem> inArticles) {
+        checkAndSwitchover(appid);
         final WxMpMaterialService materialService = wxMpService.getMaterialService();
         final WxMpMaterialNews material = new WxMpMaterialNews();
-        final WxMpMaterialNews.WxMpMaterialNewsArticle article = new WxMpMaterialNews.WxMpMaterialNewsArticle();
-        // article.setThumbUrl();
+        inArticles.parallelStream()
+            .map(mapping::asWxMpMaterialNews0WxMpMaterialNewsArticle)
+            .forEach(material::addArticle);
         try {
             return materialService.materialNewsUpload(material);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
+     * 上传图文消息内的图片
+     *
+     * @param appid
+     * @param file
+     * @return
+     */
+    public String uploadMaterialImageWithNews(@NotNull String appid, @NotNull File file) {
+        checkAndSwitchover(appid);
+        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+        try {
+            return materialService.mediaImgUpload(file).getUrl();
         } catch (WxErrorException e) {
             throw ServiceException.wrap(e.getError().getErrorMsg());
         }
@@ -123,7 +192,7 @@ public class WxMpManager {
         final String appid = entity.getAppid();
         checkAndSwitchover(appid);
         final WxMpMenuService menuService = wxMpService.getMenuService();
-        menuService.menuCreate(wxMpMapping.asWxMenu(entity));
+        menuService.menuCreate(mapping.asWxMenu(entity));
     }
 
     /**
@@ -149,7 +218,7 @@ public class WxMpManager {
         final String appid = entity.getAppid();
         checkAndSwitchover(appid);
         final WxMpMenuService menuService = wxMpService.getMenuService();
-        menuService.menuCreate(wxMpMapping.asWxMenu(entity));
+        menuService.menuCreate(mapping.asWxMenu(entity));
     }
 
     /**
@@ -221,7 +290,7 @@ public class WxMpManager {
 
     @Async
     public void insertOrUpdateWithMpConfig(@NonNull WxMpConfig config) {
-        wxMpService.addConfigStorage(config.getAppid(), wxMpMapping.asWxMpConfigStorage(config));
+        wxMpService.addConfigStorage(config.getAppid(), mapping.asWxMpConfigStorage(config));
     }
 
     @Async
@@ -233,7 +302,11 @@ public class WxMpManager {
         return this.wxMpService;
     }
 
-
+    /**
+     * 切换公众号
+     *
+     * @param appid
+     */
     private void checkAndSwitchover(String appid) {
         if (!wxMpService.switchover(appid)) {
             throw ServiceException.wrap("切换公众号配置失败[appid={}]", appid);

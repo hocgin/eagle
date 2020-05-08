@@ -44,6 +44,22 @@ public class WxMaterialTests extends WxTests {
         log.info("上传结果: {}", result);
     }
 
+    @Test
+    public void testUploadVideoFile() throws WxErrorException {
+        final File file = new File("/Users/hocgin/Downloads/xx.mp4");
+        final WxMpService wxMpService = wxMpManager.getWxMpService();
+        wxMpService.switchover(appid);
+        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+
+        final WxMpMaterial material = new WxMpMaterial();
+        material.setFile(file);
+        material.setName(file.getName());
+        material.setVideoIntroduction("svi");
+        material.setVideoTitle("svt");
+        final WxMpMaterialUploadResult result = materialService.materialFileUpload(WxConsts.MediaFileType.VIDEO, material);
+        log.info("上传结果: {}", result);
+    }
+
 
     @Test
     public void testUploadFile2() {

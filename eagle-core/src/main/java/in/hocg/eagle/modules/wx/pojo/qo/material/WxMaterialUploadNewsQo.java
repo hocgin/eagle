@@ -2,7 +2,9 @@ package in.hocg.eagle.modules.wx.pojo.qo.material;
 
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -22,15 +24,21 @@ public class WxMaterialUploadNewsQo extends BaseQo {
 
     @Data
     public static class NewsItem {
+        @NotBlank(message = "标题不能为空")
         private String title;
-        private String thumbUrl;
+        @URL(message = "图片地址错误")
+        private String originalUrl;
+        private String thumbMediaId;
         private String author;
         private String digest;
-        private Integer showCoverPic;
+        @NotNull(message = "是否显示封面不能为空")
+        private Boolean showCoverPic;
+        @NotBlank(message = "图文消息正文不能为空")
         private String content;
+        @NotBlank(message = "图文消息原文地址不能为空")
         private String contentSourceUrl;
-        private Integer needOpenComment;
-        private Integer onlyFansCanComment;
+        private Boolean needOpenComment;
+        private Boolean onlyFansCanComment;
     }
 
 }

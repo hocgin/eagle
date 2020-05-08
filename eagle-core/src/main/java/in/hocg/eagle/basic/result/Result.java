@@ -3,8 +3,12 @@ package in.hocg.eagle.basic.result;
 import in.hocg.eagle.utils.string.JsonUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 /**
@@ -63,9 +67,9 @@ public class Result<T> implements Serializable {
     public static <T> Result<T> result(Boolean success, Integer code, String message, T data) {
         Result<T> result = new Result<>();
         return result.setCode(code)
-                .setSuccess(success)
-                .setMessage(message)
-                .setData(data);
+            .setSuccess(success)
+            .setMessage(message)
+            .setData(data);
     }
 
     public ResponseEntity<Result<T>> asResponseEntity() {
@@ -74,5 +78,17 @@ public class Result<T> implements Serializable {
 
     public String json() {
         return JsonUtils.toJSONString(this);
+    }
+
+    public static ResponseEntity<InputStreamResource> stream(InputStream is) {
+        return ResponseEntity
+            .ok()
+            .headers(new HttpHeaders() {{
+                add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
+                add(HttpHeaders.PRAGMA, "no-cache");
+                add(HttpHeaders.EXPIRES, "0");
+            }})
+            .contentType(MediaType.parseMediaType("application/octet-stream"))
+            .body(new InputStreamResource(is));
     }
 }

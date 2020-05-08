@@ -79,13 +79,14 @@ public enum WxMaterialType implements IntEnum {
             private String title;
             private String thumbMediaId;
             private String thumbUrl;
+            private String originalUrl;
             private String author;
             private String digest;
-            private Integer showCoverPic;
+            private Boolean showCoverPic;
             private String content;
             private String contentSourceUrl;
-            private Integer needOpenComment;
-            private Integer onlyFansCanComment;
+            private Boolean needOpenComment;
+            private Boolean onlyFansCanComment;
         }
     }
 

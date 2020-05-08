@@ -1,0 +1,74 @@
+package in.hocg.eagle.modules.wx.controller;
+
+
+import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadFileQo;
+import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadNewsQo;
+import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadVideoQo;
+import in.hocg.eagle.modules.wx.service.WxMaterialService;
+import lombok.RequiredArgsConstructor;
+import me.chanjar.weixin.common.error.WxErrorException;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+/**
+ * <p>
+ * [微信模块] 微信素材库 前端控制器
+ * </p>
+ *
+ * @author hocgin
+ * @since 2020-05-05
+ */
+@RestController
+@RequiredArgsConstructor(onConstructor = @__(@Lazy))
+@RequestMapping("/api/wx/material")
+public class WxMaterialController {
+    private final WxMaterialService service;
+
+    @GetMapping("/video/{appid}/{mediaId}")
+    public ResponseEntity video(@PathVariable("appid") String appid, @PathVariable String mediaId) throws WxErrorException {
+        return Result.stream(service.getVideoStream(appid, mediaId));
+    }
+
+    @GetMapping("/voice/{appid}/{mediaId}")
+    public ResponseEntity voice(@PathVariable("appid") String appid, @PathVariable String mediaId) throws WxErrorException {
+        return Result.stream(service.getVoiceStream(appid, mediaId));
+    }
+
+    @GetMapping("/image/{appid}/{mediaId}")
+    public ResponseEntity image(@PathVariable("appid") String appid, @PathVariable String mediaId) throws WxErrorException {
+        return Result.stream(service.getImageStream(appid, mediaId));
+    }
+
+    @UseLogger("上传音频 - 微信素材")
+    @PostMapping("/upload/voice")
+    public Result uploadVoice(@Validated @RequestBody WxMaterialUploadFileQo qo) {
+        service.uploadVoice(qo);
+        return Result.success();
+    }
+
+    @UseLogger("上传视频 - 微信素材")
+    @PostMapping("/upload/video")
+    public Result uploadVideo(@Validated @RequestBody WxMaterialUploadVideoQo qo) {
+        service.uploadVideo(qo);
+        return Result.success();
+    }
+
+    @UseLogger("上传图片 - 微信素材")
+    @PostMapping("/upload/image")
+    public Result uploadImage(@Validated @RequestBody WxMaterialUploadFileQo qo) {
+        service.uploadImage(qo);
+        return Result.success();
+    }
+
+    @UseLogger("上传图文 - 微信素材")
+    @PostMapping("/upload/news")
+    public Result uploadFile(@Validated @RequestBody WxMaterialUploadNewsQo qo) {
+        service.uploadNews(qo);
+        return Result.success();
+    }
+}
+
