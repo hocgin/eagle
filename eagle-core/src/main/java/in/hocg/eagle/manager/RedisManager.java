@@ -83,4 +83,18 @@ public class RedisManager {
         }
         return Optional.of(JSON.parseObject(text, clazz));
     }
+
+    public void setUserId(String sessionId, Long userId) {
+        final ValueOperations<String, String> opsForValue = template.opsForValue();
+        opsForValue.set(sessionId, String.valueOf(userId), 5, TimeUnit.MINUTES);
+    }
+
+    public Optional<Long> getAndCleanUserId(String sessionId) {
+        final ValueOperations<String, String> opsForValue = template.opsForValue();
+        final String userId = opsForValue.get(sessionId);
+        if (Strings.isNotBlank(userId)) {
+            return Optional.ofNullable(Long.parseLong(userId));
+        }
+        return Optional.empty();
+    }
 }

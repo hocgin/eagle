@@ -9,6 +9,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 /**
@@ -72,5 +73,9 @@ public class SpringContext implements ApplicationContextAware {
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    public static Optional<HttpSession> getSession() {
+        return getRequest().map(request -> request.getSession(false));
     }
 }
