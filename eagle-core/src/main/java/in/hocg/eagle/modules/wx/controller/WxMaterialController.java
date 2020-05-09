@@ -2,7 +2,9 @@ package in.hocg.eagle.modules.wx.controller;
 
 
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialPageQo;
 import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadFileQo;
 import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadNewsQo;
 import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadVideoQo;
@@ -69,6 +71,20 @@ public class WxMaterialController {
     public Result uploadFile(@Validated @RequestBody WxMaterialUploadNewsQo qo) {
         service.uploadNews(qo);
         return Result.success();
+    }
+
+    @UseLogger("分页查询 - 微信素材")
+    @PostMapping("/_paging")
+    public Result paging(@Validated @RequestBody WxMaterialPageQo qo) {
+        return Result.success(service.paging(qo));
+    }
+
+    @UseLogger("详情 - 微信素材")
+    @GetMapping("/{id}")
+    public Result selectOne(@PathVariable Long id) {
+        final IdQo qo = new IdQo();
+        qo.setId(id);
+        return Result.success(service.selectOne(qo));
     }
 }
 

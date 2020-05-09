@@ -17,6 +17,10 @@ spring:
       mail.smtp.starttls.enable: true
       mail.smtp.starttls.required: true
       mail.debug: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 aliyun:
   oss:
     endpoint: http://oss-cn-beijing.aliyuncs.com

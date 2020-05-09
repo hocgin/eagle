@@ -9,8 +9,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -23,10 +25,10 @@ import java.util.List;
 @ApiModel("微信素材类型")
 @RequiredArgsConstructor
 public enum WxMaterialType implements IntEnum {
-    Image(0, "图片", File.class, ImageResult.class),
+    Image(0, "图片", File.class, Result.class),
     Voice(1, "语音", File.class, Result.class),
     Video(2, "视频", Video.class, Result.class),
-    Thumb(3, "缩略图", File.class, ImageResult.class),
+    Thumb(3, "缩略图", File.class, Result.class),
     News(4, "图文", News.class, Result.class);
     private final Integer code;
     private final String name;
@@ -57,7 +59,7 @@ public enum WxMaterialType implements IntEnum {
      * @return
      */
     public String asMediaFileType() {
-        return getName().toLowerCase();
+        return name().toLowerCase();
     }
 
     @Data
@@ -73,6 +75,9 @@ public enum WxMaterialType implements IntEnum {
     @Accessors(chain = true)
     @EqualsAndHashCode(callSuper = true)
     public static class News extends ArrayList<WxMaterialType.News.NewsItem> {
+        public News(@NotNull Collection<? extends NewsItem> c) {
+            super(c);
+        }
 
         @Data
         public static class NewsItem {

@@ -9,8 +9,10 @@ import me.chanjar.weixin.common.bean.menu.WxMenuRule;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
+import org.apache.logging.log4j.util.Strings;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+
+import java.util.Objects;
 
 /**
  * Created by hocgin on 2020/4/30.
@@ -37,6 +39,23 @@ public interface WxMpMapping {
         return result;
     }
 
-    @Mapping(target = "url", ignore = true)
-    WxMpMaterialNews.WxMpMaterialNewsArticle asWxMpMaterialNews0WxMpMaterialNewsArticle(WxMaterialType.News.NewsItem item);
+    default WxMpMaterialNews.WxMpMaterialNewsArticle asWxMpMaterialNews0WxMpMaterialNewsArticle(WxMaterialType.News.NewsItem item) {
+        final WxMpMaterialNews.WxMpMaterialNewsArticle result = new WxMpMaterialNews.WxMpMaterialNewsArticle();
+        final String thumbUrl = item.getThumbUrl();
+        final String thumbMediaId = item.getThumbMediaId();
+        if (Strings.isNotBlank(thumbUrl)) {
+            result.setThumbUrl(thumbUrl);
+        } else if (Objects.nonNull(thumbMediaId)){
+            result.setThumbMediaId(thumbMediaId);
+        }
+        result.setContent(item.getContent());
+        result.setTitle(item.getTitle());
+        result.setAuthor(item.getAuthor());
+        result.setContentSourceUrl(item.getContentSourceUrl());
+        result.setNeedOpenComment(item.getNeedOpenComment());
+        result.setDigest(item.getDigest());
+        result.setOnlyFansCanComment(item.getOnlyFansCanComment());
+        result.setShowCoverPic(item.getShowCoverPic());
+        return result;
+    }
 }

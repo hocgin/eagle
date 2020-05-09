@@ -44,10 +44,6 @@ public class WxMaterial extends AbstractEntity<WxMaterial> {
     @TableField("material_content")
     private String materialContent;
 
-    @TableField("uploader")
-    private Long uploader;
-    @TableField("uploaded_at")
-    private LocalDateTime uploadedAt;
     @TableField("creator")
     private Long creator;
     @TableField("created_at")

@@ -1,15 +1,20 @@
 package in.hocg.eagle.modules.wx.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.IntEnum;
 import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
+import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.security.SecurityContext;
 import in.hocg.eagle.modules.wx.entity.WxMaterial;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxMaterialMapper;
 import in.hocg.eagle.modules.wx.mapstruct.WxMaterialMapping;
+import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialPageQo;
 import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadFileQo;
 import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadNewsQo;
 import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadVideoQo;
+import in.hocg.eagle.modules.wx.pojo.vo.material.WxMaterialComplexVo;
 import in.hocg.eagle.modules.wx.service.WxMaterialService;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.file.FileUtils;
@@ -45,12 +50,18 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
 
     @Override
     public void uploadVoice(WxMaterialUploadFileQo qo) {
-        this.uploadFile(qo);
+        final String appid = qo.getAppid();
+        final Integer materialType = qo.getMaterialType();
+        final String url = qo.getUrl();
+        this.uploadFile(appid, materialType, url);
     }
 
     @Override
     public void uploadImage(WxMaterialUploadFileQo qo) {
-        this.uploadFile(qo);
+        final String appid = qo.getAppid();
+        final Integer materialType = qo.getMaterialType();
+        final String url = qo.getUrl();
+        this.uploadFile(appid, materialType, url);
     }
 
     @Override
@@ -104,14 +115,13 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
                 if (Strings.isNotBlank(thumbMediaId)) {
                     result.setThumbMediaId(thumbMediaId);
                 } else {
-                    final File file;
-                    try {
-                        file = FileUtils.toFile(new URL(newsItem.getOriginalUrl()));
-                        final String url = wxMpManager.uploadMaterialImageWithNews(appid, file);
-                        result.setThumbUrl(url);
-                    } catch (IOException e) {
-                        ValidUtils.fail(e.getMessage());
-                    }
+//                        final File file;
+//                        file = FileUtils.toFile(new URL(newsItem.getOriginalUrl()));
+//                        final String url = wxMpManager.uploadMaterialImageWithNews(appid, file);
+                    final WxMaterialType materialType = WxMaterialType.Image;
+                    final WxMaterial wxMaterial = this.uploadFile(appid, materialType.getCode(), newsItem.getOriginalUrl());
+                    WxMaterialType.Result imageResult = materialType.asResult(wxMaterial.getMaterialResult());
+                    result.setThumbMediaId(imageResult.getMediaId());
                 }
                 return result;
             }).collect(Collectors.toList());
@@ -123,9 +133,8 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
         entity.setMaterialType(WxMaterialType.News.getCode());
         entity.setCreatedAt(createdAt);
         entity.setCreator(userId);
-        entity.setMaterialContent(JsonUtils.toJSONString(
-            new WxMaterialType.News().addAll(items)
-        ));
+
+        entity.setMaterialContent(JsonUtils.toJSONString(new WxMaterialType.News(items)));
         entity.setMaterialResult(JsonUtils.toJSONString(
             new WxMaterialType.Result()
                 .setMediaId(result.getMediaId())
@@ -149,17 +158,33 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
         return wxMpManager.getMaterialImageOrVoice(appid, mediaId);
     }
 
+    @Override
+    public IPage<WxMaterialComplexVo> paging(WxMaterialPageQo qo) {
+        final IPage<WxMaterial> paging = baseMapper.paging(qo, qo.page());
+        return paging.convert(this::convertComplex);
+    }
+
+    @Override
+    public WxMaterialComplexVo selectOne(IdQo qo) {
+        final WxMaterial entity = getById(qo.getId());
+        return this.convertComplex(entity);
+    }
+
+    private WxMaterialComplexVo convertComplex(WxMaterial entity) {
+        final WxMaterialComplexVo result = mapping.asWxMaterialComplex(entity);
+        final WxMaterialType materialType = IntEnum.ofThrow(entity.getMaterialType(), WxMaterialType.class);
+        result.setMaterialContent(materialType.asContent(entity.getMaterialContent()));
+        result.setMaterialResult(materialType.asResult(entity.getMaterialResult()));
+        return result;
+    }
+
     /**
      * 非图文/非视频
-     *
-     * @param qo
      */
-    private void uploadFile(WxMaterialUploadFileQo qo) {
-        final String url = qo.getUrl();
-        final String appid = qo.getAppid();
-        final LocalDateTime createdAt = qo.getCreatedAt();
-        final Long userId = qo.getUserId();
-        final WxMaterialType wxMaterialType = IntEnum.ofThrow(qo.getMaterialType(), WxMaterialType.class);
+    private WxMaterial uploadFile(String appid, Integer materialType, String url) {
+        final LocalDateTime createdAt = LocalDateTime.now();
+        final Long userId = SecurityContext.getCurrentUserId();
+        final WxMaterialType wxMaterialType = IntEnum.ofThrow(materialType, WxMaterialType.class);
         final String mediaFileType = wxMaterialType.asMediaFileType();
 
         File file = null;
@@ -187,5 +212,6 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
                 .setUrl(result.getUrl())
         ));
         validInsert(entity);
+        return entity;
     }
 }

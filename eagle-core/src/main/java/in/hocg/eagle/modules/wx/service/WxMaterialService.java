@@ -1,10 +1,14 @@
 package in.hocg.eagle.modules.wx.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.modules.wx.entity.WxMaterial;
+import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialPageQo;
 import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadFileQo;
 import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadNewsQo;
 import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadVideoQo;
+import in.hocg.eagle.modules.wx.pojo.vo.material.WxMaterialComplexVo;
 
 import java.io.InputStream;
 
@@ -31,4 +35,8 @@ public interface WxMaterialService extends AbstractService<WxMaterial> {
     InputStream getVoiceStream(String appid, String mediaId);
 
     InputStream getImageStream(String appid, String mediaId);
+
+    IPage<WxMaterialComplexVo> paging(WxMaterialPageQo qo);
+
+    WxMaterialComplexVo selectOne(IdQo qo);
 }

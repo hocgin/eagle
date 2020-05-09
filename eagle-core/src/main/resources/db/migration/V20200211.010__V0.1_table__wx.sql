@@ -114,9 +114,9 @@ CREATE TABLE `wx_material`
         COMMENT '素材ID，上传后获得',
     material_content JSON                NOT NULL
         COMMENT '素材内容',
+    material_result JSON                NOT NULL
+        COMMENT '素材上传后获得',
     --
-    uploader         BIGINT              NULL,
-    uploaded_at      DATETIME(6)         NULL,
     creator          BIGINT              NOT NULL,
     created_at       DATETIME(6)         NOT NULL,
     last_updater     BIGINT              NULL,
