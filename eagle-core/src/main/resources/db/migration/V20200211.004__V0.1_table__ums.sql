@@ -377,6 +377,16 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
                           `creator`)
     VALUE (28, '优惠券模版详情', 1, 'mkt:coupon:detail', 0, 20, '/19/20/28', NOW(), 1);
 
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (29, '微信', 1, 'wx', 0, null, '/29', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (30, '公众号配置', 1, 'wx:mp-config', 0, 29, '/29/30', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (31, '微信用户', 1, 'wx:mp-user', 0, 29, '/29/31', NOW(), 1);
+
 
 # 角色
 INSERT INTO ums_role(`id`, `title`, `role_code`, `platform`, `created_at`, `creator`)
@@ -415,7 +425,10 @@ VALUES (1, 1),
        (1, 25),
        (1, 26),
        (1, 27),
-       (1, 28);
+       (1, 28),
+       (1, 29),
+       (1, 30),
+       (1, 31);
 
 # 赋予账号角色
 INSERT INTO ums_role_account(`role_id`, `account_id`)

@@ -1,8 +1,13 @@
 package in.hocg.eagle.modules.wx.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.modules.wx.entity.WxUser;
 import in.hocg.eagle.modules.wx.mapper.WxUserMapper;
+import in.hocg.eagle.modules.wx.mapstruct.WxUserMapping;
+import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserPagingQo;
+import in.hocg.eagle.modules.wx.pojo.vo.user.WxMpUserComplexVo;
 import in.hocg.eagle.modules.wx.service.WxUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -23,6 +28,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class WxUserServiceImpl extends AbstractServiceImpl<WxUserMapper, WxUser> implements WxUserService {
+    private final WxUserMapping mapping;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -49,5 +55,24 @@ public class WxUserServiceImpl extends AbstractServiceImpl<WxUserMapper, WxUser>
     public void unsubscribe(String appid, String openid) {
         lambdaUpdate().eq(WxUser::getAppid, appid).eq(WxUser::getOpenid, openid)
             .set(WxUser::getSubscribe, Boolean.FALSE).update();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<WxMpUserComplexVo> paging(WxMpUserPagingQo qo) {
+        return baseMapper.paging(qo, qo.page()).convert(this::convertComplex);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public WxMpUserComplexVo selectOne(IdQo qo) {
+        final Long id = qo.getId();
+        final WxUser entity = getById(id);
+        return this.convertComplex(entity);
+    }
+
+    private WxMpUserComplexVo convertComplex(WxUser entity) {
+        WxMpUserComplexVo result = mapping.asWxMpUserComplex(entity);
+        return result;
     }
 }

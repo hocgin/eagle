@@ -49,12 +49,20 @@ public class WxMpConfigController {
         return Result.success(service.paging(qo));
     }
 
+    @UseLogger("查询所有 - 微信公众号配置")
+    @GetMapping("/all")
+    public Result all() {
+        final WxMpConfigPagingQo qo = new WxMpConfigPagingQo();
+        qo.setSize(1);
+        qo.setSize(Integer.MAX_VALUE);
+        return Result.success(service.paging(qo).getRecords());
+    }
+
     @UseLogger("查看详情 - 微信公众号配置")
     @GetMapping("/{appid}")
     public Result selectOne(@PathVariable("appid") String appid) {
         return Result.success(service.selectOne(appid));
     }
-
 
 }
 

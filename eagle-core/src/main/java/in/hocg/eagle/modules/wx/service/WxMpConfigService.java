@@ -26,4 +26,5 @@ public interface WxMpConfigService extends AbstractService<WxMpConfig> {
     WxMpConfigComplexVo selectOne(String appid);
 
     List<WxMpConfig> selectListByEnabled(Integer enabled);
+
 }

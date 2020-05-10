@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.eagle.modules.wx.mapper.WxUserMapper">
 
+  <select id="paging" resultType="in.hocg.eagle.modules.wx.entity.WxUser">
+    SELECT wu.* FROM wx_user wu
+    <where>
+      <if test="qo.appid != null">
+        AND wu.appid = #{qo.appid}
+      </if>
+    </where>
+  </select>
 </mapper>

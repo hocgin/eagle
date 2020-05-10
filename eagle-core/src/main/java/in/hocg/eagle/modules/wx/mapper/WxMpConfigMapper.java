@@ -24,4 +24,7 @@ public interface WxMpConfigMapper extends BaseMapper<WxMpConfig> {
     IPage<WxMpConfig> paging(@Param("qo") WxMpConfigPagingQo qo, @Param("page") Page page);
 
     List<WxMpConfig> selectListByEnabled(@Param("enabled") Integer enabled);
+
+    List<WxMpConfig> search();
+
 }
