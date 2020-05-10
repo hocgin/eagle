@@ -10,6 +10,7 @@
 3. 检查HOST, 参考`.host.example`
 4. 修改`yml`配置参数
 5. 设置参数`spring.profiles.active=dev`并启动`AppApplication`
+
 **内网穿透**请参考 `scripts/proxy.sh` 内网穿透(`仅支持MacOS`)
 
 ### Eagle UI
