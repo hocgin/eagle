@@ -386,6 +386,12 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
     VALUE (31, '微信用户', 1, 'wx:mp-user', 0, 29, '/29/31', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (32, '微信菜单', 1, 'wx:mp-menu', 0, 29, '/29/32', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (33, '微信素材', 1, 'wx:mp-material', 0, 29, '/29/33', NOW(), 1);
 
 
 # 角色
@@ -428,7 +434,9 @@ VALUES (1, 1),
        (1, 28),
        (1, 29),
        (1, 30),
-       (1, 31);
+       (1, 31),
+       (1, 32),
+       (1, 33);
 
 # 赋予账号角色
 INSERT INTO ums_role_account(`role_id`, `account_id`)
