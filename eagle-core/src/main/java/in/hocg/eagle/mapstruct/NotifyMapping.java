@@ -1,7 +1,7 @@
 package in.hocg.eagle.mapstruct;
 
 import in.hocg.eagle.mapstruct.dto.PublishNotifyDto;
-import in.hocg.eagle.modules.notify.entity.Notify;
+import in.hocg.eagle.modules.mms.entity.Notify;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

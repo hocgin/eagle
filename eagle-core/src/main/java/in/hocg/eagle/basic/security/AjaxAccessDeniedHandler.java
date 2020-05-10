@@ -2,7 +2,7 @@ package in.hocg.eagle.basic.security;
 
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.basic.result.ResultCode;
-import in.hocg.eagle.utils.ResponseUtility;
+import in.hocg.eagle.utils.web.ResponseUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
@@ -20,13 +20,13 @@ import java.io.PrintWriter;
  * @author hocgin
  */
 public class AjaxAccessDeniedHandler implements AccessDeniedHandler {
-    
+
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         final ResultCode resultCode = ResultCode.ACCESS_DENIED_ERROR;
         final Result<Object> result = Result.error(resultCode.getCode(), "无权限");
-        
-        ResponseUtility.setUtf8(response);
+
+        ResponseUtils.setUtf8(response);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         try (final PrintWriter writer = response.getWriter()) {
             writer.write(result.json());

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.eagle.modules.com.mapper.SystemSettingsMapper">
+
+  <select id="pagingWithComplex"
+          resultType="in.hocg.eagle.modules.com.entity.SystemSettings">
+    SELECT css.*
+    FROM com_system_settings css
+  </select>
+
+  <select id="countAndConfigCodeIgnoreId" resultType="java.lang.Integer">
+    SELECT COUNT(1) FROM com_system_settings css
+    <where>
+      css.config_code = #{code}
+      <if test="id != null">
+        AND css.id != #{id}
+      </if>
+    </where>
+  </select>
+</mapper>

@@ -18,4 +18,6 @@ public enum Enabled implements IntEnum {
     On(1, "启用");
     private final Integer code;
     private final String name;
+
+    public static final String KEY = "enabled";
 }

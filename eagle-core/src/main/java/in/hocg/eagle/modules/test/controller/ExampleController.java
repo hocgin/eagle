@@ -26,30 +26,30 @@ import java.io.Serializable;
 @RequestMapping("/test/example")
 public class ExampleController {
     private final ExampleService service;
-    
+
     @DeleteMapping("/{id}")
     public Result<Void> deleteById(@PathVariable Serializable id) {
         return Result.success();
     }
-    
+
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('example')")
     public Result<Void> selectById(@PathVariable Serializable id) {
         return Result.success();
     }
-    
+
     @PostMapping
     public Result<Void> insert(@Validated @RequestBody ExamplePostQo qo) {
         return Result.success();
     }
-    
+
     @PutMapping("/{id}")
     public Result<Void> insert(@PathVariable Serializable id,
                                @Validated @RequestBody ExamplePutQo qo) {
         return Result.success();
     }
-    
-    @PostMapping("/_search")
+
+    @PostMapping({"/_search", "/_paging"})
     public Result<Void> search(@Validated @RequestBody Void qo) {
         return Result.success();
     }

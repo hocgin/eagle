@@ -17,9 +17,9 @@ import java.util.Objects;
  */
 @UtilityClass
 public class DateUtils {
-    public static final DateTimeFormatter SIMPLE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-    
-    public static Date getDate(LocalDateTime localDateTime) {
+    public final DateTimeFormatter SIMPLE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+
+    public Date getDate(LocalDateTime localDateTime) {
         if (Objects.isNull(localDateTime)) {
             return null;
         }
@@ -27,9 +27,16 @@ public class DateUtils {
         Instant instant = localDateTime.atZone(zone).toInstant();
         return Date.from(instant);
     }
-    
-    public static String format(LocalDateTime localDateTime, DateTimeFormatter formatter) {
+
+    public String format(LocalDateTime localDateTime, DateTimeFormatter formatter) {
         return localDateTime.format(formatter);
     }
-    
+
+    public LocalDateTime ofLong(long timestamp) {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), getDefaultZoneId());
+    }
+
+    public ZoneId getDefaultZoneId() {
+        return ZoneId.systemDefault();
+    }
 }

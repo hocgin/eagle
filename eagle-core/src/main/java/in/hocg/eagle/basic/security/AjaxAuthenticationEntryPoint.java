@@ -2,7 +2,7 @@ package in.hocg.eagle.basic.security;
 
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.basic.result.ResultCode;
-import in.hocg.eagle.utils.ResponseUtility;
+import in.hocg.eagle.utils.web.ResponseUtils;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
@@ -24,8 +24,8 @@ public class AjaxAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         final ResultCode resultCode = ResultCode.AUTHENTICATION_ERROR;
         final Result<Object> result = Result.error(resultCode.getCode(), "未登录");
-        
-        ResponseUtility.setUtf8(response);
+
+        ResponseUtils.setUtf8(response);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         try (final PrintWriter writer = response.getWriter()) {
             writer.write(result.json());

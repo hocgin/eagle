@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.eagle.modules.ums.mapper.AccountGroupMemberMapper">
+
+  <delete id="deleteAllByGroupId">
+    DELETE
+    FROM ums_account_group_member
+    WHERE group_id = #{groupId}
+  </delete>
+  <select id="pagingWithComplex" resultType="in.hocg.eagle.modules.ums.entity.Account">
+    SELECT ua.*
+    FROM ums_account ua
+           LEFT JOIN ums_account_group_member uagm ON uagm.account_id = ua.id
+    WHERE uagm.group_id = #{qo.groupId}
+  </select>
+</mapper>

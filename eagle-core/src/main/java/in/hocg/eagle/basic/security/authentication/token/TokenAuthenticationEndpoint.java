@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class TokenAuthenticationEndpoint {
     public static final String ACCOUNT_TOKEN_URI = "/api/account/authenticate";
-    
+
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
-    
-    @UseLogger("获取Token")
+
+    @UseLogger("获取TOKEN")
     @PostMapping(TokenAuthenticationEndpoint.ACCOUNT_TOKEN_URI)
     public Result<String> authenticate(@Validated @RequestBody TokenQo qo) {
         final String username = qo.getUsername();

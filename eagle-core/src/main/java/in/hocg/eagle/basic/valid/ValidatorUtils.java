@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.valid;
 
-import in.hocg.eagle.utils.ClassUtils;
+import in.hocg.eagle.utils.clazz.ClassUtils;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

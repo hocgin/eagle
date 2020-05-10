@@ -1,8 +1,8 @@
 package in.hocg.eagle.basic.aspect.named;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.utils.ClassUtils;
 import in.hocg.eagle.utils.LangUtils;
+import in.hocg.eagle.utils.clazz.ClassUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -13,9 +13,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author hocgin
@@ -28,6 +26,7 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class NamedAspect {
+    private final ThreadLocal<Map<String, Object>> cache = ThreadLocal.withInitial(WeakHashMap::new);
 
     @Pointcut("@within(org.springframework.stereotype.Service) && execution((*) *(..))")
     public void pointcut() {
@@ -101,8 +100,18 @@ public class NamedAspect {
         }
         final NamedType namedType = named.type();
         final Object id = ClassUtils.getObjectValue(result, idField, null);
-        final Object val = namedType.getFunction().apply(id, argsValue);
+        Object val;
+        try {
+            val = getValue(namedType, id, argsValue);
+        } catch (Exception e) {
+            val = null;
+        }
         ClassUtils.setFieldValue(result, field, val);
+    }
+
+    private Object getValue(NamedType namedType, Object id, String[] args) {
+        final String key = String.format("%s-%s-%s", namedType.name(), id, Arrays.toString(args));
+        return cache.get().computeIfAbsent(key, s -> namedType.getFunction().apply(id, args));
     }
 
 }

@@ -3,7 +3,7 @@ package in.hocg.eagle.basic.aspect.logger;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.security.SecurityContext;
-import in.hocg.eagle.utils.RequestUtility;
+import in.hocg.eagle.utils.web.RequestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -64,11 +64,11 @@ public class LoggerAspect {
             Method method = target.getClass().getMethod(methodName, parameterTypes);
             UseLogger annotation = method.getAnnotation(UseLogger.class);
             List<Object> args = Lists.newArrayList(point.getArgs())
-                    .stream()
-                    .filter(arg -> (!(arg instanceof HttpServletRequest)
-                            && !(arg instanceof HttpServletResponse)
-                            && !(arg instanceof MultipartFile)))
-                    .collect(Collectors.toList());
+                .stream()
+                .filter(arg -> (!(arg instanceof HttpServletRequest)
+                    && !(arg instanceof HttpServletResponse)
+                    && !(arg instanceof MultipartFile)))
+                .collect(Collectors.toList());
 
             Optional<HttpServletRequest> requestOpt = SpringContext.getRequest();
             String uri = "Unknown";
@@ -76,29 +76,32 @@ public class LoggerAspect {
             String host = "Unknown";
             String userAgent = "Unknown";
             String clientIp = "0.0.0.0";
+            String source = null;
             if (requestOpt.isPresent()) {
                 final HttpServletRequest request = requestOpt.get();
                 uri = request.getRequestURI();
                 requestMethod = request.getMethod();
-                userAgent = RequestUtility.getUserAgent(request);
-                host = RequestUtility.getHost(request);
-                clientIp = RequestUtility.getClientIP(request);
+                userAgent = RequestUtils.getUserAgent(request);
+                host = RequestUtils.getHost(request);
+                clientIp = RequestUtils.getClientIP(request);
+                source = request.getParameter("source");
             }
             final Logger logger = new Logger();
             final String enterRemark = annotation.value();
             logger.setCurrentUser(SecurityContext.getCurrentUser().orElse(null))
-                    .setMapping(mapping)
-                    .setException(errorMessage)
-                    .setEnterRemark(enterRemark)
-                    .setHost(host)
-                    .setCreatedAt(LocalDateTime.now())
-                    .setClientIp(clientIp)
-                    .setUserAgent(userAgent)
-                    .setMethod(requestMethod)
-                    .setTotalTimeMillis(watch.getTotalTimeMillis())
-                    .setUri(uri)
-                    .setRet(ret)
-                    .setArgs(args);
+                .setMapping(mapping)
+                .setSource(source)
+                .setException(errorMessage)
+                .setEnterRemark(enterRemark)
+                .setHost(host)
+                .setCreatedAt(LocalDateTime.now())
+                .setClientIp(clientIp)
+                .setUserAgent(userAgent)
+                .setMethod(requestMethod)
+                .setTotalTimeMillis(watch.getTotalTimeMillis())
+                .setUri(uri)
+                .setRet(ret)
+                .setArgs(args);
             logger.save();
         }
 

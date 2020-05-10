@@ -4,10 +4,10 @@ import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.RoleMapping;
-import in.hocg.eagle.modules.account.entity.Account;
-import in.hocg.eagle.modules.account.entity.Authority;
-import in.hocg.eagle.modules.account.entity.Role;
-import in.hocg.eagle.modules.account.service.AccountService;
+import in.hocg.eagle.modules.ums.entity.Account;
+import in.hocg.eagle.modules.ums.entity.Authority;
+import in.hocg.eagle.modules.ums.entity.Role;
+import in.hocg.eagle.modules.ums.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +30,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     private final AccountService accountService;
     private final RoleMapping roleMapping;
     private final AuthorityMapping authorityMapping;
-    
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final Optional<Account> accountOptional = accountService.selectOneByUsername(username);
@@ -44,7 +44,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         }
         throw new UsernameNotFoundException("用户名或密码错误");
     }
-    
+
     /**
      * 构建权限集
      *

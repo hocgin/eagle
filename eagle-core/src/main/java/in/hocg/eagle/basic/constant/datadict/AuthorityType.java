@@ -18,4 +18,6 @@ public enum AuthorityType implements IntEnum {
     Menu(1, "菜单");
     private final Integer code;
     private final String name;
+
+    public static final String KEY = "authorityType";
 }

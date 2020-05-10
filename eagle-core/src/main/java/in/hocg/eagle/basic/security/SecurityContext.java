@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -28,7 +29,7 @@ public class SecurityContext {
      *
      * @param userId 用户ID
      */
-    public static void signin(String userId) {
+    public void signin(String userId) {
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userId, null, null));
     }
 
@@ -37,7 +38,7 @@ public class SecurityContext {
      *
      * @return
      */
-    public static Authentication getAuthentication() {
+    public Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
@@ -47,9 +48,9 @@ public class SecurityContext {
      *
      * @return
      */
-    public static Optional<String> getCurrentUsername() {
+    public Optional<String> getCurrentUsername() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth instanceof AnonymousAuthenticationToken) {
+        if (Objects.isNull(auth) || auth instanceof AnonymousAuthenticationToken) {
             return Optional.empty();
         }
         try {
@@ -64,7 +65,7 @@ public class SecurityContext {
      *
      * @return
      */
-    public static Optional<User> getCurrentUser() {
+    public Optional<User> getCurrentUser() {
         final Optional<String> usernameOptional = getCurrentUsername();
         if (usernameOptional.isPresent()) {
             final String username = usernameOptional.get();

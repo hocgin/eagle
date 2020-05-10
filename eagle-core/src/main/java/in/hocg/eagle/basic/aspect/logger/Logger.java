@@ -1,8 +1,10 @@
 package in.hocg.eagle.basic.aspect.logger;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.security.User;
+import in.hocg.eagle.modules.com.entity.RequestLog;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -20,7 +22,10 @@ import java.util.Objects;
 @Data
 @Accessors(chain = true)
 public class Logger {
+    @ApiModelProperty("代码位置")
     private String mapping;
+    @ApiModelProperty("来源(需使用请求参数, 如: source=eagle)")
+    private String source;
     @ApiModelProperty("请求头:host")
     private String host;
     @ApiModelProperty("请求头:user-agent")
@@ -47,12 +52,12 @@ public class Logger {
     private LocalDateTime createdAt;
     @ApiModelProperty("线程内日志")
     private static final ThreadLocal<List<String>> LOGS_REMARK = new ThreadLocal<>();
-    
-    
+
+
     public static void log(String message) {
         getOrCreateLogPool().add(message);
     }
-    
+
     private static List<String> getOrCreateLogPool() {
         List<String> list = LOGS_REMARK.get();
         if (Objects.isNull(list)) {
@@ -61,8 +66,30 @@ public class Logger {
         }
         return list;
     }
-    
+
     public void save() {
         SpringContext.getBean(LoggerService.class).handle(this);
+    }
+
+    public RequestLog asRequestLog() {
+        final RequestLog entity = new RequestLog();
+        entity.setArgs(JSON.toJSONString(args));
+        entity.setRet(JSON.toJSONString(ret));
+        entity.setSource(source);
+        entity.setClientIp(clientIp);
+        entity.setCreatedAt(createdAt);
+        entity.setMapping(mapping);
+        entity.setMethod(method);
+        entity.setTotalTimeMillis(totalTimeMillis);
+        entity.setEnterRemark(enterRemark);
+        entity.setUri(uri);
+        entity.setException(exception);
+        entity.setHost(host);
+        entity.setUserAgent(userAgent);
+        entity.setLogs(JSON.toJSONString(LOGS_REMARK));
+        if (Objects.nonNull(currentUser)) {
+            entity.setCreator(currentUser.getId());
+        }
+        return entity;
     }
 }

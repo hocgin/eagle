@@ -25,8 +25,8 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class MapperGenerate {
     private final DataSourceProperties properties;
-    List<String> tablePrefix = Lists.newArrayList("T_");
-    
+    List<String> tablePrefix = Lists.newArrayList("T_", "SHOP_", "UMS_", "COM_", "OMS_", "MKT_");
+
     public void generateByTables(String packageName,
                                  String moduleName,
                                  String outputDir,
@@ -47,7 +47,7 @@ public class MapperGenerate {
                 .setControllerMappingHyphenStyle(true)
                 .setRestControllerStyle(true)
                 .setTablePrefix(tablePrefix.toArray(new String[]{}))
-                
+
                 .setSuperEntityClass(AbstractEntity.class.getName())
                 .setSuperServiceClass(AbstractService.class.getName())
                 .setSuperServiceImplClass(AbstractServiceImpl.class.getName())
@@ -62,7 +62,7 @@ public class MapperGenerate {
                 .setBaseColumnList(false)
                 .setBaseResultMap(false)
                 .setServiceName("%sService");
-        
+
         new AutoGenerator()
                 .setGlobalConfig(config)
                 .setDataSource(dataSourceConfig)

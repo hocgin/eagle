@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.eagle.modules.pms.mapper.ProductCategoryMapper">
+
+    <select id="search" resultType="in.hocg.eagle.modules.pms.entity.ProductCategory">
+        SELECT ppc.* FROM pms_product_category ppc
+        <where>
+            <if test="qo.parentId != null ">
+                AND ppc.parent_id = #{qo.parentId}
+            </if>
+        </where>
+      ORDER BY ppc.sort DESC, ppc.created_at DESC
+    </select>
+    <select id="countUsedProduct" resultType="java.lang.Integer">
+      SELECT COUNT(1)
+      FROM pms_product_category ppc
+        LEFT JOIN pms_product pp ON pp.product_category_id = ppc.id
+      WHERE ppc.tree_path REGEXP #{regexTreePath}
+    </select>
+  <select id="countUsedCoupon" resultType="java.lang.Integer">
+    SELECT COUNT(1)
+    FROM pms_product_category ppc
+        LEFT JOIN mkt_coupon_product_category_relation mcpcr ON mcpcr.product_category_id = ppc.id
+    WHERE ppc.tree_path REGEXP #{regexTreePath}
+  </select>
+</mapper>

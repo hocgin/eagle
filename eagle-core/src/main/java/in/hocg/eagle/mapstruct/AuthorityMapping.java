@@ -1,12 +1,12 @@
 package in.hocg.eagle.mapstruct;
 
 import in.hocg.eagle.basic.security.GrantedAuthority;
-import in.hocg.eagle.modules.account.pojo.qo.authority.AuthorityInsertQo;
-import in.hocg.eagle.modules.account.pojo.qo.authority.AuthorityUpdateQo;
-import in.hocg.eagle.modules.account.pojo.vo.authority.AuthorityComplexAndRoleVo;
-import in.hocg.eagle.modules.account.pojo.vo.authority.AuthorityTreeNodeVo;
-import in.hocg.eagle.modules.account.entity.Authority;
-import in.hocg.eagle.modules.account.entity.Role;
+import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthorityInsertQo;
+import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthorityUpdateQo;
+import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityComplexAndRoleVo;
+import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
+import in.hocg.eagle.modules.ums.entity.Authority;
+import in.hocg.eagle.modules.ums.entity.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

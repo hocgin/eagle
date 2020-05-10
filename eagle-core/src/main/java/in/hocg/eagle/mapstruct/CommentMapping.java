@@ -1,10 +1,10 @@
 package in.hocg.eagle.mapstruct;
 
-import in.hocg.eagle.modules.comment.pojo.qo.comment.CommentPostQo;
-import in.hocg.eagle.modules.comment.pojo.qo.comment.CommentPutQo;
-import in.hocg.eagle.modules.comment.pojo.vo.comment.CommentComplexVo;
-import in.hocg.eagle.modules.comment.pojo.vo.comment.RootCommentComplexVo;
-import in.hocg.eagle.modules.comment.entity.Comment;
+import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPostQo;
+import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPutQo;
+import in.hocg.eagle.modules.crm.pojo.vo.comment.CommentComplexVo;
+import in.hocg.eagle.modules.crm.pojo.vo.comment.RootCommentComplexVo;
+import in.hocg.eagle.modules.crm.entity.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -26,11 +26,12 @@ public interface CommentMapping {
     @Mapping(target = "childrenTotal", ignore = true)
     RootCommentComplexVo asRootCommentComplexVo(CommentComplexVo entity);
 
+    @Mapping(target = "targetId", ignore = true)
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
     @Mapping(target = "enabled", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    @Mapping(target = "targetId", ignore = true)
     @Mapping(target = "treePath", ignore = true)
     Comment asComment(CommentPostQo qo);
 

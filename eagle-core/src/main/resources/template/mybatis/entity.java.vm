@@ -5,6 +5,7 @@ import ${pkg};
 #end
 #if(${entityLombokModel})
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -47,9 +48,7 @@ public class ${entity} implements Serializable {
 #set($keyPropertyName=${field.propertyName})
 #end
 #if("$!field.comment" != "")
-    /**
-     * ${field.comment}
-     */
+    @ApiModelProperty("${field.comment}")
 #end
 #if(${field.keyFlag})
 ## 主键
@@ -116,7 +115,7 @@ public class ${entity} implements Serializable {
 #end
 #if(${activeRecord})
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
 #if(${keyPropertyName})
         return this.${keyPropertyName};
 #else

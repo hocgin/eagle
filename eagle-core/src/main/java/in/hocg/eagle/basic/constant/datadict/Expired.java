@@ -19,4 +19,6 @@ public enum Expired implements IntEnum {
     On(1, "正常");
     private final Integer code;
     private final String name;
+
+    public static final String KEY = "expired";
 }
