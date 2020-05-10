@@ -19,5 +19,8 @@ public interface WxMpConfigMapping {
     @Mapping(target = "lastUpdatedAt", ignore = true)
     WxMpConfig asWxMpConfig(WxMpConfigSaveQo qo);
 
+    @Mapping(target = "enabledName", ignore = true)
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
     WxMpConfigComplexVo asWxMpConfigComplex(WxMpConfig entity);
 }

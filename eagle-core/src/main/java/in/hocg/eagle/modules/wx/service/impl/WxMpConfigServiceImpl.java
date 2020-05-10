@@ -38,14 +38,17 @@ public class WxMpConfigServiceImpl extends AbstractServiceImpl<WxMpConfigMapper,
     @Transactional(rollbackFor = Exception.class)
     public void saveOne(WxMpConfigSaveQo qo) {
         final WxMpConfig entity = mapping.asWxMpConfig(qo);
-        if (Objects.isNull(qo.getAppid())) {
+        final WxMpConfig dbEntity = getById(entity.getAppid());
+
+        if (Objects.isNull(dbEntity)) {
             entity.setCreatedAt(qo.getCreatedAt());
             entity.setCreator(qo.getUserId());
+            validInsert(entity);
         } else {
             entity.setLastUpdatedAt(qo.getCreatedAt());
             entity.setLastUpdater(qo.getUserId());
+            validUpdateById(entity);
         }
-        validInsertOrUpdate(entity);
 
         final String pkVal = (String) entity.pkVal();
         if (!LangUtils.equals(Enabled.Off.getCode(), qo.getEnabled())) {
@@ -58,7 +61,7 @@ public class WxMpConfigServiceImpl extends AbstractServiceImpl<WxMpConfigMapper,
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<WxMpConfigComplexVo> paging(WxMpConfigPagingQo qo) {
-        return baseMapper.paging(qo).convert(this::convertComplex);
+        return baseMapper.paging(qo, qo.page()).convert(this::convertComplex);
     }
 
     @Override

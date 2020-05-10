@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.wx.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
 import in.hocg.eagle.modules.wx.pojo.qo.WxMpConfigPagingQo;
 import org.apache.ibatis.annotations.Mapper;
@@ -20,7 +21,7 @@ import java.util.List;
 @Mapper
 public interface WxMpConfigMapper extends BaseMapper<WxMpConfig> {
 
-    IPage<WxMpConfig> paging(@Param("qo") WxMpConfigPagingQo qo);
+    IPage<WxMpConfig> paging(@Param("qo") WxMpConfigPagingQo qo, @Param("page") Page page);
 
     List<WxMpConfig> selectListByEnabled(@Param("enabled") Integer enabled);
 }

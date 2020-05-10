@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.wx.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -29,7 +30,7 @@ public class WxMpConfig extends AbstractEntity<WxMpConfig> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("开发者ID(AppID)")
-    @TableId("appid")
+    @TableId(value = "appid", type = IdType.INPUT)
     private String appid;
     @ApiModelProperty("微信公众号标题")
     @TableField("title")

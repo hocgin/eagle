@@ -23,14 +23,13 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/api/wx/config")
+@RequestMapping("/api/wx-mp/config")
 public class WxMpConfigController {
     private final WxMpConfigService service;
 
     @UseLogger("新增 - 微信公众号配置")
     @PostMapping
     public Result<Void> insertOne(@Validated({Insert.class}) @RequestBody WxMpConfigSaveQo qo) {
-        qo.setAppid(null);
         service.saveOne(qo);
         return Result.success();
     }
