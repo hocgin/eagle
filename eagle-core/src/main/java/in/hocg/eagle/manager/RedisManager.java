@@ -93,7 +93,7 @@ public class RedisManager {
         final ValueOperations<String, String> opsForValue = template.opsForValue();
         final String userId = opsForValue.get(sessionId);
         if (Strings.isNotBlank(userId)) {
-            return Optional.ofNullable(Long.parseLong(userId));
+            return Optional.of(Long.parseLong(userId));
         }
         return Optional.empty();
     }

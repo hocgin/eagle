@@ -41,25 +41,27 @@ CREATE TABLE `ums_account`
     DEFAULT CHARSET = utf8mb4
     COMMENT = '[用户模块] 账号表';
 --
-DROP TABLE IF EXISTS `ums_account_social_weibo`;
-CREATE TABLE ums_account_social_weibo
+DROP TABLE IF EXISTS `ums_account_social`;
+CREATE TABLE ums_account_social
 (
 
-    `id`         BIGINT      NOT NULL
+    `id`              BIGINT      NOT NULL
         COMMENT 'ID',
-    `account_id` BIGINT      NOT NULL
+    `registration_id` VARCHAR(32) NOT NULL
+        COMMENT '社交类型',
+    `account_id`      BIGINT      NOT NULL
         COMMENT '账号ID',
-    `uid`        BIGINT      NOT NULL
+    `uid`             BIGINT      NOT NULL
         COMMENT '微博 UID',
-    `created_at` DATETIME(6) NOT NULL
+    `created_at`      DATETIME(6) NOT NULL
         COMMENT '创建时间',
-    UNIQUE KEY (`uid`),
-    UNIQUE KEY (`account_id`),
+    UNIQUE KEY (`uid`, `registration_id`),
+    UNIQUE KEY (`account_id`, `registration_id`),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
-    COMMENT = '[用户模块] 账号x微博表';
+    COMMENT = '[用户模块] 账号x社交绑定表';
 --
 DROP TABLE IF EXISTS `ums_account_group`;
 CREATE TABLE `ums_account_group`

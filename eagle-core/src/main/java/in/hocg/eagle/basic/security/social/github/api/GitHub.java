@@ -1,7 +1,7 @@
 package in.hocg.eagle.basic.security.social.github.api;
 
 import in.hocg.eagle.basic.security.social.github.ApiBinding;
-import in.hocg.eagle.basic.security.social.github.UserInfo;
+import in.hocg.eagle.basic.security.social.github.GitHubUserInfo;
 
 /**
  * Created by hocgin on 2020/5/9.
@@ -16,7 +16,7 @@ public class GitHub extends ApiBinding {
         super(accessToken);
     }
 
-    public UserInfo getUserInfo() {
+    public GitHubUserInfo getUserInfo() {
         throw new UnsupportedOperationException();
     }
 }

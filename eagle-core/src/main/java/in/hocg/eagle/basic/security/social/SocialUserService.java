@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.io.Serializable;
 import java.util.Optional;
 
 /**
@@ -42,14 +43,19 @@ public class SocialUserService extends DefaultOAuth2UserService {
     private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
         final HttpSession session = SpringContext.getSession().orElseThrow(() -> new SecurityException("获取会话失败"));
         final Optional<Long> userIdOpt = redisManager.getAndCleanUserId(session.getId());
-        log.info("当前登录的用户:: " + userIdOpt.orElse(null));
-        log.info("社交登录的用户:: " + oAuth2User);
+        final String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        log.info("当前登录的用户:: {}", userIdOpt.orElse(null));
+        log.info("社交登录的用户[{}]:: {}", registrationId, oAuth2User);
+        final SocialUserInfo userInfo = SocialUserInfoFactory.getSocialUserInfo(registrationId, oAuth2User.getAttributes());
 
         // 1. 如果已经登录 => 绑定账号
         if (userIdOpt.isPresent()) {
+            final Serializable id = userInfo.getId();
+
         }
         // 2. 如果未登录
         else {
+
             // 2.1 如果有绑定账号 => 登录完成
             // 2.2 如果没有绑定账号 => 注册+绑定页面
         }
