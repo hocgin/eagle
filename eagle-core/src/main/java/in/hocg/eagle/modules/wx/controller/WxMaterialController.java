@@ -4,10 +4,7 @@ package in.hocg.eagle.modules.wx.controller;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialPageQo;
-import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadFileQo;
-import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadNewsQo;
-import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadVideoQo;
+import in.hocg.eagle.modules.wx.pojo.qo.material.*;
 import in.hocg.eagle.modules.wx.service.WxMaterialService;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -66,10 +63,19 @@ public class WxMaterialController {
         return Result.success();
     }
 
-    @UseLogger("上传图文 - 微信素材")
+    @UseLogger("上传图文(新增) - 微信素材")
     @PostMapping("/upload/news")
-    public Result uploadFile(@Validated @RequestBody WxMaterialUploadNewsQo qo) {
+    public Result uploadNews(@Validated @RequestBody WxMaterialUploadNewsQo qo) {
         service.uploadNews(qo);
+        return Result.success();
+    }
+
+    @UseLogger("上传图文(更新) - 微信素材")
+    @PostMapping("/update/news/{id}")
+    public Result updateNews(@PathVariable("id") Long id,
+                             @Validated @RequestBody WxMaterialUpdateNewsQo qo) {
+        qo.setId(id);
+        service.updateNews(qo);
         return Result.success();
     }
 

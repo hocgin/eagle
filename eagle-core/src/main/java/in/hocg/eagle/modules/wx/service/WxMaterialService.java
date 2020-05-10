@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.modules.wx.entity.WxMaterial;
-import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialPageQo;
-import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadFileQo;
-import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadNewsQo;
-import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadVideoQo;
+import in.hocg.eagle.modules.wx.pojo.qo.material.*;
 import in.hocg.eagle.modules.wx.pojo.vo.material.WxMaterialComplexVo;
 
 import java.io.InputStream;
@@ -29,6 +26,8 @@ public interface WxMaterialService extends AbstractService<WxMaterial> {
     void uploadVideo(WxMaterialUploadVideoQo qo);
 
     void uploadNews(WxMaterialUploadNewsQo qo);
+
+    void updateNews(WxMaterialUpdateNewsQo qo);
 
     InputStream getVideoStream(String appid, String mediaId);
 

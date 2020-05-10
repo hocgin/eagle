@@ -58,4 +58,5 @@ public interface WxMpMapping {
         result.setShowCoverPic(item.getShowCoverPic());
         return result;
     }
+
 }

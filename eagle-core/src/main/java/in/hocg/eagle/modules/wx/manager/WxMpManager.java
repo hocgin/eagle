@@ -19,10 +19,7 @@ import me.chanjar.weixin.mp.api.WxMpMaterialService;
 import me.chanjar.weixin.mp.api.WxMpMenuService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpUserService;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialVideoInfoResult;
+import me.chanjar.weixin.mp.bean.material.*;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.context.annotation.Lazy;
@@ -104,6 +101,24 @@ public class WxMpManager {
             .forEach(material::addArticle);
         try {
             return materialService.materialNewsUpload(material);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    public boolean updateMaterialNews(@NonNull String appid,
+                                      @NonNull String mediaId,
+                                      @NonNull Integer index,
+                                      WxMaterialType.News.NewsItem item) {
+        checkAndSwitchover(appid);
+        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+        final WxMpMaterialNews.WxMpMaterialNewsArticle article = mapping.asWxMpMaterialNews0WxMpMaterialNewsArticle(item);
+        final WxMpMaterialArticleUpdate update = new WxMpMaterialArticleUpdate();
+        update.setMediaId(mediaId);
+        update.setIndex(index);
+        update.setArticles(article);
+        try {
+            return materialService.materialNewsUpdate(update);
         } catch (WxErrorException e) {
             throw ServiceException.wrap(e.getError().getErrorMsg());
         }

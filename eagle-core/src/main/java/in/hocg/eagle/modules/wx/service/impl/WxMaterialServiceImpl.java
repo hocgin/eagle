@@ -10,10 +10,7 @@ import in.hocg.eagle.modules.wx.entity.WxMaterial;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxMaterialMapper;
 import in.hocg.eagle.modules.wx.mapstruct.WxMaterialMapping;
-import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialPageQo;
-import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadFileQo;
-import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadNewsQo;
-import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadVideoQo;
+import in.hocg.eagle.modules.wx.pojo.qo.material.*;
 import in.hocg.eagle.modules.wx.pojo.vo.material.WxMaterialComplexVo;
 import in.hocg.eagle.modules.wx.service.WxMaterialService;
 import in.hocg.eagle.utils.ValidUtils;
@@ -24,6 +21,7 @@ import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,6 +47,7 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void uploadVoice(WxMaterialUploadFileQo qo) {
         final String appid = qo.getAppid();
         final Integer materialType = qo.getMaterialType();
@@ -57,6 +56,7 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void uploadImage(WxMaterialUploadFileQo qo) {
         final String appid = qo.getAppid();
         final Integer materialType = qo.getMaterialType();
@@ -65,6 +65,7 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void uploadVideo(WxMaterialUploadVideoQo qo) {
         final String url = qo.getUrl();
         final String appid = qo.getAppid();
@@ -103,28 +104,15 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void uploadNews(WxMaterialUploadNewsQo qo) {
         final String appid = qo.getAppid();
         final LocalDateTime createdAt = qo.getCreatedAt();
         final Long userId = qo.getUserId();
 
         final List<WxMaterialType.News.NewsItem> items = qo.getNewsItems().stream()
-            .map(newsItem -> {
-                final WxMaterialType.News.NewsItem result = mapping.asWxMaterialType0News0NewsItem(newsItem);
-                final String thumbMediaId = newsItem.getThumbMediaId();
-                if (Strings.isNotBlank(thumbMediaId)) {
-                    result.setThumbMediaId(thumbMediaId);
-                } else {
-//                        final File file;
-//                        file = FileUtils.toFile(new URL(newsItem.getOriginalUrl()));
-//                        final String url = wxMpManager.uploadMaterialImageWithNews(appid, file);
-                    final WxMaterialType materialType = WxMaterialType.Image;
-                    final WxMaterial wxMaterial = this.uploadFile(appid, materialType.getCode(), newsItem.getOriginalUrl());
-                    WxMaterialType.Result imageResult = materialType.asResult(wxMaterial.getMaterialResult());
-                    result.setThumbMediaId(imageResult.getMediaId());
-                }
-                return result;
-            }).collect(Collectors.toList());
+            .map(newsItem -> this.convertNewsItem(appid, newsItem))
+            .collect(Collectors.toList());
 
         final WxMpMaterialUploadResult result = wxMpManager.uploadMaterialNews(appid, items);
 
@@ -133,14 +121,56 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
         entity.setMaterialType(WxMaterialType.News.getCode());
         entity.setCreatedAt(createdAt);
         entity.setCreator(userId);
-
         entity.setMaterialContent(JsonUtils.toJSONString(new WxMaterialType.News(items)));
         entity.setMaterialResult(JsonUtils.toJSONString(
             new WxMaterialType.Result()
                 .setMediaId(result.getMediaId())
                 .setUrl(result.getUrl())
         ));
-        validInsert(entity);
+        validInsertOrUpdate(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateNews(WxMaterialUpdateNewsQo qo) {
+        final Long id = qo.getId();
+        final LocalDateTime createdAt = qo.getCreatedAt();
+        final Long userId = qo.getUserId();
+        final Integer index = qo.getIndex();
+        final WxMaterialUploadNewsQo.NewsItem item = qo.getItem();
+
+        final WxMaterial entity = getById(id);
+        ValidUtils.notNull(entity, "图文不存在");
+        final WxMaterialType materialType = IntEnum.ofThrow(entity.getMaterialType(), WxMaterialType.class);
+        final WxMaterialType.News news = materialType.asContent(entity.getMaterialContent());
+        final WxMaterialType.Result result = materialType.asResult(entity.getMaterialResult());
+        ValidUtils.isTrue(news.size() >= index, "图文下标错误");
+        final String appid = entity.getAppid();
+        final WxMaterialType.News.NewsItem updateItem = this.convertNewsItem(appid, item);
+        final boolean bool = wxMpManager.updateMaterialNews(appid, result.getMediaId(), index, updateItem);
+        ValidUtils.isTrue(bool, "更新失败");
+        news.set(index, updateItem);
+
+        final WxMaterial updated = new WxMaterial();
+        updated.setId(id);
+        updated.setLastUpdatedAt(createdAt);
+        updated.setLastUpdater(userId);
+        updated.setMaterialContent(JsonUtils.toJSONString(new WxMaterialType.News(news)));
+        validInsertOrUpdate(updated);
+    }
+
+    private WxMaterialType.News.NewsItem convertNewsItem(String appid, WxMaterialUploadNewsQo.NewsItem item) {
+        final WxMaterialType.News.NewsItem result = mapping.asWxMaterialType0News0NewsItem(item);
+        final String thumbMediaId = item.getThumbMediaId();
+        if (Strings.isNotBlank(thumbMediaId)) {
+            result.setThumbMediaId(thumbMediaId);
+        } else {
+            final WxMaterialType materialType = WxMaterialType.Image;
+            final WxMaterial wxMaterial = this.uploadFile(appid, materialType.getCode(), item.getOriginalUrl());
+            WxMaterialType.Result imageResult = materialType.asResult(wxMaterial.getMaterialResult());
+            result.setThumbMediaId(imageResult.getMediaId());
+        }
+        return result;
     }
 
     @Override
@@ -159,12 +189,14 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public IPage<WxMaterialComplexVo> paging(WxMaterialPageQo qo) {
         final IPage<WxMaterial> paging = baseMapper.paging(qo, qo.page());
         return paging.convert(this::convertComplex);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public WxMaterialComplexVo selectOne(IdQo qo) {
         final WxMaterial entity = getById(qo.getId());
         return this.convertComplex(entity);
