@@ -23,6 +23,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class WxMenuUpdateQo extends BaseQo {
     private Long id;
+    private String title;
     @Valid
     @NotNull(groups = {Insert.class, Update.class}, message = "一级菜单不能为空")
     @Size(groups = {Insert.class, Update.class}, min = 1, max = 3, message = "一级菜单数组，个数应为1~3个")

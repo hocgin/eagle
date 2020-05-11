@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/api/wx/material")
+@RequestMapping("/api/wx-mp/material")
 public class WxMaterialController {
     private final WxMaterialService service;
 

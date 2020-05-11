@@ -31,6 +31,9 @@ public class WxMenu extends AbstractEntity<WxMenu> {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+    @ApiModelProperty("微信菜单组命名")
+    @TableField("title")
+    private String title;
     @ApiModelProperty("APP ID")
     @TableField("appid")
     private String appid;

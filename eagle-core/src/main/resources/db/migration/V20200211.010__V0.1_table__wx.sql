@@ -79,6 +79,8 @@ CREATE TABLE `wx_menu`
     appid           VARCHAR(32)         NOT NULL
         COMMENT 'APP ID',
     --
+    title           VARCHAR(255)        NOT NULL
+        COMMENT '标题',
     menu_type       TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '菜单类型, 0->通用菜单; 1->个性化菜单',
     menu_id         VARCHAR(32)
@@ -114,7 +116,7 @@ CREATE TABLE `wx_material`
         COMMENT '素材ID，上传后获得',
     material_content JSON                NOT NULL
         COMMENT '素材内容',
-    material_result JSON                NOT NULL
+    material_result  JSON                NOT NULL
         COMMENT '素材上传后获得',
     --
     creator          BIGINT              NOT NULL,

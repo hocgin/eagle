@@ -15,6 +15,8 @@ import org.mapstruct.Mapping;
  */
 @Mapper(componentModel = "spring")
 public interface WxMenuMapping {
+    @Mapping(target = "uploader", ignore = true)
+    @Mapping(target = "uploadedAt", ignore = true)
     @Mapping(target = "appid", ignore = true)
     @Mapping(target = "menuType", ignore = true)
     @Mapping(target = "matchRule", ignore = true)
@@ -26,6 +28,8 @@ public interface WxMenuMapping {
     @Mapping(target = "creator", ignore = true)
     WxMenu asWxMenu(WxMenuUpdateQo qo);
 
+    @Mapping(target = "uploadedAt", ignore = true)
+    @Mapping(target = "uploader", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "menuType", ignore = true)
     @Mapping(target = "menuId", ignore = true)
@@ -37,6 +41,10 @@ public interface WxMenuMapping {
     @Mapping(target = "creator", ignore = true)
     WxMenu asWxMenu(WxMenuInsertQo qo);
 
+    @Mapping(target = "menuTypeName", ignore = true)
+    @Mapping(target = "lastUpdaterName", ignore = true)
+    @Mapping(target = "enabledName", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
     @Mapping(target = "button", ignore = true)
     @Mapping(target = "matchRule", ignore = true)
     WxMenuComplexVo asWxMenuComplexVo(WxMenu entity);

@@ -645,4 +645,15 @@ INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`
                                  `created_at`, `creator`)
     VALUE (25, '通用', '0', '账号群组类型:通用', 1, NOW(), 1);
 
+## 账号群组类型
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (26, '微信菜单类型', 'wxMenuType', '微信菜单类型', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (26, '通用', '0', '微信菜单类型:通用菜单', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (26, '个性化', '1', '微信菜单类型:个性化菜单', 1, NOW(), 1);
+
 

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/api/wx/menu")
+@RequestMapping("/api/wx-mp/menu")
 public class WxMenuController {
     private final WxMenuService service;
 

@@ -29,6 +29,8 @@ public class WxMenuInsertQo extends BaseQo {
     @NotNull(message = "菜单类型不能为空")
     @RangeEnum(enumClass = WxMenuType.class, message = "菜单类型错误")
     private Integer menuType;
+    @NotBlank(message = "标题不能为空")
+    private String title;
     @Valid
     @NotNull(message = "一级菜单不能为空")
     @Size(min = 1, max = 3, message = "一级菜单数组，个数应为1~3个")
