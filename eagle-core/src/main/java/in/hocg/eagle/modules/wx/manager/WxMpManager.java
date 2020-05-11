@@ -11,7 +11,6 @@ import in.hocg.eagle.utils.DateUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -202,12 +201,17 @@ public class WxMpManager {
      *
      * @param entity
      */
-    @SneakyThrows
     public void setWxGeneralMenu(WxMenu entity) {
         final String appid = entity.getAppid();
         checkAndSwitchover(appid);
         final WxMpMenuService menuService = wxMpService.getMenuService();
-        menuService.menuCreate(mapping.asWxMenu(entity));
+        try {
+            final me.chanjar.weixin.common.bean.menu.WxMenu wxMenu = mapping.asWxMenu(entity);
+            wxMenu.setMatchRule(null);
+            menuService.menuCreate(wxMenu);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
     }
 
     /**
@@ -215,12 +219,15 @@ public class WxMpManager {
      *
      * @param entity
      */
-    @SneakyThrows
     public void removeWxGeneralMenu(WxMenu entity) {
         final String appid = entity.getAppid();
-        final WxMpMenuService menuService = wxMpService.getMenuService();
         checkAndSwitchover(appid);
-        menuService.menuDelete();
+        final WxMpMenuService menuService = wxMpService.getMenuService();
+        try {
+            menuService.menuDelete();
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
     }
 
     /**
@@ -228,12 +235,15 @@ public class WxMpManager {
      *
      * @param entity
      */
-    @SneakyThrows
     public void setWxIndividuationMenu(WxMenu entity) {
         final String appid = entity.getAppid();
         checkAndSwitchover(appid);
         final WxMpMenuService menuService = wxMpService.getMenuService();
-        menuService.menuCreate(mapping.asWxMenu(entity));
+        try {
+            menuService.menuCreate(mapping.asWxMenu(entity));
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
     }
 
     /**
@@ -241,16 +251,19 @@ public class WxMpManager {
      *
      * @param entity
      */
-    @SneakyThrows
     public void removeWxIndividuationMenu(WxMenu entity) {
         final String appid = entity.getAppid();
         final String menuId = entity.getMenuId();
         if (Objects.isNull(menuId)) {
             return;
         }
-        final WxMpMenuService menuService = wxMpService.getMenuService();
         checkAndSwitchover(appid);
-        menuService.menuDelete(menuId);
+        final WxMpMenuService menuService = wxMpService.getMenuService();
+        try {
+            menuService.menuDelete(menuId);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
     }
 
     /**

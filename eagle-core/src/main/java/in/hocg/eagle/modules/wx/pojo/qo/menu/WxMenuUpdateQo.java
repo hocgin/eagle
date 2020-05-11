@@ -1,8 +1,10 @@
 package in.hocg.eagle.modules.wx.pojo.qo.menu;
 
+import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
 import in.hocg.eagle.basic.pojo.qo.Insert;
 import in.hocg.eagle.basic.pojo.qo.Update;
+import in.hocg.eagle.basic.valid.RangeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,6 +33,10 @@ public class WxMenuUpdateQo extends BaseQo {
     private List<Button> button = Collections.emptyList();
     @ApiModelProperty("菜单匹配规则")
     private WxMenuUpdateQo.MatchRule matchRule;
+    @ApiModelProperty("启用状态")
+    @NotNull(message = "启用状态不能为空")
+    @RangeEnum(enumClass = Enabled.class)
+    private Integer enabled;
 
     @Data
     public static class Button {
@@ -42,7 +48,7 @@ public class WxMenuUpdateQo extends BaseQo {
         private String appid;
         private String pagepath;
         @Size(groups = {Insert.class, Update.class}, min = 1, max = 5, message = "一级菜单数组，个数应为1~5个")
-        private List<SubButton> subButton = Collections.emptyList();
+        private List<SubButton> subButtons = Collections.emptyList();
 
         @Data
         public static class SubButton {

@@ -70,6 +70,8 @@ public class WxMenuServiceImpl extends AbstractServiceImpl<WxMenuMapper, WxMenu>
         final LocalDateTime requestDateTime = qo.getCreatedAt();
         final Long userId = qo.getUserId();
         WxMenu entity = mapping.asWxMenu(qo);
+        entity.setButton(LangUtils.callIfNotNull(qo.getButton(), JsonUtils::toJSONString).orElse(null));
+        entity.setMatchRule(LangUtils.callIfNotNull(qo.getMatchRule(), JsonUtils::toJSONString).orElse(null));
         entity.setLastUpdatedAt(requestDateTime);
         entity.setLastUpdater(userId);
         validInsertOrUpdate(entity);
@@ -91,7 +93,7 @@ public class WxMenuServiceImpl extends AbstractServiceImpl<WxMenuMapper, WxMenu>
 
     @Override
     public void sync(Long id) {
-        throw ServiceException.wrap("未实现该方法");
+        autoSyncMenu(id);
     }
 
     @Override

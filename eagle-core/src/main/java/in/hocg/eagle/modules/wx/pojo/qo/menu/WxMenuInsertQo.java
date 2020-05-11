@@ -53,7 +53,7 @@ public class WxMenuInsertQo extends BaseQo {
         private String appid;
         private String pagepath;
         @Size(max = 5, message = "一级菜单数组，个数应为1~5个")
-        private List<SubButton> subButton = Collections.emptyList();
+        private List<SubButton> subButtons = Collections.emptyList();
 
         @Data
         public static class SubButton {

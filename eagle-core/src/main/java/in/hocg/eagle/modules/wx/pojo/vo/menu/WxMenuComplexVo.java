@@ -64,7 +64,7 @@ public class WxMenuComplexVo {
         private String mediaId;
         private String appid;
         private String pagepath;
-        private List<Button.SubButton> subButton = Collections.emptyList();
+        private List<Button.SubButton> subButtons = Collections.emptyList();
 
         @Data
         public static class SubButton {

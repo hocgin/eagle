@@ -24,7 +24,6 @@ public interface WxMenuMapping {
     @Mapping(target = "button", ignore = true)
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "lastUpdatedAt", ignore = true)
-    @Mapping(target = "enabled", ignore = true)
     @Mapping(target = "creator", ignore = true)
     WxMenu asWxMenu(WxMenuUpdateQo qo);
 

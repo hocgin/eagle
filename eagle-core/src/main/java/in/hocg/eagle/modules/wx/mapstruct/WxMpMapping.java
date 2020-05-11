@@ -35,7 +35,7 @@ public interface WxMpMapping {
     default WxMenu asWxMenu(in.hocg.eagle.modules.wx.entity.WxMenu entity) {
         final WxMenu result = new WxMenu();
         result.setButtons(JsonUtils.parseArray(entity.getButton(), WxMenuButton.class));
-        result.setMatchRule(JsonUtils.parseObject(entity.getButton(), WxMenuRule.class));
+        result.setMatchRule(JsonUtils.parseObject(entity.getMatchRule(), WxMenuRule.class));
         return result;
     }
 
