@@ -235,12 +235,12 @@ public class WxMpManager {
      *
      * @param entity
      */
-    public void setWxIndividuationMenu(WxMenu entity) {
+    public String setWxIndividuationMenu(WxMenu entity) {
         final String appid = entity.getAppid();
         checkAndSwitchover(appid);
         final WxMpMenuService menuService = wxMpService.getMenuService();
         try {
-            menuService.menuCreate(mapping.asWxMenu(entity));
+            return menuService.menuCreate(mapping.asWxMenu(entity));
         } catch (WxErrorException e) {
             throw ServiceException.wrap(e.getError().getErrorMsg());
         }
