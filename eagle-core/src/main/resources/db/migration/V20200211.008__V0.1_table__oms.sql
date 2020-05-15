@@ -80,7 +80,7 @@ CREATE TABLE `oms_order_item`
     product_sku_code  VARCHAR(50)    NULL COMMENT '商品SKU条码',
     coupon_amount     DECIMAL(10, 2) NULL COMMENT '优惠券优惠分解金额',
     real_amount       DECIMAL(10, 2) NULL COMMENT '[计算型]该商品经过优惠后的分解金额',
-    product_spec_data VARCHAR(500)   NULL
+    product_spec_data JSON           NULL
         COMMENT '商品规格:[{"key":"颜色","value":"颜色"},{"key":"容量","value":"4G"}]',
     --
     PRIMARY KEY (id)
@@ -137,7 +137,7 @@ CREATE TABLE `oms_cart_item`
         COMMENT '加入时，商品图片',
     sku_id                BIGINT         NOT NULL
         COMMENT 'SKU ID',
-    sku_spec_data         varchar(512)   NOT NULL
+    sku_spec_data         JSON           NOT NULL
         COMMENT '规格属性',
     quantity              INT(8)         NOT NULL DEFAULT 1
         COMMENT '加入的数量',

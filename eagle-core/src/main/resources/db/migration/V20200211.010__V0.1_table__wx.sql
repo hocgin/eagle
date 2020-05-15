@@ -132,26 +132,28 @@ DROP TABLE IF EXISTS `wx_mp_reply_rule`;
 CREATE TABLE `wx_mp_reply_rule`
 (
     `id`              BIGINT AUTO_INCREMENT,
-    `appid`           VARCHAR(32)  NOT NULL
+    `appid`           VARCHAR(32)         NOT NULL
         COMMENT '开发者ID(AppID)',
-    `title`           VARCHAR(32)  NOT NULL
+    `title`           VARCHAR(32)         NOT NULL
         COMMENT '规则名称',
-    `enabled`         TINYINT(1) UNSIGNED   DEFAULT 1
+    `enabled`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
         COMMENT '启用状态(0:为禁用状态;1:为正常状态)',
-    `reply_type`      TINYINT(1) UNSIGNED   DEFAULT 1
-        COMMENT '回复类型',
-    `reply_content`   VARCHAR(255)
+
+    `match_msg_type`  TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+        COMMENT '匹配消息类型',
+    `match_rule`      JSON                NOT NULL
+        COMMENT '匹配规则',
+
+    `reply_msg_type`  TINYINT(1) UNSIGNED NOT NULL DEFAULT 1
+        COMMENT '回复消息类型',
+    `reply_content`   JSON                NOT NULL
         COMMENT '回复内容',
-    `sort`            INT(10)      NOT NULL DEFAULT 1000
+    `sort`            INT(10)             NOT NULL DEFAULT 1000
         COMMENT '排序, 从大到小降序',
-    `keywords`        VARCHAR(255) NOT NULL
-        COMMENT '关键词列表',
-    `match_mode`      TINYINT(1) UNSIGNED   DEFAULT 1
-        COMMENT '匹配模式: 0=>完全匹配, 1=>部分匹配',
     --
-    `created_at`      DATETIME(6)  NOT NULL
+    `created_at`      DATETIME(6)         NOT NULL
         COMMENT '创建时间',
-    `creator`         BIGINT       NOT NULL
+    `creator`         BIGINT              NOT NULL
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
@@ -164,4 +166,4 @@ CREATE TABLE `wx_mp_reply_rule`
 -- 被关注自动回复
 -- 默认自动回复
 -- 关键词自动回复
---
+

@@ -11,7 +11,7 @@ CREATE TABLE pms_product
         COMMENT '采购地(中国,福建)',
     title               VARCHAR(255) NOT NULL
         COMMENT '产品名',
-    attrs               VARCHAR(1024)         DEFAULT NULL
+    attrs               JSON                  DEFAULT NULL
         COMMENT '产品属性: {}',
     publish_status      tinyint      NOT NULL DEFAULT 1
         COMMENT '上架状态: [0:下架, 1:上架]',
@@ -77,7 +77,7 @@ CREATE TABLE `pms_sku`
         COMMENT '库存, 默认为0',
     sale       int            NOT NULL DEFAULT 0
         COMMENT '销量, 默认为0',
-    spec_data  varchar(512)            DEFAULT NULL
+    spec_data  JSON                    DEFAULT NULL
         COMMENT '规格属性(JSONArray, 如: [{"key":"颜色","value":"银色"}])',
     image_url  VARCHAR(255)
         COMMENT '该特色商品图片',
