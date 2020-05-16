@@ -23,7 +23,7 @@ import java.util.StringJoiner;
  * @author hocgin
  */
 @Component
-public class ReplyHandler extends AbstractHandler {
+public class DebugReplyHandler extends AbstractHandler {
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService, WxSessionManager sessionManager) throws WxErrorException {

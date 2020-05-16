@@ -5,22 +5,30 @@ import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.wx.entity.WxMenu;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
+import in.hocg.eagle.modules.wx.entity.WxMpMessageTemplate;
 import in.hocg.eagle.modules.wx.entity.WxUser;
 import in.hocg.eagle.modules.wx.mapstruct.WxMpMapping;
+import in.hocg.eagle.modules.wx.pojo.qo.message.SendTemplateMessageToUserQo;
 import in.hocg.eagle.utils.DateUtils;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpMaterialService;
-import me.chanjar.weixin.mp.api.WxMpMenuService;
-import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.WxMpUserService;
+import me.chanjar.weixin.mp.api.*;
+import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
+import me.chanjar.weixin.mp.bean.WxMpMassPreviewMessage;
+import me.chanjar.weixin.mp.bean.WxMpMassTagMessage;
 import me.chanjar.weixin.mp.bean.material.*;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
+import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -33,6 +41,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by hocgin on 2020/4/25.
@@ -48,17 +57,158 @@ public class WxMpManager {
     private final WxMpMapping mapping;
 
     /**
-     * 获取图片或音频文件流
+     * [消息/用户] 发送普通消息
+     *
+     * @param appid
+     * @param openId
+     * @param msgType
+     * @param mediaId
+     * @param content
+     * @return
+     */
+    public WxMpMassSendResult massOpenIdsMessageSend(@NonNull String appid, @NonNull List<String> openId,
+                                                     @NonNull String msgType, String mediaId, String content) {
+        ValidUtils.isFalse(StringUtils.isAllBlank(mediaId, content), "发送内容不能为空");
+        getWxMpService(appid);
+        final WxMpMassMessageService service = wxMpService.getMassMessageService();
+        final WxMpMassOpenIdsMessage message = new WxMpMassOpenIdsMessage();
+        message.setToUsers(openId);
+        message.setMsgType(msgType);
+        if (Strings.isNotBlank(content)) {
+            message.setContent(content);
+        } else if (Strings.isNotBlank(mediaId)) {
+            message.setMediaId(mediaId);
+        } else {
+            ValidUtils.fail("发送内容错误");
+        }
+        try {
+            return service.massOpenIdsMessageSend(message);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
+     * [消息/群组] 发送普通消息
+     *
+     * @param appid
+     * @param tagId
+     * @param msgType
+     * @param mediaId
+     * @param content
+     * @return
+     */
+    public WxMpMassSendResult massGroupMessageSend(@NonNull String appid, Long tagId,
+                                                   @NonNull String msgType, String mediaId, String content) {
+        ValidUtils.isFalse(StringUtils.isAllBlank(mediaId, content), "发送内容不能为空");
+        getWxMpService(appid);
+        final WxMpMassMessageService service = wxMpService.getMassMessageService();
+        final WxMpMassTagMessage message = new WxMpMassTagMessage();
+        message.setSendAll(Objects.isNull(tagId));
+        message.setTagId(tagId);
+        message.setMsgType(msgType);
+        if (Strings.isNotBlank(content)) {
+            message.setContent(content);
+        } else if (Strings.isNotBlank(mediaId)) {
+            message.setMediaId(mediaId);
+        } else {
+            ValidUtils.fail("发送内容错误");
+        }
+        try {
+            return service.massGroupMessageSend(message);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
+     * [消息/用户] 发送预览消息
+     *
+     * @param appid
+     * @param openId
+     * @param msgType
+     * @param mediaId
+     * @param content
+     * @return
+     */
+    public WxMpMassSendResult massMessagePreview(@NonNull String appid, @NonNull String openId,
+                                                 @NonNull String msgType, String mediaId, String content) {
+        ValidUtils.isFalse(StringUtils.isAllBlank(mediaId, content), "发送内容不能为空");
+        final WxMpMassMessageService service = getWxMpService(appid).getMassMessageService();
+        try {
+            final WxMpMassPreviewMessage message = new WxMpMassPreviewMessage();
+            message.setToWxUserOpenid(openId);
+            message.setMsgType(msgType);
+            if (Strings.isNotBlank(content)) {
+                message.setContent(content);
+            } else if (Strings.isNotBlank(mediaId)) {
+                message.setMediaId(mediaId);
+            } else {
+                ValidUtils.fail("发送内容错误");
+            }
+            return service.massMessagePreview(message);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
+     * [消息/用户] 发送模版消息
+     *
+     * @param appid
+     * @param openId
+     * @param templateId
+     * @param templateData
+     * @param url
+     * @param miniProgram
+     * @return 消息Id
+     */
+    public String sendTemplateMsg(@NonNull String appid, @NonNull String openId, @NonNull String templateId,
+                                  List<SendTemplateMessageToUserQo.TemplateData> templateData, String url, SendTemplateMessageToUserQo.MiniProgram miniProgram) {
+        final WxMpTemplateMsgService service = getWxMpService(appid).getTemplateMsgService();
+        final WxMpTemplateMessage message = new WxMpTemplateMessage();
+        message.setTemplateId(templateId);
+        message.setToUser(openId);
+        message.setData(templateData.parallelStream().map(SendTemplateMessageToUserQo.TemplateData::asWxMpTemplateData).collect(Collectors.toList()));
+        LangUtils.setIfNotNull(LangUtils.callIfNotNull(miniProgram, SendTemplateMessageToUserQo.MiniProgram::asMiniProgram).orElse(null), message::setMiniProgram);
+        LangUtils.setIfNotNull(url, message::setUrl);
+
+        try {
+            return service.sendTemplateMsg(message);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
+     * [消息模版] 查询所有
+     *
+     * @param appid
+     * @return
+     */
+    public List<WxMpMessageTemplate> getAllPrivateTemplate(@NonNull String appid) {
+        final WxMpTemplateMsgService service = getWxMpService(appid).getTemplateMsgService();
+        try {
+            final List<WxMpTemplate> allPrivateTemplate = service.getAllPrivateTemplate();
+            return allPrivateTemplate.parallelStream()
+                .map(template -> mapping.asWxMpMessageTemplate(template).setAppid(appid))
+                .collect(Collectors.toList());
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
+     * [素材] 获取图片或音频文件流
      *
      * @param appid
      * @param mediaId
      * @return
      */
     public InputStream getMaterialImageOrVoice(@NonNull String appid, String mediaId) {
-        checkAndSwitchover(appid);
-        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+        final WxMpMaterialService service = getWxMpService(appid).getMaterialService();
         try {
-            return materialService.materialImageOrVoiceDownload(mediaId);
+            return service.materialImageOrVoiceDownload(mediaId);
         } catch (WxErrorException e) {
             throw ServiceException.wrap(e.getError().getErrorMsg());
         }
@@ -72,8 +222,7 @@ public class WxMpManager {
      * @return
      */
     public InputStream getMaterialVideo(@NonNull String appid, String mediaId) {
-        checkAndSwitchover(appid);
-        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+        final WxMpMaterialService materialService = getWxMpService(appid).getMaterialService();
         try {
             final WxMpMaterialVideoInfoResult result = materialService.materialVideoInfo(mediaId);
             return new URL(result.getDownUrl()).openStream();
@@ -92,8 +241,7 @@ public class WxMpManager {
      * @return
      */
     public WxMpMaterialUploadResult uploadMaterialNews(@NonNull String appid, List<WxMaterialType.News.NewsItem> inArticles) {
-        checkAndSwitchover(appid);
-        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+        final WxMpMaterialService materialService = getWxMpService(appid).getMaterialService();
         final WxMpMaterialNews material = new WxMpMaterialNews();
         inArticles.parallelStream()
             .map(mapping::asWxMpMaterialNews0WxMpMaterialNewsArticle)
@@ -109,8 +257,7 @@ public class WxMpManager {
                                       @NonNull String mediaId,
                                       @NonNull Integer index,
                                       WxMaterialType.News.NewsItem item) {
-        checkAndSwitchover(appid);
-        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+        final WxMpMaterialService materialService = getWxMpService(appid).getMaterialService();
         final WxMpMaterialNews.WxMpMaterialNewsArticle article = mapping.asWxMpMaterialNews0WxMpMaterialNewsArticle(item);
         final WxMpMaterialArticleUpdate update = new WxMpMaterialArticleUpdate();
         update.setMediaId(mediaId);
@@ -131,8 +278,7 @@ public class WxMpManager {
      * @return
      */
     public String uploadMaterialImageWithNews(@NotNull String appid, @NotNull File file) {
-        checkAndSwitchover(appid);
-        final WxMpMaterialService materialService = wxMpService.getMaterialService();
+        final WxMpMaterialService materialService = getWxMpService(appid).getMaterialService();
         try {
             return materialService.mediaImgUpload(file).getUrl();
         } catch (WxErrorException e) {
@@ -153,13 +299,12 @@ public class WxMpManager {
                                                         @NotNull File file,
                                                         String videoTitle,
                                                         String videoIntroduction) {
-        checkAndSwitchover(appid);
+        final WxMpMaterialService materialService = getWxMpService(appid).getMaterialService();
         final WxMpMaterial material = new WxMpMaterial();
         material.setFile(file);
         material.setName(file.getName());
         material.setVideoTitle(videoTitle);
         material.setVideoIntroduction(videoIntroduction);
-        final WxMpMaterialService materialService = wxMpService.getMaterialService();
         try {
             return materialService.materialFileUpload(WxConsts.MediaFileType.VIDEO, material);
         } catch (WxErrorException e) {
@@ -184,11 +329,10 @@ public class WxMpManager {
             WxConsts.MediaFileType.IMAGE,
             WxConsts.MediaFileType.FILE).contains(mediaType), "文件类型不支持");
 
-        checkAndSwitchover(appid);
+        final WxMpMaterialService materialService = getWxMpService(appid).getMaterialService();
         final WxMpMaterial material = new WxMpMaterial();
         material.setFile(file);
         material.setName(file.getName());
-        final WxMpMaterialService materialService = wxMpService.getMaterialService();
         try {
             return materialService.materialFileUpload(mediaType, material);
         } catch (WxErrorException e) {
@@ -203,8 +347,7 @@ public class WxMpManager {
      */
     public void setWxGeneralMenu(WxMenu entity) {
         final String appid = entity.getAppid();
-        checkAndSwitchover(appid);
-        final WxMpMenuService menuService = wxMpService.getMenuService();
+        final WxMpMenuService menuService = getWxMpService(appid).getMenuService();
         try {
             final me.chanjar.weixin.common.bean.menu.WxMenu wxMenu = mapping.asWxMenu(entity);
             wxMenu.setMatchRule(null);
@@ -221,8 +364,7 @@ public class WxMpManager {
      */
     public void removeWxGeneralMenu(WxMenu entity) {
         final String appid = entity.getAppid();
-        checkAndSwitchover(appid);
-        final WxMpMenuService menuService = wxMpService.getMenuService();
+        final WxMpMenuService menuService = getWxMpService(appid).getMenuService();
         try {
             menuService.menuDelete();
         } catch (WxErrorException e) {
@@ -237,8 +379,7 @@ public class WxMpManager {
      */
     public String setWxIndividuationMenu(WxMenu entity) {
         final String appid = entity.getAppid();
-        checkAndSwitchover(appid);
-        final WxMpMenuService menuService = wxMpService.getMenuService();
+        final WxMpMenuService menuService = getWxMpService(appid).getMenuService();
         try {
             return menuService.menuCreate(mapping.asWxMenu(entity));
         } catch (WxErrorException e) {
@@ -257,8 +398,7 @@ public class WxMpManager {
         if (Objects.isNull(menuId)) {
             return;
         }
-        checkAndSwitchover(appid);
-        final WxMpMenuService menuService = wxMpService.getMenuService();
+        final WxMpMenuService menuService = getWxMpService(appid).getMenuService();
         try {
             menuService.menuDelete(menuId);
         } catch (WxErrorException e) {
@@ -273,8 +413,7 @@ public class WxMpManager {
      * @return
      */
     public Optional<WxMpMenu> getWxMenus(@NotNull String appid) {
-        checkAndSwitchover(appid);
-        final WxMpMenuService menuService = wxMpService.getMenuService();
+        final WxMpMenuService menuService = getWxMpService(appid).getMenuService();
         try {
             return Optional.ofNullable(menuService.menuGet());
         } catch (WxErrorException e) {
@@ -290,8 +429,7 @@ public class WxMpManager {
      * @return
      */
     public Optional<WxUser> getWxUser(@NotNull String appid, @NotNull String openId) {
-        checkAndSwitchover(appid);
-        final WxMpUserService userService = wxMpService.getUserService();
+        final WxMpUserService userService = getWxMpService(appid).getUserService();
         try {
             final WxMpUser wxMpUser = userService.userInfo(openId);
             return Optional.of(new WxUser()
@@ -335,9 +473,10 @@ public class WxMpManager {
      *
      * @param appid
      */
-    private void checkAndSwitchover(String appid) {
-        if (!wxMpService.switchover(appid)) {
-            throw ServiceException.wrap("切换公众号配置失败[appid={}]", appid);
-        }
+    private WxMpService getWxMpService(String appid) {
+        final WxMpService wxMpService = this.wxMpService.switchoverTo(appid);
+        ValidUtils.notNull(wxMpService, "切换公众号配置失败[appid=" + appid + "]");
+        return wxMpService;
+
     }
 }

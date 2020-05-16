@@ -7,6 +7,8 @@ import in.hocg.eagle.modules.wx.entity.WxUser;
 import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserPagingQo;
 import in.hocg.eagle.modules.wx.pojo.vo.user.WxMpUserComplexVo;
 
+import java.util.List;
+
 /**
  * <p>
  * 微信用户表 服务类
@@ -21,4 +23,6 @@ public interface WxUserService extends AbstractService<WxUser> {
     IPage<WxMpUserComplexVo> paging(WxMpUserPagingQo qo);
 
     WxMpUserComplexVo selectOne(IdQo qo);
+
+    List<WxUser> selectListById(List<Long> id);
 }

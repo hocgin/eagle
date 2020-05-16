@@ -162,8 +162,36 @@ CREATE TABLE `wx_mp_reply_rule`
     PRIMARY KEY (id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-    COMMENT ='微信自动回复配置表';
+    COMMENT ='[微信模块] 微信自动回复配置表';
 -- 被关注自动回复
 -- 默认自动回复
 -- 关键词自动回复
-
+-- ################################################################################################
+DROP TABLE IF EXISTS `wx_mp_message_template`;
+CREATE TABLE `wx_mp_message_template`
+(
+    `id`               BIGINT AUTO_INCREMENT,
+    `appid`            VARCHAR(32)   NOT NULL
+        COMMENT '开发者ID(AppID)',
+    `template_id`      VARCHAR(32)   NOT NULL
+        COMMENT '模版ID',
+    `title`            VARCHAR(32)   NOT NULL
+        COMMENT '模版标题',
+    `primary_industry` VARCHAR(32)   NOT NULL
+        COMMENT '模板所属行业的一级行业',
+    `deputy_industry`  VARCHAR(32)   NOT NULL
+        COMMENT '模板所属行业的二级行业',
+    `content`          VARCHAR(1024) NOT NULL
+        COMMENT '模板内容',
+    `example`          VARCHAR(1024) NOT NULL
+        COMMENT '模板示例',
+    --
+    `created_at`       DATETIME(6)   NOT NULL
+        COMMENT '创建时间',
+    `creator`          BIGINT        NOT NULL
+        COMMENT '创建者',
+    UNIQUE KEY (`appid`, `template_id`),
+    PRIMARY KEY (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+    COMMENT ='[微信模块] 消息模版表';

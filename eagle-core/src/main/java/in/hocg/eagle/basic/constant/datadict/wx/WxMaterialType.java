@@ -1,8 +1,6 @@
 package in.hocg.eagle.basic.constant.datadict.wx;
 
-import com.alibaba.fastjson.JSON;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
-import in.hocg.eagle.utils.string.JsonUtils;
+import in.hocg.eagle.basic.constant.datadict.IntJSONEnum;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by hocgin on 2020/5/6.
@@ -24,7 +21,7 @@ import java.util.List;
 @Getter
 @ApiModel("微信素材类型")
 @RequiredArgsConstructor
-public enum WxMaterialType implements IntEnum {
+public enum WxMaterialType implements IntJSONEnum {
     Image(0, "图片", File.class, Result.class),
     Voice(1, "语音", File.class, Result.class),
     Video(2, "视频", Video.class, Result.class),
@@ -38,19 +35,11 @@ public enum WxMaterialType implements IntEnum {
     public static final String KEY = "wxMaterialType";
 
     public <T> T asResult(String json) {
-        return (T) asClass(json, this.getResult());
+        return (T) this.asClass(json, this.getResult());
     }
 
     public <T> T asContent(String json) {
-        return (T) asClass(json, this.getContent());
-    }
-
-    private <T> T asClass(String json, Class<T> clazz) {
-        if (List.class.isAssignableFrom(clazz)) {
-            final Class<?> aClass = clazz.getClasses()[0];
-            return (T) JSON.parseArray(json, aClass);
-        }
-        return JsonUtils.parseObject(json, clazz);
+        return (T) this.asClass(json, this.getContent());
     }
 
     /**

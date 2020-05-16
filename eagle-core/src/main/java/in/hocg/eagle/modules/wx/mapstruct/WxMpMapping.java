@@ -2,11 +2,13 @@ package in.hocg.eagle.modules.wx.mapstruct;
 
 import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
+import in.hocg.eagle.modules.wx.entity.WxMpMessageTemplate;
 import in.hocg.eagle.utils.string.JsonUtils;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.bean.menu.WxMenuRule;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import org.apache.logging.log4j.util.Strings;
@@ -56,6 +58,17 @@ public interface WxMpMapping {
         result.setDigest(item.getDigest());
         result.setOnlyFansCanComment(item.getOnlyFansCanComment());
         result.setShowCoverPic(item.getShowCoverPic());
+        return result;
+    }
+
+    default WxMpMessageTemplate asWxMpMessageTemplate(WxMpTemplate template) {
+        final WxMpMessageTemplate result = new WxMpMessageTemplate();
+        result.setContent(template.getContent());
+        result.setDeputyIndustry(template.getDeputyIndustry());
+        result.setExample(template.getExample());
+        result.setTemplateId(template.getTemplateId());
+        result.setPrimaryIndustry(template.getPrimaryIndustry());
+        result.setTitle(template.getTitle());
         return result;
     }
 

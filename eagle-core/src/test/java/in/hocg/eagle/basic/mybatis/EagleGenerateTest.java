@@ -30,7 +30,7 @@ public class EagleGenerateTest {
     @Test
     public void generateByTables() {
         List<String> TABLES = Arrays.asList(
-            "wx_mp_reply_rule",
+            "wx_mp_message_template",
             "",
             ""
         );
