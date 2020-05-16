@@ -51,7 +51,7 @@ public class LangUtils {
      */
     public <K, V> Optional<V> callIfNotNull(K v, Function<K, V> func) {
         if (Objects.nonNull(v)) {
-            return Optional.of(func.apply(v));
+            return Optional.ofNullable(func.apply(v));
         }
         return Optional.empty();
     }

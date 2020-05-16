@@ -173,7 +173,7 @@ CREATE TABLE `wx_mp_message_template`
     `id`               BIGINT AUTO_INCREMENT,
     `appid`            VARCHAR(32)   NOT NULL
         COMMENT '开发者ID(AppID)',
-    `template_id`      VARCHAR(32)   NOT NULL
+    `template_id`      VARCHAR(64)   NOT NULL
         COMMENT '模版ID',
     `title`            VARCHAR(32)   NOT NULL
         COMMENT '模版标题',
@@ -190,6 +190,10 @@ CREATE TABLE `wx_mp_message_template`
         COMMENT '创建时间',
     `creator`          BIGINT        NOT NULL
         COMMENT '创建者',
+    `last_updated_at`  DATETIME(6)
+        COMMENT '更新时间',
+    `last_updater`     BIGINT
+        COMMENT '更新者',
     UNIQUE KEY (`appid`, `template_id`),
     PRIMARY KEY (id)
 ) ENGINE = InnoDB

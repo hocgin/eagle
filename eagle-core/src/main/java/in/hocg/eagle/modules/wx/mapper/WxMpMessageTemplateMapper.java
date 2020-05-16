@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.eagle.modules.wx.entity.WxMpMessageTemplate;
 import in.hocg.eagle.modules.wx.pojo.qo.message.template.WxMpMessageTemplatePageQo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -18,5 +19,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface WxMpMessageTemplateMapper extends BaseMapper<WxMpMessageTemplate> {
 
-    IPage<WxMpMessageTemplate> paging(WxMpMessageTemplatePageQo qo, Page page);
+    IPage<WxMpMessageTemplate> paging(@Param("qo") WxMpMessageTemplatePageQo qo, @Param("page") Page page);
 }

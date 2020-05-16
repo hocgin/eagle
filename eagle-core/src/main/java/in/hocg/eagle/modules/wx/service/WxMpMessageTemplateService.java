@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.wx.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.modules.wx.entity.WxMpMessageTemplate;
-import in.hocg.eagle.modules.wx.pojo.qo.message.template.RefreshMessageTemplateQo;
+import in.hocg.eagle.modules.wx.pojo.qo.message.template.WxMpMessageTemplateRefreshQo;
 import in.hocg.eagle.modules.wx.pojo.qo.message.template.WxMpMessageTemplatePageQo;
 import in.hocg.eagle.modules.wx.pojo.vo.message.template.WxMpMessageTemplateComplexVo;
 
@@ -17,7 +17,7 @@ import in.hocg.eagle.modules.wx.pojo.vo.message.template.WxMpMessageTemplateComp
  */
 public interface WxMpMessageTemplateService extends AbstractService<WxMpMessageTemplate> {
 
-    void refresh(RefreshMessageTemplateQo qo);
+    void refresh(WxMpMessageTemplateRefreshQo qo);
 
     IPage<WxMpMessageTemplateComplexVo> paging(WxMpMessageTemplatePageQo qo);
 

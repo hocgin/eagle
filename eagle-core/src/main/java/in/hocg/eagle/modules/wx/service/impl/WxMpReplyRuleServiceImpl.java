@@ -11,7 +11,7 @@ import in.hocg.eagle.modules.wx.mapper.WxMpReplyRuleMapper;
 import in.hocg.eagle.modules.wx.mapstruct.WxMpReplyRuleMapping;
 import in.hocg.eagle.modules.wx.pojo.qo.reply.WxReplyRulePageQo;
 import in.hocg.eagle.modules.wx.pojo.qo.reply.WxReplyRuleSaveQo;
-import in.hocg.eagle.modules.wx.pojo.qo.user.reply.WxReplyRuleComplexVo;
+import in.hocg.eagle.modules.wx.pojo.qo.reply.WxReplyRuleComplexVo;
 import in.hocg.eagle.modules.wx.service.WxMpReplyRuleService;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +73,16 @@ public class WxMpReplyRuleServiceImpl extends AbstractServiceImpl<WxMpReplyRuleM
         final LocalDateTime createdAt = qo.getCreatedAt();
         final Long userId = qo.getUserId();
 
+        final String matchRuleString = qo.getMatchRuleString();
+        final String replyContentString = qo.getReplyContentString();
+
+        IntEnum.ofThrow(entity.getMatchMsgType(), WxMatchMsgType.class)
+            .asObject(matchRuleString).validThrow();
+        IntEnum.ofThrow(entity.getReplyMsgType(), WxReplyMsgType.class)
+            .asObject(replyContentString).validThrow();
+
+        entity.setReplyContent(replyContentString);
+        entity.setMatchRule(matchRuleString);
         if (Objects.isNull(entity.getId())) {
             entity.setCreatedAt(createdAt);
             entity.setCreator(userId);

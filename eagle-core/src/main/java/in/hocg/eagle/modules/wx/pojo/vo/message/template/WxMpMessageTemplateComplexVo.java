@@ -40,5 +40,11 @@ public class WxMpMessageTemplateComplexVo {
     private String creatorName;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
+    private Long lastUpdater;
+    @ApiModelProperty("更新者")
+    @Named(idFor = "lastUpdater", type = NamedType.Nickname)
+    private String lastUpdaterName;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime lastUpdatedAt;
 
 }

@@ -6,7 +6,7 @@ import in.hocg.eagle.modules.wx.entity.WxMpMessageTemplate;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxMpMessageTemplateMapper;
 import in.hocg.eagle.modules.wx.mapstruct.WxMpMessageTemplateMapping;
-import in.hocg.eagle.modules.wx.pojo.qo.message.template.RefreshMessageTemplateQo;
+import in.hocg.eagle.modules.wx.pojo.qo.message.template.WxMpMessageTemplateRefreshQo;
 import in.hocg.eagle.modules.wx.pojo.qo.message.template.WxMpMessageTemplatePageQo;
 import in.hocg.eagle.modules.wx.pojo.vo.message.template.WxMpMessageTemplateComplexVo;
 import in.hocg.eagle.modules.wx.service.WxMpMessageTemplateService;
@@ -38,7 +38,7 @@ public class WxMpMessageTemplateServiceImpl extends AbstractServiceImpl<WxMpMess
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void refresh(RefreshMessageTemplateQo qo) {
+    public void refresh(WxMpMessageTemplateRefreshQo qo) {
         final String appid = qo.getAppid();
         final LocalDateTime createdAt = qo.getCreatedAt();
         final Long userId = qo.getUserId();
@@ -49,8 +49,16 @@ public class WxMpMessageTemplateServiceImpl extends AbstractServiceImpl<WxMpMess
         final List<WxMpMessageTemplate> mixedList = LangUtils.getMixed(allTemplate, allPrivateTemplate, isSameMessageTemplate);
         List<WxMpMessageTemplate> deleteList = LangUtils.removeIfExits(allTemplate, mixedList, isSameMessageTemplate);
         List<WxMpMessageTemplate> addList = LangUtils.removeIfExits(allPrivateTemplate, mixedList, isSameMessageTemplate);
+
+        // 删除
         this.removeByIds(deleteList.parallelStream().map(WxMpMessageTemplate::getId).filter(Objects::nonNull).collect(Collectors.toList()));
+
+        // 新增
         addList.parallelStream().peek(wxMpMessageTemplate -> wxMpMessageTemplate.setCreatedAt(createdAt).setCreator(userId))
+            .forEach(this::validInsertOrUpdate);
+
+        // 更新
+        mixedList.parallelStream().peek(wxMpMessageTemplate -> wxMpMessageTemplate.setLastUpdatedAt(createdAt).setLastUpdater(userId))
             .forEach(this::validInsertOrUpdate);
     }
 

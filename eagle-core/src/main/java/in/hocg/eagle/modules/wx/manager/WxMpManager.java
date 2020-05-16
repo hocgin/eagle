@@ -25,6 +25,7 @@ import me.chanjar.weixin.mp.bean.material.*;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
+import me.chanjar.weixin.mp.bean.result.WxMpUserList;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import org.apache.commons.lang3.StringUtils;
@@ -41,6 +42,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -57,6 +59,29 @@ public class WxMpManager {
     private final WxMpMapping mapping;
 
     /**
+     * 获取微信用户列表
+     *
+     * @param appid
+     * @param nextOpenId
+     * @param consumer
+     */
+    public void getWxUserList(@NonNull String appid,
+                              String nextOpenId, Consumer<String> consumer) {
+        try {
+            final WxMpUserService service = getWxMpService(appid).getUserService();
+            String tmpNextOpenId = nextOpenId;
+            do {
+                WxMpUserList result = service.userList(tmpNextOpenId);
+                result.getOpenids().forEach(consumer);
+                tmpNextOpenId = result.getNextOpenid();
+            } while (Strings.isNotBlank(tmpNextOpenId));
+
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
      * [消息/用户] 发送普通消息
      *
      * @param appid
@@ -69,8 +94,7 @@ public class WxMpManager {
     public WxMpMassSendResult massOpenIdsMessageSend(@NonNull String appid, @NonNull List<String> openId,
                                                      @NonNull String msgType, String mediaId, String content) {
         ValidUtils.isFalse(StringUtils.isAllBlank(mediaId, content), "发送内容不能为空");
-        getWxMpService(appid);
-        final WxMpMassMessageService service = wxMpService.getMassMessageService();
+        final WxMpMassMessageService service = getWxMpService(appid).getMassMessageService();
         final WxMpMassOpenIdsMessage message = new WxMpMassOpenIdsMessage();
         message.setToUsers(openId);
         message.setMsgType(msgType);

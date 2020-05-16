@@ -14,6 +14,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface WxMpMessageTemplateMapping {
 
+    @Mapping(target = "lastUpdaterName", ignore = true)
     @Mapping(target = "creatorName", ignore = true)
     WxMpMessageTemplateComplexVo asWxMpMessageTemplateComplexVo(WxMpMessageTemplate entity);
 

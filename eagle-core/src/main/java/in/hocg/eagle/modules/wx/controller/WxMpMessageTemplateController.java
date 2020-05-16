@@ -4,7 +4,7 @@ package in.hocg.eagle.modules.wx.controller;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.pojo.qo.Insert;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.modules.wx.pojo.qo.message.template.RefreshMessageTemplateQo;
+import in.hocg.eagle.modules.wx.pojo.qo.message.template.WxMpMessageTemplateRefreshQo;
 import in.hocg.eagle.modules.wx.pojo.qo.message.template.WxMpMessageTemplatePageQo;
 import in.hocg.eagle.modules.wx.service.WxMpMessageTemplateService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class WxMpMessageTemplateController {
 
     @UseLogger("刷新 - 消息模版")
     @PostMapping("/refresh")
-    public Result<Void> refresh(@Validated({Insert.class}) @RequestBody RefreshMessageTemplateQo qo) {
+    public Result<Void> refresh(@Validated({Insert.class}) @RequestBody WxMpMessageTemplateRefreshQo qo) {
         service.refresh(qo);
         return Result.success();
     }

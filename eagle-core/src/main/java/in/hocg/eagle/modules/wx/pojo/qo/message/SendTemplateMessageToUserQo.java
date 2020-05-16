@@ -7,10 +7,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,12 +24,12 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class SendTemplateMessageToUserQo extends BaseQo {
     @ApiModelProperty("微信用户ID")
-    @Length(min = 1, message = "接收人不能为空")
+    @Size(min = 1, message = "接收人不能为空")
     private List<Long> toUsers;
     @NotBlank(message = "模版ID不能为空")
     private String templateId;
     @Valid
-    @Length(message = "模版参数不能为空")
+    @Size(message = "模版参数不能为空")
     private List<TemplateData> data = Collections.emptyList();
     @Valid
     private MiniProgram miniProgram;

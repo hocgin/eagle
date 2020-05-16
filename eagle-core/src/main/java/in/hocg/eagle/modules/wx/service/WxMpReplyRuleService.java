@@ -7,7 +7,7 @@ import in.hocg.eagle.basic.constant.datadict.wx.reply.WxMatchMsgType;
 import in.hocg.eagle.modules.wx.entity.WxMpReplyRule;
 import in.hocg.eagle.modules.wx.pojo.qo.reply.WxReplyRulePageQo;
 import in.hocg.eagle.modules.wx.pojo.qo.reply.WxReplyRuleSaveQo;
-import in.hocg.eagle.modules.wx.pojo.qo.user.reply.WxReplyRuleComplexVo;
+import in.hocg.eagle.modules.wx.pojo.qo.reply.WxReplyRuleComplexVo;
 
 import java.util.List;
 

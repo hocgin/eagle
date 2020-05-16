@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.wx.pojo.qo.user.reply;
+package in.hocg.eagle.modules.wx.pojo.qo.reply;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

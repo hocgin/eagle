@@ -52,12 +52,19 @@ public class WxMpMessageTemplate extends AbstractEntity<WxMpMessageTemplate> {
     @ApiModelProperty("模板示例")
     @TableField("example")
     private String example;
+
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;
     @ApiModelProperty("创建者")
     @TableField("creator")
     private Long creator;
+    @ApiModelProperty("更新时间")
+    @TableField("last_updated_at")
+    private LocalDateTime lastUpdatedAt;
+    @ApiModelProperty("更新者")
+    @TableField("last_updater")
+    private Long lastUpdater;
 
 
     @Override
