@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.wx.pojo.qo.menu;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.wx.WxMenuType;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,7 +27,7 @@ public class WxMenuInsertQo extends BaseQo {
     @NotBlank(message = "APP ID 不能为空")
     private String appid;
     @NotNull(message = "菜单类型不能为空")
-    @RangeEnum(enumClass = WxMenuType.class, message = "菜单类型错误")
+    @EnumRange(enumClass = WxMenuType.class, message = "菜单类型错误")
     private Integer menuType;
     @NotBlank(message = "标题不能为空")
     private String title;
@@ -40,7 +40,7 @@ public class WxMenuInsertQo extends BaseQo {
     private WxMenuInsertQo.MatchRule matchRule;
     @ApiModelProperty("启用状态")
     @NotNull(message = "启用状态不能为空")
-    @RangeEnum(enumClass = Enabled.class)
+    @EnumRange(enumClass = Enabled.class)
     private Integer enabled;
 
     @Data

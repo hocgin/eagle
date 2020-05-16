@@ -4,7 +4,7 @@ import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.basic.pojo.qo.Insert;
 import in.hocg.eagle.basic.pojo.qo.Update;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -49,7 +49,7 @@ public class ProductSaveQo extends IdQo {
     @NotNull(groups = {Insert.class}, message = "品类不能为空")
     private Long productCategoryId;
     @NotNull(groups = {Insert.class}, message = "商品状态错误")
-    @RangeEnum(enumClass = ProductPublishStatus.class,
+    @EnumRange(enumClass = ProductPublishStatus.class,
         groups = {Insert.class}, message = "商品上架状态错误")
     @ApiModelProperty("上架状态: [0:下架, 1:上架]")
     private Integer publishStatus;

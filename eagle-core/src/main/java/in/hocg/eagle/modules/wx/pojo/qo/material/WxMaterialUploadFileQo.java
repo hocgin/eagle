@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.wx.pojo.qo.material;
 
 import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -22,7 +22,7 @@ public class WxMaterialUploadFileQo extends BaseQo {
     @URL(message = "错误的文件链接")
     private String url;
     @NotNull(message = "素材类型不能为空")
-    @RangeEnum(enumClass = WxMaterialType.class)
+    @EnumRange(enumClass = WxMaterialType.class)
     private Integer materialType;
 
 }

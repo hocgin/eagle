@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.com.pojo.qo.datadict;
 import in.hocg.eagle.basic.constant.PatternConstant;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemInsertQo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -35,7 +35,7 @@ public class DataDictInsertQo extends BaseQo {
     private String code;
     @NotNull(message = "启用状态")
     @ApiModelProperty("启用状态")
-    @RangeEnum(enumClass = Enabled.class)
+    @EnumRange(enumClass = Enabled.class)
     private Integer enabled;
     @Valid
     private List<DataDictItemInsertQo> items = new ArrayList<>();

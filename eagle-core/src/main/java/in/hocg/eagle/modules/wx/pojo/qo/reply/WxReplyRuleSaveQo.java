@@ -4,7 +4,7 @@ import in.hocg.eagle.basic.constant.datadict.wx.reply.WxMatchMsgType;
 import in.hocg.eagle.basic.constant.datadict.wx.reply.WxReplyMsgType;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
 import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import in.hocg.eagle.utils.string.JsonUtils;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -34,14 +34,14 @@ public class WxReplyRuleSaveQo extends BaseQo {
     @ApiModelProperty("启用状态(0:为禁用状态;1:为正常状态)")
     private Integer enabled;
     @NotNull(groups = {Insert.class}, message = "匹配消息类型不能为空")
-    @RangeEnum(enumClass = WxMatchMsgType.class, groups = {Insert.class}, message = "匹配消息类型不能为空")
+    @EnumRange(enumClass = WxMatchMsgType.class, groups = {Insert.class}, message = "匹配消息类型不能为空")
     @ApiModelProperty("匹配消息类型")
     private Integer matchMsgType;
     @NotNull(groups = {Insert.class}, message = "匹配规则不能为空")
     @ApiModelProperty("匹配规则")
     private Object matchRule;
     @NotNull(groups = {Insert.class}, message = "回复消息类型不能为空")
-    @RangeEnum(enumClass = WxReplyMsgType.class, groups = {Insert.class}, message = "回复消息类型错误")
+    @EnumRange(enumClass = WxReplyMsgType.class, groups = {Insert.class}, message = "回复消息类型错误")
     @ApiModelProperty("回复消息类型")
     private Integer replyMsgType;
     @NotNull(groups = {Insert.class}, message = "回复内容不能为空")

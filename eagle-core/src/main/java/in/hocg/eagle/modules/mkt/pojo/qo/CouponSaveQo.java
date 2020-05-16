@@ -6,7 +6,7 @@ import in.hocg.eagle.basic.constant.datadict.CouponUseType;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
 import in.hocg.eagle.basic.pojo.qo.Insert;
 import in.hocg.eagle.basic.pojo.qo.Update;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -33,7 +33,7 @@ public class CouponSaveQo extends BaseQo {
     private String title;
 
     @NotNull(groups = {Insert.class}, message = "请选择优惠券类型")
-    @RangeEnum(groups = {Insert.class, Update.class}, enumClass = CouponType.class, message = "请选择优惠券类型")
+    @EnumRange(groups = {Insert.class, Update.class}, enumClass = CouponType.class, message = "请选择优惠券类型")
     @ApiModelProperty("优惠券类型")
     private Integer couponType;
 
@@ -54,12 +54,12 @@ public class CouponSaveQo extends BaseQo {
     private BigDecimal ceiling;
 
     @NotNull(groups = {Insert.class}, message = "请选择可用平台")
-    @RangeEnum(groups = {Insert.class, Update.class}, enumClass = {CouponPlatformType.class})
+    @EnumRange(groups = {Insert.class, Update.class}, enumClass = {CouponPlatformType.class})
     @ApiModelProperty("可用平台")
     private Integer platform;
 
     @NotNull(groups = {Insert.class}, message = "请选择可用类型")
-    @RangeEnum(groups = {Insert.class, Update.class}, enumClass = {CouponUseType.class})
+    @EnumRange(groups = {Insert.class, Update.class}, enumClass = {CouponUseType.class})
     @ApiModelProperty("可用类型")
     private Integer useType;
 

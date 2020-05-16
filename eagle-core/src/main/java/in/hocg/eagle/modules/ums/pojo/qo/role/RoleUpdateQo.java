@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.ums.pojo.qo.role;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.PatternConstant;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +26,7 @@ public class RoleUpdateQo extends IdQo {
     private String roleCode;
     @ApiModelProperty("角色描述")
     private String remark;
-    @RangeEnum(enumClass = Enabled.class)
+    @EnumRange(enumClass = Enabled.class)
     @ApiModelProperty("启用状态[0:为禁用状态;1:为正常状态]")
     private Integer enabled;
 }

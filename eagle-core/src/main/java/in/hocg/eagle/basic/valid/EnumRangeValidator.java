@@ -12,14 +12,14 @@ import javax.validation.ConstraintValidatorContext;
  *
  * @author hocgin
  */
-public class RangeEnumValidator implements ConstraintValidator<RangeEnum, Integer> {
+public class EnumRangeValidator implements ConstraintValidator<EnumRange, Integer> {
     private Class<? extends Enum>[] enumClass;
-    
+
     @Override
-    public void initialize(RangeEnum constraintAnnotation) {
+    public void initialize(EnumRange constraintAnnotation) {
         enumClass = constraintAnnotation.enumClass();
     }
-    
+
     @Override
     public boolean isValid(Integer id, ConstraintValidatorContext context) {
         IntEnum intEnum;
