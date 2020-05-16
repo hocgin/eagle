@@ -38,7 +38,9 @@ public class SendTemplateMessageToUserQo extends BaseQo {
     @Data
     @ApiModel("模版参数::变量")
     public static class TemplateData {
+        @NotBlank(message = "变量名称不能为空")
         private String name;
+        @NotBlank(message = "变量值不能为空")
         private String value;
         private String color;
 

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/wx/wx-mp/reply-rule")
+@RequestMapping("/api/wx-mp/reply-rule")
 public class WxMpReplyRuleController {
     private final WxMpReplyRuleService service;
 

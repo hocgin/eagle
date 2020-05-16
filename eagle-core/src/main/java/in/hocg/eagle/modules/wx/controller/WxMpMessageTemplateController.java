@@ -27,7 +27,7 @@ public class WxMpMessageTemplateController {
     private final WxMpMessageTemplateService service;
 
     @UseLogger("刷新 - 消息模版")
-    @PostMapping
+    @PostMapping("/refresh")
     public Result<Void> refresh(@Validated({Insert.class}) @RequestBody RefreshMessageTemplateQo qo) {
         service.refresh(qo);
         return Result.success();
