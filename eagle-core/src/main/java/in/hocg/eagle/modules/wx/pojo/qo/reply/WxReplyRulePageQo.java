@@ -13,5 +13,5 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class WxReplyRulePageQo extends PageQo {
-
+    private String appid;
 }

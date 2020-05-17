@@ -5,6 +5,11 @@
   <select id="paging" resultType="in.hocg.eagle.modules.wx.entity.WxMpReplyRule">
     SELECT wmrr.*
     FROM wx_mp_reply_rule wmrr
+    <where>
+      <if test="qo.appid != null">
+        AND wmrr.appid = #{qo.appid}
+      </if>
+    </where>
   </select>
   <select id="selectListByAppidAndMatchMsgTypeAndEnabled"
           resultType="in.hocg.eagle.modules.wx.entity.WxMpReplyRule">
