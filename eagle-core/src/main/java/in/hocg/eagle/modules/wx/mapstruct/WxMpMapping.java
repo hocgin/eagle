@@ -3,6 +3,7 @@ package in.hocg.eagle.modules.wx.mapstruct;
 import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
 import in.hocg.eagle.modules.wx.entity.WxMpMessageTemplate;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.string.JsonUtils;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
@@ -54,10 +55,10 @@ public interface WxMpMapping {
         result.setTitle(item.getTitle());
         result.setAuthor(item.getAuthor());
         result.setContentSourceUrl(item.getContentSourceUrl());
-        result.setNeedOpenComment(item.getNeedOpenComment());
+        result.setNeedOpenComment(LangUtils.getOrDefault(item.getNeedOpenComment(), Boolean.FALSE));
         result.setDigest(item.getDigest());
-        result.setOnlyFansCanComment(item.getOnlyFansCanComment());
-        result.setShowCoverPic(item.getShowCoverPic());
+        result.setOnlyFansCanComment(LangUtils.getOrDefault(item.getOnlyFansCanComment(), Boolean.FALSE));
+        result.setShowCoverPic(LangUtils.getOrDefault(item.getShowCoverPic(), Boolean.FALSE));
         return result;
     }
 

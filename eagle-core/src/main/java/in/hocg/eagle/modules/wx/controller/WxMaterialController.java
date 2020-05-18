@@ -66,6 +66,7 @@ public class WxMaterialController {
     @UseLogger("上传图文(新增) - 微信素材")
     @PostMapping("/upload/news")
     public Result uploadNews(@Validated @RequestBody WxMaterialUploadNewsQo qo) {
+        qo.validThrow();
         service.uploadNews(qo);
         return Result.success();
     }

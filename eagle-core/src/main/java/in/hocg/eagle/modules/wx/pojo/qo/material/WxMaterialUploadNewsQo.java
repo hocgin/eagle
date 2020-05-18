@@ -1,7 +1,9 @@
 package in.hocg.eagle.modules.wx.pojo.qo.material;
 
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotBlank;
@@ -35,10 +37,17 @@ public class WxMaterialUploadNewsQo extends BaseQo {
         private Boolean showCoverPic;
         @NotBlank(message = "图文消息正文不能为空")
         private String content;
-        @NotBlank(message = "图文消息原文地址不能为空")
+        @NotBlank(message = "原文地址不能为空")
+        @URL(message = "原文地址错误")
         private String contentSourceUrl;
         private Boolean needOpenComment;
         private Boolean onlyFansCanComment;
+    }
+
+    public void validThrow() {
+        for (NewsItem item : newsItems) {
+            ValidUtils.isFalse(StringUtils.isAllBlank(item.getOriginalUrl(), item.getThumbMediaId()), "请上传封面");
+        }
     }
 
 }

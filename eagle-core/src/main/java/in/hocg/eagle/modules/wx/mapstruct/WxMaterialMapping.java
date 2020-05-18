@@ -19,6 +19,7 @@ public interface WxMaterialMapping {
     @Mapping(target = "thumbMediaId", ignore = true)
     WxMaterialType.News.NewsItem asWxMaterialType0News0NewsItem(WxMaterialUploadNewsQo.NewsItem item);
 
+    @Mapping(target = "materialTypeName", ignore = true)
     @Mapping(target = "materialResult", ignore = true)
     @Mapping(target = "materialContent", ignore = true)
     @Mapping(target = "lastUpdaterName", ignore = true)

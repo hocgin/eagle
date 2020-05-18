@@ -5,6 +5,7 @@ import in.hocg.eagle.utils.LangUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.Objects;
 
 /**
  * Created by hocgin on 2020/2/16.
@@ -22,6 +23,10 @@ public class EnumRangeValidator implements ConstraintValidator<EnumRange, Intege
 
     @Override
     public boolean isValid(Integer id, ConstraintValidatorContext context) {
+        if (Objects.isNull(id)) {
+            return true;
+        }
+
         IntEnum intEnum;
         for (Class<? extends Enum> aClass : enumClass) {
             if (IntEnum.class.isAssignableFrom(aClass)) {

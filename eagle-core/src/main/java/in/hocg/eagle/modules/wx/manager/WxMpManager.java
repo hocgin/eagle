@@ -498,9 +498,10 @@ public class WxMpManager {
      * @param appid
      */
     private WxMpService getWxMpService(String appid) {
-        final WxMpService wxMpService = this.wxMpService.switchoverTo(appid);
-        ValidUtils.notNull(wxMpService, "切换公众号配置失败[appid=" + appid + "]");
-        return wxMpService;
-
+        try {
+            return this.wxMpService.switchoverTo(appid);
+        } catch (Exception e) {
+            throw ServiceException.wrap(e);
+        }
     }
 }

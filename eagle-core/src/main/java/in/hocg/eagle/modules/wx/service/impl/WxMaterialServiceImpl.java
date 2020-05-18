@@ -225,7 +225,8 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
             file = FileUtils.toFile(new URL(url));
             result = wxMpManager.uploadMaterialFile(appid, mediaFileType, file);
         } catch (IOException e) {
-            ValidUtils.fail(e);
+            e.printStackTrace();
+            ValidUtils.fail(e.getMessage());
         }
 
         final WxMaterial entity = new WxMaterial();
