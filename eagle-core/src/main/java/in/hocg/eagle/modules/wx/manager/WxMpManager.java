@@ -3,10 +3,7 @@ package in.hocg.eagle.modules.wx.manager;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.modules.wx.entity.WxMenu;
-import in.hocg.eagle.modules.wx.entity.WxMpConfig;
-import in.hocg.eagle.modules.wx.entity.WxMpMessageTemplate;
-import in.hocg.eagle.modules.wx.entity.WxUser;
+import in.hocg.eagle.modules.wx.entity.*;
 import in.hocg.eagle.modules.wx.mapstruct.WxMpMapping;
 import in.hocg.eagle.modules.wx.pojo.qo.message.SendTemplateMessageToUserQo;
 import in.hocg.eagle.utils.DateUtils;
@@ -26,6 +23,8 @@ import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.bean.result.WxMpUserList;
+import me.chanjar.weixin.mp.bean.tag.WxTagListUser;
+import me.chanjar.weixin.mp.bean.tag.WxUserTag;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import org.apache.commons.lang3.StringUtils;
@@ -59,14 +58,104 @@ public class WxMpManager {
     private final WxMpMapping mapping;
 
     /**
+     * [标签] 删除标签
+     *
+     * @param appid
+     * @param tagId
+     */
+    public void deleteTag(@NonNull String appid, @NonNull Long tagId) {
+        final WxMpUserTagService service = this.getWxMpService(appid).getUserTagService();
+        try {
+            service.tagDelete(tagId);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+
+    }
+
+    /**
+     * [标签] 取消标签
+     *
+     * @param appid
+     * @param tagId
+     * @param openId
+     * @return
+     */
+    public boolean unsetUserTag(@NonNull String appid, @NonNull Long tagId, @NonNull List<String> openId) {
+        final WxMpUserTagService service = this.getWxMpService(appid).getUserTagService();
+        try {
+            return service.batchUntagging(tagId, openId.toArray(new String[]{}));
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
+     * [标签] 设置标签
+     *
+     * @param appid
+     * @param tagId
+     * @param openId
+     * @return
+     */
+    public boolean setUserTag(@NonNull String appid, @NonNull Long tagId, @NonNull List<String> openId) {
+        final WxMpUserTagService service = this.getWxMpService(appid).getUserTagService();
+        try {
+            return service.batchTagging(tagId, openId.toArray(new String[]{}));
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
+     * 获取标签列表
+     *
+     * @param appid
+     * @param consumer
+     */
+    public void getTags(@NonNull String appid, Consumer<WxMpUserTags> consumer) {
+        final WxMpUserTagService service = this.getWxMpService(appid).getUserTagService();
+        try {
+            final List<WxUserTag> tags = service.tagGet();
+            tags.stream().map(wxUserTag -> mapping.asWxMpUserTags(appid, wxUserTag)).forEach(consumer);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+
+    }
+
+    /**
+     * 拉取指定标签下的所有用户列表
+     *
+     * @param appid
+     * @param tagId
+     * @param nextOpenId
+     * @param consumer
+     */
+    public void getTagUsers(@NonNull String appid, @NonNull Long tagId, String nextOpenId,
+                            Consumer<String> consumer) {
+        final WxMpUserTagService service = this.getWxMpService(appid).getUserTagService();
+        String tmpNextOpenId = nextOpenId;
+        try {
+            do {
+                final WxTagListUser result = service.tagListUser(tagId, tmpNextOpenId);
+                result.getData().getOpenidList().forEach(consumer);
+                tmpNextOpenId = result.getNextOpenid();
+            } while (Strings.isNotBlank(tmpNextOpenId));
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
      * 获取微信用户列表
      *
      * @param appid
      * @param nextOpenId
      * @param consumer
      */
-    public void getWxUserList(@NonNull String appid,
-                              String nextOpenId, Consumer<String> consumer) {
+    public void getWxUserList(@NonNull String appid, String nextOpenId,
+                              Consumer<String> consumer) {
         try {
             final WxMpUserService service = getWxMpService(appid).getUserService();
             String tmpNextOpenId = nextOpenId;

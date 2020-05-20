@@ -166,7 +166,7 @@ CREATE TABLE `wx_mp_reply_rule`
 -- 被关注自动回复
 -- 默认自动回复
 -- 关键词自动回复
--- ################################################################################################
+-- #[消息模版]###########################################################################################
 DROP TABLE IF EXISTS `wx_mp_message_template`;
 CREATE TABLE `wx_mp_message_template`
 (
@@ -199,3 +199,32 @@ CREATE TABLE `wx_mp_message_template`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
     COMMENT ='[微信模块] 消息模版表';
+-- #[微信用户标签]###########################################################################################
+DROP TABLE IF EXISTS `wx_mp_user_tags`;
+CREATE TABLE `wx_mp_user_tags`
+(
+    `id`     BIGINT AUTO_INCREMENT,
+    `appid`  VARCHAR(32) NOT NULL
+        COMMENT '开发者ID(AppID)',
+    `tag_id` LONG        NOT NULL
+        COMMENT '标签ID(来着微信)',
+    `name`   VARCHAR(32) NOT NULL
+        COMMENT '标签名称(来着微信)',
+    UNIQUE KEY (`appid`, `tag_id`),
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+    COMMENT ='[微信模块] 用户标签表';
+DROP TABLE IF EXISTS `wx_mp_user_tags_relation`;
+CREATE TABLE `wx_mp_user_tags_relation`
+(
+    `id`      BIGINT AUTO_INCREMENT,
+    `tags_id` LONG        NOT NULL
+        COMMENT '用户标签ID(来着自己)',
+    `openid`  VARCHAR(32) NOT NULL
+        COMMENT '用户的标识，对当前公众号唯一',
+    UNIQUE KEY (`tags_id`, `openid`),
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+    COMMENT ='[微信模块] 标签x用户表';

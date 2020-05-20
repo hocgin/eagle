@@ -3,12 +3,16 @@ package in.hocg.eagle.modules.wx.mapstruct;
 import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
 import in.hocg.eagle.modules.wx.entity.WxMpMessageTemplate;
+import in.hocg.eagle.modules.wx.entity.WxMpUserTags;
+import in.hocg.eagle.modules.wx.entity.WxMpUserTagsRelation;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.string.JsonUtils;
+import lombok.NonNull;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.bean.menu.WxMenuRule;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
+import me.chanjar.weixin.mp.bean.tag.WxUserTag;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
@@ -48,7 +52,7 @@ public interface WxMpMapping {
         final String thumbMediaId = item.getThumbMediaId();
         if (Strings.isNotBlank(thumbUrl)) {
             result.setThumbUrl(thumbUrl);
-        } else if (Objects.nonNull(thumbMediaId)){
+        } else if (Objects.nonNull(thumbMediaId)) {
             result.setThumbMediaId(thumbMediaId);
         }
         result.setContent(item.getContent());
@@ -73,4 +77,11 @@ public interface WxMpMapping {
         return result;
     }
 
+    default WxMpUserTags asWxMpUserTags(@NonNull String appid, WxUserTag tag) {
+        final WxMpUserTags result = new WxMpUserTags();
+        result.setTagId(tag.getId());
+        result.setAppid(appid);
+        result.setName(tag.getName());
+        return result;
+    }
 }

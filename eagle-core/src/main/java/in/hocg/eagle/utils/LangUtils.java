@@ -7,6 +7,7 @@ import com.google.common.hash.Hashing;
 import in.hocg.eagle.utils.clazz.ClassUtils;
 import lombok.experimental.UtilityClass;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.util.CollectionUtils;
 
 import java.net.*;
 import java.util.*;
@@ -287,5 +288,37 @@ public class LangUtils {
             }
             return builder.build();
         }).collect(Collectors.toList());
+    }
+
+    /**
+     * 分组调用
+     * - 将大批量数据，分组后，在整合
+     *
+     * @param allIds
+     * @param queryFunction
+     * @param len
+     * @param <R>
+     * @param <P>
+     * @return
+     */
+    public <R, P> List<R> groupCallback(Collection<P> allIds,
+                                        Function<Collection<P>, Collection<R>> queryFunction, int len) {
+        if (CollectionUtils.isEmpty(allIds)) {
+            return Collections.emptyList();
+        }
+        List<P> all = Lists.newArrayList(allIds);
+        List<R> result = Lists.newArrayList();
+
+        int startIndex = 0;
+        final int maxLength = all.size();
+
+        while (startIndex < maxLength) {
+            int toIndex = Math.min((startIndex + len), maxLength);
+
+            final List<P> ids = all.subList(startIndex, toIndex);
+            result.addAll(queryFunction.apply(ids));
+            startIndex = toIndex;
+        }
+        return result;
     }
 }

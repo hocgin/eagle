@@ -3,6 +3,10 @@ package in.hocg.eagle.basic;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Created by hocgin on 2020/2/11.
  * email: hocgin@gmail.com
@@ -40,4 +44,12 @@ public interface AbstractService<T> extends IService<T> {
      * @param entity
      */
     void validInsertOrUpdate(T entity);
+
+    /**
+     * 分片查询
+     *
+     * @param id
+     * @return
+     */
+    List<T> selectListById(Collection<? extends Serializable> id);
 }

@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -84,12 +83,6 @@ public class WxUserServiceImpl extends AbstractServiceImpl<WxUserMapper, WxUser>
         final Long id = qo.getId();
         final WxUser entity = getById(id);
         return this.convertComplex(entity);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public List<WxUser> selectListById(List<Long> id) {
-        return this.listByIds(id);
     }
 
     private WxMpUserComplexVo convertComplex(WxUser entity) {

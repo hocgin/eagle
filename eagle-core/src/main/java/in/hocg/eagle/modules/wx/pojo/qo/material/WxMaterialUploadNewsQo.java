@@ -3,6 +3,7 @@ package in.hocg.eagle.modules.wx.pojo.qo.material;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.URL;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class WxMaterialUploadNewsQo extends BaseQo {
     @NotNull(message = "APP ID不能为空")
     private String appid;
