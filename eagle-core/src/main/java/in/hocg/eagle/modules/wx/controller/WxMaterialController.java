@@ -7,7 +7,6 @@ import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.wx.pojo.qo.material.*;
 import in.hocg.eagle.modules.wx.service.WxMaterialService;
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -28,17 +27,17 @@ public class WxMaterialController {
     private final WxMaterialService service;
 
     @GetMapping("/video/{appid}/{mediaId}")
-    public ResponseEntity video(@PathVariable("appid") String appid, @PathVariable String mediaId) throws WxErrorException {
+    public ResponseEntity video(@PathVariable("appid") String appid, @PathVariable String mediaId) {
         return Result.stream(service.getVideoStream(appid, mediaId));
     }
 
     @GetMapping("/voice/{appid}/{mediaId}")
-    public ResponseEntity voice(@PathVariable("appid") String appid, @PathVariable String mediaId) throws WxErrorException {
+    public ResponseEntity voice(@PathVariable("appid") String appid, @PathVariable String mediaId) {
         return Result.stream(service.getVoiceStream(appid, mediaId));
     }
 
     @GetMapping("/image/{appid}/{mediaId}")
-    public ResponseEntity image(@PathVariable("appid") String appid, @PathVariable String mediaId) throws WxErrorException {
+    public ResponseEntity image(@PathVariable("appid") String appid, @PathVariable String mediaId) {
         return Result.stream(service.getImageStream(appid, mediaId));
     }
 
