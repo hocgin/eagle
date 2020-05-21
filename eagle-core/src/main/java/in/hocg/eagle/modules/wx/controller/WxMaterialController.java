@@ -44,7 +44,7 @@ public class WxMaterialController {
 
     @UseLogger("上传音频 - 微信素材")
     @PostMapping("/upload/voice")
-    public Result uploadVoice(@Validated @RequestBody WxMaterialUploadFileQo qo) {
+    public Result uploadVoice(@Validated @RequestBody WxMaterialUploadVoiceQo qo) {
         service.uploadVoice(qo);
         return Result.success();
     }
@@ -58,7 +58,7 @@ public class WxMaterialController {
 
     @UseLogger("上传图片 - 微信素材")
     @PostMapping("/upload/image")
-    public Result uploadImage(@Validated @RequestBody WxMaterialUploadFileQo qo) {
+    public Result uploadImage(@Validated @RequestBody WxMaterialUploadImageQo qo) {
         service.uploadImage(qo);
         return Result.success();
     }

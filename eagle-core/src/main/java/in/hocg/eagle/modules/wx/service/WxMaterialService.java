@@ -19,9 +19,9 @@ import java.io.InputStream;
  */
 public interface WxMaterialService extends AbstractService<WxMaterial> {
 
-    void uploadVoice(WxMaterialUploadFileQo qo);
+    void uploadVoice(WxMaterialUploadVoiceQo qo);
 
-    void uploadImage(WxMaterialUploadFileQo qo);
+    void uploadImage(WxMaterialUploadImageQo qo);
 
     void uploadVideo(WxMaterialUploadVideoQo qo);
 
