@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -62,7 +61,8 @@ public class WxMpUserTagsServiceImpl extends AbstractServiceImpl<WxMpUserTagsMap
         List<WxMpUserTags> addList = LangUtils.removeIfExits(pullData, mixedList, isSame);
 
         // 删除
-        this.removeByIds(deleteList.parallelStream().map(WxMpUserTags::getId).filter(Objects::nonNull).collect(Collectors.toList()));
+        deleteList.parallelStream().map(WxMpUserTags::getId)
+            .filter(Objects::nonNull).forEach(this::deleteOne);
 
         // 新增
         addList.parallelStream().forEach(this::validInsertOrUpdate);
@@ -70,7 +70,11 @@ public class WxMpUserTagsServiceImpl extends AbstractServiceImpl<WxMpUserTagsMap
         // 更新
         mixedList.parallelStream().forEach(this::validInsertOrUpdate);
 
-        for (WxMpUserTags item : pullData) {
+        final List<WxMpUserTags> all = Lists.newArrayList();
+        all.addAll(addList);
+        all.addAll(mixedList);
+
+        for (WxMpUserTags item : all) {
             final Long tagsId = item.getId();
             final Long tagId = item.getTagId();
             List<WxMpUserTagsRelation> userTags = Lists.newArrayList();
@@ -87,6 +91,7 @@ public class WxMpUserTagsServiceImpl extends AbstractServiceImpl<WxMpUserTagsMap
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void setTagWithinUser(WxMpSetUserTagsQo qo) {
         final Long tagsId = qo.getTagsId();
         final List<Long> wxUserId = qo.getWxUserId();
@@ -95,6 +100,7 @@ public class WxMpUserTagsServiceImpl extends AbstractServiceImpl<WxMpUserTagsMap
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void unsetTagWithinUser(WxMpUnsetUserTagsQo qo) {
         final Long tagsId = qo.getTagsId();
         final List<Long> wxUserId = qo.getWxUserId();

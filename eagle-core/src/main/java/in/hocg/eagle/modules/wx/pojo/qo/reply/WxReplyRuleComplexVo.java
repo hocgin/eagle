@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.eagle.basic.constant.datadict.wx.reply.WxMatchMsgType;
+import in.hocg.eagle.basic.constant.datadict.wx.reply.WxReplyMsgType;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -30,12 +33,18 @@ public class WxReplyRuleComplexVo {
     private String title;
     @ApiModelProperty("启用状态(0:为禁用状态;1:为正常状态)")
     private Integer enabled;
+    @Named(idFor = "enabled", type = NamedType.DataDict, args = {Enabled.KEY})
+    private String enabledName;
     @ApiModelProperty("匹配消息类型")
     private Integer matchMsgType;
+    @Named(idFor = "matchMsgType", type = NamedType.DataDict, args = {WxMatchMsgType.KEY})
+    private String matchMsgTypeName;
     @ApiModelProperty("匹配规则")
     private Object matchRule;
     @ApiModelProperty("回复消息类型")
     private Integer replyMsgType;
+    @Named(idFor = "replyMsgType", type = NamedType.DataDict, args = {WxReplyMsgType.KEY})
+    private String replyMsgTypeName;
     @ApiModelProperty("回复内容")
     private Object replyContent;
     @ApiModelProperty("排序, 从大到小降序")

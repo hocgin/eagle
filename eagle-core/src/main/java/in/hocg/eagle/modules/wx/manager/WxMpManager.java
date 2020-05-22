@@ -21,6 +21,7 @@ import me.chanjar.weixin.mp.bean.WxMpMassTagMessage;
 import me.chanjar.weixin.mp.bean.material.*;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
+import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import me.chanjar.weixin.mp.bean.result.WxMpUserList;
 import me.chanjar.weixin.mp.bean.tag.WxTagListUser;
@@ -56,6 +57,75 @@ import java.util.stream.Collectors;
 public class WxMpManager {
     private final WxMpService wxMpService;
     private final WxMpMapping mapping;
+
+    /**
+     * 长链接转短链接
+     *
+     * @param appid
+     * @param longUrl
+     * @return
+     */
+    public String shortUrl(@NonNull String appid, @NonNull String longUrl) {
+        try {
+            return this.getWxMpService(appid).shortUrl(longUrl);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
+     * 创建永久二维码
+     *
+     * @param appid
+     * @param sceneId
+     * @param sceneStr
+     * @return
+     */
+    public File createForeverQrCode(@NonNull String appid, Integer sceneId, String sceneStr) {
+        final WxMpQrcodeService service = this.getWxMpService(appid).getQrcodeService();
+        if (Objects.isNull(sceneId) && Objects.isNull(sceneStr)) {
+            ValidUtils.fail("参数错误");
+        }
+
+        try {
+            WxMpQrCodeTicket ticket;
+            if (Objects.nonNull(sceneId)) {
+                ticket = service.qrCodeCreateLastTicket(sceneId);
+            } else {
+                ticket = service.qrCodeCreateLastTicket(sceneStr);
+            }
+            return service.qrCodePicture(ticket);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
+     * 创建临时二维码
+     *
+     * @param appid
+     * @param sceneId
+     * @param sceneStr
+     * @return
+     */
+    public File createTmpQrCode(@NonNull String appid, @NonNull Integer expireSeconds, Integer sceneId, String sceneStr) {
+        final WxMpQrcodeService service = this.getWxMpService(appid).getQrcodeService();
+        if (Objects.isNull(sceneId) && Objects.isNull(sceneStr)) {
+            ValidUtils.fail("参数错误");
+        }
+
+        try {
+            WxMpQrCodeTicket ticket;
+            if (Objects.nonNull(sceneId)) {
+                ticket = service.qrCodeCreateTmpTicket(sceneId, expireSeconds);
+            } else {
+                ticket = service.qrCodeCreateTmpTicket(sceneStr, expireSeconds);
+            }
+            return service.qrCodePicture(ticket);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
 
     /**
      * [标签] 删除标签
@@ -139,7 +209,10 @@ public class WxMpManager {
         try {
             do {
                 final WxTagListUser result = service.tagListUser(tagId, tmpNextOpenId);
-                result.getData().getOpenidList().forEach(consumer);
+                final WxTagListUser.WxTagListUserData data = result.getData();
+                if (Objects.nonNull(data)) {
+                    data.getOpenidList().forEach(consumer);
+                }
                 tmpNextOpenId = result.getNextOpenid();
             } while (Strings.isNotBlank(tmpNextOpenId));
         } catch (WxErrorException e) {

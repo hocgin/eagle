@@ -676,4 +676,21 @@ INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`
                                  `created_at`, `creator`)
     VALUE (27, '图文', '4', '微信素材类型:图文', 1, NOW(), 1);
 
+## 匹配消息类型
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (28, '微信匹配规则 - 匹配消息类型', 'wxMatchMsgType', '匹配消息类型', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (28, '文本', '0', '匹配消息类型:文本', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (28, '事件', '1', '匹配消息类型:事件', 1, NOW(), 1);
 
+## 回复消息类型
+INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
+                            `created_at`, `creator`)
+    VALUE (29, '微信匹配规则 - 回复消息类型', 'wxReplyMsgType', '回复消息类型', 1, NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (29, '文本', '0', '回复消息类型:文本', 1, NOW(), 1);

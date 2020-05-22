@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.constant.datadict.wx.reply;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import in.hocg.eagle.basic.constant.datadict.IntJSONEnum;
 import in.hocg.eagle.basic.constant.datadict.Valid;
 import in.hocg.eagle.utils.LangUtils;
@@ -85,6 +86,9 @@ public enum WxMatchMsgType implements IntJSONEnum {
     @Accessors(chain = true)
     @ApiModel("匹配消息类型::文本")
     public static class Text implements Valid {
+        @ApiModelProperty("匹配类型")
+        private Integer matchType;
+        @JsonProperty("rContent")
         @ApiModelProperty("包含匹配")
         private String rContent;
         @ApiModelProperty("完全匹配")

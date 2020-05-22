@@ -17,6 +17,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -60,6 +61,7 @@ public class WxMpUserTagsRelationServiceImpl extends AbstractServiceImpl<WxMpUse
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.NOT_SUPPORTED)
     public void setTagWithinUser(Long tagsId, List<Long> wxUserId) {
         final WxMpUserTags entity = wxMpUserTagsService.getById(tagsId);
         ValidUtils.notNull(entity, "标签不存在");
@@ -84,6 +86,7 @@ public class WxMpUserTagsRelationServiceImpl extends AbstractServiceImpl<WxMpUse
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.NOT_SUPPORTED)
     public void unsetTagWithinUser(Long tagsId, List<Long> wxUserId) {
         final WxMpUserTags entity = wxMpUserTagsService.getById(tagsId);
         ValidUtils.notNull(entity, "标签不存在");
@@ -106,6 +109,7 @@ public class WxMpUserTagsRelationServiceImpl extends AbstractServiceImpl<WxMpUse
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteByTagsId(Long id) {
         baseMapper.deleteByTagsId(id);
     }
