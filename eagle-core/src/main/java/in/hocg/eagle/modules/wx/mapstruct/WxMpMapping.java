@@ -3,8 +3,8 @@ package in.hocg.eagle.modules.wx.mapstruct;
 import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
 import in.hocg.eagle.modules.wx.entity.WxMpMessageTemplate;
+import in.hocg.eagle.modules.wx.entity.WxMpQrcode;
 import in.hocg.eagle.modules.wx.entity.WxMpUserTags;
-import in.hocg.eagle.modules.wx.entity.WxMpUserTagsRelation;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.string.JsonUtils;
 import lombok.NonNull;
@@ -12,6 +12,7 @@ import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.bean.menu.WxMenuRule;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
+import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import me.chanjar.weixin.mp.bean.tag.WxUserTag;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
@@ -82,6 +83,17 @@ public interface WxMpMapping {
         result.setTagId(tag.getId());
         result.setAppid(appid);
         result.setName(tag.getName());
+        return result;
+    }
+
+    default WxMpQrcode asWxMpQrcode(@NonNull String appid, Integer sceneId, String sceneStr, @NonNull WxMpQrCodeTicket ticket) {
+        final WxMpQrcode result = new WxMpQrcode();
+        result.setAppid(appid);
+        result.setSceneId(sceneId);
+        result.setSceneStr(sceneStr);
+        result.setExpireSeconds(ticket.getExpireSeconds());
+        result.setUrl(ticket.getUrl());
+        result.setTicket(ticket.getTicket());
         return result;
     }
 }

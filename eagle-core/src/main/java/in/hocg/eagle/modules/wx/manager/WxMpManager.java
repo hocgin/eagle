@@ -81,7 +81,7 @@ public class WxMpManager {
      * @param sceneStr
      * @return
      */
-    public File createForeverQrCode(@NonNull String appid, Integer sceneId, String sceneStr) {
+    public WxMpQrcode createForeverQrCode(@NonNull String appid, Integer sceneId, String sceneStr) {
         final WxMpQrcodeService service = this.getWxMpService(appid).getQrcodeService();
         if (Objects.isNull(sceneId) && Objects.isNull(sceneStr)) {
             ValidUtils.fail("参数错误");
@@ -94,7 +94,7 @@ public class WxMpManager {
             } else {
                 ticket = service.qrCodeCreateLastTicket(sceneStr);
             }
-            return service.qrCodePicture(ticket);
+            return mapping.asWxMpQrcode(appid, sceneId, sceneStr, ticket);
         } catch (WxErrorException e) {
             throw ServiceException.wrap(e.getError().getErrorMsg());
         }
@@ -108,7 +108,7 @@ public class WxMpManager {
      * @param sceneStr
      * @return
      */
-    public File createTmpQrCode(@NonNull String appid, @NonNull Integer expireSeconds, Integer sceneId, String sceneStr) {
+    public WxMpQrcode createTmpQrCode(@NonNull String appid, @NonNull Integer expireSeconds, Integer sceneId, String sceneStr) {
         final WxMpQrcodeService service = this.getWxMpService(appid).getQrcodeService();
         if (Objects.isNull(sceneId) && Objects.isNull(sceneStr)) {
             ValidUtils.fail("参数错误");
@@ -121,7 +121,7 @@ public class WxMpManager {
             } else {
                 ticket = service.qrCodeCreateTmpTicket(sceneStr, expireSeconds);
             }
-            return service.qrCodePicture(ticket);
+            return mapping.asWxMpQrcode(appid, sceneId, sceneStr, ticket);
         } catch (WxErrorException e) {
             throw ServiceException.wrap(e.getError().getErrorMsg());
         }

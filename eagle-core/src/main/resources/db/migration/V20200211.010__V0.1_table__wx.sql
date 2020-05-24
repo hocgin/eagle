@@ -228,3 +228,49 @@ CREATE TABLE `wx_mp_user_tags_relation`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
     COMMENT ='[微信模块] 标签x用户表';
+-- #[短链接]###########################################################################################
+DROP TABLE IF EXISTS `wx_mp_short_url`;
+CREATE TABLE `wx_mp_short_url`
+(
+    `id`         BIGINT AUTO_INCREMENT,
+    `appid`      VARCHAR(32)  NOT NULL
+        COMMENT '开发者ID(AppID)',
+    `long_url`   VARCHAR(255) NOT NULL
+        COMMENT '长链接',
+    `short_url`  VARCHAR(255) NOT NULL
+        COMMENT '短链接',
+    # --
+    `created_at` DATETIME(6)  NOT NULL
+        COMMENT '创建时间',
+    `creator`    BIGINT       NOT NULL
+        COMMENT '创建者',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+    COMMENT ='[微信模块] 短链接表';
+
+DROP TABLE IF EXISTS `wx_mp_qrcode`;
+CREATE TABLE `wx_mp_qrcode`
+(
+    `id`             BIGINT AUTO_INCREMENT,
+    `appid`          VARCHAR(32) NOT NULL
+        COMMENT '开发者ID(AppID)',
+    `expire_seconds` INT(16)     NOT NULL
+        COMMENT '过期时间(秒), -1 为永久型',
+    `scene_id`       INT(16)
+        COMMENT '场景值ID，临时二维码时为32位非0整型，永久二维码时最大值为100000',
+    `scene_str`      VARCHAR(64)
+        COMMENT '场景值ID（字符串形式的ID），字符串类型，长度限制为1到64',
+    `ticket`         INT(16)
+        COMMENT '获取的二维码ticket，凭借此ticket可以在有效时间内换取二维码',
+    `url`            VARCHAR(64)
+        COMMENT '二维码图片解析后的地址，开发者可根据该地址自行生成需要的二维码图片',
+    # --
+    `created_at`     DATETIME(6) NOT NULL
+        COMMENT '创建时间',
+    `creator`        BIGINT      NOT NULL
+        COMMENT '创建者',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+    COMMENT ='[微信模块] 二维码表';
