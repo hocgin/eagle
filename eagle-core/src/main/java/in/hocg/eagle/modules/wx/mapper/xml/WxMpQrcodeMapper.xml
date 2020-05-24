@@ -4,5 +4,10 @@
 
     <select id="paging" resultType="in.hocg.eagle.modules.wx.entity.WxMpQrcode">
       SELECT wmq.* FROM wx_mp_qrcode wmq
+      <where>
+        <if test="qo.appid != null">
+          AND wmq.appid = #{qo.appid}
+        </if>
+      </where>
     </select>
 </mapper>

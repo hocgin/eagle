@@ -32,9 +32,12 @@ public class WxMpQrcodeComplexVo {
     private String ticket;
     @ApiModelProperty("二维码图片解析后的地址，开发者可根据该地址自行生成需要的二维码图片")
     private String url;
+    private String qrcodeUrl;
     private Long creator;
     @Named(idFor = "creator", type = NamedType.Nickname)
     private String creatorName;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdAt;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime expireAt;
 }

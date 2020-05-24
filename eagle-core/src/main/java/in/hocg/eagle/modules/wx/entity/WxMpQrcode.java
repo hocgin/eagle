@@ -49,6 +49,8 @@ public class WxMpQrcode extends AbstractEntity<WxMpQrcode> {
     @ApiModelProperty("二维码图片解析后的地址，开发者可根据该地址自行生成需要的二维码图片")
     @TableField("url")
     private String url;
+    @TableField("expire_at")
+    private LocalDateTime expireAt;
     @ApiModelProperty("创建时间")
     @TableField("created_at")
     private LocalDateTime createdAt;

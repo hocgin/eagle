@@ -42,6 +42,11 @@ public class WxMpQrcodeServiceImpl extends AbstractServiceImpl<WxMpQrcodeMapper,
         WxMpQrcode entity = mapping.asWxMpQrcode(qo);
         entity.setCreator(userId);
         entity.setCreatedAt(createdAt);
+
+        if (qo.getUseExpireQrCode()) {
+            entity.setExpireAt(createdAt.plusSeconds(entity.getExpireSeconds()));
+        }
+
         this.validInsert(entity);
 
         WxMpQrcode updated;
@@ -50,8 +55,9 @@ public class WxMpQrcodeServiceImpl extends AbstractServiceImpl<WxMpQrcodeMapper,
         } else {
             updated = wxMpManager.createTmpQrCode(appid, entity.getExpireSeconds(), entity.getSceneId(), entity.getSceneStr());
         }
+
         updated.setId(entity.getId());
-        this.validUpdateById(entity);
+        this.validUpdateById(updated);
     }
 
     @Override
@@ -69,6 +75,8 @@ public class WxMpQrcodeServiceImpl extends AbstractServiceImpl<WxMpQrcodeMapper,
     }
 
     private WxMpQrcodeComplexVo convertComplex(WxMpQrcode entity) {
-        return mapping.asWxMpQrcodeComplex(entity);
+        final WxMpQrcodeComplexVo result = mapping.asWxMpQrcodeComplex(entity);
+        result.setQrcodeUrl(wxMpManager.getQrCodeImage(entity.getAppid(), entity.getTicket()));
+        return result;
     }
 }

@@ -261,10 +261,12 @@ CREATE TABLE `wx_mp_qrcode`
         COMMENT '场景值ID，临时二维码时为32位非0整型，永久二维码时最大值为100000',
     `scene_str`      VARCHAR(64)
         COMMENT '场景值ID（字符串形式的ID），字符串类型，长度限制为1到64',
-    `ticket`         INT(16)
+    `ticket`         VARCHAR(128)
         COMMENT '获取的二维码ticket，凭借此ticket可以在有效时间内换取二维码',
     `url`            VARCHAR(64)
         COMMENT '二维码图片解析后的地址，开发者可根据该地址自行生成需要的二维码图片',
+    `expire_at`      DATETIME(6)
+        COMMENT '过期时间',
     # --
     `created_at`     DATETIME(6) NOT NULL
         COMMENT '创建时间',

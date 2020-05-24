@@ -23,4 +23,5 @@ public interface WxMpQrcodeService extends AbstractService<WxMpQrcode> {
     WxMpQrcodeComplexVo selectOne(IdQo qo);
 
     IPage<WxMpQrcodeComplexVo> paging(WxMpQrcodePageQo qo);
+
 }

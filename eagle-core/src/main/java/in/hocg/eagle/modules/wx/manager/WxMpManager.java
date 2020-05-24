@@ -59,6 +59,22 @@ public class WxMpManager {
     private final WxMpMapping mapping;
 
     /**
+     * 图片地址
+     *
+     * @param appid
+     * @param ticket
+     * @return
+     */
+    public String getQrCodeImage(@NonNull String appid, @NonNull String ticket) {
+        final WxMpQrcodeService service = this.getWxMpService(appid).getQrcodeService();
+        try {
+            return service.qrCodePictureUrl(ticket);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
      * 长链接转短链接
      *
      * @param appid

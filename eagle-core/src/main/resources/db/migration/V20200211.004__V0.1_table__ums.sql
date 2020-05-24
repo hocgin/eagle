@@ -401,6 +401,12 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
     VALUE (36, '用户标签', 1, 'wx:mp-user-tags', 0, 29, '/29/36', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (37, '二维码', 1, 'wx:mp-qrcode', 0, 29, '/29/37', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (38, '短链接', 1, 'wx:mp-short-url', 0, 29, '/29/38', NOW(), 1);
 
 
 # 角色
@@ -448,7 +454,9 @@ VALUES (1, 1),
        (1, 33),
        (1, 34),
        (1, 35),
-       (1, 36);
+       (1, 36),
+       (1, 37),
+       (1, 38);
 
 # 赋予账号角色
 INSERT INTO ums_role_account(`role_id`, `account_id`)

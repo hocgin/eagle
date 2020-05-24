@@ -15,11 +15,14 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface WxMpQrcodeMapping {
 
+    @Mapping(target = "expireAt", ignore = true)
     @Mapping(target = "url", ignore = true)
     @Mapping(target = "ticket", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creator", ignore = true)
     WxMpQrcode asWxMpQrcode(WxMpQrcodeInsertQo qo);
 
+    @Mapping(target = "qrcodeUrl", ignore = true)
+    @Mapping(target = "creatorName", ignore = true)
     WxMpQrcodeComplexVo asWxMpQrcodeComplex(WxMpQrcode entity);
 }
