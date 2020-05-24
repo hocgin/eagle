@@ -128,6 +128,22 @@ public class WxMpManager {
     }
 
     /**
+     * [标签] 新增标签
+     *
+     * @param appid
+     * @param name
+     */
+    public WxMpUserTags createTag(@NonNull String appid, @NonNull String name) {
+        final WxMpUserTagService service = this.getWxMpService(appid).getUserTagService();
+        try {
+            final WxUserTag wxUserTag = service.tagCreate(name);
+            return mapping.asWxMpUserTags(appid, wxUserTag);
+        } catch (WxErrorException e) {
+            throw ServiceException.wrap(e.getError().getErrorMsg());
+        }
+    }
+
+    /**
      * [标签] 删除标签
      *
      * @param appid

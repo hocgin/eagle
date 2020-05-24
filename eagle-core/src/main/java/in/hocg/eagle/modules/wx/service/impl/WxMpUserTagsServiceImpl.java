@@ -8,10 +8,7 @@ import in.hocg.eagle.modules.wx.entity.WxMpUserTagsRelation;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxMpUserTagsMapper;
 import in.hocg.eagle.modules.wx.mapstruct.WxMpUserTagsMapping;
-import in.hocg.eagle.modules.wx.pojo.qo.user.tags.WxMpSetUserTagsQo;
-import in.hocg.eagle.modules.wx.pojo.qo.user.tags.WxMpUnsetUserTagsQo;
-import in.hocg.eagle.modules.wx.pojo.qo.user.tags.WxMpUserTagsPageQo;
-import in.hocg.eagle.modules.wx.pojo.qo.user.tags.WxMpUserTagsRefreshQo;
+import in.hocg.eagle.modules.wx.pojo.qo.user.tags.*;
 import in.hocg.eagle.modules.wx.pojo.vo.user.tags.WxMpUserTagsComplexVo;
 import in.hocg.eagle.modules.wx.service.WxMpUserTagsRelationService;
 import in.hocg.eagle.modules.wx.service.WxMpUserTagsService;
@@ -81,6 +78,15 @@ public class WxMpUserTagsServiceImpl extends AbstractServiceImpl<WxMpUserTagsMap
             wxMpManager.getTagUsers(appid, tagId, null, openId -> userTags.add(new WxMpUserTagsRelation().setOpenid(openId).setTagsId(tagsId)));
             wxMpUserTagsRelationService.batchInsertIfNotExist(tagsId, userTags);
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void insertOne(WxMpUserTagsInsertQo qo) {
+        final String appid = qo.getAppid();
+        final String name = qo.getName();
+        final WxMpUserTags tag = wxMpManager.createTag(appid, name);
+        this.validInsert(tag);
     }
 
     @Override

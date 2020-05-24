@@ -32,4 +32,6 @@ public interface WxMpUserTagsService extends AbstractService<WxMpUserTags> {
     void unsetTagWithinUser(WxMpUnsetUserTagsQo qo);
 
     void deleteOne(Long id);
+
+    void insertOne(WxMpUserTagsInsertQo qo);
 }

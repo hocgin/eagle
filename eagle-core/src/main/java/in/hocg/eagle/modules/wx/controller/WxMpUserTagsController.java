@@ -3,10 +3,7 @@ package in.hocg.eagle.modules.wx.controller;
 
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.modules.wx.pojo.qo.user.tags.WxMpSetUserTagsQo;
-import in.hocg.eagle.modules.wx.pojo.qo.user.tags.WxMpUnsetUserTagsQo;
-import in.hocg.eagle.modules.wx.pojo.qo.user.tags.WxMpUserTagsPageQo;
-import in.hocg.eagle.modules.wx.pojo.qo.user.tags.WxMpUserTagsRefreshQo;
+import in.hocg.eagle.modules.wx.pojo.qo.user.tags.*;
 import in.hocg.eagle.modules.wx.service.WxMpUserTagsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -31,6 +28,13 @@ public class WxMpUserTagsController {
     @PostMapping("/refresh")
     public Result refresh(@Validated @RequestBody WxMpUserTagsRefreshQo qo) {
         service.refresh(qo);
+        return Result.success();
+    }
+
+    @UseLogger("新建 - 微信用户标签")
+    @PostMapping
+    public Result insertOne(@Validated @RequestBody WxMpUserTagsInsertQo qo) {
+        service.insertOne(qo);
         return Result.success();
     }
 
