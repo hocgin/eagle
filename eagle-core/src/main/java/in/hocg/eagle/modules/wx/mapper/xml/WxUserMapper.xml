@@ -10,4 +10,17 @@
       </if>
     </where>
   </select>
+  <select id="complete" resultType="in.hocg.eagle.modules.wx.entity.WxUser">
+    SELECT wu.* FROM wx_user wu
+    <where>
+      <if test="qo.appid != null">
+        AND wu.appid = #{qo.appid}
+      </if>
+      <if test="qo.keyword != null">
+        <bind name="keyword" value="'%'+qo.keyword+'%'"/>
+        AND (wu.nickname LIKE #{keyword} OR wu.id LIKE #{keyword} OR wu.openid LIKE #{keyword})
+      </if>
+    </where>
+    LIMIT 50
+  </select>
 </mapper>

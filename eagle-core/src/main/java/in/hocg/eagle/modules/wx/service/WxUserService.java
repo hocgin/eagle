@@ -6,7 +6,10 @@ import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.modules.wx.entity.WxUser;
 import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserPagingQo;
 import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserRefreshQo;
+import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserSearchQo;
 import in.hocg.eagle.modules.wx.pojo.vo.user.WxMpUserComplexVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -25,4 +28,5 @@ public interface WxUserService extends AbstractService<WxUser> {
 
     WxMpUserComplexVo selectOne(IdQo qo);
 
+    List<WxMpUserComplexVo> complete(WxMpUserSearchQo qo);
 }

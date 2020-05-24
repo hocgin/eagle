@@ -6,6 +6,7 @@ import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserPagingQo;
 import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserRefreshQo;
+import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserSearchQo;
 import in.hocg.eagle.modules.wx.service.WxUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -37,6 +38,12 @@ public class WxUserController {
     @PostMapping("/_paging")
     public Result paging(@Validated @RequestBody WxMpUserPagingQo qo) {
         return Result.success(service.paging(qo));
+    }
+
+    @UseLogger("搜索 - 微信用户")
+    @PostMapping("/_complete")
+    public Result complete(@Validated @RequestBody WxMpUserSearchQo qo) {
+        return Result.success(service.complete(qo));
     }
 
     @UseLogger("查看详情 - 微信用户")
