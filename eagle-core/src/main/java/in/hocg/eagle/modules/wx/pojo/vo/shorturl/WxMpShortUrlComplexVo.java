@@ -1,5 +1,10 @@
 package in.hocg.eagle.modules.wx.pojo.vo.shorturl;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import in.hocg.eagle.basic.aspect.named.InjectNamed;
+import in.hocg.eagle.basic.aspect.named.Named;
+import in.hocg.eagle.basic.aspect.named.NamedType;
+import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -12,6 +17,7 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
+@InjectNamed
 public class WxMpShortUrlComplexVo {
     private Long id;
     @ApiModelProperty("开发者ID(AppID)")
@@ -20,8 +26,9 @@ public class WxMpShortUrlComplexVo {
     private String longUrl;
     @ApiModelProperty("短链接")
     private String shortUrl;
-    @ApiModelProperty("创建时间")
-    private LocalDateTime createdAt;
-    @ApiModelProperty("创建者")
     private Long creator;
+    @Named(idFor = "creator", type = NamedType.Nickname)
+    private String creatorName;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime createdAt;
 }

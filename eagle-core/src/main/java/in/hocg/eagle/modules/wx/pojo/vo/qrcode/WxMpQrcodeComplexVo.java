@@ -1,6 +1,12 @@
 package in.hocg.eagle.modules.wx.pojo.vo.qrcode;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import in.hocg.eagle.basic.aspect.named.InjectNamed;
+import in.hocg.eagle.basic.aspect.named.Named;
+import in.hocg.eagle.basic.aspect.named.NamedType;
+import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +16,8 @@ import java.time.LocalDateTime;
  *
  * @author hocgin
  */
+@Data
+@InjectNamed
 public class WxMpQrcodeComplexVo {
     private Long id;
     @ApiModelProperty("开发者ID(AppID)")
@@ -24,8 +32,9 @@ public class WxMpQrcodeComplexVo {
     private String ticket;
     @ApiModelProperty("二维码图片解析后的地址，开发者可根据该地址自行生成需要的二维码图片")
     private String url;
-    @ApiModelProperty("创建时间")
-    private LocalDateTime createdAt;
-    @ApiModelProperty("创建者")
     private Long creator;
+    @Named(idFor = "creator", type = NamedType.Nickname)
+    private String creatorName;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime createdAt;
 }
