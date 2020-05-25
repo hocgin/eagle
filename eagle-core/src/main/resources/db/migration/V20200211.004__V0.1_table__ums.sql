@@ -3,7 +3,7 @@ CREATE TABLE `ums_account`
 (
     `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `nickname`        VARCHAR(10)         NOT NULL
+    `nickname`        VARCHAR(16)         NOT NULL
         COMMENT '昵称;显示使用',
     `username`        VARCHAR(20)         NOT NULL UNIQUE
         COMMENT '用户名;唯一,登录使用',
@@ -28,7 +28,7 @@ CREATE TABLE `ums_account`
     --
     `created_at`      DATETIME(6)         NOT NULL
         COMMENT '创建时间',
-    `creator`         BIGINT              NOT NULL
+    `creator`         BIGINT
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',

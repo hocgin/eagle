@@ -321,4 +321,8 @@ public class LangUtils {
         }
         return result;
     }
+
+    public Integer getIntRandomCode(int i) {
+        return 10086;
+    }
 }

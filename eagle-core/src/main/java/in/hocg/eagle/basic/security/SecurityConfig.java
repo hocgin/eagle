@@ -64,10 +64,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 短链接
                 "/s/*",
                 "/wx-mp/*",
-                "/login/oauth2/code/*",
                 "/social/**",
                 "/api/wx/material/**",
                 "/",
+                // 登录
+                "/login/oauth2/code/*",
+                // 注册账号
+                "/sign-up",
+                // 验证码
+                "/sms-code",
                 "/captcha",
                 TokenAuthenticationEndpoint.ACCOUNT_TOKEN_URI).permitAll()
             .anyRequest().authenticated()

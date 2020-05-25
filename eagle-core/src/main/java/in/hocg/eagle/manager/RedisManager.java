@@ -57,8 +57,11 @@ public class RedisManager {
      */
     public boolean validSmsCode(@NonNull String phone, @NonNull String smsCode) {
         ValueOperations<String, String> opsForValue = template.opsForValue();
-        template.delete(phone);
-        return LangUtils.equals(opsForValue.get(phone), smsCode);
+        if (LangUtils.equals(opsForValue.get(phone), smsCode)) {
+            template.delete(phone);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -96,8 +99,11 @@ public class RedisManager {
     public boolean validResetPasswordToken(@NonNull String email, @NonNull String validToken) {
         ValueOperations<String, String> opsForValue = template.opsForValue();
         final String token = opsForValue.get(email);
-        template.delete(email);
-        return LangUtils.equals(token, validToken);
+        if (LangUtils.equals(token, validToken)) {
+            template.delete(email);
+            return true;
+        }
+        return false;
     }
 
     private String deserialize(Object object) {

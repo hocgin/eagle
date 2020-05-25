@@ -46,6 +46,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -211,7 +212,6 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         final String phone = qo.getPhone();
         final String smsCode = qo.getSmsCode();
         final String nickname = LangUtils.getOrDefault(qo.getNickname(), phone);
-        final Long userId = qo.getUserId();
         if (!redisManager.validSmsCode(phone, smsCode)) {
             throw ServiceException.wrap("验证码错误");
         }
@@ -224,10 +224,10 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
                 requestOpt.ifPresent(request -> account.setCreatedIp(RequestUtils.getClientIP(request)));
                 return account.setNickname(nickname)
                     .setGender(Gender.Man.getCode())
+                    .setPassword(passwordEncoder.encode(UUID.randomUUID().toString()))
                     .setUsername(phone)
                     .setPhone(phone)
-                    .setCreatedAt(createdAt)
-                    .setCreator(userId);
+                    .setCreatedAt(createdAt);
             });
 
         if (Objects.isNull(entity.getId())) {
@@ -237,8 +237,10 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         }
 
         // 更新头像
-        final File file = Avatars.getAvatarAsPath(entity.getId()).toFile();
+        final Long entityId = entity.getId();
+        final File file = Avatars.getAvatarAsPath(entityId).toFile();
         final Account update = new Account()
+            .setId(entityId)
             .setAvatar(ossManager.uploadToOss(file, file.getName()));
         this.validUpdateById(update);
     }

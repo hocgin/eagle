@@ -55,7 +55,7 @@ public class Avatars {
         BufferedImage dest = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = dest.createGraphics();
         AvatarUtils.activeAntialiasing(g2);
-        g2.drawImage(avatar.create(code), 0, 0, size, size, null);
+        g2.drawImage(avatar.create(code + 100000), 0, 0, size, size, null);
         g2.dispose();
         return dest;
     }
