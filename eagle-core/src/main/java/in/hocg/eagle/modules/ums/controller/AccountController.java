@@ -34,6 +34,13 @@ import java.util.List;
 public class AccountController {
     private final AccountService service;
 
+    @UseLogger("注册账号")
+    @PostMapping("/sign-up")
+    public Result<Void> signUp(@Validated @RequestBody AccountSignUpQo qo) {
+        service.signUp(qo);
+        return Result.success();
+    }
+
     @GetMapping
     @UseLogger("当前账号信息")
     @PreAuthorize(AuthorizeConstant.IS_AUTHENTICATED)

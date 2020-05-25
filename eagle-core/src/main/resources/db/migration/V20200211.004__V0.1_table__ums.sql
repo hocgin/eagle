@@ -9,7 +9,7 @@ CREATE TABLE `ums_account`
         COMMENT '用户名;唯一,登录使用',
     `email`           VARCHAR(20) UNIQUE
         COMMENT '邮箱;唯一,登录使用',
-    `phone`           VARCHAR(20) UNIQUE
+    `phone`           VARCHAR(20)         NOT NULL UNIQUE
         COMMENT '手机号码;唯一,登录使用',
     `password`        VARCHAR(100)        NOT NULL
         COMMENT '密码',

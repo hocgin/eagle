@@ -3,12 +3,17 @@ package in.hocg.eagle.modules.ums.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.env.Env;
+import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.eagle.basic.constant.datadict.Gender;
 import in.hocg.eagle.basic.constant.datadict.Platform;
 import in.hocg.eagle.basic.datastruct.tree.Tree;
+import in.hocg.eagle.basic.env.Env;
+import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.basic.lang.Avatars;
 import in.hocg.eagle.manager.MailManager;
+import in.hocg.eagle.manager.OssManager;
 import in.hocg.eagle.manager.RedisManager;
 import in.hocg.eagle.mapstruct.AccountMapping;
 import in.hocg.eagle.mapstruct.AuthorityMapping;
@@ -25,13 +30,19 @@ import in.hocg.eagle.modules.ums.pojo.vo.role.RoleComplexAndAuthorityVo;
 import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.modules.ums.service.RoleAccountService;
 import in.hocg.eagle.modules.ums.service.RoleAuthorityService;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.eagle.utils.web.RequestUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -45,6 +56,7 @@ import java.util.stream.Collectors;
  * @author hocgin
  * @since 2020-02-11
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Account> implements AccountService {
@@ -57,6 +69,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     private final RoleMapping roleMapping;
     private final AuthorityMapping authorityMapping;
     private final PasswordEncoder passwordEncoder;
+    private final OssManager ossManager;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -88,6 +101,10 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
 
     public Optional<Account> selectOneByEmail(String email) {
         return lambdaQuery().eq(Account::getEmail, email).oneOpt();
+    }
+
+    private Optional<Account> selectOneByPhone(String phone) {
+        return lambdaQuery().eq(Account::getPhone, phone).oneOpt();
     }
 
     @Override
@@ -185,6 +202,45 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         update.setLastUpdater(qo.getUserId());
         update.setPassword(passwordEncoder.encode(newPassword));
         validUpdateById(update);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void signUp(AccountSignUpQo qo) {
+        final LocalDateTime createdAt = qo.getCreatedAt();
+        final String phone = qo.getPhone();
+        final String smsCode = qo.getSmsCode();
+        final String nickname = LangUtils.getOrDefault(qo.getNickname(), phone);
+        final Long userId = qo.getUserId();
+        if (!redisManager.validSmsCode(phone, smsCode)) {
+            throw ServiceException.wrap("验证码错误");
+        }
+
+        // 账号是否存在
+        Account entity = selectOneByPhone(phone)
+            .orElseGet(() -> {
+                final Account account = new Account();
+                final Optional<HttpServletRequest> requestOpt = SpringContext.getRequest();
+                requestOpt.ifPresent(request -> account.setCreatedIp(RequestUtils.getClientIP(request)));
+                return account.setNickname(nickname)
+                    .setGender(Gender.Man.getCode())
+                    .setUsername(phone)
+                    .setPhone(phone)
+                    .setCreatedAt(createdAt)
+                    .setCreator(userId);
+            });
+
+        if (Objects.isNull(entity.getId())) {
+            validInsert(entity);
+        } else {
+            throw ServiceException.wrap("该手机号码已注册");
+        }
+
+        // 更新头像
+        final File file = Avatars.getAvatarAsPath(entity.getId()).toFile();
+        final Account update = new Account()
+            .setAvatar(ossManager.uploadToOss(file, file.getName()));
+        this.validUpdateById(update);
     }
 
     public void validResetPasswordToken(String email, String token) {

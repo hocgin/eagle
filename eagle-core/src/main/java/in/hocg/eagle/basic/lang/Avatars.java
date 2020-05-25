@@ -5,8 +5,12 @@ import com.talanlabs.avatargenerator.GitHubAvatar;
 import com.talanlabs.avatargenerator.utils.AvatarUtils;
 import lombok.experimental.UtilityClass;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Created by hocgin on 2020/3/27.
@@ -16,7 +20,7 @@ import java.awt.image.BufferedImage;
  */
 @UtilityClass
 public class Avatars {
-    public static final Avatar AVATAR = GitHubAvatar.newAvatarBuilder()
+    public final Avatar AVATAR = GitHubAvatar.newAvatarBuilder()
         .build();
 
     /**
@@ -25,8 +29,18 @@ public class Avatars {
      * @param code
      * @return
      */
-    public static BufferedImage getAvatar(long code) {
+    public BufferedImage getAvatar(long code) {
         return createAvatar(Avatars.AVATAR, code);
+    }
+
+    public Path getAvatarAsPath(long code) {
+        try {
+            final Path filePath = Files.createTempFile("img", ".png");
+            ImageIO.write(getAvatar(code), "png", filePath.toFile());
+            return filePath;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -36,7 +50,7 @@ public class Avatars {
      * @param code
      * @return
      */
-    private static BufferedImage createAvatar(Avatar avatar, long code) {
+    private BufferedImage createAvatar(Avatar avatar, long code) {
         int size = avatar.getWidth();
         BufferedImage dest = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = dest.createGraphics();

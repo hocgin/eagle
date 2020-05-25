@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by hocgin on 2020/3/27.
@@ -64,10 +65,14 @@ public class OssManager {
      */
     private String uploadToOss(File file, String filename, String space) {
         try {
-            ossClient.putObject(space, filename, java.nio.file.Files.newInputStream(file.toPath()));
+            return this.uploadToOss(java.nio.file.Files.newInputStream(file.toPath()), filename, space);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String uploadToOss(InputStream is, String filename, String space) {
+        ossClient.putObject(space, filename, is);
         return PREFIX_URL + filename;
     }
 }
