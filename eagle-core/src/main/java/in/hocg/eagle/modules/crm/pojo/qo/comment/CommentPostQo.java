@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.crm.pojo.qo.comment;
 
 import in.hocg.eagle.basic.constant.datadict.CommentTargetType;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,7 +23,7 @@ public class CommentPostQo extends BaseQo {
      * @see CommentTargetType 的名称
      */
     @NotNull
-    @RangeEnum(enumClass = CommentTargetType.class, message = "评论对象类型")
+    @EnumRange(enumClass = CommentTargetType.class, message = "评论对象类型")
     @ApiModelProperty("评论对象")
     private Integer refType;
     @NotNull

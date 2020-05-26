@@ -2,6 +2,7 @@ package in.hocg.eagle.manager;
 
 import com.alibaba.fastjson.JSON;
 import in.hocg.eagle.manager.dto.IpAndAddressDto;
+import in.hocg.eagle.utils.LangUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,34 @@ public class RedisManager {
     }
 
     /**
+     * 验证短信验证码
+     *
+     * @param phone
+     * @param smsCode
+     * @return
+     */
+    public boolean validSmsCode(@NonNull String phone, @NonNull String smsCode) {
+        ValueOperations<String, String> opsForValue = template.opsForValue();
+        if (LangUtils.equals(opsForValue.get(phone), smsCode)) {
+            template.delete(phone);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 设置短信验证码
+     *
+     * @param phone
+     * @param smsCode
+     */
+    public void setSmsCode(@NonNull String phone, @NonNull String smsCode) {
+        ValueOperations<String, String> opsForValue = template.opsForValue();
+        opsForValue.set(phone, smsCode, 5, TimeUnit.MINUTES);
+        log.debug("验证码设置[手机号码: {}, Token: {}]", phone, smsCode);
+    }
+
+    /**
      * 设置重置密码 Token
      *
      * @param email
@@ -70,7 +99,11 @@ public class RedisManager {
     public boolean validResetPasswordToken(@NonNull String email, @NonNull String validToken) {
         ValueOperations<String, String> opsForValue = template.opsForValue();
         final String token = opsForValue.get(email);
-        return validToken.equals(token);
+        if (LangUtils.equals(token, validToken)) {
+            template.delete(email);
+            return true;
+        }
+        return false;
     }
 
     private String deserialize(Object object) {

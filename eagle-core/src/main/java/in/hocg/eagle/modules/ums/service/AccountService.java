@@ -94,4 +94,5 @@ public interface AccountService extends AbstractService<Account> {
 
     void changePassword(ChangePasswordQo qo);
 
+    void signUp(AccountSignUpQo qo);
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
+import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
 import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,6 +25,8 @@ public class WxMaterialComplexVo {
     private String appid;
     @ApiModelProperty("素材类型, 0->图片; 1->语音; 2->视频; 3->缩略图; 4->图文")
     private Integer materialType;
+    @Named(idFor = "materialType", type = NamedType.DataDict, args = {WxMaterialType.KEY})
+    private String materialTypeName;
     @ApiModelProperty("素材上传后获得")
     private Object materialResult;
     @ApiModelProperty("素材内容")

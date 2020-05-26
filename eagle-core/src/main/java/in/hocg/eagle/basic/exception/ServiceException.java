@@ -1,6 +1,7 @@
 package in.hocg.eagle.basic.exception;
 
 import in.hocg.eagle.basic.result.ResultCode;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.string.TextBlock;
 import lombok.Getter;
 
@@ -18,14 +19,21 @@ public class ServiceException extends RuntimeException {
         super(message);
         this.code = code;
     }
+    public static ServiceException wrap(Exception e) {
+        return wrap(e.getMessage());
+    }
+
+    public static ServiceException wrap(String message) {
+        return wrap(message, new Object[]{});
+    }
 
     public static ServiceException wrap(String message, Object... args) {
         final int code = ResultCode.SERVICE_ERROR.getCode();
-        return new ServiceException(code, TextBlock.format(message, args));
+        return wrap(code, message, args);
     }
 
     public static ServiceException wrap(int code, String message, Object... args) {
-        return new ServiceException(code, TextBlock.format(message, args));
+        return new ServiceException(code, TextBlock.format(LangUtils.getOrDefault(message, ResultCode.SERVICE_ERROR.getMessage()), args));
     }
 
 }

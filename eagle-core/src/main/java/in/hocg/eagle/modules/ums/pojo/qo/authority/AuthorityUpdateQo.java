@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.ums.pojo.qo.authority;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.PatternConstant;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,7 +31,7 @@ public class AuthorityUpdateQo extends IdQo {
     private String authorityCode;
 
     @ApiModelProperty("启用状态")
-    @RangeEnum(enumClass = Enabled.class)
+    @EnumRange(enumClass = Enabled.class)
     private Integer enabled;
 
     @ApiModelProperty("排序")

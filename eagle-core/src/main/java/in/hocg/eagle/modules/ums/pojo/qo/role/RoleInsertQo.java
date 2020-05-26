@@ -5,7 +5,7 @@ import in.hocg.eagle.basic.constant.PatternConstant;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.Platform;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,11 +34,11 @@ public class RoleInsertQo extends BaseQo {
     @ApiModelProperty("角色描述")
     private String remark;
     @NotNull(message = "启用状态不能为空")
-    @RangeEnum(enumClass = Enabled.class)
+    @EnumRange(enumClass = Enabled.class)
     @ApiModelProperty("启用状态[0:为禁用状态;1:为正常状态]")
     private Integer enabled;
     @NotNull(message = "平台不能为空")
-    @RangeEnum(enumClass = Platform.class)
+    @EnumRange(enumClass = Platform.class)
     @ApiModelProperty("平台")
     private Integer platform;
     @ApiModelProperty("权限列表")

@@ -4,7 +4,7 @@ import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.PatternConstant;
 import in.hocg.eagle.basic.constant.datadict.Platform;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,7 +38,7 @@ public class AuthorityInsertQo extends BaseQo {
 
     @NotNull(message = "启用状态")
     @ApiModelProperty("启用状态")
-    @RangeEnum(enumClass = Enabled.class)
+    @EnumRange(enumClass = Enabled.class)
     private Integer enabled;
 
     @ApiModelProperty("排序")
@@ -48,7 +48,7 @@ public class AuthorityInsertQo extends BaseQo {
     private Long parentId;
 
     @NotNull(message = "平台不能为空")
-    @RangeEnum(enumClass = Platform.class)
+    @EnumRange(enumClass = Platform.class)
     @ApiModelProperty("平台")
     private Integer platform;
 

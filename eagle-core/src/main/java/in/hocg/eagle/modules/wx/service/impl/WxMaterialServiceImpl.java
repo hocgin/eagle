@@ -48,20 +48,18 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void uploadVoice(WxMaterialUploadFileQo qo) {
+    public void uploadVoice(WxMaterialUploadVoiceQo qo) {
         final String appid = qo.getAppid();
-        final Integer materialType = qo.getMaterialType();
         final String url = qo.getUrl();
-        this.uploadFile(appid, materialType, url);
+        this.uploadFile(appid, WxMaterialType.Voice.getCode(), url);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void uploadImage(WxMaterialUploadFileQo qo) {
+    public void uploadImage(WxMaterialUploadImageQo qo) {
         final String appid = qo.getAppid();
-        final Integer materialType = qo.getMaterialType();
         final String url = qo.getUrl();
-        this.uploadFile(appid, materialType, url);
+        this.uploadFile(appid, WxMaterialType.Image.getCode(), url);
     }
 
     @Override
@@ -225,7 +223,8 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
             file = FileUtils.toFile(new URL(url));
             result = wxMpManager.uploadMaterialFile(appid, mediaFileType, file);
         } catch (IOException e) {
-            ValidUtils.fail(e);
+            e.printStackTrace();
+            ValidUtils.fail(e.getMessage());
         }
 
         final WxMaterial entity = new WxMaterial();

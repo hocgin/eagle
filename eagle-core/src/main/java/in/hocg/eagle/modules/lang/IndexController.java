@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules;
+package in.hocg.eagle.modules.lang;
 
 
 import com.wf.captcha.GifCaptcha;
@@ -6,8 +6,11 @@ import com.wf.captcha.utils.CaptchaUtil;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.cache.CacheKeys;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
-import in.hocg.eagle.modules.com.service.ShortUrlService;
+import in.hocg.eagle.modules.lang.pojo.SendSmsCode;
+import in.hocg.eagle.modules.lang.service.IndexService;
+import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSignUpQo;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +19,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +42,23 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping
 public class IndexController {
-    private final ShortUrlService shortUrlService;
+    private final IndexService service;
+
+    @UseLogger("注册账号")
+    @PostMapping("/sign-up")
+    @ResponseBody
+    public Result<Void> signUp(@Validated @RequestBody AccountSignUpQo qo) {
+        service.signUp(qo);
+        return Result.success();
+    }
+
+    @UseLogger("发送验证码")
+    @PostMapping("/sms-code")
+    @ResponseBody
+    public Result<Void> sendSmsCode(@Validated @RequestBody SendSmsCode qo) {
+        service.sendSmsCode(qo);
+        return Result.success();
+    }
 
     @Cacheable(value = CacheKeys.DEMO)
     @GetMapping
@@ -64,7 +81,7 @@ public class IndexController {
     @UseLogger("转发 - 短链接")
     @GetMapping("/s/{code}")
     public ResponseEntity<Void> shortUrl(@PathVariable String code) {
-        final Optional<ShortUrl> shortUrlOpt = shortUrlService.selectOneByCode(code);
+        final Optional<ShortUrl> shortUrlOpt = service.selectOneByCode(code);
         if (!shortUrlOpt.isPresent() || !LangUtils.equals(Enabled.On.getCode(), shortUrlOpt.get().getEnabled())) {
             return ResponseEntity.notFound().build();
         }

@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.crm.pojo.qo.comment;
 
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +23,6 @@ public class CommentPutQo extends IdQo {
     private String content;
 
     @ApiModelProperty("启用状态")
-    @RangeEnum(enumClass = Enabled.class)
+    @EnumRange(enumClass = Enabled.class)
     private Integer enabled;
 }

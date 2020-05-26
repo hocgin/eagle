@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.wx.pojo.qo;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
 import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,6 +35,6 @@ public class WxMpConfigSaveQo extends BaseQo {
     @ApiModelProperty("消息加解密密钥(EncodingAESKey)")
     private String aesKey;
     @ApiModelProperty("启用状态")
-    @RangeEnum(enumClass = Enabled.class)
+    @EnumRange(enumClass = Enabled.class)
     private Integer enabled;
 }

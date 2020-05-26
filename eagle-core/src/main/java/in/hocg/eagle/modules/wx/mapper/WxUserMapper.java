@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import in.hocg.eagle.modules.wx.entity.WxUser;
 import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserPagingQo;
+import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserSearchQo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -20,4 +23,6 @@ import org.apache.ibatis.annotations.Param;
 public interface WxUserMapper extends BaseMapper<WxUser> {
 
     IPage<WxUser> paging(@Param("qo") WxMpUserPagingQo qo, @Param("page") Page page);
+
+    List<WxUser> complete(@Param("qo") WxMpUserSearchQo qo);
 }

@@ -4,17 +4,23 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.modules.wx.entity.WxUser;
+import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxUserMapper;
 import in.hocg.eagle.modules.wx.mapstruct.WxUserMapping;
 import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserPagingQo;
+import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserRefreshQo;
+import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserSearchQo;
 import in.hocg.eagle.modules.wx.pojo.vo.user.WxMpUserComplexVo;
 import in.hocg.eagle.modules.wx.service.WxUserService;
+import in.hocg.eagle.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,6 +35,17 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class WxUserServiceImpl extends AbstractServiceImpl<WxUserMapper, WxUser> implements WxUserService {
     private final WxUserMapping mapping;
+    private final WxMpManager wxMpManager;
+
+    @Async
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void refresh(WxMpUserRefreshQo qo) {
+        final String appid = qo.getAppid();
+        wxMpManager.getWxUserList(appid, null,
+            openId -> wxMpManager.getWxUser(appid, openId).ifPresent(this::saveOrUpdate)
+        );
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -69,6 +86,11 @@ public class WxUserServiceImpl extends AbstractServiceImpl<WxUserMapper, WxUser>
         final Long id = qo.getId();
         final WxUser entity = getById(id);
         return this.convertComplex(entity);
+    }
+
+    @Override
+    public List<WxMpUserComplexVo> complete(WxMpUserSearchQo qo) {
+        return LangUtils.toList(baseMapper.complete(qo), this::convertComplex);
     }
 
     private WxMpUserComplexVo convertComplex(WxUser entity) {

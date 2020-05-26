@@ -6,6 +6,7 @@ import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.IntEnum;
 import in.hocg.eagle.basic.constant.datadict.wx.WxMenuType;
 import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.basic.security.SecurityContext;
 import in.hocg.eagle.modules.wx.entity.WxMenu;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxMenuMapper;
@@ -19,6 +20,7 @@ import in.hocg.eagle.modules.wx.service.WxMpConfigService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.string.JsonUtils;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
@@ -70,6 +72,8 @@ public class WxMenuServiceImpl extends AbstractServiceImpl<WxMenuMapper, WxMenu>
         final LocalDateTime requestDateTime = qo.getCreatedAt();
         final Long userId = qo.getUserId();
         WxMenu entity = mapping.asWxMenu(qo);
+        entity.setButton(LangUtils.callIfNotNull(qo.getButton(), JsonUtils::toJSONString).orElse(null));
+        entity.setMatchRule(LangUtils.callIfNotNull(qo.getMatchRule(), JsonUtils::toJSONString).orElse(null));
         entity.setLastUpdatedAt(requestDateTime);
         entity.setLastUpdater(userId);
         validInsertOrUpdate(entity);
@@ -83,6 +87,7 @@ public class WxMenuServiceImpl extends AbstractServiceImpl<WxMenuMapper, WxMenu>
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public WxMenuComplexVo selectOne(Long id) {
         final WxMenu entity = getById(id);
         ValidUtils.notNull(entity, "菜单不存在");
@@ -90,8 +95,9 @@ public class WxMenuServiceImpl extends AbstractServiceImpl<WxMenuMapper, WxMenu>
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void sync(Long id) {
-        throw ServiceException.wrap("未实现该方法");
+        autoSyncMenu(id);
     }
 
     @Override
@@ -117,43 +123,50 @@ public class WxMenuServiceImpl extends AbstractServiceImpl<WxMenuMapper, WxMenu>
      */
     private void autoSyncMenu(Long id) {
         final WxMenu entity = getById(id);
+        final LocalDateTime now = LocalDateTime.now();
+        final Long userId = SecurityContext.getCurrentUserId();
 
+        final WxMenu updated = new WxMenu();
+        updated.setId(id);
+        updated.setUploadedAt(now);
+        updated.setUploader(userId);
         // 如果是(启用状态 && 通用菜单)
         if (LangUtils.equals(entity.getEnabled(), Enabled.On.getCode())
             && LangUtils.equals(entity.getMenuType(), WxMenuType.General.getCode())) {
             wxMpManager.setWxGeneralMenu(entity);
-            return;
+            updated.setEnabled(Enabled.On.getCode());
         }
-
         // 如果是(启用状态 && 个性化菜单)
-        if (LangUtils.equals(entity.getEnabled(), Enabled.On.getCode())
-            && LangUtils.equals(entity.getMenuType(), WxMenuType.Individuation.getCode())) {
-            wxMpManager.setWxIndividuationMenu(entity);
-            // 删除该 menuid 菜单
-            // 设置 menu id 为空
-            // 设置新的menu id
-            return;
-        }
-
-        // 如果是(禁用状态 && 通用菜单)
-        if (LangUtils.equals(entity.getEnabled(), Enabled.Off.getCode())
-            && LangUtils.equals(entity.getMenuType(), WxMenuType.General.getCode())) {
-            wxMpManager.removeWxGeneralMenu(entity);
-            // 更新所有该 appid 的菜单为禁用
-            return;
-        }
-
-        // 如果是(禁用状态 && 个性化菜单)
-        if (LangUtils.equals(entity.getEnabled(), Enabled.Off.getCode())
+        else if (LangUtils.equals(entity.getEnabled(), Enabled.On.getCode())
             && LangUtils.equals(entity.getMenuType(), WxMenuType.Individuation.getCode())) {
             wxMpManager.removeWxIndividuationMenu(entity);
-            // 删除该 menuid 菜单
-            // 设置 menu id 为空
-            // 设置启用状态为禁用
+            final String menuId = wxMpManager.setWxIndividuationMenu(entity);
+            updated.setEnabled(Enabled.On.getCode());
+            updated.setMenuId(menuId);
+        }
+        // 如果是(禁用状态 && 通用菜单)
+        else if (LangUtils.equals(entity.getEnabled(), Enabled.Off.getCode())
+            && LangUtils.equals(entity.getMenuType(), WxMenuType.General.getCode())) {
+            this.updateEnabledByAppId(entity.getAppid(), Enabled.Off);
+            wxMpManager.removeWxGeneralMenu(entity);
             return;
         }
+        // 如果是(禁用状态 && 个性化菜单)
+        else if (LangUtils.equals(entity.getEnabled(), Enabled.Off.getCode())
+            && LangUtils.equals(entity.getMenuType(), WxMenuType.Individuation.getCode())) {
+            updated.setEnabled(Enabled.Off.getCode());
+            wxMpManager.removeWxIndividuationMenu(entity);
+        } else {
+            throw ServiceException.wrap("数据错误");
+        }
+        baseMapper.updateById(entity);
+    }
 
-        throw ServiceException.wrap("数据错误");
+    private void updateEnabledByAppId(@NonNull String appid, Enabled enabled) {
+        lambdaUpdate().set(WxMenu::getEnabled, enabled.getCode())
+            .set(WxMenu::getUploadedAt, LocalDateTime.now())
+            .set(WxMenu::getUploader, SecurityContext.getCurrentUserId())
+            .eq(WxMenu::getAppid, appid).update();
     }
 
 }

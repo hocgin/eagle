@@ -5,6 +5,7 @@ import in.hocg.eagle.utils.LangUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.Objects;
 
 /**
  * Created by hocgin on 2020/2/16.
@@ -12,16 +13,20 @@ import javax.validation.ConstraintValidatorContext;
  *
  * @author hocgin
  */
-public class RangeEnumValidator implements ConstraintValidator<RangeEnum, Integer> {
+public class EnumRangeValidator implements ConstraintValidator<EnumRange, Integer> {
     private Class<? extends Enum>[] enumClass;
-    
+
     @Override
-    public void initialize(RangeEnum constraintAnnotation) {
+    public void initialize(EnumRange constraintAnnotation) {
         enumClass = constraintAnnotation.enumClass();
     }
-    
+
     @Override
     public boolean isValid(Integer id, ConstraintValidatorContext context) {
+        if (Objects.isNull(id)) {
+            return true;
+        }
+
         IntEnum intEnum;
         for (Class<? extends Enum> aClass : enumClass) {
             if (IntEnum.class.isAssignableFrom(aClass)) {

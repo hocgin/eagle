@@ -3,13 +3,13 @@ CREATE TABLE `ums_account`
 (
     `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `nickname`        VARCHAR(10)         NOT NULL
+    `nickname`        VARCHAR(16)         NOT NULL
         COMMENT '昵称;显示使用',
     `username`        VARCHAR(20)         NOT NULL UNIQUE
         COMMENT '用户名;唯一,登录使用',
     `email`           VARCHAR(20) UNIQUE
         COMMENT '邮箱;唯一,登录使用',
-    `phone`           VARCHAR(20) UNIQUE
+    `phone`           VARCHAR(20)         NOT NULL UNIQUE
         COMMENT '手机号码;唯一,登录使用',
     `password`        VARCHAR(100)        NOT NULL
         COMMENT '密码',
@@ -28,7 +28,7 @@ CREATE TABLE `ums_account`
     --
     `created_at`      DATETIME(6)         NOT NULL
         COMMENT '创建时间',
-    `creator`         BIGINT              NOT NULL
+    `creator`         BIGINT
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
@@ -392,6 +392,21 @@ INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `
 INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
                           `creator`)
     VALUE (33, '微信素材', 1, 'wx:mp-material', 0, 29, '/29/33', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (34, '消息模版', 1, 'wx:mp-message-template', 0, 29, '/29/34', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (35, '回复规则', 1, 'wx:mp-reply-rule', 0, 29, '/29/35', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (36, '用户标签', 1, 'wx:mp-user-tags', 0, 29, '/29/36', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (37, '二维码', 1, 'wx:mp-qrcode', 0, 29, '/29/37', NOW(), 1);
+INSERT INTO ums_authority(`id`, `title`, `type`, `authority_code`, `platform`, `parent_id`, `tree_path`, `created_at`,
+                          `creator`)
+    VALUE (38, '短链接', 1, 'wx:mp-short-url', 0, 29, '/29/38', NOW(), 1);
 
 
 # 角色
@@ -436,7 +451,12 @@ VALUES (1, 1),
        (1, 30),
        (1, 31),
        (1, 32),
-       (1, 33);
+       (1, 33),
+       (1, 34),
+       (1, 35),
+       (1, 36),
+       (1, 37),
+       (1, 38);
 
 # 赋予账号角色
 INSERT INTO ums_role_account(`role_id`, `account_id`)

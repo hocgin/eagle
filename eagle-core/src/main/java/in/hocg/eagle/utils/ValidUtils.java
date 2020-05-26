@@ -5,8 +5,6 @@ import in.hocg.eagle.basic.result.ResultCode;
 import io.jsonwebtoken.lang.Assert;
 import lombok.experimental.UtilityClass;
 
-import java.io.IOException;
-
 /**
  * Created by hocgin on 2020/2/15.
  * email: hocgin@gmail.com
@@ -65,10 +63,10 @@ public class ValidUtils {
     }
 
     public void fail(String message) {
-        throw ServiceException.wrap(message);
+        throw ServiceException.wrap(LangUtils.getOrDefault(message, ResultCode.SERVICE_ERROR.getMessage()));
     }
 
-    public void fail(IOException e) {
+    public void fail(Exception e) {
         fail(e.getMessage());
     }
 }

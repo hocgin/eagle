@@ -24,6 +24,7 @@ import java.util.List;
 @InjectNamed
 public class WxMenuComplexVo {
     private Long id;
+    private String title;
     @ApiModelProperty("APP ID")
     private String appid;
     @ApiModelProperty("上传个性化菜单后的 menu_id (仅菜单类型为: 个性化菜单)")
@@ -63,7 +64,7 @@ public class WxMenuComplexVo {
         private String mediaId;
         private String appid;
         private String pagepath;
-        private List<Button.SubButton> subButton = Collections.emptyList();
+        private List<Button.SubButton> subButtons = Collections.emptyList();
 
         @Data
         public static class SubButton {

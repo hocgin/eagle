@@ -6,7 +6,7 @@ import in.hocg.eagle.basic.constant.datadict.GroupMemberSource;
 import in.hocg.eagle.basic.pojo.qo.Insert;
 import in.hocg.eagle.basic.pojo.qo.PageQo;
 import in.hocg.eagle.basic.pojo.qo.Update;
-import in.hocg.eagle.basic.valid.RangeEnum;
+import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,10 +35,10 @@ public class AccountGroupPageQo extends PageQo {
     @NotBlank(groups = {Insert.class}, message = "描述不能为空")
     private String remark;
     @ApiModelProperty("分组类型, 如: 通用")
-    @RangeEnum(groups = {Insert.class, Update.class}, enumClass = AccountGroupType.class)
+    @EnumRange(groups = {Insert.class, Update.class}, enumClass = AccountGroupType.class)
     private Integer groupType;
     @ApiModelProperty("成员来源: 0->所有, 1->自定义组员列表")
-    @RangeEnum(groups = {Insert.class, Update.class}, enumClass = GroupMemberSource.class)
+    @EnumRange(groups = {Insert.class, Update.class}, enumClass = GroupMemberSource.class)
     private Integer memberSource;
     @ApiModelProperty("群成员")
     private List<Long> members = Lists.newArrayList();

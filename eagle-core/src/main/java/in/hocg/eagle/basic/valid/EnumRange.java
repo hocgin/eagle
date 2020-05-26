@@ -17,15 +17,15 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  */
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = RangeEnumValidator.class)
+@Constraint(validatedBy = EnumRangeValidator.class)
 @Documented
-public @interface RangeEnum {
-    
+public @interface EnumRange {
+
     String message() default "参数错误";
-    
+
     Class<? extends Enum>[] enumClass() default {};
-    
+
     Class<?>[] groups() default {};
-    
+
     Class<? extends Payload>[] payload() default {};
 }

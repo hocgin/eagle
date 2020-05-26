@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.eagle.modules.wx.mapper.WxMpReplyRuleMapper">
+
+  <select id="paging" resultType="in.hocg.eagle.modules.wx.entity.WxMpReplyRule">
+    SELECT wmrr.*
+    FROM wx_mp_reply_rule wmrr
+    <where>
+      <if test="qo.appid != null">
+        AND wmrr.appid = #{qo.appid}
+      </if>
+    </where>
+  </select>
+  <select id="selectListByAppidAndMatchMsgTypeAndEnabled"
+          resultType="in.hocg.eagle.modules.wx.entity.WxMpReplyRule">
+    SELECT wmrr.*
+    FROM wx_mp_reply_rule wmrr
+    <where>
+      <if test="appid">
+        AND wmrr.appid = #{appid}
+      </if>
+      <if test="enabled">
+        AND wmrr.enabled = #{enabled}
+      </if>
+      <if test="enabled">
+        AND wmrr.match_msg_type = #{matchMsgType}
+      </if>
+    </where>
+    ORDER BY wmrr.sort DESC
+  </select>
+</mapper>
