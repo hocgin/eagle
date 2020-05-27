@@ -10,6 +10,7 @@ import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.entity.Role;
+import lombok.NonNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,8 @@ public interface AccountService extends AbstractService<Account> {
      * @return
      */
     Optional<Account> selectOneByUsername(String username);
+
+    Optional<Account> selectOneByPhone(String phone);
 
     /**
      * 授权角色
@@ -94,5 +97,7 @@ public interface AccountService extends AbstractService<Account> {
 
     void changePassword(ChangePasswordQo qo);
 
-    void signUp(AccountSignUpQo qo);
+    void changePassword(@NonNull Long id, @NonNull String newPassword);
+
+    String signUp(AccountSignUpQo qo);
 }

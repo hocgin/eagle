@@ -11,7 +11,9 @@ import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.lang.pojo.SendSmsCode;
 import in.hocg.eagle.modules.lang.service.IndexService;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSignUpQo;
+import in.hocg.eagle.modules.ums.pojo.qo.account.ChangePasswordUseSmsCodeQo;
 import in.hocg.eagle.utils.LangUtils;
+import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -45,15 +47,22 @@ public class IndexController {
     private final IndexService service;
 
     @UseLogger("注册账号")
-    @PostMapping("/sign-up")
+    @PostMapping("/api/sign-up")
     @ResponseBody
-    public Result<Void> signUp(@Validated @RequestBody AccountSignUpQo qo) {
-        service.signUp(qo);
-        return Result.success();
+    public Result<String> signUp(@Validated @RequestBody AccountSignUpQo qo) {
+        return Result.success(service.signUp(qo));
+    }
+
+    @UseLogger("更改密码:验证码")
+    @PostMapping("/api/change-password:sms-code")
+    @ResponseBody
+    public Result<String> changePasswordUseSmsCode(@Validated @RequestBody ChangePasswordUseSmsCodeQo qo) {
+        ValidUtils.isTrue(LangUtils.equals(qo.getPassword(), qo.getConfirmPassword()), "确认密码不一致");
+        return Result.success(service.changePasswordUsePhone(qo));
     }
 
     @UseLogger("发送验证码")
-    @PostMapping("/sms-code")
+    @PostMapping("/api/sms-code")
     @ResponseBody
     public Result<Void> sendSmsCode(@Validated @RequestBody SendSmsCode qo) {
         service.sendSmsCode(qo);

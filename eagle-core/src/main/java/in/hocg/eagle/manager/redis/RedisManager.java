@@ -1,4 +1,4 @@
-package in.hocg.eagle.manager;
+package in.hocg.eagle.manager.redis;
 
 import com.alibaba.fastjson.JSON;
 import in.hocg.eagle.manager.dto.IpAndAddressDto;
@@ -46,34 +46,6 @@ public class RedisManager {
     public void setIpAndAddress(String ip, IpAndAddressDto dto) {
         final ValueOperations<String, String> opsForValue = template.opsForValue();
         opsForValue.set(ip, deserialize(dto), 30, TimeUnit.DAYS);
-    }
-
-    /**
-     * 验证短信验证码
-     *
-     * @param phone
-     * @param smsCode
-     * @return
-     */
-    public boolean validSmsCode(@NonNull String phone, @NonNull String smsCode) {
-        ValueOperations<String, String> opsForValue = template.opsForValue();
-        if (LangUtils.equals(opsForValue.get(phone), smsCode)) {
-            template.delete(phone);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 设置短信验证码
-     *
-     * @param phone
-     * @param smsCode
-     */
-    public void setSmsCode(@NonNull String phone, @NonNull String smsCode) {
-        ValueOperations<String, String> opsForValue = template.opsForValue();
-        opsForValue.set(phone, smsCode, 5, TimeUnit.MINUTES);
-        log.debug("验证码设置[手机号码: {}, Token: {}]", phone, smsCode);
     }
 
     /**
@@ -129,5 +101,46 @@ public class RedisManager {
             return Optional.of(Long.parseLong(userId));
         }
         return Optional.empty();
+    }
+
+    /**
+     * 是否存在未过期的验证码
+     *
+     * @param phone
+     * @return
+     */
+    public Boolean exitsSmsCode(@NonNull String phone) {
+        final String smsKey = RedisConstants.getSmsKey(phone);
+        return template.hasKey(smsKey);
+    }
+
+    /**
+     * 验证短信验证码
+     *
+     * @param phone
+     * @param smsCode
+     * @return
+     */
+    public boolean validSmsCode(@NonNull String phone, @NonNull String smsCode) {
+        ValueOperations<String, String> opsForValue = template.opsForValue();
+        final String smsKey = RedisConstants.getSmsKey(phone);
+        if (LangUtils.equals(opsForValue.get(smsKey), smsCode)) {
+            template.delete(smsKey);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 设置短信验证码
+     *
+     * @param phone
+     * @param smsCode
+     */
+    public void setSmsCode(@NonNull String phone, @NonNull String smsCode) {
+        ValueOperations<String, String> opsForValue = template.opsForValue();
+        final String smsKey = RedisConstants.getSmsKey(phone);
+        opsForValue.set(smsKey, smsCode, 5, TimeUnit.MINUTES);
+        log.debug("验证码设置[手机号码: {}, Token: {}]", phone, smsCode);
     }
 }

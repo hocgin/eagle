@@ -1,18 +1,23 @@
 package in.hocg.eagle.modules.lang.service.impl;
 
-import in.hocg.eagle.manager.RedisManager;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.basic.security.authentication.token.TokenUtility;
 import in.hocg.eagle.manager.SmsManager;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.com.service.ShortUrlService;
 import in.hocg.eagle.modules.lang.pojo.SendSmsCode;
 import in.hocg.eagle.modules.lang.service.IndexService;
+import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSignUpQo;
+import in.hocg.eagle.modules.ums.pojo.qo.account.ChangePasswordUseSmsCodeQo;
 import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -28,12 +33,11 @@ import java.util.Optional;
 public class IndexServiceImpl implements IndexService {
     private final ShortUrlService shortUrlService;
     private final AccountService accountService;
-    private final RedisManager redisManager;
     private final SmsManager smsManager;
 
     @Override
-    public void signUp(AccountSignUpQo qo) {
-        accountService.signUp(qo);
+    public String signUp(AccountSignUpQo qo) {
+        return accountService.signUp(qo);
     }
 
     @Override
@@ -41,11 +45,32 @@ public class IndexServiceImpl implements IndexService {
         final String phone = qo.getPhone();
         String smsCode = String.valueOf(LangUtils.getIntRandomCode(4));
         smsManager.sendSmsCode(phone, smsCode);
-        redisManager.setSmsCode(phone, smsCode);
     }
 
     @Override
     public Optional<ShortUrl> selectOneByCode(String code) {
         return shortUrlService.selectOneByCode(code);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public String changePasswordUsePhone(ChangePasswordUseSmsCodeQo qo) {
+        final String phone = qo.getPhone();
+        final String smsCode = qo.getSmsCode();
+        final String password = qo.getPassword();
+        if (!smsManager.validSmsCode(phone, smsCode)) {
+            throw ServiceException.wrap("验证码错误");
+        }
+        final Optional<Account> accountOpt = accountService.selectOneByPhone(phone);
+        if (!accountOpt.isPresent()) {
+            throw ServiceException.wrap("找不到账号");
+        }
+        final Account account = accountOpt.get();
+        if (!LangUtils.equals(Enabled.On.getCode(), account.getEnabled())) {
+            throw ServiceException.wrap("账号被禁用了");
+        }
+
+        accountService.changePassword(account.getId(), password);
+        return TokenUtility.encode(account.getUsername());
     }
 }

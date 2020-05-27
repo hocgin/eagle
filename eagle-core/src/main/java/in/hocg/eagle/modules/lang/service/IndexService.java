@@ -3,6 +3,7 @@ package in.hocg.eagle.modules.lang.service;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.lang.pojo.SendSmsCode;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSignUpQo;
+import in.hocg.eagle.modules.ums.pojo.qo.account.ChangePasswordUseSmsCodeQo;
 
 import java.util.Optional;
 
@@ -14,9 +15,11 @@ import java.util.Optional;
  */
 public interface IndexService {
 
-    void signUp(AccountSignUpQo qo);
+    String signUp(AccountSignUpQo qo);
 
     void sendSmsCode(SendSmsCode qo);
 
     Optional<ShortUrl> selectOneByCode(String code);
+
+    String changePasswordUsePhone(ChangePasswordUseSmsCodeQo qo);
 }

@@ -5,6 +5,7 @@ import in.hocg.eagle.basic.env.Env;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.manager.dto.AMapDistrictResultDto;
 import in.hocg.eagle.manager.dto.IpAndAddressDto;
+import in.hocg.eagle.manager.redis.RedisManager;
 import in.hocg.eagle.modules.com.pojo.qo.district.AMapDistrictDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
