@@ -3,7 +3,7 @@ package in.hocg.eagle.basic.security.social;
 import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.security.User;
 import in.hocg.eagle.basic.security.authentication.token.TokenUtility;
-import in.hocg.eagle.manager.RedisManager;
+import in.hocg.eagle.manager.redis.RedisManager;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

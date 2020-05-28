@@ -1,7 +1,7 @@
 package in.hocg.eagle.basic.security.social;
 
 import in.hocg.eagle.basic.SpringContext;
-import in.hocg.eagle.manager.RedisManager;
+import in.hocg.eagle.manager.redis.RedisManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;

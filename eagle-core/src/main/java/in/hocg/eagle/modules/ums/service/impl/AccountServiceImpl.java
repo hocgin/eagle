@@ -12,9 +12,11 @@ import in.hocg.eagle.basic.datastruct.tree.Tree;
 import in.hocg.eagle.basic.env.Env;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.lang.Avatars;
+import in.hocg.eagle.basic.security.authentication.token.TokenUtility;
 import in.hocg.eagle.manager.MailManager;
 import in.hocg.eagle.manager.OssManager;
-import in.hocg.eagle.manager.RedisManager;
+import in.hocg.eagle.manager.SmsManager;
+import in.hocg.eagle.manager.redis.RedisManager;
 import in.hocg.eagle.mapstruct.AccountMapping;
 import in.hocg.eagle.mapstruct.AuthorityMapping;
 import in.hocg.eagle.mapstruct.RoleMapping;
@@ -33,6 +35,7 @@ import in.hocg.eagle.modules.ums.service.RoleAuthorityService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.web.RequestUtils;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -71,6 +74,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     private final AuthorityMapping authorityMapping;
     private final PasswordEncoder passwordEncoder;
     private final OssManager ossManager;
+    private final SmsManager smsManager;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -104,7 +108,8 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         return lambdaQuery().eq(Account::getEmail, email).oneOpt();
     }
 
-    private Optional<Account> selectOneByPhone(String phone) {
+    @Override
+    public Optional<Account> selectOneByPhone(String phone) {
         return lambdaQuery().eq(Account::getPhone, phone).oneOpt();
     }
 
@@ -207,12 +212,21 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void signUp(AccountSignUpQo qo) {
+    public void changePassword(@NonNull Long id, @NonNull String newPassword) {
+        final Account update = new Account();
+        update.setId(id);
+        update.setPassword(passwordEncoder.encode(newPassword));
+        validUpdateById(update);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public String signUp(AccountSignUpQo qo) {
         final LocalDateTime createdAt = qo.getCreatedAt();
         final String phone = qo.getPhone();
         final String smsCode = qo.getSmsCode();
         final String nickname = LangUtils.getOrDefault(qo.getNickname(), phone);
-        if (!redisManager.validSmsCode(phone, smsCode)) {
+        if (!smsManager.validSmsCode(phone, smsCode)) {
             throw ServiceException.wrap("验证码错误");
         }
 
@@ -243,6 +257,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
             .setId(entityId)
             .setAvatar(ossManager.uploadToOss(file, file.getName()));
         this.validUpdateById(update);
+        return TokenUtility.encode(update.getUsername());
     }
 
     public void validResetPasswordToken(String email, String token) {

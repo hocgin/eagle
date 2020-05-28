@@ -21,6 +21,13 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
 aliyun:
   oss:
     endpoint: http://oss-cn-beijing.aliyuncs.com
@@ -29,7 +36,7 @@ aliyun:
 
 # EAGLE
 eagle:
-  hostname: http://127.0.0.1:8080
+  hostname: ${EAGLE_HOSTNAME}
   amap: ENC(773e44N8XZaDGUKtmj3btJztElbCAhWYNCkSRMhj/wUiYtPs5nKQ3/JsTg9LzCGF)
   ip138: ENC(qcTFZLAY+7tDV4gKQ7xcl3vXs/ypMFx/wBUE0zf15SUBLKqB7xu3FsVpwOIktiiE)
 
