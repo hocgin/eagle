@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.IsDefault;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.mapstruct.AccountAddressMapping;
+import in.hocg.eagle.modules.ums.mapstruct.AccountAddressMapping;
 import in.hocg.eagle.modules.ums.entity.AccountAddress;
 import in.hocg.eagle.modules.ums.mapper.AccountAddressMapper;
 import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressPageQo;

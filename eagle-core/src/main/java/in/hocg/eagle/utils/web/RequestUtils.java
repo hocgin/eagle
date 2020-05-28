@@ -22,7 +22,7 @@ public class RequestUtils {
      * @param request
      * @return
      */
-    public static String getClientIP(HttpServletRequest request) {
+    public String getClientIP(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
         if (Strings.isNotBlank(ip)
                 && !"unknown".equalsIgnoreCase(ip)) {
@@ -56,15 +56,15 @@ public class RequestUtils {
      * @param request
      * @return
      */
-    public static String getUserAgent(HttpServletRequest request) {
+    public String getUserAgent(HttpServletRequest request) {
         return request.getHeader("User-Agent");
     }
 
-    public static String getHost(HttpServletRequest request) {
+    public String getHost(HttpServletRequest request) {
         return request.getHeader("Host");
     }
 
-    public static boolean isAJAX(HttpServletRequest request) {
+    public boolean isAJAX(HttpServletRequest request) {
         return "XMLHttpRequest".equalsIgnoreCase(request.getHeader("X-Requested-With"));
     }
 }

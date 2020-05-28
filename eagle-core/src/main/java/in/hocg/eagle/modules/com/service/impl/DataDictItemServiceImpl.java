@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.com.service.impl;
 
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.pojo.qo.IdsQo;
-import in.hocg.eagle.mapstruct.DataDictItemMapping;
+import in.hocg.eagle.modules.com.mapstruct.DataDictItemMapping;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemInsertQo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemUpdateQo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemsBatchInsertQo;

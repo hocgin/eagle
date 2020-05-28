@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.wx.manager;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
+import in.hocg.eagle.basic.constant.datadict.WxMaterialType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.wx.entity.*;
 import in.hocg.eagle.modules.wx.mapstruct.WxMpMapping;

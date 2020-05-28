@@ -8,7 +8,7 @@ import in.hocg.eagle.basic.constant.datadict.OrderRefundApplyStatus;
 import in.hocg.eagle.basic.constant.datadict.OrderStatus;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.lang.SNCode;
-import in.hocg.eagle.mapstruct.OrderRefundApplyMapping;
+import in.hocg.eagle.modules.oms.mapstruct.OrderRefundApplyMapping;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.entity.OrderRefundApply;

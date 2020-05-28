@@ -23,7 +23,7 @@ public class ResponseUtils {
      * @param response
      * @return
      */
-    public static HttpServletResponse setUtf8(ServletResponse response) {
+    public HttpServletResponse setUtf8(ServletResponse response) {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.setContentType("text/html;charset=utf-8");
         httpServletResponse.setCharacterEncoding(StandardCharsets.UTF_8.name());

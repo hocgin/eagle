@@ -20,14 +20,14 @@ import java.util.StringJoiner;
 @UtilityClass
 public class GLog {
     ThreadLocal<List<String>> localLines = new ThreadLocal<>();
-    private static final int MIN_STACK_OFFSET = 3;
-    private static final int METHOD_OFFSET = 0;
+    private final int MIN_STACK_OFFSET = 3;
+    private final int METHOD_OFFSET = 0;
 
-    public static void addLog(String line) {
+    public void addLog(String line) {
         getOrCreate().add(process(line));
     }
 
-    public static String string() {
+    public String string() {
         StringJoiner stringJoiner = new StringJoiner("\n");
         for (String s : getOrCreate()) {
             stringJoiner.add(s);
@@ -35,11 +35,11 @@ public class GLog {
         return stringJoiner.toString();
     }
 
-    public static void print() {
+    public void print() {
         log.info(string());
     }
 
-    public static void clear() {
+    public void clear() {
         getOrCreate().clear();
     }
 

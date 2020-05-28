@@ -43,7 +43,7 @@ public class ClassUtils {
         }
     }
 
-    public static <T> T getObjectValue(Object fieldObject, Field field,
+    public <T> T getObjectValue(Object fieldObject, Field field,
                                        Object def) {
         return ((T) getFieldValue(fieldObject, field, def));
     }
@@ -72,7 +72,7 @@ public class ClassUtils {
      *
      * @return
      */
-    public static List<Method> getAllMethod(Class<?> clazz) {
+    public List<Method> getAllMethod(Class<?> clazz) {
         List<Method> result = Lists.newArrayList();
         result.addAll(Arrays.asList(clazz.getDeclaredMethods()));
         Class<?> superclass = clazz.getSuperclass();
@@ -89,7 +89,7 @@ public class ClassUtils {
      *
      * @return
      */
-    public static List<Field> getAllField(Class<?> clazz) {
+    public List<Field> getAllField(Class<?> clazz) {
         ArrayList<Field> result = Lists.newArrayList();
         result.addAll(Arrays.asList(clazz.getDeclaredFields()));
 
@@ -107,7 +107,7 @@ public class ClassUtils {
      * @param fieldName
      * @return
      */
-    public static Optional<Field> getField(Class<?> clazz, String fieldName) {
+    public Optional<Field> getField(Class<?> clazz, String fieldName) {
         Field field = null;
         try {
             field = clazz.getDeclaredField(fieldName);
@@ -127,7 +127,7 @@ public class ClassUtils {
      * @param methodName
      * @return
      */
-    public static Method getMethod(Class<?> clazz, String methodName) {
+    public Method getMethod(Class<?> clazz, String methodName) {
         Method[] methods = clazz.getMethods();
         for (Method method : methods) {
             if (method.getName().equals(methodName)) {
@@ -146,7 +146,7 @@ public class ClassUtils {
      * @param clazz
      * @return
      */
-    public static boolean isPrimitive(Class<?> clazz) {
+    public boolean isPrimitive(Class<?> clazz) {
         try {
             return ((Class<?>) clazz.getField("TYPE").get(null)).isPrimitive();
         } catch (IllegalAccessException | NoSuchFieldException e) {
@@ -160,7 +160,7 @@ public class ClassUtils {
      * @param clazz
      * @return
      */
-    public static boolean isBaseType(Class clazz) {
+    public boolean isBaseType(Class clazz) {
         return clazz.equals(Integer.class) ||
                 clazz.equals(Byte.class) ||
                 clazz.equals(Long.class) ||
@@ -177,7 +177,7 @@ public class ClassUtils {
      * @param clazz
      * @return
      */
-    public static boolean isArray(Class clazz) {
+    public boolean isArray(Class clazz) {
         return clazz.isArray();
     }
 
@@ -188,7 +188,7 @@ public class ClassUtils {
      * @param index
      * @return
      */
-    public static Class getGenericSuperclass(Class clazz, int index) {
+    public Class getGenericSuperclass(Class clazz, int index) {
         ParameterizedType pt = (ParameterizedType) clazz.getGenericSuperclass();
         return (Class) pt.getActualTypeArguments()[index];
     }

@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.wx.pojo.qo.reply;
 
-import in.hocg.eagle.basic.constant.datadict.wx.reply.WxMatchMsgType;
-import in.hocg.eagle.basic.constant.datadict.wx.reply.WxReplyMsgType;
+import in.hocg.eagle.basic.constant.datadict.WxMatchMsgType;
+import in.hocg.eagle.basic.constant.datadict.WxReplyMsgType;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
 import in.hocg.eagle.basic.pojo.qo.Insert;
 import in.hocg.eagle.basic.valid.EnumRange;

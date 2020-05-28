@@ -1,9 +1,8 @@
 package in.hocg.eagle.modules.mms.service;
 
-import in.hocg.eagle.mapstruct.dto.PublishNotifyDto;
-import in.hocg.eagle.modules.mms.entity.Notify;
 import in.hocg.eagle.basic.AbstractService;
-import org.springframework.transaction.annotation.Transactional;
+import in.hocg.eagle.modules.mms.entity.Notify;
+import in.hocg.eagle.modules.mms.pojo.dto.notify.PublishNotifyDto;
 
 /**
  * <p>

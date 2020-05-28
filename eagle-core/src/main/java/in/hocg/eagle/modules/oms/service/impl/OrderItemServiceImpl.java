@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.oms.service.impl;
 import com.alibaba.fastjson.JSON;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.pojo.KeyValue;
-import in.hocg.eagle.mapstruct.OrderItemMapping;
+import in.hocg.eagle.modules.oms.mapstruct.OrderItemMapping;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.entity.OrderRefundApply;
 import in.hocg.eagle.modules.oms.mapper.OrderItemMapper;

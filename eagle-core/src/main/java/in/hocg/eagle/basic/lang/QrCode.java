@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @UtilityClass
 public class QrCode {
-    private static final Map<EncodeHintType, Object> DEFAULT_HINTS = Maps.newHashMap();
+    private final Map<EncodeHintType, Object> DEFAULT_HINTS = Maps.newHashMap();
 
     static {
         // 字符编码
@@ -33,7 +33,7 @@ public class QrCode {
         DEFAULT_HINTS.put(EncodeHintType.MARGIN, 2);
     }
 
-    private static BufferedImage getQrCode(String content, int width, int height) {
+    private BufferedImage getQrCode(String content, int width, int height) {
         try {
             BitMatrix bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height, DEFAULT_HINTS);
             return MatrixToImageWriter.toBufferedImage(bitMatrix);

@@ -2,8 +2,8 @@ package in.hocg.eagle.basic.security;
 
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.constant.GlobalConstant;
-import in.hocg.eagle.mapstruct.AuthorityMapping;
-import in.hocg.eagle.mapstruct.RoleMapping;
+import in.hocg.eagle.modules.ums.mapstruct.AuthorityMapping;
+import in.hocg.eagle.modules.ums.mapstruct.RoleMapping;
 import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.entity.Role;

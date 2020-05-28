@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.IntEnum;
-import in.hocg.eagle.basic.constant.datadict.wx.WxMenuType;
+import in.hocg.eagle.basic.constant.datadict.WxMenuType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.security.SecurityContext;
 import in.hocg.eagle.modules.wx.entity.WxMenu;

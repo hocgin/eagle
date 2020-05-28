@@ -2,8 +2,8 @@ package in.hocg.eagle.modules.wx.support.handle;
 
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.IntEnum;
-import in.hocg.eagle.basic.constant.datadict.wx.reply.WxMatchMsgType;
-import in.hocg.eagle.basic.constant.datadict.wx.reply.WxReplyMsgType;
+import in.hocg.eagle.basic.constant.datadict.WxMatchMsgType;
+import in.hocg.eagle.basic.constant.datadict.WxReplyMsgType;
 import in.hocg.eagle.modules.wx.entity.WxMpReplyRule;
 import in.hocg.eagle.modules.wx.service.WxMpReplyRuleService;
 import lombok.RequiredArgsConstructor;

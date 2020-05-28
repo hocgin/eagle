@@ -6,7 +6,7 @@ import in.hocg.eagle.basic.constant.datadict.CartItemStatus;
 import in.hocg.eagle.basic.constant.datadict.DeleteStatus;
 import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.mapstruct.CartItemMapping;
+import in.hocg.eagle.modules.oms.mapstruct.CartItemMapping;
 import in.hocg.eagle.modules.oms.entity.CartItem;
 import in.hocg.eagle.modules.oms.mapper.CartItemMapper;
 import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemPagingQo;

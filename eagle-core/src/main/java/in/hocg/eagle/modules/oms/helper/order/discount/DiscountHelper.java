@@ -30,7 +30,7 @@ public class DiscountHelper {
      * @param vo
      * @return
      */
-    public static Coupon createCoupon(CouponAccountComplexVo vo) {
+    public Coupon createCoupon(CouponAccountComplexVo vo) {
         final Integer couponType = vo.getCouponType();
         if (LangUtils.equals(CouponType.Credit.getCode(), couponType)) {
             return createFixedAmountCoupon(vo);
@@ -46,7 +46,7 @@ public class DiscountHelper {
      * @param vo
      * @return
      */
-    private static FixedAmountCoupon createFixedAmountCoupon(CouponAccountComplexVo vo) {
+    private FixedAmountCoupon createFixedAmountCoupon(CouponAccountComplexVo vo) {
         final List<Long> canUseProductId = ((List<ProductComplexVo>) LangUtils.getOrDefault(vo.getCanUseProduct(), Lists.newArrayList())).parallelStream().map(ProductComplexVo::getId).collect(Collectors.toList());
         final List<Long> canUseProductCategoryId = ((List<ProductCategoryComplexVo>) LangUtils.getOrDefault(vo.getCanUseProductCategory(), Lists.newArrayList())).parallelStream().map(ProductCategoryComplexVo::getId).collect(Collectors.toList());
         return new FixedAmountCoupon(vo.getCredit())
@@ -67,7 +67,7 @@ public class DiscountHelper {
      * @param vo
      * @return
      */
-    private static FixedScaleCoupon createFixedScaleCoupon(CouponAccountComplexVo vo) {
+    private FixedScaleCoupon createFixedScaleCoupon(CouponAccountComplexVo vo) {
         final List<Long> canUseProductId = ((List<ProductComplexVo>) LangUtils.getOrDefault(vo.getCanUseProduct(), Lists.newArrayList())).parallelStream().map(ProductComplexVo::getId).collect(Collectors.toList());
         final List<Long> canUseProductCategoryId = ((List<ProductCategoryComplexVo>) LangUtils.getOrDefault(vo.getCanUseProductCategory(), Lists.newArrayList())).parallelStream().map(ProductCategoryComplexVo::getId).collect(Collectors.toList());
         return new FixedScaleCoupon(vo.getCredit(), vo.getCeiling())

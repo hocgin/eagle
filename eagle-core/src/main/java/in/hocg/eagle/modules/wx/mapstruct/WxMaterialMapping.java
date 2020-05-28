@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.mapstruct;
 
-import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
+import in.hocg.eagle.basic.constant.datadict.WxMaterialType;
 import in.hocg.eagle.modules.wx.entity.WxMaterial;
 import in.hocg.eagle.modules.wx.pojo.qo.material.WxMaterialUploadNewsQo;
 import in.hocg.eagle.modules.wx.pojo.vo.material.WxMaterialComplexVo;

@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.ums.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.mapstruct.AccountGroupMapping;
+import in.hocg.eagle.modules.ums.mapstruct.AccountGroupMapping;
 import in.hocg.eagle.modules.ums.entity.AccountGroup;
 import in.hocg.eagle.modules.ums.mapper.AccountGroupMapper;
 import in.hocg.eagle.modules.ums.pojo.qo.account.group.*;

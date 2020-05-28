@@ -6,7 +6,7 @@ import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.aspect.logger.Logger;
 import in.hocg.eagle.manager.LangManager;
 import in.hocg.eagle.manager.dto.IpAndAddressDto;
-import in.hocg.eagle.mapstruct.RequestLogMapping;
+import in.hocg.eagle.modules.com.mapstruct.RequestLogMapping;
 import in.hocg.eagle.modules.com.entity.RequestLog;
 import in.hocg.eagle.modules.com.mapper.RequestLogMapper;
 import in.hocg.eagle.modules.com.pojo.qo.requestlog.RequestLogPagingQo;

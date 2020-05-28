@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.com.service.impl;
 import in.hocg.eagle.basic.datastruct.tree.Tree;
 import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
 import in.hocg.eagle.manager.LangManager;
-import in.hocg.eagle.mapstruct.DistrictMapping;
+import in.hocg.eagle.modules.com.mapstruct.DistrictMapping;
 import in.hocg.eagle.modules.com.entity.District;
 import in.hocg.eagle.modules.com.mapper.DistrictMapper;
 import in.hocg.eagle.modules.com.pojo.qo.district.AMapDistrictDto;

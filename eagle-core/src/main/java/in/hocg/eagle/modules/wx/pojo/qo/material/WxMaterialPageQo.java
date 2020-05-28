@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.material;
 
-import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
+import in.hocg.eagle.basic.constant.datadict.WxMaterialType;
 import in.hocg.eagle.basic.pojo.qo.PageQo;
 import in.hocg.eagle.basic.valid.EnumRange;
 import lombok.Data;

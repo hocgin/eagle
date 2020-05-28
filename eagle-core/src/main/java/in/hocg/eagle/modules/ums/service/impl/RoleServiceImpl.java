@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.mapstruct.RoleMapping;
+import in.hocg.eagle.modules.ums.mapstruct.RoleMapping;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.GrantAuthorityQo;
 import in.hocg.eagle.modules.ums.pojo.qo.role.RoleInsertQo;
 import in.hocg.eagle.modules.ums.pojo.qo.role.RoleUpdateQo;

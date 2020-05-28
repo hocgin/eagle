@@ -5,7 +5,7 @@ import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.GroupMemberSource;
 import in.hocg.eagle.basic.constant.datadict.IntEnum;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.mapstruct.AccountGroupMemberMapping;
+import in.hocg.eagle.modules.ums.mapstruct.AccountGroupMemberMapping;
 import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.entity.AccountGroup;
 import in.hocg.eagle.modules.ums.entity.AccountGroupMember;

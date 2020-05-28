@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.mapstruct;
 
-import in.hocg.eagle.basic.constant.datadict.wx.WxMaterialType;
+import in.hocg.eagle.basic.constant.datadict.WxMaterialType;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
 import in.hocg.eagle.modules.wx.entity.WxMpMessageTemplate;
 import in.hocg.eagle.modules.wx.entity.WxMpQrcode;

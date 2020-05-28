@@ -16,20 +16,19 @@
 package in.hocg.eagle.utils.clazz;
 
 import lombok.experimental.UtilityClass;
-import org.apache.ibatis.reflection.ReflectionException;
 
 import java.util.Locale;
 
 @UtilityClass
 public class PropertyNamer {
 
-    public static String methodToProperty(String name) {
+    public String methodToProperty(String name) {
         if (name.startsWith("is")) {
             name = name.substring(2);
         } else if (name.startsWith("get") || name.startsWith("set")) {
             name = name.substring(3);
         } else {
-            throw new ReflectionException("Error parsing property name '" + name + "'.  Didn't start with 'is', 'get' or 'set'.");
+            throw new RuntimeException("Error parsing property name '" + name + "'.  Didn't start with 'is', 'get' or 'set'.");
         }
 
         if (name.length() == 1 || (name.length() > 1 && !Character.isUpperCase(name.charAt(1)))) {
@@ -39,15 +38,15 @@ public class PropertyNamer {
         return name;
     }
 
-    public static boolean isProperty(String name) {
+    public boolean isProperty(String name) {
         return isGetter(name) || isSetter(name);
     }
 
-    public static boolean isGetter(String name) {
+    public boolean isGetter(String name) {
         return (name.startsWith("get") && name.length() > 3) || (name.startsWith("is") && name.length() > 2);
     }
 
-    public static boolean isSetter(String name) {
+    public boolean isSetter(String name) {
         return name.startsWith("set") && name.length() > 3;
     }
 

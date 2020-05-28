@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.wx.pojo.qo.menu;
 
 import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.constant.datadict.wx.WxMenuType;
+import in.hocg.eagle.basic.constant.datadict.WxMenuType;
 import in.hocg.eagle.basic.pojo.qo.BaseQo;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
