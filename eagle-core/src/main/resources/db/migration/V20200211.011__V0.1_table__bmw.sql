@@ -102,7 +102,7 @@ CREATE TABLE `bmw_payment_refund`
         comment '退款金额',
     refund_reason   varchar(255)
         comment '退款理由',
-    payment_way    bigint
+    payment_way     bigint
         comment '支付方式(第三方回调填充)',
     currency_code   char(3)          default 'CNY' not null
         comment '币种: CNY USD HKD',
@@ -147,3 +147,28 @@ CREATE TABLE `bmw_notify_app_log`
 ) ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8mb4
     COMMENT = '[支付网关] 所有通知应用方日志表';
+
+DROP TABLE IF EXISTS `bmw_log_data`;
+CREATE TABLE `bmw_log_data`
+(
+    id             bigint auto_increment,
+    app_id         bigint      not null
+        comment '接入方应用ID',
+    app_order_sn   varchar(64) not null
+        comment '接入方应用订单号',
+    transaction_sn varchar(64) not null
+        comment '交易流水号',
+    request_header text        not null
+        comment '请求头',
+    request_params text        not null
+        comment '请求参数',
+    log_type       varchar(10) not null
+        comment '日志类型: payment=>支付; refund=>退款; notify=>异步通知; return=>同步通知; query=>查询',
+    created_at     datetime(6) not null
+        comment '创建时间',
+    created_ip     varchar(32)
+        comment '创建ip',
+    PRIMARY KEY (id)
+) ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8mb4
+    COMMENT = '[支付网关] 所有交易日志表';
