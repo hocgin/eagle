@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.oms.pojo.vo.order;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
@@ -35,6 +36,8 @@ public class OrderComplexVo {
     private String accountName;
     @ApiModelProperty("订单编号")
     private String orderSn;
+    @ApiModelProperty("交易流水号")
+    private String transactionSn;
     @ApiModelProperty("优惠券ID")
     private Long couponId;
     @ApiModelProperty("优惠券抵扣金额")

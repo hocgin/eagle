@@ -30,14 +30,13 @@ public class EagleGenerateTest {
     @Test
     public void generateByTables() {
         List<String> TABLES = Arrays.asList(
-            "wx_mp_short_url",
-            "wx_mp_qrcode",
+            "bmw_notify_app_log",
             ""
         );
         String javaPath = "src/main/java";
         String dir = Paths.get(System.getProperty("user.dir"), javaPath).toString();
         eagleGenerate.generateByTables("in.hocg.eagle.modules",
-            "wx",
+            "bmw",
             dir, TABLES.toArray(new String[]{}));
     }
 }

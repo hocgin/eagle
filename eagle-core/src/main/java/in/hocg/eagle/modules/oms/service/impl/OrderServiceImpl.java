@@ -5,12 +5,15 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.*;
+import in.hocg.eagle.basic.env.Env;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.lang.SNCode;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.modules.oms.mapstruct.OrderMapping;
-import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
+import in.hocg.eagle.modules.bmw.api.PaymentApi;
+import in.hocg.eagle.modules.bmw.helper.payment.request.PaymentRequestResult;
+import in.hocg.eagle.modules.bmw.pojo.qo.CreatePaymentTransactionQo;
+import in.hocg.eagle.modules.bmw.pojo.qo.GoPayQo;
 import in.hocg.eagle.modules.com.service.ChangeLogService;
 import in.hocg.eagle.modules.mkt.entity.CouponAccount;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
@@ -23,6 +26,7 @@ import in.hocg.eagle.modules.oms.helper.order.GeneralProduct;
 import in.hocg.eagle.modules.oms.helper.order.discount.DiscountHelper;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.Coupon;
 import in.hocg.eagle.modules.oms.mapper.OrderMapper;
+import in.hocg.eagle.modules.oms.mapstruct.OrderMapping;
 import in.hocg.eagle.modules.oms.pojo.dto.order.OrderItemDto;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
@@ -31,6 +35,7 @@ import in.hocg.eagle.modules.oms.service.OrderItemService;
 import in.hocg.eagle.modules.oms.service.OrderService;
 import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.entity.Sku;
+import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.pms.service.SkuService;
 import in.hocg.eagle.utils.LangUtils;
@@ -68,6 +73,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     private final ProductService productService;
     private final OrderItemService orderItemService;
     private final CouponService couponService;
+    private final PaymentApi paymentApi;
     private final CouponAccountService couponAccountService;
     private final SkuService skuService;
     private final SkuMapping skuMapping;
@@ -209,6 +215,14 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
                 throw ServiceException.wrap("库存商品不足");
             }
         }
+
+        // 生成交易
+        final String transactionSn = paymentApi.createPaymentTransaction(CreatePaymentTransactionQo.builder()
+            .appId(Env.getConfigs().getPaymentAppId())
+            .appOrderSn(order.getOrderSn())
+            .totalFee(order.getTotalAmount())
+            .build());
+        updateById(new Order().setId(orderId).setTransactionSn(transactionSn));
     }
 
     @Override
@@ -229,6 +243,9 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         updated.setLastUpdatedAt(qo.getCreatedAt());
         validUpdateById(updated);
         this.handleCancelOrClosedOrderAfter(orderId);
+
+        // 关闭交易
+        paymentApi.closePaymentTransaction(order.getTransactionSn());
     }
 
     @Override
@@ -396,6 +413,22 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         }
 
         this.validUpdateById(updated);
+    }
+
+    @Override
+    public PaymentRequestResult goPay(PayOrderQo qo) {
+        final Long id = qo.getId();
+        final Integer payType = qo.getPayType();
+        final OrderComplexVo orderComplex = this.selectOne(id);
+        if (!LangUtils.equals(OrderStatus.PendingPayment.getCode(), orderComplex.getOrderStatus())) {
+            throw ServiceException.wrap("操作失败，请检查订单的支付状态");
+        }
+
+        Integer paymentWay = payType;
+        return paymentApi.goPay(GoPayQo.builder()
+            .transactionSn(orderComplex.getTransactionSn())
+            .paymentWay(paymentWay)
+            .build());
     }
 
     @Override

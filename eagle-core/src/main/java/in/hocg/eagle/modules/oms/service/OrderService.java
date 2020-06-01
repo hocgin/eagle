@@ -3,6 +3,7 @@ package in.hocg.eagle.modules.oms.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.modules.bmw.helper.payment.request.PaymentRequestResult;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
@@ -94,4 +95,12 @@ public interface OrderService extends AbstractService<Order> {
      * @param qo
      */
     void updateOne(UpdateOrderQo qo);
+
+    /**
+     * 生成支付信息
+     *
+     * @param qo
+     * @return
+     */
+    PaymentRequestResult goPay(PayOrderQo qo);
 }

@@ -39,4 +39,7 @@ public class EnvConfigs {
     @ApiModelProperty("支付宝 APPID")
     private String aliPayAppId;
 
+    @ApiModelProperty("支付光管应用")
+    private Long paymentAppId = 1L;
+
 }
