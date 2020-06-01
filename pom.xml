@@ -17,6 +17,7 @@
   <modules>
     <module>eagle-parent</module>
     <module>eagle-core</module>
+    <module>eagle-generator</module>
   </modules>
 
   <properties>
