@@ -67,10 +67,10 @@ public class RefundRequest extends AbsRequest {
         final Integer paymentWayCode = paymentWay.getCode();
         final RefundRequestResult result = new RefundRequestResult();
         result.setPaymentWay(paymentWayCode);
-        if (PaymentWay.WxPay.eq(paymentWayCode)) {
+        if (PaymentWay.WxPayWithJSAPI.eq(paymentWayCode)) {
             final PayRefundResponse response = SpringContext.getBean(WxPayService.class).request(this.wxRefundRequest());
             return result.setRefundTradeNo(response.getRefundId());
-        } else if (PaymentWay.AliPay.eq(paymentWayCode)) {
+        } else if (PaymentWay.AliPayWithApp.eq(paymentWayCode)) {
             final TradeRefundResponse response = SpringContext.getBean(AliPayService.class).request(this.aliRefundRequest());
             return result.setRefundTradeNo(response.getTradeNo());
         }

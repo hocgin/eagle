@@ -36,7 +36,7 @@ CREATE TABLE `bmw_payment_transaction`
         comment '交易流水号',
     total_fee      decimal(10, 2) default '0'   not null
         comment '交易总金额',
-    payment_way    bigint
+    payment_way    tinyint
         comment '支付方式(第三方回调填充)',
     trade_no       varchar(64)
         comment '第三方的流水号(第三方回调填充)',

@@ -28,7 +28,7 @@ public class WxPayPaymentMessageRule extends StringResolve.StringRule<UnifiedOrd
         try {
             final String outTradeNo = message.getOutTradeNo();
             final String tradeNo = message.getTransactionId();
-            SpringContext.getBean(PaymentService.class).handlePaymentCallback(PaymentWay.WxPay, outTradeNo, tradeNo, true);
+            SpringContext.getBean(PaymentService.class).handlePaymentCallback(PaymentWay.WxPayWithJSAPI, outTradeNo, tradeNo, true);
             return UnifiedOrderMessage.Result.builder().returnMsg("SUCCESS").returnCode("OK").build();
         } catch (Exception e) {
             return UnifiedOrderMessage.Result.builder().returnMsg("FAIL").returnCode("FAIL").build();

@@ -76,8 +76,9 @@ public class PaymentServiceImpl
         LocalDateTime now = LocalDateTime.now();
         final String clientIp = SpringContext.getRequest().map(RequestUtils::getClientIP).orElse(null);
 
+        final String transactionSn = snCode.getTransactionSNCode();
         PaymentTransaction entity = paymentTransactionMapping.asPaymentTransaction(data)
-            .setTransactionSn(snCode.getTransactionSNCode())
+            .setTransactionSn(transactionSn)
             .setTradeStatus(TradeStatus.Init.getCode())
             .setCreatedAt(now)
             .setCreatedIp(clientIp);
@@ -106,6 +107,7 @@ public class PaymentServiceImpl
         LocalDateTime now = LocalDateTime.now();
         final String clientIp = SpringContext.getRequest().map(RequestUtils::getClientIP).orElse(null);
 
+        final String wxOpenId = data.getWxOpenId();
         // 保存日志
         final String transactionSn = data.getTransactionSn();
         final PaymentWay paymentWay = IntEnum.of(data.getPaymentWay(), PaymentWay.class).orElseThrow(() -> ServiceException.wrap("暂不支持该交易方式"));
@@ -133,10 +135,10 @@ public class PaymentServiceImpl
 
         return PaymentRequest.builder()
             .orderSn(orderSn)
+            .wxOpenId(wxOpenId)
             .payAmount(transaction.getTotalFee())
             .paymentWay(paymentWay)
-            .build()
-            .request();
+            .build().request();
     }
 
     @Override

@@ -113,6 +113,7 @@ public class AppService {
     @Transactional(rollbackFor = Exception.class)
     public void confirmOrder(ConfirmOrderQo qo) {
         final Order order = orderService.getById(qo.getId());
+        ValidUtils.notNull(order, "未找到订单");
         ValidUtils.isTrue(LangUtils.equals(order.getAccountId(), qo.getUserId()), "非订单所有人，操作失败");
         orderService.confirmOrder(qo);
     }

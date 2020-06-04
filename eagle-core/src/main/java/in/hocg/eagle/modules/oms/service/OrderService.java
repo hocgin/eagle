@@ -102,5 +102,6 @@ public interface OrderService extends AbstractService<Order> {
      * @param qo
      * @return
      */
+    @Deprecated
     PaymentRequestResult goPay(PayOrderQo qo);
 }

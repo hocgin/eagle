@@ -1,6 +1,9 @@
 package in.hocg.eagle.modules.bmw.helper.payment.request;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -12,8 +15,34 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class PaymentRequestResult {
-    private Long paymentWay;
+    private Integer platform;
+    private Integer paymentWay;
     private String url;
-    private String form;
     private String method;
+
+    @ApiModelProperty("表单")
+    private String form;
+    @ApiModelProperty("APP")
+    private String app;
+    @ApiModelProperty("二维码")
+    private String qrCode;
+    @ApiModelProperty("微信 - JSAPI")
+    private WxJSAPI wxJSApi;
+    private String wxNative;
+
+
+    @Data
+    @RequiredArgsConstructor
+    public static class WxJSAPI {
+        private final String timestamp;
+        private final String nonceStr;
+        @JsonAlias("package")
+        private final String packageName;
+        private final String signType;
+        private final String paySign;
+
+        public static WxJSAPI NEW(String timestamp, String nonceStr, String packageName, String signType, String paySign) {
+            return new WxJSAPI(timestamp, nonceStr, "prepay_id=" + packageName, signType, paySign);
+        }
+    }
 }

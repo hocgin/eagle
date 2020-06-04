@@ -15,6 +15,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface PaymentTransactionMapping {
 
+    @Mapping(target = "transactionSn", ignore = true)
     @Mapping(target = "tradeStatus", ignore = true)
     @Mapping(target = "paymentWay", ignore = true)
     @Mapping(target = "tradeNo", source = "")

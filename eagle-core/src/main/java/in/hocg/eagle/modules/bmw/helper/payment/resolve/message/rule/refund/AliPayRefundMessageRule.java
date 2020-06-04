@@ -29,7 +29,7 @@ public class AliPayRefundMessageRule extends StringResolve.StringRule<TradeStatu
         try {
             final String refundTradeNo = message.getTradeNo();
             final String refundSn = message.getOutTradeNo();
-            SpringContext.getBean(PaymentService.class).handleRefundCallback(PaymentWay.AliPay, refundSn, refundTradeNo, true);
+            SpringContext.getBean(PaymentService.class).handleRefundCallback(PaymentWay.AliPayWithApp, refundSn, refundTradeNo, true);
             return TradeStatusSyncMessage.Result.builder().result("success").build();
         } catch (Exception e) {
             return TradeStatusSyncMessage.Result.builder().result("fail").build();

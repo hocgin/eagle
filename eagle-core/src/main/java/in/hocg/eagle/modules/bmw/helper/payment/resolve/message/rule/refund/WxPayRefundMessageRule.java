@@ -29,7 +29,7 @@ public class WxPayRefundMessageRule extends StringResolve.StringRule<PayRefundMe
             final PayRefundMessage.ReqInfo reqInfo = message.getReqInfo();
             final String refundTradeNo = reqInfo.getRefundId();
             final String refundSn = reqInfo.getOutTradeNo();
-            SpringContext.getBean(PaymentService.class).handleRefundCallback(PaymentWay.WxPay, refundSn, refundTradeNo, true);
+            SpringContext.getBean(PaymentService.class).handleRefundCallback(PaymentWay.WxPayWithJSAPI, refundSn, refundTradeNo, true);
             return PayRefundMessage.Result.builder().returnMsg("SUCCESS").returnCode("OK").build();
         } catch (Exception e) {
             return PayRefundMessage.Result.builder().returnMsg("FAIL").returnCode("FAIL").build();

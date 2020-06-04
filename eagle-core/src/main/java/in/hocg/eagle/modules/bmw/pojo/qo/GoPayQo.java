@@ -13,8 +13,10 @@ import lombok.Data;
 @Data
 @Builder
 public class GoPayQo {
-    @ApiModelProperty("交易流水号")
+    @ApiModelProperty(value = "交易流水号", required = true)
     private final String transactionSn;
-    @ApiModelProperty("支付方式")
+    @ApiModelProperty(value = "支付方式", required = true)
     private final Integer paymentWay;
+    @ApiModelProperty(value = "[可选]微信支付")
+    private String wxOpenId;
 }
