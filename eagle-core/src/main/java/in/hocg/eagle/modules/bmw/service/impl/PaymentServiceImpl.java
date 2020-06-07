@@ -9,10 +9,10 @@ import in.hocg.eagle.modules.bmw.datastruct.PaymentTradeMapping;
 import in.hocg.eagle.modules.bmw.datastruct.RefundRecordMapping;
 import in.hocg.eagle.modules.bmw.entity.PaymentPlatform;
 import in.hocg.eagle.modules.bmw.entity.*;
-import in.hocg.eagle.modules.bmw.helper.payment.request.PaymentRequest;
-import in.hocg.eagle.modules.bmw.helper.payment.request.PaymentRequestResult;
-import in.hocg.eagle.modules.bmw.helper.payment.request.RefundRequest;
-import in.hocg.eagle.modules.bmw.helper.payment.request.RefundRequestResult;
+import in.hocg.eagle.modules.bmw.helper.payment.pojo.request.GoPaymentRequest;
+import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoPaymentResponse;
+import in.hocg.eagle.modules.bmw.helper.payment.pojo.request.GoRefundRequest;
+import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoRefundResponse;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.AllInMessageResolve;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
 import in.hocg.eagle.modules.bmw.pojo.ro.*;
@@ -134,9 +134,9 @@ public class PaymentServiceImpl implements PaymentService {
             .setCreatedAt(now)
             .setCreatedIp(clientIp));
 
-        final PaymentRequestResult result = PaymentRequest.builder()
+        final GoPaymentResponse result = GoPaymentRequest.builder()
             .platformAppid(paymentPlatform.getPlatformAppid())
-            .outTradeSn(trade.getOutTradeSn())
+            .tradeSn(trade.getTradeSn())
             .wxOpenId(wxOpenId)
             .payAmount(trade.getTotalFee())
             .paymentWay(paymentWay)
@@ -171,7 +171,7 @@ public class PaymentServiceImpl implements PaymentService {
             .setCreatedAt(now)
             .setCreatedIp(clientIp);
 
-        final RefundRequestResult result = RefundRequest.builder()
+        final GoRefundResponse result = GoRefundRequest.builder()
             .platformAppid(paymentPlatform.getPlatformAppid())
             .paymentWay(paymentWay)
             .tradeSn(trade.getTradeSn())

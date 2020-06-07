@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.bmw.helper.payment.request;
+package in.hocg.eagle.modules.bmw.helper.payment.pojo.response;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -12,8 +12,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class RefundRequestResult {
-    private Integer paymentWay;
+public class GoRefundResponse {
     @ApiModelProperty("第三方退款的流水号")
     private String refundTradeNo;
 }

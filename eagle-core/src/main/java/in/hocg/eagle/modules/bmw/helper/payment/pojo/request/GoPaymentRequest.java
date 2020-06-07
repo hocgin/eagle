@@ -1,11 +1,13 @@
-package in.hocg.eagle.modules.bmw.helper.payment.request;
+package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 
-import in.hocg.eagle.basic.SpringContext;
-import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
 import in.hocg.eagle.basic.constant.datadict.PaymentWay;
+import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoPaymentResponse;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.FeatureType;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.payment.PaymentResponse;
+import in.hocg.payment.PaymentService;
 import in.hocg.payment.alipay.v2.AliPayService;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeAppPayRequest;
@@ -31,7 +33,7 @@ import java.math.BigDecimal;
  */
 @Data
 @Builder
-public class PaymentRequest extends AbsRequest {
+public class GoPaymentRequest extends AbsRequest {
     @NonNull
     @ApiModelProperty(value = "支付平台AppId", required = true)
     private String platformAppid;
@@ -42,15 +44,15 @@ public class PaymentRequest extends AbsRequest {
     @ApiModelProperty(value = "订单支付金额", required = true)
     private BigDecimal payAmount;
     @NonNull
-    @ApiModelProperty(value = "订单号", required = true)
-    private String outTradeSn;
+    @ApiModelProperty("交易单号(网关)")
+    private String tradeSn;
     @ApiModelProperty(value = "[可选] 微信用户(微信支付必须)")
     private String wxOpenId;
     @ApiModelProperty(value = "[可选] (支付宝Wap支付)")
     private String quitUrl;
 
     private String getSubject() {
-        return String.format("订单: %s", this.outTradeSn);
+        return String.format("订单: %s", this.tradeSn);
     }
 
     private AliPayRequest aliPayAppRequest() {
@@ -58,7 +60,7 @@ public class PaymentRequest extends AbsRequest {
         request.setBizContent2(new TradeAppPayRequest.BizContent()
             .setSubject(this.getSubject())
             .setTotalAmount(String.valueOf(this.getPayAmount()))
-            .setOutTradeNo(this.getOutTradeSn()));
+            .setOutTradeNo(this.getTradeSn()));
         request.setNotifyUrl(this.getNotifyUrl());
         return request;
     }
@@ -70,7 +72,7 @@ public class PaymentRequest extends AbsRequest {
             .setTotalAmount(String.valueOf(this.getPayAmount()))
             .setProductCode("QUICK_WAP_WAY")
             .setQuitUrl(getQuitUrl())
-            .setOutTradeNo(this.getOutTradeSn()));
+            .setOutTradeNo(this.getTradeSn()));
         request.setNotifyUrl(this.getNotifyUrl());
         return request;
     }
@@ -81,7 +83,7 @@ public class PaymentRequest extends AbsRequest {
             .setSubject(this.getSubject())
             .setTotalAmount(String.valueOf(this.getPayAmount()))
             .setProductCode("FAST_INSTANT_TRADE_PAY")
-            .setOutTradeNo(this.getOutTradeSn()));
+            .setOutTradeNo(this.getTradeSn()));
         request.setNotifyUrl(this.getNotifyUrl());
         return request;
     }
@@ -91,7 +93,7 @@ public class PaymentRequest extends AbsRequest {
         request.setBizContent2(new TradePreCreateRequest.BizContent()
             .setSubject(this.getSubject())
             .setTotalAmount(String.valueOf(this.getPayAmount()))
-            .setOutTradeNo(this.getOutTradeSn()));
+            .setOutTradeNo(this.getTradeSn()));
         request.setNotifyUrl(this.getNotifyUrl());
         return request;
     }
@@ -105,7 +107,7 @@ public class PaymentRequest extends AbsRequest {
         request.setTradeType("JSAPI");
         request.setBody(this.getSubject());
         request.setNotifyUrl(this.getNotifyUrl());
-        request.setOutTradeNo(this.getOutTradeSn());
+        request.setOutTradeNo(this.getTradeSn());
         request.setTotalFee(String.valueOf(this.getPayAmount().multiply(BigDecimal.valueOf(100L))));
         request.setSpbillCreateIp(this.getClientIp());
         return request;
@@ -119,7 +121,7 @@ public class PaymentRequest extends AbsRequest {
         request.setTradeType("APP");
         request.setBody(this.getSubject());
         request.setNotifyUrl(this.getNotifyUrl());
-        request.setOutTradeNo(this.getOutTradeSn());
+        request.setOutTradeNo(this.getTradeSn());
         request.setTotalFee(String.valueOf(this.getPayAmount().multiply(BigDecimal.valueOf(100L))));
         request.setSpbillCreateIp(this.getClientIp());
         return request;
@@ -133,52 +135,69 @@ public class PaymentRequest extends AbsRequest {
         request.setTradeType("APP");
         request.setBody(this.getSubject());
         request.setNotifyUrl(this.getNotifyUrl());
-        request.setOutTradeNo(this.getOutTradeSn());
+        request.setOutTradeNo(this.getTradeSn());
         request.setTotalFee(String.valueOf(this.getPayAmount().multiply(BigDecimal.valueOf(100L))));
         request.setSpbillCreateIp(this.getClientIp());
         return request;
     }
 
-    public PaymentRequestResult request() {
-        final PaymentRequestResult result = new PaymentRequestResult()
-            .setPlatform(paymentWay.getPlatform().getCode())
+    public GoPaymentResponse request() {
+        final PaymentPlatform platform = paymentWay.getPlatform();
+        final GoPaymentResponse result = new GoPaymentResponse()
+            .setPlatform(platform.getCode())
             .setPaymentWay(paymentWay.getCode());
+        final PaymentService<?> payService = getPayService(platform, platformAppid);
+
         switch (paymentWay) {
             case AliPayWithApp: {
-                final PaymentResponse response = SpringContext.getBean(AliPayService.class).request(this.aliPayAppRequest());
-                return result.setApp(response.getContent());
+                final AliPayRequest request = this.aliPayAppRequest();
+                final PaymentResponse response = ((AliPayService) payService).request(request);
+                result.setApp(response.getContent());
+                break;
             }
             case AliPayWithQrCode: {
-                final TradePreCreateResponse response = SpringContext.getBean(AliPayService.class).request(this.aliPayQrCodeRequest());
-                return result.setQrCode(response.getQrCode());
+                final AliPayRequest request = this.aliPayQrCodeRequest();
+                final TradePreCreateResponse response = ((AliPayService) payService).request(request);
+                result.setQrCode(response.getQrCode());
+                break;
             }
             case AliPayWithPC: {
-                final PaymentResponse response = SpringContext.getBean(AliPayService.class).request(this.aliPayPcRequest());
+                final AliPayRequest request = this.aliPayPcRequest();
+                final PaymentResponse response = ((AliPayService) payService).request(request);
                 result.setMethod("POST");
-                return result.setForm(response.getContent());
+                result.setForm(response.getContent());
+                break;
             }
             case AliPayWithWap: {
-                final PaymentResponse response = SpringContext.getBean(AliPayService.class).request(this.aliPayWapRequest());
+                final AliPayRequest request = this.aliPayWapRequest();
+                final PaymentResponse response = ((AliPayService) payService).request(request);
                 result.setMethod("POST");
-                return result.setForm(response.getContent());
+                result.setForm(response.getContent());
+                break;
             }
             case WxPayWithApp: {
-                final UnifiedOrderResponse response = SpringContext.getBean(WxPayService.class).request(this.wxPayAPPRequest());
-                return result.setApp(response.getContent());
+                final WxPayRequest request = this.wxPayAPPRequest();
+                final UnifiedOrderResponse response = ((WxPayService) payService).request(request);
+                result.setApp(response.getContent());
+                break;
             }
             case WxPayWithJSAPI: {
                 final WxPayRequest request = this.wxPayJSAPIRequest();
-                final UnifiedOrderResponse response = SpringContext.getBean(WxPayService.class).request(request);
-                return result.setWxJSApi(PaymentRequestResult.WxJSAPI.NEW("", response.getNonceStr(), response.getPrepayId(), request.getSignType(), response.getSign()));
+                final UnifiedOrderResponse response = ((WxPayService) payService).request(request);
+                result.setWxJSApi(GoPaymentResponse.WxJSAPI.NEW("", response.getNonceStr(), response.getPrepayId(), request.getSignType(), response.getSign()));
+                break;
             }
             case WxPayWithNative: {
-                final UnifiedOrderResponse response = SpringContext.getBean(WxPayService.class).request(this.wxPayNativeRequest());
-                return result.setWxNative(response.getContent());
+                final WxPayRequest request = this.wxPayNativeRequest();
+                final UnifiedOrderResponse response = ((WxPayService) payService).request(request);
+                result.setWxNative(response.getContent());
+                break;
             }
             default: {
                 throw ServiceException.wrap("暂不支持该支付方式");
             }
         }
+        return result;
     }
 
     private String getNotifyUrl() {

@@ -1,9 +1,10 @@
-package in.hocg.eagle.modules.bmw.helper.payment.request;
+package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 
-import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
 import in.hocg.eagle.basic.constant.datadict.PaymentWay;
-import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoRefundResponse;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.FeatureType;
+import in.hocg.payment.PaymentService;
 import in.hocg.payment.alipay.v2.AliPayService;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeRefundRequest;
@@ -27,7 +28,7 @@ import java.math.BigDecimal;
  */
 @Data
 @Builder
-public class RefundRequest extends AbsRequest {
+public class GoRefundRequest extends AbsRequest {
     @NonNull
     @ApiModelProperty(value = "支付平台AppId", required = true)
     private String platformAppid;
@@ -68,18 +69,27 @@ public class RefundRequest extends AbsRequest {
         return request;
     }
 
-    public RefundRequestResult request() {
-        final Integer paymentWayCode = paymentWay.getCode();
-        final RefundRequestResult result = new RefundRequestResult();
-        result.setPaymentWay(paymentWayCode);
-        if (PaymentWay.WxPayWithJSAPI.eq(paymentWayCode)) {
-            final PayRefundResponse response = SpringContext.getBean(WxPayService.class).request(this.wxRefundRequest());
-            return result.setRefundTradeNo(response.getRefundId());
-        } else if (PaymentWay.AliPayWithApp.eq(paymentWayCode)) {
-            final TradeRefundResponse response = SpringContext.getBean(AliPayService.class).request(this.aliRefundRequest());
-            return result.setRefundTradeNo(response.getTradeNo());
+    public GoRefundResponse request() {
+        final GoRefundResponse result = new GoRefundResponse();
+        final PaymentPlatform platform = paymentWay.getPlatform();
+        final PaymentService<?> payService = getPayService(platform, platformAppid);
+        switch (platform) {
+            case WxPay: {
+                final WxPayRequest request = this.wxRefundRequest();
+                final PayRefundResponse response = ((WxPayService) payService).request(request);
+                result.setRefundTradeNo(response.getRefundId());
+                break;
+            }
+            case AliPay: {
+                final AliPayRequest request = this.aliRefundRequest();
+                final TradeRefundResponse response = ((AliPayService) payService).request(request);
+                result.setRefundTradeNo(response.getTradeNo());
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException();
         }
-        throw ServiceException.wrap("暂不支持该交易方式");
+        return result;
     }
 
     private String getNotifyUrl() {

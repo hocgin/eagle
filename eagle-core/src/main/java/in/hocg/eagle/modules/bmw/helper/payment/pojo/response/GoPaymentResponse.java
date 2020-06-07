@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.bmw.helper.payment.request;
+package in.hocg.eagle.modules.bmw.helper.payment.pojo.response;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class PaymentRequestResult {
+public class GoPaymentResponse {
     private Integer platform;
     private Integer paymentWay;
     private String url;

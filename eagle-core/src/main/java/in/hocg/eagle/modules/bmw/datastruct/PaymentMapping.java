@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.bmw.datastruct;
 
-import in.hocg.eagle.modules.bmw.helper.payment.request.PaymentRequestResult;
+import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoPaymentResponse;
 import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import org.mapstruct.Mapper;
 
@@ -13,5 +13,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface PaymentMapping {
 
-    GoPayVo asGoPayVo(PaymentRequestResult result);
+    GoPayVo asGoPayVo(GoPaymentResponse result);
 }
