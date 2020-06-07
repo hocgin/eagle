@@ -78,7 +78,8 @@ public interface OrderService extends AbstractService<Order> {
      * @param payType
      * @param outTradeNo
      */
-    void paySuccess(Integer payType, String outTradeNo);
+    void asyncOrderMessage(Integer payType, String outTradeNo);
+    void asyncOrderMessage(AsyncOrderMessageQo qo);
 
     /**
      * 删除订单

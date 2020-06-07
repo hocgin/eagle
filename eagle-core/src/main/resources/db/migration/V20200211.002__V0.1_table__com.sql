@@ -433,11 +433,15 @@ INSERT INTO `com_data_dict`(`id`, `title`, `code`, `remark`, `enabled`,
            NOW(), 1);
 INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
                                  `created_at`, `creator`)
-    VALUE (11, '支付宝', '0', '支付类型:支付宝', 1,
+    VALUE (11, '未知', '0', '支付类型:未知', 1,
            NOW(), 1);
 INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
                                  `created_at`, `creator`)
-    VALUE (11, '微信', '1', '支付类型:微信', 1,
+    VALUE (11, '支付宝', '1', '支付类型:支付宝', 1,
+           NOW(), 1);
+INSERT INTO `com_data_dict_item`(`dict_id`, `title`, `code`, `remark`, `enabled`,
+                                 `created_at`, `creator`)
+    VALUE (11, '微信', '2', '支付类型:微信', 1,
            NOW(), 1);
 
 #  订单来源

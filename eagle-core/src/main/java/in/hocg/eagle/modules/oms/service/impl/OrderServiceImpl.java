@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.env.Env;
+import in.hocg.eagle.basic.env.EnvConfigs;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.lang.SNCode;
 import in.hocg.eagle.basic.pojo.KeyValue;
@@ -217,10 +218,12 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         }
 
         // 生成交易
-        final Long paymentAppSn = Env.getConfigs().getPaymentAppSn();
+        final EnvConfigs configs = Env.getConfigs();
+        final Long paymentAppSn = configs.getPaymentAppSn();
         final String orderSn = order.getOrderSn();
         final BigDecimal totalAmount = order.getTotalAmount();
-        final String transactionSn = paymentApi.createTrade(new CreateTradeRo(paymentAppSn, orderSn, totalAmount));
+        String notifyUrl = String.format("%s/api/order/async/%s", configs.getHostname(), orderSn);
+        final String transactionSn = paymentApi.createTrade(new CreateTradeRo(paymentAppSn, orderSn, totalAmount).setNotifyUrl(notifyUrl));
         this.updateById(new Order().setId(orderId).setTradeSn(transactionSn));
     }
 
@@ -310,7 +313,38 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     @Async
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void paySuccess(Integer payType, String orderSn) {
+    public void asyncOrderMessage(AsyncOrderMessageQo qo) {
+        final AsyncOrderMessageQo.TradeStatusSync data = qo.getData();
+        final OrderPayType payType = qo.getPayType();
+        final String orderSn = data.getOutTradeSn();
+
+        if (!TradeStatus.Done.eq(data.getTradeStatus())) {
+            return;
+        }
+
+        Optional<Order> orderOpl = this.selectOneByOrderSn(orderSn);
+        if (!orderOpl.isPresent()) {
+            throw ServiceException.wrap("订单不存在");
+        }
+        final Order order = orderOpl.get();
+        if (!LangUtils.equals(OrderStatus.PendingPayment.getCode(), order.getOrderStatus())) {
+            log.warn("订单{{}}状态[{}]非待付款时，被调用支付成功", orderSn, order.getOrderStatus());
+            return;
+        }
+
+        // 更改订单状态
+        final Order update = new Order();
+        update.setId(order.getId());
+        update.setOrderStatus(OrderStatus.ToBeDelivered.getCode());
+        update.setPaymentTime(LocalDateTime.now());
+        update.setPayType(payType.getCode());
+        validUpdateById(update);
+    }
+
+    @Async
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void asyncOrderMessage(Integer payType, String orderSn) {
         Optional<Order> orderOpl = this.selectOneByOrderSn(orderSn);
         if (!orderOpl.isPresent()) {
             throw ServiceException.wrap("订单不存在");
@@ -328,7 +362,6 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         update.setPaymentTime(LocalDateTime.now());
         update.setPayType(payType);
         validUpdateById(update);
-        // todo 写入流水
     }
 
     private Optional<Order> selectOneByOrderSn(String orderSn) {

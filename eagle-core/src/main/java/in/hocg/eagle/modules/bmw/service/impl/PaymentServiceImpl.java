@@ -372,7 +372,6 @@ public class PaymentServiceImpl implements PaymentService {
             .setNotifyBody(JsonUtils.toJSONString(data))
             .setCreatedAt(now);
         try {
-
             final String result = new RestTemplate().postForObject(notifyUrl, data, String.class);
             if ("SUCCESS".equalsIgnoreCase(result)) {
                 entity.setNotifyResult(PaymentNotifyResult.Success.getCode());
