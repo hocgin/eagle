@@ -1,5 +1,7 @@
 package in.hocg.eagle.modules.bmw.helper.payment.resolve.message;
 
+import in.hocg.eagle.basic.constant.datadict.PaymentNotifyType;
+import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +15,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum MessageType {
-    WxPay_Payment(1, 1, "支付通知 - 微信"),
-    WxPay_Refund(1, 2, "退款通知 - 微信"),
-    AliPay_Payment(2, 1, "支付通知 - 支付宝"),
-    AliPay_Refund(2, 2, "退款通知 - 支付宝"),
+    WxPayWithPayment(PaymentPlatform.WxPay.getCode(), PaymentNotifyType.Trade.getCode(), "支付通知 - 微信"),
+    WxPayWithRefund(PaymentPlatform.WxPay.getCode(), PaymentNotifyType.Refund.getCode(), "退款通知 - 微信"),
+    AliPayWithPayment(PaymentPlatform.AliPay.getCode(), PaymentNotifyType.Trade.getCode(), "支付通知 - 支付宝"),
+    AliPayWithRefund(PaymentPlatform.AliPay.getCode(), PaymentNotifyType.Refund.getCode(), "退款通知 - 支付宝"),
     ;
 
     private final Integer channel;

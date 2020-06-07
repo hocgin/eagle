@@ -3,6 +3,7 @@ package in.hocg.eagle.modules.bmw.helper.payment.request;
 import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.constant.datadict.PaymentWay;
+import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.FeatureType;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.payment.PaymentResponse;
 import in.hocg.payment.alipay.v2.AliPayService;
@@ -58,7 +59,7 @@ public class PaymentRequest extends AbsRequest {
             .setSubject(this.getSubject())
             .setTotalAmount(String.valueOf(this.getPayAmount()))
             .setOutTradeNo(this.getOutTradeSn()));
-        request.setNotifyUrl(this.getHost() + PaymentWay.AliPayWithApp.getNotifyUrl());
+        request.setNotifyUrl(this.getNotifyUrl());
         return request;
     }
 
@@ -70,7 +71,7 @@ public class PaymentRequest extends AbsRequest {
             .setProductCode("QUICK_WAP_WAY")
             .setQuitUrl(getQuitUrl())
             .setOutTradeNo(this.getOutTradeSn()));
-        request.setNotifyUrl(this.getHost() + PaymentWay.AliPayWithWap.getNotifyUrl());
+        request.setNotifyUrl(this.getNotifyUrl());
         return request;
     }
 
@@ -81,7 +82,7 @@ public class PaymentRequest extends AbsRequest {
             .setTotalAmount(String.valueOf(this.getPayAmount()))
             .setProductCode("FAST_INSTANT_TRADE_PAY")
             .setOutTradeNo(this.getOutTradeSn()));
-        request.setNotifyUrl(this.getHost() + PaymentWay.AliPayWithPC.getNotifyUrl());
+        request.setNotifyUrl(this.getNotifyUrl());
         return request;
     }
 
@@ -91,7 +92,7 @@ public class PaymentRequest extends AbsRequest {
             .setSubject(this.getSubject())
             .setTotalAmount(String.valueOf(this.getPayAmount()))
             .setOutTradeNo(this.getOutTradeSn()));
-        request.setNotifyUrl(this.getHost() + PaymentWay.AliPayWithQrCode.getNotifyUrl());
+        request.setNotifyUrl(this.getNotifyUrl());
         return request;
     }
 
@@ -103,7 +104,7 @@ public class PaymentRequest extends AbsRequest {
         request.setOpenId(wxOpenId);
         request.setTradeType("JSAPI");
         request.setBody(this.getSubject());
-        request.setNotifyUrl(this.getHost() + PaymentWay.WxPayWithJSAPI.getNotifyUrl());
+        request.setNotifyUrl(this.getNotifyUrl());
         request.setOutTradeNo(this.getOutTradeSn());
         request.setTotalFee(String.valueOf(this.getPayAmount().multiply(BigDecimal.valueOf(100L))));
         request.setSpbillCreateIp(this.getClientIp());
@@ -117,7 +118,7 @@ public class PaymentRequest extends AbsRequest {
         UnifiedOrderRequest request = new UnifiedOrderRequest();
         request.setTradeType("APP");
         request.setBody(this.getSubject());
-        request.setNotifyUrl(this.getHost() + PaymentWay.WxPayWithJSAPI.getNotifyUrl());
+        request.setNotifyUrl(this.getNotifyUrl());
         request.setOutTradeNo(this.getOutTradeSn());
         request.setTotalFee(String.valueOf(this.getPayAmount().multiply(BigDecimal.valueOf(100L))));
         request.setSpbillCreateIp(this.getClientIp());
@@ -131,7 +132,7 @@ public class PaymentRequest extends AbsRequest {
         UnifiedOrderRequest request = new UnifiedOrderRequest();
         request.setTradeType("APP");
         request.setBody(this.getSubject());
-        request.setNotifyUrl(this.getHost() + PaymentWay.WxPayWithApp.getNotifyUrl());
+        request.setNotifyUrl(this.getNotifyUrl());
         request.setOutTradeNo(this.getOutTradeSn());
         request.setTotalFee(String.valueOf(this.getPayAmount().multiply(BigDecimal.valueOf(100L))));
         request.setSpbillCreateIp(this.getClientIp());
@@ -180,4 +181,7 @@ public class PaymentRequest extends AbsRequest {
         }
     }
 
+    private String getNotifyUrl() {
+        return this.getHost() + paymentWay.getNotifyUrl(FeatureType.Payment, this.getPlatformAppid());
+    }
 }

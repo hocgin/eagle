@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.bmw.service;
 
+import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
 import in.hocg.eagle.modules.bmw.pojo.ro.*;
 import in.hocg.eagle.modules.bmw.pojo.vo.*;
 
@@ -62,13 +63,11 @@ public interface PaymentService {
     /**
      * 处理回调通知
      *
-     * @param feature
-     * @param channel
-     * @param appid
+     * @param context
      * @param data
      * @return
      */
-    String handleMessage(Integer feature, Integer channel, String appid, String data);
+    String handleMessage(MessageContext context, String data);
 
     /**
      * 处理退款回调信息

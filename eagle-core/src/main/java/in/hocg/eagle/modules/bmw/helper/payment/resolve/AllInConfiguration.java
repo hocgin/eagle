@@ -26,12 +26,12 @@ public class AllInConfiguration {
         final AllInMessageResolve dataResolve = new AllInMessageResolve();
 
         // 微信支付
-        dataResolve.addRule(MessageType.WxPay_Refund, new WxPayPaymentMessageRule(wxPayService));
-        dataResolve.addRule(MessageType.WxPay_Payment, new WxPayRefundMessageRule(wxPayService));
+        dataResolve.addRule(MessageType.WxPayWithRefund, new WxPayPaymentMessageRule(wxPayService));
+        dataResolve.addRule(MessageType.WxPayWithPayment, new WxPayRefundMessageRule(wxPayService));
 
         // 支付宝支付
-        dataResolve.addRule(MessageType.AliPay_Payment, new AliPayPaymentMessageRule(aliPayService));
-        dataResolve.addRule(MessageType.AliPay_Refund, new AliPayRefundMessageRule(aliPayService));
+        dataResolve.addRule(MessageType.AliPayWithPayment, new AliPayPaymentMessageRule(aliPayService));
+        dataResolve.addRule(MessageType.AliPayWithRefund, new AliPayRefundMessageRule(aliPayService));
         return dataResolve;
     }
 

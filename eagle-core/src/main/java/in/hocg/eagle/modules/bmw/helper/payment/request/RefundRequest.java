@@ -1,8 +1,9 @@
 package in.hocg.eagle.modules.bmw.helper.payment.request;
 
 import in.hocg.eagle.basic.SpringContext;
-import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.constant.datadict.PaymentWay;
+import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.FeatureType;
 import in.hocg.payment.alipay.v2.AliPayService;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeRefundRequest;
@@ -49,7 +50,7 @@ public class RefundRequest extends AbsRequest {
             .setRefundAmount(String.valueOf(getRefundFee()))
             .setOutTradeNo(getRefundSn())
             .setTradeNo(getTradeNo()));
-        request.setNotifyUrl(String.format("%s/2/1", this.getHost()));
+        request.setNotifyUrl(this.getNotifyUrl());
         return request;
     }
 
@@ -63,7 +64,7 @@ public class RefundRequest extends AbsRequest {
         request.setOutRefundNo(getRefundSn());
         request.setTotalFee(totalFe);
         request.setRefundAccount(refundAccount);
-        request.setNotifyUrl(String.format("%s/1/1", this.getHost()));
+        request.setNotifyUrl(this.getNotifyUrl());
         return request;
     }
 
@@ -79,5 +80,9 @@ public class RefundRequest extends AbsRequest {
             return result.setRefundTradeNo(response.getTradeNo());
         }
         throw ServiceException.wrap("暂不支持该交易方式");
+    }
+
+    private String getNotifyUrl() {
+        return this.getHost() + paymentWay.getNotifyUrl(FeatureType.Refund, this.getPlatformAppid());
     }
 }

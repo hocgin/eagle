@@ -1,18 +1,13 @@
 package in.hocg.eagle.modules.bmw.service.impl;
 
 import in.hocg.eagle.basic.SpringContext;
-import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
-import in.hocg.eagle.basic.constant.datadict.RefundStatus;
-import in.hocg.eagle.basic.constant.datadict.TradeStatus;
+import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.lang.SNCode;
-import in.hocg.eagle.basic.constant.datadict.PaymentNotifyResult;
-import in.hocg.eagle.basic.constant.datadict.PaymentNotifyType;
-import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.modules.bmw.datastruct.PaymentMapping;
 import in.hocg.eagle.modules.bmw.datastruct.PaymentTradeMapping;
 import in.hocg.eagle.modules.bmw.datastruct.RefundRecordMapping;
+import in.hocg.eagle.modules.bmw.entity.PaymentPlatform;
 import in.hocg.eagle.modules.bmw.entity.*;
 import in.hocg.eagle.modules.bmw.helper.payment.request.PaymentRequest;
 import in.hocg.eagle.modules.bmw.helper.payment.request.PaymentRequestResult;
@@ -20,7 +15,6 @@ import in.hocg.eagle.modules.bmw.helper.payment.request.RefundRequest;
 import in.hocg.eagle.modules.bmw.helper.payment.request.RefundRequestResult;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.AllInMessageResolve;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
-import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageType;
 import in.hocg.eagle.modules.bmw.pojo.ro.*;
 import in.hocg.eagle.modules.bmw.pojo.vo.*;
 import in.hocg.eagle.modules.bmw.service.*;
@@ -193,12 +187,13 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String handleMessage(Integer feature, Integer channel, String appid, String data) {
+    public String handleMessage(MessageContext context, String data) {
         final LambdaMap<Object> args = new StringMap<>();
-        args.put(MessageContext::getAppid, appid);
-        args.put(MessageContext::getChannel, channel);
-        args.put(MessageContext::getFeature, feature);
-        return ((PaymentMessage.Result) messageResolve.handle(MessageType.of(channel, feature), data, args)).string();
+        args.put(MessageContext::getAppid, context.getAppid());
+        args.put(MessageContext::getChannel, context.getChannel());
+        args.put(MessageContext::getFeature, context.getFeature());
+        args.put(MessageContext::getPaymentWay, context.getPaymentWay());
+        return ((PaymentMessage.Result) messageResolve.handle(context.asMessageType(), data, args)).string();
     }
 
     @Override
@@ -334,7 +329,7 @@ public class PaymentServiceImpl implements PaymentService {
         String notifyUrl;
 
         switch (notifyType) {
-            case Trade:{
+            case Trade: {
                 final PaymentTrade trade = paymentTradeService.selectOneByTradeSn(requestSn)
                     .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
                 notifyUrl = trade.getNotifyUrl();
@@ -348,7 +343,7 @@ public class PaymentServiceImpl implements PaymentService {
                 data.setData(query.getData()).setPlatformType(query.getPlatformType());
                 break;
             }
-            case Refund:{
+            case Refund: {
                 final RefundRecord refund = refundRecordService.selectOneByRefundSn(requestSn)
                     .orElseThrow(() -> ServiceException.wrap("未找到退款单据"));
                 notifyUrl = refund.getNotifyUrl();

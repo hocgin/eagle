@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.constant.datadict;
 
+import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.FeatureType;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,10 @@ public enum PaymentWay implements IntEnum {
     private final Integer code;
     private final String name;
 
-    public String getNotifyUrl() {
-        return "/" + platform.getCode() + "/" + getCode();
+    public String getNotifyUrl(FeatureType featureType, String appid) {
+        final Integer channel = platform.getCode();
+        final Integer feature = featureType.getCode();
+        final Integer paymentWay = this.getCode();
+        return "/" + feature + "/" + channel + "/" + appid + "/" + paymentWay;
     }
 }

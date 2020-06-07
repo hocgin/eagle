@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.bmw.controller;
 
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
 import in.hocg.eagle.modules.bmw.pojo.ro.GoPayRo;
 import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.bmw.service.PaymentService;
@@ -27,20 +28,25 @@ public class PaymentController {
     /**
      * 支付回调
      *
-     * @param feature 支付功能: 微信JSAPI、支付宝
-     * @param channel 支付平台: 微信、支付宝
-     * @param appid   支付平台的唯一标识
+     * @param feature    支付功能: 支付、退款
+     * @param channel    支付平台: 微信、支付宝
+     * @param appid      支付平台的唯一标识
+     * @param paymentWay 支付方式
      * @param data
      * @return
      */
     @UseLogger("支付回调")
-    @RequestMapping("/{feature}/{channel}/{appid}")
+    @RequestMapping("/{feature}/{channel}/{appid}/{paymentWay}")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<String> doPayResultMessage(@PathVariable("feature") Integer feature,
                                                      @PathVariable("channel") Integer channel,
                                                      @PathVariable("appid") String appid,
+                                                     @PathVariable("paymentWay") Integer paymentWay,
                                                      @RequestBody String data) {
-        return ResponseEntity.ok(paymentService.handleMessage(feature, channel, appid, data));
+        final MessageContext messageContext = new MessageContext()
+            .setAppid(appid).setChannel(channel)
+            .setFeature(feature).setPaymentWay(paymentWay);
+        return ResponseEntity.ok(paymentService.handleMessage(messageContext, data));
     }
 
     @UseLogger("生成支付信息")
