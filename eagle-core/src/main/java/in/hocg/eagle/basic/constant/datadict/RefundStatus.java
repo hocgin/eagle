@@ -1,6 +1,5 @@
 package in.hocg.eagle.basic.constant.datadict;
 
-import in.hocg.eagle.modules.bmw2._constant.PaymentNotifyStatus;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

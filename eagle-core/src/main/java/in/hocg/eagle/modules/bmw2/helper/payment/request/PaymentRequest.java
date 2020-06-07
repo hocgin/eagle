@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.bmw2.helper.payment.request;
 
 import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.modules.bmw2._constant.PaymentWay;
+import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.payment.PaymentResponse;
 import in.hocg.payment.alipay.v2.AliPayService;

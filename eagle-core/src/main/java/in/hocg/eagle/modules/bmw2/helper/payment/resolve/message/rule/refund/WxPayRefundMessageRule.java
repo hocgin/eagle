@@ -4,7 +4,7 @@ import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.constant.datadict.IntEnum;
 import in.hocg.eagle.basic.constant.datadict.RefundStatus;
 import in.hocg.eagle.modules.bmw2.helper.payment.resolve.message.MessageContext;
-import in.hocg.eagle.modules.bmw2._constant.PaymentWay;
+import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.modules.bmw2.pojo.ro.RefundMessageRo;
 import in.hocg.eagle.utils.DateUtils;
 import in.hocg.eagle.utils.lambda.map.LambdaMap;

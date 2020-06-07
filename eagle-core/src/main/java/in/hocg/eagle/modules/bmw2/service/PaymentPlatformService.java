@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw2.service;
 
 import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.modules.bmw2._constant.PaymentWay;
+import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.modules.bmw2.entity.PaymentPlatform;
 import in.hocg.eagle.basic.AbstractService;
 
