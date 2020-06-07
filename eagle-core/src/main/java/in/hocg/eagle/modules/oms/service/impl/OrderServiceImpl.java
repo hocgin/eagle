@@ -223,8 +223,8 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         final String orderSn = order.getOrderSn();
         final BigDecimal totalAmount = order.getTotalAmount();
         String notifyUrl = String.format("%s/api/order/async", configs.getHostname());
-        final String transactionSn = paymentApi.createTrade(new CreateTradeRo(paymentAppSn, orderSn, totalAmount).setNotifyUrl(notifyUrl));
-        this.updateById(new Order().setId(orderId).setTradeSn(transactionSn));
+        final String tradeSn = paymentApi.createTrade(new CreateTradeRo(paymentAppSn, orderSn, totalAmount).setNotifyUrl(notifyUrl));
+        this.updateById(new Order().setId(orderId).setTradeSn(tradeSn));
     }
 
     @Override
