@@ -6,7 +6,9 @@ import in.hocg.eagle.basic.env.Env;
 import in.hocg.eagle.utils.web.RequestUtils;
 import in.hocg.payment.PaymentService;
 import in.hocg.payment.alipay.v2.AliPayService;
+import in.hocg.payment.alipay.v2.response.AliPayHttpResponse;
 import in.hocg.payment.wxpay.v2.WxPayService;
+import in.hocg.payment.wxpay.v2.response.WxPayXmlResponse;
 
 /**
  * Created by hocgin on 2020/6/1.
@@ -33,6 +35,14 @@ public abstract class AbsRequest {
             default:
                 throw new UnsupportedOperationException();
         }
+    }
+
+    protected boolean isSuccess(WxPayXmlResponse response) {
+        return "SUCCESS".equalsIgnoreCase(response.getResultCode());
+    }
+
+    protected boolean isSuccess(AliPayHttpResponse response) {
+        return "10000".equalsIgnoreCase(response.getCode());
     }
 
     protected void save(GoPaymentRequest request) {

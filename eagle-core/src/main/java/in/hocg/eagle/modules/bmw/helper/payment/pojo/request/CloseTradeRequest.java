@@ -1,7 +1,6 @@
 package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 
 import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
-import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.CloseTradeResponse;
 import in.hocg.payment.PaymentService;
 import in.hocg.payment.alipay.v2.AliPayService;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
@@ -35,17 +34,18 @@ public class CloseTradeRequest extends AbsRequest {
     @ApiModelProperty(value = "支付平台", required = true)
     private PaymentPlatform platform;
 
-
-    public CloseTradeResponse request() {
-        final CloseTradeResponse result = new CloseTradeResponse();
+    public boolean request() {
+        boolean result;
         final PaymentService<?> payService = getPayService(platform, platformAppid);
         switch (platform) {
             case WxPay: {
                 final CloseOrderResponse response = ((WxPayService) payService).request(this.wxPayRequest());
+                result = this.isSuccess(response);
                 break;
             }
             case AliPay: {
                 final TradeCloseResponse response = ((AliPayService) payService).request(this.aliPayRequest());
+                result = this.isSuccess(response);
                 break;
             }
             default:

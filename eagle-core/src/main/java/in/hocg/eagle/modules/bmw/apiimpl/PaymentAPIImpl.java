@@ -40,13 +40,12 @@ public class PaymentAPIImpl implements PaymentAPI {
 
     @Override
     public QueryAsyncVo<TradeStatusSync> queryTrade(String tradeSn) {
-        return null;
+        return paymentService.queryTrade(tradeSn);
     }
 
     @Override
     public QueryAsyncVo<RefundStatusSync> queryRefund(String refundSn) {
-        return null;
+        return paymentService.queryRefund(refundSn);
     }
-//    private final
 
 }

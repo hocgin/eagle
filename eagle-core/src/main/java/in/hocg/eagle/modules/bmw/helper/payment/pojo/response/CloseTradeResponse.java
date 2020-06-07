@@ -7,4 +7,5 @@ package in.hocg.eagle.modules.bmw.helper.payment.pojo.response;
  * @author hocgin
  */
 public class CloseTradeResponse {
+
 }
