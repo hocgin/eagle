@@ -74,11 +74,8 @@ public interface OrderService extends AbstractService<Order> {
 
     /**
      * 支付成功回调处理
-     *
-     * @param payType
-     * @param outTradeNo
+     * @param qo
      */
-    void asyncOrderMessage(Integer payType, String outTradeNo);
     void asyncOrderMessage(AsyncOrderMessageQo qo);
 
     /**

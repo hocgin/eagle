@@ -70,9 +70,8 @@ public class OrderController {
     }
 
     @UseLogger("通知订单状态 - 订单")
-    @PostMapping("/async/{orderSn}")
-    public String asyncOrderMessage(@PathVariable("orderSn") String orderSn,
-                                    @RequestBody AsyncOrderMessageQo qo) {
+    @PostMapping("/async")
+    public String asyncOrderMessage(@RequestBody AsyncOrderMessageQo qo) {
         service.asyncOrderMessage(qo);
         return "SUCCESS";
     }

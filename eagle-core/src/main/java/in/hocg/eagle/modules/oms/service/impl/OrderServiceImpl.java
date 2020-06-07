@@ -222,7 +222,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         final Long paymentAppSn = configs.getPaymentAppSn();
         final String orderSn = order.getOrderSn();
         final BigDecimal totalAmount = order.getTotalAmount();
-        String notifyUrl = String.format("%s/api/order/async/%s", configs.getHostname(), orderSn);
+        String notifyUrl = String.format("%s/api/order/async", configs.getHostname());
         final String transactionSn = paymentApi.createTrade(new CreateTradeRo(paymentAppSn, orderSn, totalAmount).setNotifyUrl(notifyUrl));
         this.updateById(new Order().setId(orderId).setTradeSn(transactionSn));
     }
@@ -338,29 +338,6 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         update.setOrderStatus(OrderStatus.ToBeDelivered.getCode());
         update.setPaymentTime(LocalDateTime.now());
         update.setPayType(payType.getCode());
-        validUpdateById(update);
-    }
-
-    @Async
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void asyncOrderMessage(Integer payType, String orderSn) {
-        Optional<Order> orderOpl = this.selectOneByOrderSn(orderSn);
-        if (!orderOpl.isPresent()) {
-            throw ServiceException.wrap("订单不存在");
-        }
-        final Order order = orderOpl.get();
-        if (!LangUtils.equals(OrderStatus.PendingPayment.getCode(), order.getOrderStatus())) {
-            log.warn("订单{{}}状态[{}]非待付款时，被调用支付成功", orderSn, order.getOrderStatus());
-            return;
-        }
-
-        // 更改订单状态
-        final Order update = new Order();
-        update.setId(order.getId());
-        update.setOrderStatus(OrderStatus.ToBeDelivered.getCode());
-        update.setPaymentTime(LocalDateTime.now());
-        update.setPayType(payType);
         validUpdateById(update);
     }
 
