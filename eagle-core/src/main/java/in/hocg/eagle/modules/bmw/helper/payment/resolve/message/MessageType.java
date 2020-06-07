@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 /**
  * Created by hocgin on 2019/12/24.
  * email: hocgin@gmail.com
@@ -25,12 +27,12 @@ public enum MessageType {
     private final Integer feature;
     private final String name;
 
-    public static MessageType of(@NonNull Integer channel, @NonNull Integer feature) {
+    public static Optional<MessageType> of(@NonNull Integer channel, @NonNull Integer feature) {
         for (MessageType type : MessageType.values()) {
             if (type.channel.equals(channel) && type.feature.equals(feature)) {
-                return type;
+                return Optional.ofNullable(type);
             }
         }
-        throw new UnsupportedOperationException();
+        return Optional.empty();
     }
 }

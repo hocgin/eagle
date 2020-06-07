@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.bmw.helper.payment.resolve.message;
 
+import in.hocg.eagle.basic.exception.ServiceException;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -18,6 +19,6 @@ public class MessageContext {
     private Integer paymentWay;
 
     public MessageType asMessageType() {
-        return MessageType.of(channel, feature);
+        return MessageType.of(channel, feature).orElseThrow(() -> ServiceException.wrap("回调处理失败"));
     }
 }
