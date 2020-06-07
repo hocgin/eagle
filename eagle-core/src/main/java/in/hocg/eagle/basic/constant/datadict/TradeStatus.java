@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.constant.datadict;
 
+import in.hocg.eagle.modules.bmw2._constant.PaymentNotifyStatus;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,4 +24,21 @@ public enum TradeStatus implements IntEnum {
     private final String name;
 
     public static final String KEY = "tradeStatus";
+
+    public PaymentNotifyStatus asPaymentNotifyStatus() {
+        switch (this) {
+            case Init:
+                return PaymentNotifyStatus.Init;
+            case Wait:
+                return PaymentNotifyStatus.Pending;
+            case Done:
+                return PaymentNotifyStatus.Success;
+            case Closed:
+                return PaymentNotifyStatus.Closed;
+            case Fail:
+                return PaymentNotifyStatus.Fail;
+            default:
+                throw new IllegalArgumentException("转换失败");
+        }
+    }
 }

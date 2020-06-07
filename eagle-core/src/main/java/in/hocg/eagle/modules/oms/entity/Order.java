@@ -42,9 +42,9 @@ public class Order extends AbstractEntity<Order> {
      */
     @TableField("order_sn")
     private String orderSn;
-    @ApiModelProperty("交易流水号")
-    @TableField("transaction_sn")
-    private String transactionSn;
+    @ApiModelProperty("交易单号")
+    @TableField("trade_sn")
+    private String tradeSn;
     /**
      * 优惠券ID
      * Coupon Account ID

@@ -32,6 +32,10 @@ public class DateUtils {
         return localDateTime.format(formatter);
     }
 
+    public LocalDateTime format(CharSequence dateTimeStr, DateTimeFormatter formatter) {
+        return LocalDateTime.parse(dateTimeStr, formatter);
+    }
+
     public LocalDateTime ofLong(long timestamp) {
         return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), getDefaultZoneId());
     }

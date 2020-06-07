@@ -10,10 +10,10 @@ import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.lang.SNCode;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.modules.bmw.api.PaymentApi;
-import in.hocg.eagle.modules.bmw.helper.payment.request.PaymentRequestResult;
-import in.hocg.eagle.modules.bmw.pojo.qo.CreatePaymentTransactionQo;
-import in.hocg.eagle.modules.bmw.pojo.qo.GoPayQo;
+import in.hocg.eagle.modules.bmw2.api.PaymentAPI;
+import in.hocg.eagle.modules.bmw2.pojo.ro.CreateTradeRo;
+import in.hocg.eagle.modules.bmw2.pojo.ro.GoPayRo;
+import in.hocg.eagle.modules.bmw2.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.com.service.ChangeLogService;
 import in.hocg.eagle.modules.mkt.entity.CouponAccount;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
@@ -73,7 +73,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     private final ProductService productService;
     private final OrderItemService orderItemService;
     private final CouponService couponService;
-    private final PaymentApi paymentApi;
+    private final PaymentAPI paymentApi;
     private final CouponAccountService couponAccountService;
     private final SkuService skuService;
     private final SkuMapping skuMapping;
@@ -217,12 +217,11 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         }
 
         // 生成交易
-        final String transactionSn = paymentApi.createPaymentTransaction(CreatePaymentTransactionQo.builder()
-            .appId(Env.getConfigs().getPaymentAppId())
-            .appOrderSn(order.getOrderSn())
-            .totalFee(order.getTotalAmount())
-            .build());
-        updateById(new Order().setId(orderId).setTransactionSn(transactionSn));
+        final Long paymentAppSn = Env.getConfigs().getPaymentAppSn();
+        final String orderSn = order.getOrderSn();
+        final BigDecimal totalAmount = order.getTotalAmount();
+        final String transactionSn = paymentApi.createTrade(new CreateTradeRo(paymentAppSn, orderSn, totalAmount));
+        this.updateById(new Order().setId(orderId).setTradeSn(transactionSn));
     }
 
     @Override
@@ -245,7 +244,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         this.handleCancelOrClosedOrderAfter(orderId);
 
         // 关闭交易
-        paymentApi.closePaymentTransaction(order.getTransactionSn());
+        paymentApi.closeTrade(order.getTradeSn());
     }
 
     @Override
@@ -416,7 +415,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     }
 
     @Override
-    public PaymentRequestResult goPay(PayOrderQo qo) {
+    public GoPayVo goPay(PayOrderQo qo) {
         final Long id = qo.getId();
         final Integer payType = qo.getPayType();
         final OrderComplexVo orderComplex = this.selectOne(id);
@@ -425,10 +424,8 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         }
 
         Integer paymentWay = payType;
-        return paymentApi.goPay(GoPayQo.builder()
-            .transactionSn(orderComplex.getTransactionSn())
-            .paymentWay(paymentWay)
-            .build());
+        final GoPayRo ro = new GoPayRo(orderComplex.getTradeSn(), paymentWay);
+        return paymentApi.goPay(ro);
     }
 
     @Override

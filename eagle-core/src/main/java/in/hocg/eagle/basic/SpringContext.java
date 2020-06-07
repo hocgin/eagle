@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic;
 
+import in.hocg.eagle.utils.web.RequestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -77,5 +78,14 @@ public class SpringContext implements ApplicationContextAware {
 
     public static Optional<HttpSession> getSession() {
         return getRequest().map(request -> request.getSession(false));
+    }
+
+    /**
+     * 请求的客户端
+     *
+     * @return
+     */
+    public static Optional<String> getClientIP() {
+        return SpringContext.getRequest().map(RequestUtils::getClientIP);
     }
 }

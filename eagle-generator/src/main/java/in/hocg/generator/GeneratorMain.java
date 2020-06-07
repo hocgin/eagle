@@ -14,7 +14,16 @@ import in.hocg.generator.core.Module;
 public class GeneratorMain {
 
     public static void main(String[] args) {
-        CodeGenerator.generateByTables(DataSource.DEFAULT, Module.TEST, "undo_log");
+        CodeGenerator.generateByTables(DataSource.DEFAULT, Module.BMW2,
+            "bmw_payment_app",
+            "bmw_payment_platform",
+            "bmw_request_platform_log",
+            "bmw_payment_trade",
+            "bmw_payment_record",
+            "bmw_refund_record",
+            "bmw_notify_app",
+            "bmw_notify_app_log",
+            "");
     }
 
 }

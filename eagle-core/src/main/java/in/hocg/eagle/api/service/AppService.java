@@ -5,7 +5,7 @@ import in.hocg.eagle.api.AppMapping;
 import in.hocg.eagle.api.pojo.qo.*;
 import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.modules.bmw.helper.payment.request.PaymentRequestResult;
+import in.hocg.eagle.modules.bmw2.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponAccountPagingQo;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import in.hocg.eagle.modules.mkt.service.CouponAccountService;
@@ -88,7 +88,7 @@ public class AppService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public PaymentRequestResult payOrder(PayOrderQo qo) {
+    public GoPayVo payOrder(PayOrderQo qo) {
         return orderService.goPay(qo);
     }
 
