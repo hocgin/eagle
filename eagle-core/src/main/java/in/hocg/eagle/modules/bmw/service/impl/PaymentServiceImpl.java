@@ -9,15 +9,17 @@ import in.hocg.eagle.modules.bmw.datastruct.PaymentTradeMapping;
 import in.hocg.eagle.modules.bmw.datastruct.RefundRecordMapping;
 import in.hocg.eagle.modules.bmw.entity.PaymentPlatform;
 import in.hocg.eagle.modules.bmw.entity.*;
+import in.hocg.eagle.modules.bmw.helper.payment.pojo.request.CloseTradeRequest;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.request.GoPaymentRequest;
-import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoPaymentResponse;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.request.GoRefundRequest;
+import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoPaymentResponse;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoRefundResponse;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.AllInMessageResolve;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
 import in.hocg.eagle.modules.bmw.pojo.ro.*;
 import in.hocg.eagle.modules.bmw.pojo.vo.*;
 import in.hocg.eagle.modules.bmw.service.*;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.lambda.map.LambdaMap;
 import in.hocg.eagle.utils.lambda.map.StringMap;
@@ -35,6 +37,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -68,12 +71,28 @@ public class PaymentServiceImpl implements PaymentService {
         final String clientIp = SpringContext.getClientIP().orElse(null);
 
         final PaymentTrade trade = paymentTradeService.selectOneByTradeSn(tradeSn)
-            .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
+                .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
         final Long tradeId = trade.getId();
 
         PaymentTrade update = new PaymentTrade().setFinishAt(now).setTradeStatus(TradeStatus.Closed.getCode()).setUpdatedAt(now).setUpdatedIp(clientIp);
         boolean isOk = paymentTradeService.updateOneByIdAndTradeStatus(update, tradeId, TradeStatus.Wait.getCode());
         ValidUtils.isTrue(isOk, "系统繁忙");
+
+        final List<PaymentRecord> paymentRecords = paymentRecordService.selectListByTradeId(trade.getId());
+        final Map<Long, PaymentRecord> recordsMap = LangUtils.toMap(paymentRecords, PaymentRecord::getPaymentPlatformId);
+        PaymentPlatform paymentPlatform;
+        in.hocg.eagle.basic.constant.datadict.PaymentPlatform platform;
+        for (Map.Entry<Long, PaymentRecord> entry : recordsMap.entrySet()) {
+            final Long paymentPlatformId = entry.getKey();
+            final PaymentRecord record = entry.getValue();
+            paymentPlatform = paymentPlatformService.getById(paymentPlatformId);
+            final String platformAppid = paymentPlatform.getPlatformAppid();
+            platform = IntEnum.of(paymentPlatform.getPlatformType(), in.hocg.eagle.basic.constant.datadict.PaymentPlatform.class)
+                    .orElseThrow(() -> ServiceException.wrap("暂不支持该平台方式"));
+
+            boolean isClosedOk = new CloseTradeRequest(trade.getTradeSn(), platformAppid, platform).request();
+            log.info("交易单:[tradeSn={}]的交易记录:[ID={}], 关闭结果:[{}]", tradeSn, record.getId(), isClosedOk);
+        }
     }
 
     @Override
@@ -83,17 +102,17 @@ public class PaymentServiceImpl implements PaymentService {
         final String clientIp = SpringContext.getClientIP().orElse(null);
 
         final Long appid = paymentAppService.selectOneByAppSn(ro.getAppSn())
-            .orElseThrow(() -> ServiceException.wrap("未授权接入方")).getId();
+                .orElseThrow(() -> ServiceException.wrap("未授权接入方")).getId();
 
         final String tradeSn = snCode.getTransactionSNCode();
 
         PaymentTrade entity = paymentTradeMapping.asPaymentTrade(ro)
-            .setAppId(appid)
-            .setTradeSn(tradeSn)
-            .setTradeStatus(TradeStatus.Init.getCode())
-            .setCreatedAt(now)
-            .setNotifyUrl(ro.getNotifyUrl())
-            .setCreatedIp(clientIp);
+                .setAppId(appid)
+                .setTradeSn(tradeSn)
+                .setTradeStatus(TradeStatus.Init.getCode())
+                .setCreatedAt(now)
+                .setNotifyUrl(ro.getNotifyUrl())
+                .setCreatedIp(clientIp);
         paymentTradeService.validInsert(entity);
         return tradeSn;
     }
@@ -106,9 +125,10 @@ public class PaymentServiceImpl implements PaymentService {
 
         final String tradeSn = ro.getTradeSn();
         final String wxOpenId = ro.getWxOpenId();
-        final PaymentWay paymentWay = IntEnum.of(ro.getPaymentWay(), PaymentWay.class).orElseThrow(() -> ServiceException.wrap("暂不支持该交易方式"));
+        final PaymentWay paymentWay = IntEnum.of(ro.getPaymentWay(), PaymentWay.class)
+                .orElseThrow(() -> ServiceException.wrap("暂不支持该交易方式"));
         final PaymentTrade trade = paymentTradeService.selectOneByTradeSn(tradeSn)
-            .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
+                .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
         final Long tradeId = trade.getId();
 
         if (TradeStatus.Init.eq(trade.getTradeStatus())) {
@@ -122,25 +142,25 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         PaymentPlatform paymentPlatform = paymentPlatformService.selectOneByTradeIdAndPaymentWayAndStatus(tradeId, paymentWay, Enabled.On)
-            .orElseThrow(() -> ServiceException.wrap("未找到匹配的支付平台"));
+                .orElseThrow(() -> ServiceException.wrap("未找到匹配的支付平台"));
         final Long paymentPlatformId = paymentPlatform.getId();
 
         // 新增支付记录
         paymentRecordService.validInsert(new PaymentRecord()
-            .setPaymentPlatformId(paymentPlatformId)
-            .setPaymentWay(paymentWay.getCode())
-            .setTradeId(tradeId)
-            .setWxOpenid(wxOpenId)
-            .setCreatedAt(now)
-            .setCreatedIp(clientIp));
+                .setPaymentPlatformId(paymentPlatformId)
+                .setPaymentWay(paymentWay.getCode())
+                .setTradeId(tradeId)
+                .setWxOpenid(wxOpenId)
+                .setCreatedAt(now)
+                .setCreatedIp(clientIp));
 
         final GoPaymentResponse result = GoPaymentRequest.builder()
-            .platformAppid(paymentPlatform.getPlatformAppid())
-            .tradeSn(trade.getTradeSn())
-            .wxOpenId(wxOpenId)
-            .payAmount(trade.getTotalFee())
-            .paymentWay(paymentWay)
-            .build().request();
+                .platformAppid(paymentPlatform.getPlatformAppid())
+                .tradeSn(trade.getTradeSn())
+                .wxOpenId(wxOpenId)
+                .payAmount(trade.getTotalFee())
+                .paymentWay(paymentWay)
+                .build().request();
         return paymentMapping.asGoPayVo(result);
     }
 
@@ -152,12 +172,12 @@ public class PaymentServiceImpl implements PaymentService {
 
         final String tradeSn = ro.getTradeSn();
         final PaymentTrade trade = paymentTradeService.selectOneByTradeSn(tradeSn)
-            .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
+                .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
         if (!TradeStatus.Done.eq(trade.getTradeStatus())) {
             ValidUtils.fail("交易未完成");
         }
         final PaymentWay paymentWay = IntEnum.of(trade.getPaymentWay(), PaymentWay.class)
-            .orElseThrow(() -> ServiceException.wrap("暂不支持该交易方式"));
+                .orElseThrow(() -> ServiceException.wrap("暂不支持该交易方式"));
         final PaymentPlatform paymentPlatform = paymentPlatformService.getById(trade.getPaymentPlatformId());
         if (Objects.isNull(paymentPlatform)) {
             log.info("交易单:[{}]上的支付平台[id={}]未找到", trade.getTradeSn(), trade.getPaymentPlatformId());
@@ -166,20 +186,20 @@ public class PaymentServiceImpl implements PaymentService {
 
         final String refundSn = snCode.getRefundSNCode();
         RefundRecord entity = refundRecordMapping.asRefundRecord(ro)
-            .setRefundSn(refundSn)
-            .setRefundStatus(RefundStatus.Wait.getCode())
-            .setCreatedAt(now)
-            .setCreatedIp(clientIp);
+                .setRefundSn(refundSn)
+                .setRefundStatus(RefundStatus.Wait.getCode())
+                .setCreatedAt(now)
+                .setCreatedIp(clientIp);
 
         final GoRefundResponse result = GoRefundRequest.builder()
-            .platformAppid(paymentPlatform.getPlatformAppid())
-            .paymentWay(paymentWay)
-            .tradeSn(trade.getTradeSn())
-            .tradeNo(trade.getTradeNo())
-            .refundSn(entity.getRefundSn())
-            .totalFee(trade.getTotalFee())
-            .refundFee(entity.getRefundFee())
-            .build().request();
+                .platformAppid(paymentPlatform.getPlatformAppid())
+                .paymentWay(paymentWay)
+                .tradeSn(trade.getTradeSn())
+                .tradeNo(trade.getTradeNo())
+                .refundSn(entity.getRefundSn())
+                .totalFee(trade.getTotalFee())
+                .refundFee(entity.getRefundFee())
+                .build().request();
         entity.setRefundTradeNo(result.getRefundTradeNo());
         refundRecordService.validInsert(entity);
         return new GoRefundVo().setRefundSn(entity.getRefundSn());
@@ -204,15 +224,15 @@ public class PaymentServiceImpl implements PaymentService {
 
         final String refundSn = ro.getRefundSn();
         final RefundRecord refund = refundRecordService.selectOneByRefundSn(refundSn)
-            .orElseThrow(() -> ServiceException.wrap("退款失败"));
+                .orElseThrow(() -> ServiceException.wrap("退款失败"));
 
         final RefundRecord updated = new RefundRecord()
-            .setRefundTradeNo(ro.getRefundTradeNo())
-            .setRefundStatus(ro.getRefundStatus().getCode())
-            .setRefundAt(ro.getRefundAt())
-            .setSettlementRefundFee(ro.getSettlementRefundFee())
-            .setUpdateIp(clientIp)
-            .setUpdatedAt(now);
+                .setRefundTradeNo(ro.getRefundTradeNo())
+                .setRefundStatus(ro.getRefundStatus().getCode())
+                .setRefundAt(ro.getRefundAt())
+                .setSettlementRefundFee(ro.getSettlementRefundFee())
+                .setUpdateIp(clientIp)
+                .setUpdatedAt(now);
         final Long refundId = refund.getId();
         boolean isOk = refundRecordService.updateOneByIdAndTradeStatus(updated, refundId, RefundStatus.Wait.getCode());
         ValidUtils.isTrue(isOk, "退款失败");
@@ -230,20 +250,20 @@ public class PaymentServiceImpl implements PaymentService {
 
         final String tradeSn = ro.getTradeSn();
         final PaymentTrade paymentTrade = paymentTradeService.selectOneByTradeSn(tradeSn)
-            .orElseThrow(() -> ServiceException.wrap("交易失败"));
+                .orElseThrow(() -> ServiceException.wrap("交易失败"));
         ValidUtils.isTrue(paymentTrade.getTotalFee().compareTo(ro.getTotalFee()) == 0, "交易金额不符合");
 
         final TradeStatus tradeStatus = ro.getTradeStatus();
         final String tradeNo = ro.getTradeNo();
         final PaymentTrade update = new PaymentTrade()
-            .setBuyerPayFee(ro.getBuyerPayFee())
-            .setPaymentWay(ro.getPaymentWay().getCode())
-            .setTradeStatus(tradeStatus.getCode())
-            .setFinishAt(now)
-            .setTradeNo(tradeNo)
-            .setPaymentAt(ro.getPaymentAt())
-            .setUpdatedAt(now)
-            .setUpdatedIp(clientIp);
+                .setBuyerPayFee(ro.getBuyerPayFee())
+                .setPaymentWay(ro.getPaymentWay().getCode())
+                .setTradeStatus(tradeStatus.getCode())
+                .setFinishAt(now)
+                .setTradeNo(tradeNo)
+                .setPaymentAt(ro.getPaymentAt())
+                .setUpdatedAt(now)
+                .setUpdatedIp(clientIp);
 
         final Long tradeId = paymentTrade.getId();
         boolean isOk = paymentTradeService.updateOneByIdAndTradeStatus(update, tradeId, TradeStatus.Wait.getCode());
@@ -258,7 +278,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional(rollbackFor = Exception.class)
     public QueryAsyncVo<TradeStatusSync> queryTrade(String tradeSn) {
         final PaymentTrade trade = paymentTradeService.selectOneByTradeSn(tradeSn)
-            .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
+                .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
         final Long appId = trade.getAppId();
         final PaymentApp paymentApp = paymentAppService.getById(appId);
         ValidUtils.notNull(paymentApp, "未找到接入应用");
@@ -270,25 +290,25 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         return new QueryAsyncVo<TradeStatusSync>()
-            .setPlatformType(paymentPlatform.getPlatformType())
-            .setData(new TradeStatusSync()
-                .setOpenid(trade.getWxOpenid())
-                .setOutTradeSn(trade.getOutTradeSn())
-                .setTradeSn(trade.getTradeSn())
-                .setTotalFee(trade.getTotalFee())
-                .setTradeStatus(trade.getTradeStatus())
-                .setPaymentWay(trade.getPaymentWay())
-                .setPaymentAt(trade.getPaymentAt()));
+                .setPlatformType(paymentPlatform.getPlatformType())
+                .setData(new TradeStatusSync()
+                        .setOpenid(trade.getWxOpenid())
+                        .setOutTradeSn(trade.getOutTradeSn())
+                        .setTradeSn(trade.getTradeSn())
+                        .setTotalFee(trade.getTotalFee())
+                        .setTradeStatus(trade.getTradeStatus())
+                        .setPaymentWay(trade.getPaymentWay())
+                        .setPaymentAt(trade.getPaymentAt()));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public QueryAsyncVo<RefundStatusSync> queryRefund(String refundSn) {
         final RefundRecord refund = refundRecordService.selectOneByRefundSn(refundSn)
-            .orElseThrow(() -> ServiceException.wrap("未找到退款单据"));
+                .orElseThrow(() -> ServiceException.wrap("未找到退款单据"));
 
         final PaymentTrade trade = paymentTradeService.selectOneByTradeSn(refund.getTradeSn())
-            .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
+                .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
         final Long paymentPlatformId = trade.getPaymentPlatformId();
         final PaymentPlatform paymentPlatform = paymentPlatformService.getById(paymentPlatformId);
         if (Objects.isNull(paymentPlatform)) {
@@ -297,18 +317,18 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         return new QueryAsyncVo<RefundStatusSync>()
-            .setPlatformType(paymentPlatform.getPlatformType())
-            .setData(new RefundStatusSync()
-                .setOpenid(trade.getWxOpenid())
-                .setOutTradeSn(trade.getOutTradeSn())
-                .setTradeSn(trade.getTradeSn())
-                .setTotalFee(trade.getTotalFee())
-                .setRefundSn(refundSn)
-                .setOutRefundSn(refund.getOutRefundSn())
-                .setRefundStatus(refund.getRefundStatus())
-                .setRefundFee(refund.getRefundFee())
-                .setSettlementRefundFee(refund.getSettlementRefundFee())
-                .setRefundAt(refund.getRefundAt()));
+                .setPlatformType(paymentPlatform.getPlatformType())
+                .setData(new RefundStatusSync()
+                        .setOpenid(trade.getWxOpenid())
+                        .setOutTradeSn(trade.getOutTradeSn())
+                        .setTradeSn(trade.getTradeSn())
+                        .setTotalFee(trade.getTotalFee())
+                        .setRefundSn(refundSn)
+                        .setOutRefundSn(refund.getOutRefundSn())
+                        .setRefundStatus(refund.getRefundStatus())
+                        .setRefundFee(refund.getRefundFee())
+                        .setSettlementRefundFee(refund.getSettlementRefundFee())
+                        .setRefundAt(refund.getRefundAt()));
     }
 
     @Override
@@ -323,7 +343,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         final String requestSn = notifyApp.getRequestSn();
         final PaymentNotifyType notifyType = IntEnum.of(notifyApp.getNotifyType(), PaymentNotifyType.class)
-            .orElseThrow(() -> ServiceException.wrap("通知类型错误"));
+                .orElseThrow(() -> ServiceException.wrap("通知类型错误"));
         NotifyAppAsyncVo data;
 
         String notifyUrl;
@@ -331,7 +351,7 @@ public class PaymentServiceImpl implements PaymentService {
         switch (notifyType) {
             case Trade: {
                 final PaymentTrade trade = paymentTradeService.selectOneByTradeSn(requestSn)
-                    .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
+                        .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
                 notifyUrl = trade.getNotifyUrl();
                 if (Strings.isBlank(notifyUrl)) {
                     log.info("交易单据:[{}]无需进行通知, 没有设置通知地址", requestSn);
@@ -345,7 +365,7 @@ public class PaymentServiceImpl implements PaymentService {
             }
             case Refund: {
                 final RefundRecord refund = refundRecordService.selectOneByRefundSn(requestSn)
-                    .orElseThrow(() -> ServiceException.wrap("未找到退款单据"));
+                        .orElseThrow(() -> ServiceException.wrap("未找到退款单据"));
                 notifyUrl = refund.getNotifyUrl();
                 if (Strings.isBlank(notifyUrl)) {
                     log.info("退款单据:[{}]无需进行通知, 没有设置通知地址", requestSn);
@@ -363,14 +383,14 @@ public class PaymentServiceImpl implements PaymentService {
         final Long notifyId = notifyApp.getId();
 
         data.setNotifyAt(now)
-            .setNotifyId(notifyId)
-            .setNotifyType(notifyType.getCode());
+                .setNotifyId(notifyId)
+                .setNotifyType(notifyType.getCode());
 
         LocalDateTime finishAt;
         final NotifyAppLog entity = new NotifyAppLog()
-            .setNotifyAppId(notifyId)
-            .setNotifyBody(JsonUtils.toJSONString(data))
-            .setCreatedAt(now);
+                .setNotifyAppId(notifyId)
+                .setNotifyBody(JsonUtils.toJSONString(data))
+                .setCreatedAt(now);
         try {
             final String result = new RestTemplate().postForObject(notifyUrl, data, String.class);
             if ("SUCCESS".equalsIgnoreCase(result)) {

@@ -1,7 +1,9 @@
 package in.hocg.eagle.modules.bmw.service;
 
-import in.hocg.eagle.modules.bmw.entity.PaymentRecord;
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.modules.bmw.entity.PaymentRecord;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import in.hocg.eagle.basic.AbstractService;
  */
 public interface PaymentRecordService extends AbstractService<PaymentRecord> {
 
+    List<PaymentRecord> selectListByTradeId(Long tradeId);
 }

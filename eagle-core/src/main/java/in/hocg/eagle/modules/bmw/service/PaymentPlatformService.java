@@ -1,10 +1,11 @@
 package in.hocg.eagle.modules.bmw.service;
 
+import in.hocg.eagle.basic.AbstractService;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.modules.bmw.entity.PaymentPlatform;
-import in.hocg.eagle.basic.AbstractService;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,4 +19,5 @@ import java.util.Optional;
 public interface PaymentPlatformService extends AbstractService<PaymentPlatform> {
 
     Optional<PaymentPlatform> selectOneByTradeIdAndPaymentWayAndStatus(Long tradeId, PaymentWay paymentWay, Enabled enabled);
+
 }
