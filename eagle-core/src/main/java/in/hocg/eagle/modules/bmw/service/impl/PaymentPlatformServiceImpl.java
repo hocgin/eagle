@@ -28,8 +28,10 @@ public class PaymentPlatformServiceImpl extends AbstractServiceImpl<PaymentPlatf
     @Override
     public Optional<PaymentPlatform> selectOneByTradeIdAndPaymentWayAndStatus(Long tradeId, PaymentWay paymentWay, Enabled enabled) {
         final Integer platformCode = paymentWay.getPlatform().getCode();
-        final List<PaymentPlatform> result = selectListByPlatformTypeAndEnabled(platformCode, enabled.getCode());
-        return result.isEmpty() ? Optional.empty() : Optional.ofNullable(result.get(0));
+        final List<PaymentPlatform> result = this.selectListByPlatformTypeAndEnabled(platformCode, enabled.getCode());
+        return result.isEmpty()
+            ? Optional.empty()
+            : Optional.ofNullable(result.get(0));
     }
 
     public List<PaymentPlatform> selectListByPlatformTypeAndEnabled(Integer platformType, Integer enabled) {

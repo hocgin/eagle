@@ -427,13 +427,12 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     @Override
     public GoPayVo goPay(PayOrderQo qo) {
         final Long id = qo.getId();
-        final Integer payType = qo.getPayType();
+        final Integer paymentWay = qo.getPaymentWay();
         final OrderComplexVo orderComplex = this.selectOne(id);
         if (!LangUtils.equals(OrderStatus.PendingPayment.getCode(), orderComplex.getOrderStatus())) {
             throw ServiceException.wrap("操作失败，请检查订单的支付状态");
         }
 
-        Integer paymentWay = payType;
         final GoPayRo ro = new GoPayRo(orderComplex.getTradeSn(), paymentWay);
         return paymentApi.goPay(ro);
     }
