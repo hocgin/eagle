@@ -14,11 +14,11 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class MessageContext {
     private String appid;
-    private Integer channel;
+    private Integer platformTyp;
     private Integer feature;
     private Integer paymentWay;
 
     public MessageType asMessageType() {
-        return MessageType.of(channel, feature).orElseThrow(() -> ServiceException.wrap("回调处理失败"));
+        return MessageType.of(platformTyp, feature).orElseThrow(() -> ServiceException.wrap("回调处理失败"));
     }
 }

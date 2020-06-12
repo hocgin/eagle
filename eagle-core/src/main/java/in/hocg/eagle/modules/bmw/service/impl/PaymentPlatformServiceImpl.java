@@ -34,6 +34,11 @@ public class PaymentPlatformServiceImpl extends AbstractServiceImpl<PaymentPlatf
             : Optional.ofNullable(result.get(0));
     }
 
+    @Override
+    public Optional<PaymentPlatform> selectOneByPlatformAppidAndPlatformType(String platformAppid, Integer platformType) {
+        return lambdaQuery().eq(PaymentPlatform::getPlatformAppid, platformAppid).eq(PaymentPlatform::getPlatformType, platformType).oneOpt();
+    }
+
     public List<PaymentPlatform> selectListByPlatformTypeAndEnabled(Integer platformType, Integer enabled) {
         return lambdaQuery().eq(PaymentPlatform::getPlatformType, platformType).eq(PaymentPlatform::getEnabled, enabled).list();
     }

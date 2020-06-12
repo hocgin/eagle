@@ -2,9 +2,9 @@ package in.hocg.eagle.modules.bmw.helper.payment.resolve.message.rule.payment;
 
 import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.basic.constant.datadict.TradeStatus;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
-import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.modules.bmw.pojo.ro.PaymentMessageRo;
 import in.hocg.eagle.modules.bmw.service.PaymentService;
 import in.hocg.eagle.utils.LangUtils;
@@ -38,7 +38,7 @@ public class WxPayPaymentMessageRule extends StringResolve.StringRule<UnifiedOrd
         try {
             final LambdaMap<Object> lambdaMap = (LambdaMap<Object>) args;
             final String appid = lambdaMap.getAsString(MessageContext::getAppid);
-            final Integer channel = lambdaMap.getAsInt(MessageContext::getChannel);
+            final Integer channel = lambdaMap.getAsInt(MessageContext::getPlatformTyp);
             final Integer feature = lambdaMap.getAsInt(MessageContext::getFeature);
             PaymentWay paymentWay = IntEnum.of(lambdaMap.getAsInt(MessageContext::getPaymentWay), PaymentWay.class).orElse(PaymentWay.Unknown);
 
@@ -57,7 +57,7 @@ public class WxPayPaymentMessageRule extends StringResolve.StringRule<UnifiedOrd
                 .setPaymentAt(paymentAt)
                 .setTotalFee(totalAmount)
                 .setBuyerPayFee(buyerPayAmount)
-                .setChannel(channel)
+                .setPlatformType(channel)
                 .setPaymentWay(paymentWay);
 
             SpringContext.getBean(PaymentService.class).handlePaymentMessage(ro);

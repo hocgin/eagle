@@ -2,11 +2,12 @@ package in.hocg.eagle.modules.bmw.helper.payment.resolve.message.rule.payment;
 
 import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.basic.constant.datadict.TradeStatus;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
-import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.modules.bmw.pojo.ro.PaymentMessageRo;
 import in.hocg.eagle.modules.bmw.service.PaymentService;
+import in.hocg.eagle.utils.DateUtils;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.lambda.map.LambdaMap;
 import in.hocg.payment.alipay.v2.AliPayService;
@@ -15,6 +16,7 @@ import in.hocg.payment.convert.StringConvert;
 import in.hocg.payment.resolve.StringResolve;
 
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -29,7 +31,7 @@ public class AliPayPaymentMessageRule extends StringResolve.StringRule<TradeStat
         super(new StringConvert<TradeStatusSyncMessage>() {
             @Override
             public <R extends TradeStatusSyncMessage> R convert(String body, Class<R> clazz) {
-                return payService.message(body, clazz);
+                return payService.message(URLDecoder.decode(body), clazz);
             }
         }, AliPayPaymentMessageRule::handleMessage);
 
@@ -39,7 +41,7 @@ public class AliPayPaymentMessageRule extends StringResolve.StringRule<TradeStat
         try {
             final LambdaMap<Object> lambdaMap = (LambdaMap<Object>) args;
             final String appid = lambdaMap.getAsString(MessageContext::getAppid);
-            final Integer channel = lambdaMap.getAsInt(MessageContext::getChannel);
+            final Integer channel = lambdaMap.getAsInt(MessageContext::getPlatformTyp);
             final Integer feature = lambdaMap.getAsInt(MessageContext::getFeature);
             final PaymentWay paymentWay = IntEnum.of(lambdaMap.getAsInt(MessageContext::getPaymentWay), PaymentWay.class).orElse(PaymentWay.Unknown);
 
@@ -57,7 +59,7 @@ public class AliPayPaymentMessageRule extends StringResolve.StringRule<TradeStat
                 .setPaymentAt(paymentAt)
                 .setTotalFee(new BigDecimal(totalAmount))
                 .setBuyerPayFee(new BigDecimal(buyerPayAmount))
-                .setChannel(channel)
+                .setPlatformType(channel)
                 .setPaymentWay(paymentWay);
 
             SpringContext.getBean(PaymentService.class).handlePaymentMessage(ro);
@@ -68,10 +70,17 @@ public class AliPayPaymentMessageRule extends StringResolve.StringRule<TradeStat
     }
 
     private static TradeStatus convertStatus(String tradeStatus) {
-        return null;
+        switch (tradeStatus) {
+            case "TRADE_SUCCESS":
+                return TradeStatus.Done;
+            case "TRADE_CLOSED":
+                return TradeStatus.Closed;
+            default:
+                return TradeStatus.Fail;
+        }
     }
 
     static LocalDateTime convertDatetime(String datetime) {
-        return LocalDateTime.now();
+        return DateUtils.format(datetime, DateUtils.DATE_FORMAT_2);
     }
 }

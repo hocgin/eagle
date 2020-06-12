@@ -38,7 +38,7 @@ public class WxPayRefundMessageRule extends StringResolve.StringRule<PayRefundMe
         try {
             final LambdaMap<Object> lambdaMap = (LambdaMap<Object>) args;
             final String appid = lambdaMap.getAsString(MessageContext::getAppid);
-            final Integer channel = lambdaMap.getAsInt(MessageContext::getChannel);
+            final Integer channel = lambdaMap.getAsInt(MessageContext::getPlatformTyp);
             final Integer feature = lambdaMap.getAsInt(MessageContext::getFeature);
             final PaymentWay paymentWay = IntEnum.of(lambdaMap.getAsInt(MessageContext::getPaymentWay), PaymentWay.class).orElse(PaymentWay.Unknown);
 

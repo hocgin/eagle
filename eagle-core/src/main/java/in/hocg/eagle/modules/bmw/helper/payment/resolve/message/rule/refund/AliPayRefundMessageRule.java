@@ -6,6 +6,7 @@ import in.hocg.payment.convert.StringConvert;
 import in.hocg.payment.resolve.StringResolve;
 import in.hocg.payment.wxpay.v2.message.PayRefundMessage;
 
+import java.net.URLDecoder;
 import java.util.Map;
 
 /**
@@ -19,7 +20,7 @@ public class AliPayRefundMessageRule extends StringResolve.StringRule<TradeStatu
         super(new StringConvert<PayRefundMessage>() {
             @Override
             public <R extends PayRefundMessage> R convert(String body, Class<R> clazz) {
-                return payService.message(body, clazz);
+                return payService.message(URLDecoder.decode(body), clazz);
             }
         }, AliPayRefundMessageRule::handleMessage);
     }

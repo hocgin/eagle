@@ -90,7 +90,7 @@ CREATE TABLE `bmw_payment_trade`
     notify_url          varchar(255)
         comment '通知接入应用的地址',
     --
-    buyer_pay_fee       decimal(10, 2) default '0'
+    buyer_pay_fee       decimal(10, 2)
         comment '最终买家实际支付金额(第三方回调时填充)',
     payment_platform_id bigint
         comment '最终支付平台ID(第三方回调时填充)',

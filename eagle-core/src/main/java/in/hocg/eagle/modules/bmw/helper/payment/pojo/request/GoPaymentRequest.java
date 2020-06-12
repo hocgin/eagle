@@ -196,7 +196,7 @@ public class GoPaymentRequest extends AbsRequest {
     }
 
     private String getNotifyUrl() {
-        return getPaymentNotifyUrl(this.paymentWay, this.platformAppid);
+        return getPaymentNotifyUrl(this.paymentWay);
     }
 
     @Override

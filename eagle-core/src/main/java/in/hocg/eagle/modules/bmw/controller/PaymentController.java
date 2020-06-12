@@ -28,24 +28,26 @@ public class PaymentController {
     /**
      * 支付回调
      *
-     * @param feature    支付功能: 支付、退款
-     * @param channel    支付平台: 微信、支付宝
-     * @param appid      支付平台的唯一标识
-     * @param paymentWay 支付方式
+     * @param feature     支付功能: 支付、退款
+     * @param platformTyp 支付平台: 微信、支付宝
+     * @param appid       支付平台的唯一标识
+     * @param paymentWay  支付方式
      * @param data
      * @return
      */
     @UseLogger("支付回调")
-    @RequestMapping("/{feature}/{channel}/{appid}/{paymentWay}")
+    @RequestMapping("/{feature}/{platformTyp}/{appid}/{paymentWay}")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<String> doPayResultMessage(@PathVariable("feature") Integer feature,
-                                                     @PathVariable("channel") Integer channel,
+                                                     @PathVariable("platformTyp") Integer platformTyp,
                                                      @PathVariable("appid") String appid,
                                                      @PathVariable("paymentWay") Integer paymentWay,
                                                      @RequestBody String data) {
         final MessageContext messageContext = new MessageContext()
-            .setAppid(appid).setChannel(channel)
-            .setFeature(feature).setPaymentWay(paymentWay);
+            .setAppid(appid)
+            .setPlatformTyp(platformTyp)
+            .setFeature(feature)
+            .setPaymentWay(paymentWay);
         return ResponseEntity.ok(paymentService.handleMessage(messageContext, data));
     }
 

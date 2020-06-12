@@ -43,13 +43,15 @@ public abstract class AbsRequest {
         return Env.getConfigs().getHostname();
     }
 
-    protected String getPaymentNotifyUrl(PaymentWay paymentWay, String platformAppId) {
-        final String notifyUrl = paymentWay.getNotifyUrl(FeatureType.Payment, platformAppId);
+    protected String getPaymentNotifyUrl(PaymentWay paymentWay) {
+        final String platformAppid = this.getPlatformAppid();
+        final String notifyUrl = paymentWay.getNotifyUrl(FeatureType.Payment, platformAppid);
         return String.format("%s/payment/%s", this.getHost(), notifyUrl);
     }
 
-    protected String getRefundNotifyUrl(PaymentWay paymentWay, String platformAppId) {
-        final String notifyUrl = paymentWay.getNotifyUrl(FeatureType.Refund, platformAppId);
+    protected String getRefundNotifyUrl(PaymentWay paymentWay) {
+        final String platformAppid = this.getPlatformAppid();
+        final String notifyUrl = paymentWay.getNotifyUrl(FeatureType.Refund, platformAppid);
         return String.format("%s/payment/%s", this.getHost(), notifyUrl);
     }
 

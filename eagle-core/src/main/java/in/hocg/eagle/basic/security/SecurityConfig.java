@@ -67,6 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/social/**",
                 "/api/wx/material/**",
                 "/",
+                // 支付网关
+                "/payment/**",
                 // 登录
                 "/login/oauth2/code/*",
                 // 注册账号

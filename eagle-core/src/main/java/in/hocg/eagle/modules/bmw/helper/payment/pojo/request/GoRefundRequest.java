@@ -88,7 +88,7 @@ public class GoRefundRequest extends AbsRequest {
     }
 
     private String getNotifyUrl() {
-        return getRefundNotifyUrl(this.paymentWay, this.platformAppid);
+        return getRefundNotifyUrl(this.paymentWay);
     }
 
     @Override

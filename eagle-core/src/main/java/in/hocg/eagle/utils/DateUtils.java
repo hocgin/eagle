@@ -17,6 +17,7 @@ import java.util.Objects;
  */
 @UtilityClass
 public class DateUtils {
+    public final DateTimeFormatter DATE_FORMAT_2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public final DateTimeFormatter SIMPLE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
 
     public Date getDate(LocalDateTime localDateTime) {

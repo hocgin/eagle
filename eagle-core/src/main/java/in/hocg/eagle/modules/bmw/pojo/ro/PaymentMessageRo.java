@@ -21,7 +21,7 @@ public class PaymentMessageRo {
     @ApiModelProperty(value = "支付平台唯一标识", required = true)
     private String appid;
     @ApiModelProperty(value = "支付平台", required = true)
-    private Integer channel;
+    private Integer platformType;
     @ApiModelProperty(value = "交易单号(第三方)", required = true)
     private String tradeNo;
     @ApiModelProperty(value = "交易单号(网关)", required = true)

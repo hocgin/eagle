@@ -30,9 +30,9 @@ public enum PaymentWay implements IntEnum {
     private final String name;
 
     public String getNotifyUrl(FeatureType featureType, String appid) {
-        final Integer channel = platform.getCode();
+        final Integer paymentType = platform.getCode();
         final Integer feature = featureType.getCode();
         final Integer paymentWay = this.getCode();
-        return feature + "/" + channel + "/" + appid + "/" + paymentWay;
+        return feature + "/" + paymentType + "/" + appid + "/" + paymentWay;
     }
 }

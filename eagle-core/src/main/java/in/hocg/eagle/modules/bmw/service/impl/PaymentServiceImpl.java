@@ -31,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -210,7 +211,7 @@ public class PaymentServiceImpl implements PaymentService {
     public String handleMessage(MessageContext context, String data) {
         final LambdaMap<Object> args = new StringMap<>();
         args.put(MessageContext::getAppid, context.getAppid());
-        args.put(MessageContext::getChannel, context.getChannel());
+        args.put(MessageContext::getPlatformTyp, context.getPlatformTyp());
         args.put(MessageContext::getFeature, context.getFeature());
         args.put(MessageContext::getPaymentWay, context.getPaymentWay());
         return ((PaymentMessage.Result) messageResolve.handle(context.asMessageType(), data, args)).string();
@@ -248,6 +249,11 @@ public class PaymentServiceImpl implements PaymentService {
         LocalDateTime now = LocalDateTime.now();
         final String clientIp = SpringContext.getClientIP().orElse(null);
 
+        final String appid = ro.getAppid();
+        final Integer platformType = ro.getPlatformType();
+        PaymentPlatform platform = paymentPlatformService.selectOneByPlatformAppidAndPlatformType(appid, platformType)
+            .orElseThrow(() -> ServiceException.wrap("未匹配到支付平台"));
+
         final String tradeSn = ro.getTradeSn();
         final PaymentTrade paymentTrade = paymentTradeService.selectOneByTradeSn(tradeSn)
                 .orElseThrow(() -> ServiceException.wrap("交易失败"));
@@ -260,6 +266,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .setPaymentWay(ro.getPaymentWay().getCode())
                 .setTradeStatus(tradeStatus.getCode())
                 .setFinishAt(now)
+                .setPaymentPlatformId(platform.getId())
                 .setTradeNo(tradeNo)
                 .setPaymentAt(ro.getPaymentAt())
                 .setUpdatedAt(now)
@@ -332,6 +339,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    @Async
     @Transactional(rollbackFor = Exception.class)
     public void sendAsyncNotifyApp(Long notifyAppId) {
         // 最大通知次数
