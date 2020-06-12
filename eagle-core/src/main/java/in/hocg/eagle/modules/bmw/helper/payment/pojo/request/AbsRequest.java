@@ -2,7 +2,9 @@ package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 
 import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
+import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.basic.env.Env;
+import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.FeatureType;
 import in.hocg.eagle.utils.web.RequestUtils;
 import in.hocg.payment.PaymentService;
 import in.hocg.payment.alipay.v2.AliPayService;
@@ -20,6 +22,14 @@ public abstract class AbsRequest {
 
     protected String getHost() {
         return Env.getConfigs().getHostname();
+    }
+
+    protected String getPaymentNotifyUrl(PaymentWay paymentWay, String platformAppId) {
+        return "%s/payment" + paymentWay.getNotifyUrl(FeatureType.Payment, platformAppId);
+    }
+
+    protected String getRefundNotifyUrl(PaymentWay paymentWay, String platformAppId) {
+        return "%s/payment" + paymentWay.getNotifyUrl(FeatureType.Refund, platformAppId);
     }
 
     protected String getClientIp() {

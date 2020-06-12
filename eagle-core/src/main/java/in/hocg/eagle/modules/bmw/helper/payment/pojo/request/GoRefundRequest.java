@@ -3,7 +3,6 @@ package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
 import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoRefundResponse;
-import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.FeatureType;
 import in.hocg.payment.PaymentService;
 import in.hocg.payment.alipay.v2.AliPayService;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
@@ -93,6 +92,6 @@ public class GoRefundRequest extends AbsRequest {
     }
 
     private String getNotifyUrl() {
-        return this.getHost() + paymentWay.getNotifyUrl(FeatureType.Refund, this.getPlatformAppid());
+        return getRefundNotifyUrl(this.paymentWay, this.platformAppid);
     }
 }

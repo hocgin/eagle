@@ -4,7 +4,6 @@ import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
 import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoPaymentResponse;
-import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.FeatureType;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.payment.PaymentResponse;
 import in.hocg.payment.PaymentService;
@@ -201,6 +200,6 @@ public class GoPaymentRequest extends AbsRequest {
     }
 
     private String getNotifyUrl() {
-        return this.getHost() + paymentWay.getNotifyUrl(FeatureType.Payment, this.getPlatformAppid());
+        return getPaymentNotifyUrl(this.paymentWay, this.platformAppid);
     }
 }
