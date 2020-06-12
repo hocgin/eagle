@@ -5,12 +5,16 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.*;
+import in.hocg.eagle.basic.env.Env;
+import in.hocg.eagle.basic.env.EnvConfigs;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.lang.SNCode;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.modules.oms.mapstruct.OrderMapping;
-import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
+import in.hocg.eagle.modules.bmw.api.PaymentAPI;
+import in.hocg.eagle.modules.bmw.pojo.ro.CreateTradeRo;
+import in.hocg.eagle.modules.bmw.pojo.ro.GoPayRo;
+import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.com.service.ChangeLogService;
 import in.hocg.eagle.modules.mkt.entity.CouponAccount;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
@@ -23,6 +27,7 @@ import in.hocg.eagle.modules.oms.helper.order.GeneralProduct;
 import in.hocg.eagle.modules.oms.helper.order.discount.DiscountHelper;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.Coupon;
 import in.hocg.eagle.modules.oms.mapper.OrderMapper;
+import in.hocg.eagle.modules.oms.mapstruct.OrderMapping;
 import in.hocg.eagle.modules.oms.pojo.dto.order.OrderItemDto;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
@@ -31,6 +36,7 @@ import in.hocg.eagle.modules.oms.service.OrderItemService;
 import in.hocg.eagle.modules.oms.service.OrderService;
 import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.entity.Sku;
+import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.pms.service.SkuService;
 import in.hocg.eagle.utils.LangUtils;
@@ -68,6 +74,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     private final ProductService productService;
     private final OrderItemService orderItemService;
     private final CouponService couponService;
+    private final PaymentAPI paymentApi;
     private final CouponAccountService couponAccountService;
     private final SkuService skuService;
     private final SkuMapping skuMapping;
@@ -209,6 +216,15 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
                 throw ServiceException.wrap("库存商品不足");
             }
         }
+
+        // 生成交易
+        final EnvConfigs configs = Env.getConfigs();
+        final Long paymentAppSn = configs.getPaymentAppSn();
+        final String orderSn = order.getOrderSn();
+        final BigDecimal totalAmount = order.getTotalAmount();
+        String notifyUrl = String.format("%s/api/order/async", configs.getHostname());
+        final String tradeSn = paymentApi.createTrade(new CreateTradeRo(paymentAppSn, orderSn, totalAmount).setNotifyUrl(notifyUrl));
+        this.updateById(new Order().setId(orderId).setTradeSn(tradeSn));
     }
 
     @Override
@@ -229,6 +245,9 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         updated.setLastUpdatedAt(qo.getCreatedAt());
         validUpdateById(updated);
         this.handleCancelOrClosedOrderAfter(orderId);
+
+        // 关闭交易
+        paymentApi.closeTrade(order.getTradeSn());
     }
 
     @Override
@@ -294,14 +313,22 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     @Async
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void paySuccess(Integer payType, String orderSn) {
+    public void asyncOrderMessage(AsyncOrderMessageQo qo) {
+        final AsyncOrderMessageQo.TradeStatusSync data = qo.getData();
+        final OrderPayType payType = qo.getPayType();
+        final String orderSn = data.getOutTradeSn();
+
+        if (!TradeStatus.Success.eq(data.getTradeStatus())) {
+            return;
+        }
+
         Optional<Order> orderOpl = this.selectOneByOrderSn(orderSn);
         if (!orderOpl.isPresent()) {
             throw ServiceException.wrap("订单不存在");
         }
         final Order order = orderOpl.get();
         if (!LangUtils.equals(OrderStatus.PendingPayment.getCode(), order.getOrderStatus())) {
-            log.warn("订单{{}}状态[{}]非待付款时，被调用支付成功", orderSn, order.getOrderStatus());
+            log.warn("订单[orderSn={}]，状态[{}]非待付款时，被调用支付成功", orderSn, order.getOrderStatus());
             return;
         }
 
@@ -310,9 +337,8 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         update.setId(order.getId());
         update.setOrderStatus(OrderStatus.ToBeDelivered.getCode());
         update.setPaymentTime(LocalDateTime.now());
-        update.setPayType(payType);
+        update.setPayType(payType.getCode());
         validUpdateById(update);
-        // todo 写入流水
     }
 
     private Optional<Order> selectOneByOrderSn(String orderSn) {
@@ -396,6 +422,19 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         }
 
         this.validUpdateById(updated);
+    }
+
+    @Override
+    public GoPayVo goPay(PayOrderQo qo) {
+        final Long id = qo.getId();
+        final Integer paymentWay = qo.getPaymentWay();
+        final OrderComplexVo orderComplex = this.selectOne(id);
+        if (!LangUtils.equals(OrderStatus.PendingPayment.getCode(), orderComplex.getOrderStatus())) {
+            throw ServiceException.wrap("操作失败，请检查订单的支付状态");
+        }
+
+        final GoPayRo ro = new GoPayRo(orderComplex.getTradeSn(), paymentWay);
+        return paymentApi.goPay(ro);
     }
 
     @Override

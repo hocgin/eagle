@@ -55,13 +55,33 @@ public class SNCode {
         return getSNCode(Type.BusinessLog);
     }
 
+    /**
+     * 支付交易流水号
+     *
+     * @return
+     */
+    public String getTransactionSNCode() {
+        return getSNCode(Type.Transaction);
+    }
+
+    /**
+     * 退款交易流水号
+     *
+     * @return
+     */
+    public String getRefundSNCode() {
+        return getSNCode(Type.Refund);
+    }
+
     @Getter
     @RequiredArgsConstructor
     enum Type {
         Order("E1"),
         OrderRefundApply("R1"),
         CouponAccount("C1"),
-        BusinessLog("B1");
+        BusinessLog("B1"),
+        Transaction("T1"),
+        Refund("RD1");
         private final String code;
     }
 

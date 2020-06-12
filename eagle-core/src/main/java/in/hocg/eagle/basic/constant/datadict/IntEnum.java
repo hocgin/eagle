@@ -1,5 +1,7 @@
 package in.hocg.eagle.basic.constant.datadict;
 
+import in.hocg.eagle.utils.LangUtils;
+
 import java.util.Optional;
 
 /**
@@ -16,6 +18,10 @@ public interface IntEnum {
      * @return
      */
     Integer getCode();
+
+    default boolean eq(Integer val) {
+        return LangUtils.equals(this.getCode(), val);
+    }
 
 
     static <T extends IntEnum> Optional<T> of(Integer code, Class<T> enumClass) {

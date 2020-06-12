@@ -7,6 +7,8 @@ CREATE TABLE `oms_order`
         COMMENT '账号ID',
     order_sn                VARCHAR(64)    NOT NULL
         COMMENT '订单编号',
+    trade_sn                VARCHAR(64)
+        COMMENT '交易单号',
     coupon_account_id       BIGINT         NULL
         COMMENT '用户优惠券ID',
 

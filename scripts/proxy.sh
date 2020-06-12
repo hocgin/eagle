@@ -3,4 +3,4 @@
 # 开启内网穿透
 # ===========================
 path=$(cd `dirname $0`; pwd)
-$path/proxy/sunny clientid 233005205987
+$path/proxy/sunny clientid 201514205987

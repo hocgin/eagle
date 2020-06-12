@@ -14,8 +14,9 @@ import lombok.RequiredArgsConstructor;
 @ApiModel("支付类型")
 @RequiredArgsConstructor
 public enum OrderPayType implements IntEnum {
-    AliPay(0, "支付宝"),
-    WxPay(1, "微信");
+    Unknown(0, "未支付"),
+    AliPay(1, "支付宝"),
+    WxPay(2, "微信");
     private final Integer code;
     private final String name;
 

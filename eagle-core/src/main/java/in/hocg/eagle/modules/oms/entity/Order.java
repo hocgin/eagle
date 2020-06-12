@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.eagle.basic.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -41,6 +42,9 @@ public class Order extends AbstractEntity<Order> {
      */
     @TableField("order_sn")
     private String orderSn;
+    @ApiModelProperty("交易单号")
+    @TableField("trade_sn")
+    private String tradeSn;
     /**
      * 优惠券ID
      * Coupon Account ID

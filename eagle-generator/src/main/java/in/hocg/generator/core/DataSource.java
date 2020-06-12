@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum DataSource {
-    DEFAULT(DbType.MYSQL, "jdbc:mysql://mysql.localhost:3306/db_springcloud?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true",
+    DEFAULT(DbType.MYSQL, "jdbc:mysql://mysql.localhost:3306/db_eagle?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true",
         com.mysql.cj.jdbc.Driver.class, "root", "hocgin");
     private final DbType dbType;
     private final String url;

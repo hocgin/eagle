@@ -4,10 +4,7 @@ package in.hocg.eagle.modules.oms.controller;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.modules.oms.pojo.qo.order.CancelOrderQo;
-import in.hocg.eagle.modules.oms.pojo.qo.order.OrderPagingQo;
-import in.hocg.eagle.modules.oms.pojo.qo.order.ShippedOrderQo;
-import in.hocg.eagle.modules.oms.pojo.qo.order.UpdateOrderQo;
+import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -70,6 +67,13 @@ public class OrderController {
         qo.setId(id);
         service.deleteOne(qo);
         return Result.success();
+    }
+
+    @UseLogger("通知订单状态 - 订单")
+    @PostMapping("/async")
+    public String asyncOrderMessage(@RequestBody AsyncOrderMessageQo qo) {
+        service.asyncOrderMessage(qo);
+        return "SUCCESS";
     }
 }
 

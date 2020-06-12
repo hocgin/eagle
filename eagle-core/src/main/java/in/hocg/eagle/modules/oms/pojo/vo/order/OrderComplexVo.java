@@ -35,6 +35,8 @@ public class OrderComplexVo {
     private String accountName;
     @ApiModelProperty("订单编号")
     private String orderSn;
+    @ApiModelProperty("交易流水号")
+    private String tradeSn;
     @ApiModelProperty("优惠券ID")
     private Long couponId;
     @ApiModelProperty("优惠券抵扣金额")
