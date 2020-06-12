@@ -2,6 +2,7 @@ package in.hocg.eagle.basic.env;
 
 import in.hocg.eagle.basic.SpringContext;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 
 import java.util.Arrays;
@@ -12,16 +13,11 @@ import java.util.Arrays;
  *
  * @author hocgin
  */
+@Slf4j
 @UtilityClass
 public class Env {
-    private final Environment ENVIRONMENT;
-    private final EnvConfigs configs;
-
-    static {
-        ENVIRONMENT = SpringContext.getBean(Environment.class);
-        configs = SpringContext.getBean(EnvConfigs.class);
-//        configs = Binder.get(ENVIRONMENT).bind(Configs.PREFIX, Configs.class).orElse(new Configs());
-    }
+    private Environment environment;
+    private EnvConfigs configs;
 
     /**
      * 当前是否为开发环境
@@ -34,16 +30,7 @@ public class Env {
     }
 
     public String[] getActiveProfiles() {
-        return ENVIRONMENT.getActiveProfiles();
-    }
-
-    /**
-     * 配置
-     *
-     * @return
-     */
-    public EnvConfigs getConfigs() {
-        return configs;
+        return getEnvironment().getActiveProfiles();
     }
 
     /**
@@ -53,5 +40,29 @@ public class Env {
      */
     public String hostname() {
         return getConfigs().getHostname();
+    }
+
+    /**
+     * 配置
+     *
+     * @return
+     */
+    public EnvConfigs getConfigs() {
+        if (configs == null) {
+            lazyLoad();
+        }
+        return configs;
+    }
+
+    private Environment getEnvironment() {
+        if (environment == null) {
+            lazyLoad();
+        }
+        return environment;
+    }
+
+    private void lazyLoad() {
+        environment = SpringContext.getBean(Environment.class);
+        configs = SpringContext.getBean(EnvConfigs.class);
     }
 }
