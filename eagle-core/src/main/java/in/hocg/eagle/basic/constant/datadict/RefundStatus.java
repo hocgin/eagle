@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 public enum RefundStatus implements IntEnum {
     Init(0, "未退款"),
     Wait(1, "退款处理中"),
-    Done(2, "退款成功"),
+    Success(2, "退款成功"),
     Closed(3, "退款关闭"),
     Fail(4, "退款失败");
     private final Integer code;
@@ -30,7 +30,7 @@ public enum RefundStatus implements IntEnum {
                 return PaymentNotifyStatus.Init;
             case Wait:
                 return PaymentNotifyStatus.Pending;
-            case Done:
+            case Success:
                 return PaymentNotifyStatus.Success;
             case Closed:
                 return PaymentNotifyStatus.Closed;

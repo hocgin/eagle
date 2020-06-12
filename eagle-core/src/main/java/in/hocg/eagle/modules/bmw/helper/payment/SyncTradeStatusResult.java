@@ -49,7 +49,7 @@ public class SyncTradeStatusResult {
 
     public static SyncTradeStatus transform(@Nonnull RefundStatus status) {
         switch (status) {
-            case Done: {
+            case Success: {
                 return SyncTradeStatus.Success;
             }
             case Fail: {
@@ -67,7 +67,7 @@ public class SyncTradeStatusResult {
 
     public static SyncTradeStatus transform(@NonNull TradeStatus status) {
         switch (status) {
-            case Done: {
+            case Success: {
                 return SyncTradeStatus.Success;
             }
             case Fail: {

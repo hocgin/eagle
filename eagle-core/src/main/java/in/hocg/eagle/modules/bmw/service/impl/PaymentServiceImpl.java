@@ -175,7 +175,7 @@ public class PaymentServiceImpl implements PaymentService {
         final String tradeSn = ro.getTradeSn();
         final PaymentTrade trade = paymentTradeService.selectOneByTradeSn(tradeSn)
             .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
-        if (!TradeStatus.Done.eq(trade.getTradeStatus())) {
+        if (!TradeStatus.Success.eq(trade.getTradeStatus())) {
             ValidUtils.fail("交易未完成");
         }
         final PaymentWay paymentWay = IntEnum.of(trade.getPaymentWay(), PaymentWay.class)

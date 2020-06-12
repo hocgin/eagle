@@ -7,6 +7,7 @@ import in.hocg.eagle.basic.constant.datadict.TradeStatus;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
 import in.hocg.eagle.modules.bmw.pojo.ro.PaymentMessageRo;
 import in.hocg.eagle.modules.bmw.service.PaymentService;
+import in.hocg.eagle.utils.DateUtils;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.lambda.map.LambdaMap;
 import in.hocg.payment.convert.StringConvert;
@@ -68,18 +69,37 @@ public class WxPayPaymentMessageRule extends StringResolve.StringRule<UnifiedOrd
     }
 
     private static PaymentWay convertTradeType(String tradeType) {
-        return null;
+        switch (tradeType.toUpperCase()) {
+            case "JSAPI":
+                return PaymentWay.WxPayWithJSAPI;
+            case "NATIVE":
+                return PaymentWay.WxPayWithNative;
+            case "APP":
+                return PaymentWay.WxPayWithApp;
+            default:
+                return PaymentWay.Unknown;
+
+        }
     }
 
     private static BigDecimal convertBigDecimal(BigDecimal v) {
         return v.multiply(BigDecimal.valueOf(100L));
     }
 
-    private static LocalDateTime convertDatetime(String timeEnd) {
-        return null;
+    private static LocalDateTime convertDatetime(String datetime) {
+        return DateUtils.format(datetime, DateUtils.DATE_FORMAT_2);
     }
 
     private static TradeStatus convertStatus(String resultCode) {
-        return null;
+        switch (resultCode.toUpperCase()) {
+            // 退款成功
+            case "SUCCESS": {
+                return TradeStatus.Success;
+            }
+            // 退款关闭
+            case "FAIL":
+            default:
+                return TradeStatus.Fail;
+        }
     }
 }

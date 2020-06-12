@@ -70,7 +70,7 @@ public class WxPayRefundMessageRule extends StringResolve.StringRule<PayRefundMe
         switch (refundStatus.toUpperCase()) {
             // 退款成功
             case "SUCCESS":{
-                return RefundStatus.Done;
+                return RefundStatus.Success;
             }
             // 退款关闭
             case "REFUNDCLOSE":
@@ -88,6 +88,6 @@ public class WxPayRefundMessageRule extends StringResolve.StringRule<PayRefundMe
     }
 
     private static LocalDateTime convertDatetime(String datetime) {
-        return DateUtils.format(datetime, DateUtils.SIMPLE_FORMATTER);
+        return DateUtils.format(datetime, DateUtils.DATE_FORMAT_2);
     }
 }

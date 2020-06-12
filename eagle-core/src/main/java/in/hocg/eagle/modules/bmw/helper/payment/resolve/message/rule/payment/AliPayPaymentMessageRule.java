@@ -72,7 +72,7 @@ public class AliPayPaymentMessageRule extends StringResolve.StringRule<TradeStat
     private static TradeStatus convertStatus(String tradeStatus) {
         switch (tradeStatus) {
             case "TRADE_SUCCESS":
-                return TradeStatus.Done;
+                return TradeStatus.Success;
             case "TRADE_CLOSED":
                 return TradeStatus.Closed;
             default:

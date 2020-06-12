@@ -318,7 +318,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         final OrderPayType payType = qo.getPayType();
         final String orderSn = data.getOutTradeSn();
 
-        if (!TradeStatus.Done.eq(data.getTradeStatus())) {
+        if (!TradeStatus.Success.eq(data.getTradeStatus())) {
             return;
         }
 
