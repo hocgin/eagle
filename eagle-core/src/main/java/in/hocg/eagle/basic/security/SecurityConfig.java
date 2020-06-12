@@ -69,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/",
                 // 支付网关
                 "/payment/**",
+                "/api/order/async/*",
                 // 登录
                 "/login/oauth2/code/*",
                 // 注册账号

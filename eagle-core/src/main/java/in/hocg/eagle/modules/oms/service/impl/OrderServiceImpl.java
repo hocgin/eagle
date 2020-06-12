@@ -328,7 +328,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         }
         final Order order = orderOpl.get();
         if (!LangUtils.equals(OrderStatus.PendingPayment.getCode(), order.getOrderStatus())) {
-            log.warn("订单{{}}状态[{}]非待付款时，被调用支付成功", orderSn, order.getOrderStatus());
+            log.warn("订单[orderSn={}]，状态[{}]非待付款时，被调用支付成功", orderSn, order.getOrderStatus());
             return;
         }
 
