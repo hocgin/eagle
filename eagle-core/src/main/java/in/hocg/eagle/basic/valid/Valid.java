@@ -1,10 +1,6 @@
 package in.hocg.eagle.basic.valid;
 
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ValidationException;
-import java.util.Set;
-
 /**
  * Created by hocgin on 2020/3/12.
  * email: hocgin@gmail.com
@@ -19,9 +15,6 @@ public interface Valid {
      * @param groups
      */
     default void validThrow(Class<?>... groups) {
-        final Set<ConstraintViolation<Valid>> validate = ValidatorUtils.validate(this, groups);
-        for (ConstraintViolation<Valid> violation : validate) {
-            throw new ValidationException(violation.getMessage());
-        }
+        ValidatorUtils.validThrow(groups);
     }
 }
