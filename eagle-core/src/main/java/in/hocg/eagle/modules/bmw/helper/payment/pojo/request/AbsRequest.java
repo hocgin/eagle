@@ -5,12 +5,16 @@ import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
 import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.basic.env.Env;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.FeatureType;
+import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.eagle.utils.string.JsonUtils;
 import in.hocg.eagle.utils.web.RequestUtils;
+import in.hocg.payment.PaymentRequest;
 import in.hocg.payment.PaymentService;
 import in.hocg.payment.alipay.v2.AliPayService;
 import in.hocg.payment.alipay.v2.response.AliPayHttpResponse;
 import in.hocg.payment.wxpay.v2.WxPayService;
 import in.hocg.payment.wxpay.v2.response.WxPayXmlResponse;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by hocgin on 2020/6/1.
@@ -18,26 +22,46 @@ import in.hocg.payment.wxpay.v2.response.WxPayXmlResponse;
  *
  * @author hocgin
  */
+@Slf4j
 public abstract class AbsRequest {
+
+    /**
+     * 支付平台
+     *
+     * @return
+     */
+    protected abstract PaymentPlatform getPaymentPlatform();
+
+    /**
+     * 支付平台唯一标识
+     *
+     * @return
+     */
+    protected abstract String getPlatformAppid();
 
     protected String getHost() {
         return Env.getConfigs().getHostname();
     }
 
     protected String getPaymentNotifyUrl(PaymentWay paymentWay, String platformAppId) {
-        return "%s/payment" + paymentWay.getNotifyUrl(FeatureType.Payment, platformAppId);
+        final String notifyUrl = paymentWay.getNotifyUrl(FeatureType.Payment, platformAppId);
+        return String.format("%s/payment/%s", this.getHost(), notifyUrl);
     }
 
     protected String getRefundNotifyUrl(PaymentWay paymentWay, String platformAppId) {
-        return "%s/payment" + paymentWay.getNotifyUrl(FeatureType.Refund, platformAppId);
+        final String notifyUrl = paymentWay.getNotifyUrl(FeatureType.Refund, platformAppId);
+        return String.format("%s/payment/%s", this.getHost(), notifyUrl);
     }
 
     protected String getClientIp() {
         return SpringContext.getRequest().map(RequestUtils::getClientIP).orElse(null);
     }
 
-    protected PaymentService getPayService(PaymentPlatform platform, String appid) {
-        switch (platform) {
+    protected PaymentService getPayService() {
+        final PaymentPlatform paymentPlatform = this.getPaymentPlatform();
+        final String appid = this.getPlatformAppid();
+        ValidUtils.notNull(appid, "支付平台唯一标识错误");
+        switch (paymentPlatform) {
             case AliPay:
                 return SpringContext.getBean(AliPayService.class);
             case WxPay:
@@ -45,6 +69,12 @@ public abstract class AbsRequest {
             default:
                 throw new UnsupportedOperationException();
         }
+    }
+
+    protected <T> T request(PaymentRequest request) {
+        final PaymentService paymentService = this.getPayService();
+        this.save(this);
+        return (T) paymentService.request(request);
     }
 
     protected boolean isSuccess(WxPayXmlResponse response) {
@@ -55,7 +85,7 @@ public abstract class AbsRequest {
         return "10000".equalsIgnoreCase(response.getCode());
     }
 
-    protected void save(GoPaymentRequest request) {
-
+    protected void save(AbsRequest request) {
+        log.info("发起请求: {}", JsonUtils.toJSONString(request));
     }
 }

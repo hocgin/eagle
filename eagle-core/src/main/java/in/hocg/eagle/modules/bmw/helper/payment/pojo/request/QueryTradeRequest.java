@@ -2,12 +2,9 @@ package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 
 import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.QueryTradeResponse;
-import in.hocg.payment.PaymentService;
-import in.hocg.payment.alipay.v2.AliPayService;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeQueryRequest;
 import in.hocg.payment.alipay.v2.response.TradeQueryResponse;
-import in.hocg.payment.wxpay.v2.WxPayService;
 import in.hocg.payment.wxpay.v2.request.OrderQueryRequest;
 import in.hocg.payment.wxpay.v2.request.WxPayRequest;
 import in.hocg.payment.wxpay.v2.response.OrderQueryResponse;
@@ -37,14 +34,13 @@ public class QueryTradeRequest extends AbsRequest {
 
     public QueryTradeResponse request() {
         final QueryTradeResponse result = new QueryTradeResponse();
-        final PaymentService<?> payService = getPayService(platform, platformAppid);
         switch (platform) {
             case WxPay:{
-                final OrderQueryResponse response = ((WxPayService) payService).request(this.wxPayRequest());
+                final OrderQueryResponse response = this.request(this.wxPayRequest());
                 break;
             }
             case AliPay:{
-                final TradeQueryResponse response = ((AliPayService) payService).request(this.aliPayRequest());
+                final TradeQueryResponse response = this.request(this.aliPayRequest());
                 break;
             }
             default:
@@ -64,5 +60,10 @@ public class QueryTradeRequest extends AbsRequest {
         final OrderQueryRequest request = new OrderQueryRequest();
         request.setTransactionId(tradeNo);
         return request;
+    }
+
+    @Override
+    protected PaymentPlatform getPaymentPlatform() {
+        return this.platform;
     }
 }

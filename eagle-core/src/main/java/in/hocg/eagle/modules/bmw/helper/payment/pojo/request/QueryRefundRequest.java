@@ -2,12 +2,9 @@ package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 
 import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.QueryRefundResponse;
-import in.hocg.payment.PaymentService;
-import in.hocg.payment.alipay.v2.AliPayService;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeRefundRequest;
 import in.hocg.payment.alipay.v2.response.TradeRefundResponse;
-import in.hocg.payment.wxpay.v2.WxPayService;
 import in.hocg.payment.wxpay.v2.request.RefundQueryRequest;
 import in.hocg.payment.wxpay.v2.request.WxPayRequest;
 import in.hocg.payment.wxpay.v2.response.RefundQueryResponse;
@@ -37,14 +34,13 @@ public class QueryRefundRequest extends AbsRequest {
 
     public QueryRefundResponse request() {
         final QueryRefundResponse result = new QueryRefundResponse();
-        final PaymentService<?> payService = getPayService(platform, platformAppid);
         switch (platform) {
             case WxPay: {
-                final RefundQueryResponse response = ((WxPayService) payService).request(this.wxPayRequest());
+                final RefundQueryResponse response = this.request(this.wxPayRequest());
                 break;
             }
             case AliPay: {
-                final TradeRefundResponse response = ((AliPayService) payService).request(this.aliPayRequest());
+                final TradeRefundResponse response = this.request(this.aliPayRequest());
                 break;
             }
             default:
@@ -64,5 +60,10 @@ public class QueryRefundRequest extends AbsRequest {
         final RefundQueryRequest request = new RefundQueryRequest();
         request.setRefundId(refundTradeNo);
         return request;
+    }
+
+    @Override
+    protected PaymentPlatform getPaymentPlatform() {
+        return this.platform;
     }
 }

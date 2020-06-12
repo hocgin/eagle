@@ -33,6 +33,6 @@ public enum PaymentWay implements IntEnum {
         final Integer channel = platform.getCode();
         final Integer feature = featureType.getCode();
         final Integer paymentWay = this.getCode();
-        return "/" + feature + "/" + channel + "/" + appid + "/" + paymentWay;
+        return feature + "/" + channel + "/" + appid + "/" + paymentWay;
     }
 }

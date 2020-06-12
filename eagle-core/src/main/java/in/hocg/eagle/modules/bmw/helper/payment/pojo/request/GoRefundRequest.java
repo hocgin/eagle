@@ -3,12 +3,9 @@ package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
 import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoRefundResponse;
-import in.hocg.payment.PaymentService;
-import in.hocg.payment.alipay.v2.AliPayService;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeRefundRequest;
 import in.hocg.payment.alipay.v2.response.TradeRefundResponse;
-import in.hocg.payment.wxpay.v2.WxPayService;
 import in.hocg.payment.wxpay.v2.request.PayRefundRequest;
 import in.hocg.payment.wxpay.v2.request.WxPayRequest;
 import in.hocg.payment.wxpay.v2.response.PayRefundResponse;
@@ -71,17 +68,16 @@ public class GoRefundRequest extends AbsRequest {
     public GoRefundResponse request() {
         final GoRefundResponse result = new GoRefundResponse();
         final PaymentPlatform platform = paymentWay.getPlatform();
-        final PaymentService<?> payService = getPayService(platform, platformAppid);
         switch (platform) {
             case WxPay: {
                 final WxPayRequest request = this.wxRefundRequest();
-                final PayRefundResponse response = ((WxPayService) payService).request(request);
+                final PayRefundResponse response = this.request(request);
                 result.setRefundTradeNo(response.getRefundId());
                 break;
             }
             case AliPay: {
                 final AliPayRequest request = this.aliRefundRequest();
-                final TradeRefundResponse response = ((AliPayService) payService).request(request);
+                final TradeRefundResponse response = this.request(request);
                 result.setRefundTradeNo(response.getTradeNo());
                 break;
             }
@@ -93,5 +89,10 @@ public class GoRefundRequest extends AbsRequest {
 
     private String getNotifyUrl() {
         return getRefundNotifyUrl(this.paymentWay, this.platformAppid);
+    }
+
+    @Override
+    protected PaymentPlatform getPaymentPlatform() {
+        return this.paymentWay.getPlatform();
     }
 }

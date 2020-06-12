@@ -1,12 +1,9 @@
 package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 
 import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
-import in.hocg.payment.PaymentService;
-import in.hocg.payment.alipay.v2.AliPayService;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeCloseRequest;
 import in.hocg.payment.alipay.v2.response.TradeCloseResponse;
-import in.hocg.payment.wxpay.v2.WxPayService;
 import in.hocg.payment.wxpay.v2.request.CloseOrderRequest;
 import in.hocg.payment.wxpay.v2.request.WxPayRequest;
 import in.hocg.payment.wxpay.v2.response.CloseOrderResponse;
@@ -36,15 +33,14 @@ public class CloseTradeRequest extends AbsRequest {
 
     public boolean request() {
         boolean result;
-        final PaymentService<?> payService = getPayService(platform, platformAppid);
         switch (platform) {
             case WxPay: {
-                final CloseOrderResponse response = ((WxPayService) payService).request(this.wxPayRequest());
+                final CloseOrderResponse response = this.request(this.wxPayRequest());
                 result = this.isSuccess(response);
                 break;
             }
             case AliPay: {
-                final TradeCloseResponse response = ((AliPayService) payService).request(this.aliPayRequest());
+                final TradeCloseResponse response = this.request(this.aliPayRequest());
                 result = this.isSuccess(response);
                 break;
             }
@@ -65,5 +61,10 @@ public class CloseTradeRequest extends AbsRequest {
         final CloseOrderRequest request = new CloseOrderRequest();
         request.setOutTradeNo(getTradeSn());
         return request;
+    }
+
+    @Override
+    protected PaymentPlatform getPaymentPlatform() {
+        return this.platform;
     }
 }

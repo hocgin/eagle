@@ -6,14 +6,11 @@ import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoPaymentResponse;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.payment.PaymentResponse;
-import in.hocg.payment.PaymentService;
-import in.hocg.payment.alipay.v2.AliPayService;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeAppPayRequest;
 import in.hocg.payment.alipay.v2.request.TradePreCreateRequest;
 import in.hocg.payment.alipay.v2.request.TradeWapPayRequest;
 import in.hocg.payment.alipay.v2.response.TradePreCreateResponse;
-import in.hocg.payment.wxpay.v2.WxPayService;
 import in.hocg.payment.wxpay.v2.request.UnifiedOrderRequest;
 import in.hocg.payment.wxpay.v2.request.WxPayRequest;
 import in.hocg.payment.wxpay.v2.response.UnifiedOrderResponse;
@@ -145,50 +142,49 @@ public class GoPaymentRequest extends AbsRequest {
         final GoPaymentResponse result = new GoPaymentResponse()
             .setPlatform(platform.getCode())
             .setPaymentWay(paymentWay.getCode());
-        final PaymentService<?> payService = getPayService(platform, platformAppid);
 
         switch (paymentWay) {
             case AliPayWithApp: {
                 final AliPayRequest request = this.aliPayAppRequest();
-                final PaymentResponse response = ((AliPayService) payService).request(request);
+                final PaymentResponse response = this.request(request);
                 result.setApp(response.getContent());
                 break;
             }
             case AliPayWithQrCode: {
                 final AliPayRequest request = this.aliPayQrCodeRequest();
-                final TradePreCreateResponse response = ((AliPayService) payService).request(request);
+                final TradePreCreateResponse response = this.request(request);
                 result.setQrCode(response.getQrCode());
                 break;
             }
             case AliPayWithPC: {
                 final AliPayRequest request = this.aliPayPcRequest();
-                final PaymentResponse response = ((AliPayService) payService).request(request);
+                final PaymentResponse response = this.request(request);
                 result.setMethod("POST");
                 result.setForm(response.getContent());
                 break;
             }
             case AliPayWithWap: {
                 final AliPayRequest request = this.aliPayWapRequest();
-                final PaymentResponse response = ((AliPayService) payService).request(request);
+                final PaymentResponse response = this.request(request);
                 result.setMethod("POST");
                 result.setForm(response.getContent());
                 break;
             }
             case WxPayWithApp: {
                 final WxPayRequest request = this.wxPayAPPRequest();
-                final UnifiedOrderResponse response = ((WxPayService) payService).request(request);
+                final UnifiedOrderResponse response = this.request(request);
                 result.setApp(response.getContent());
                 break;
             }
             case WxPayWithJSAPI: {
                 final WxPayRequest request = this.wxPayJSAPIRequest();
-                final UnifiedOrderResponse response = ((WxPayService) payService).request(request);
+                final UnifiedOrderResponse response = this.request(request);
                 result.setWxJSApi(GoPaymentResponse.WxJSAPI.NEW("", response.getNonceStr(), response.getPrepayId(), request.getSignType(), response.getSign()));
                 break;
             }
             case WxPayWithNative: {
                 final WxPayRequest request = this.wxPayNativeRequest();
-                final UnifiedOrderResponse response = ((WxPayService) payService).request(request);
+                final UnifiedOrderResponse response = this.request(request);
                 result.setWxNative(response.getContent());
                 break;
             }
@@ -201,5 +197,10 @@ public class GoPaymentRequest extends AbsRequest {
 
     private String getNotifyUrl() {
         return getPaymentNotifyUrl(this.paymentWay, this.platformAppid);
+    }
+
+    @Override
+    protected PaymentPlatform getPaymentPlatform() {
+        return this.paymentWay.getPlatform();
     }
 }
