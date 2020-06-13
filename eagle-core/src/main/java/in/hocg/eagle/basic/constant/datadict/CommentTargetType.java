@@ -13,8 +13,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("评论目标")
 @RequiredArgsConstructor
-public enum CommentTargetType implements IntEnum {
+public enum CommentTargetType implements DataDictEnum {
     Test(0, "测试");
     private final Integer code;
     private final String name;
+
+    public static final String KEY = "CommentTargetType";
 }

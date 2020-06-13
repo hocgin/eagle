@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("账号群组类型")
 @RequiredArgsConstructor
-public enum AccountGroupType implements IntEnum {
+public enum AccountGroupType implements DataDictEnum {
     General(0, "通用");
     private final Integer code;
     private final String name;

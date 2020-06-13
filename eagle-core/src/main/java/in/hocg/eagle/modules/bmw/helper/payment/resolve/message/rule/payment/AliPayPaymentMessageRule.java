@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.helper.payment.resolve.message.rule.payment;
 
 import in.hocg.eagle.basic.SpringContext;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.basic.constant.datadict.TradeStatus;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
@@ -43,7 +43,7 @@ public class AliPayPaymentMessageRule extends StringResolve.StringRule<TradeStat
             final String appid = lambdaMap.getAsString(MessageContext::getAppid);
             final Integer channel = lambdaMap.getAsInt(MessageContext::getPlatformTyp);
             final Integer feature = lambdaMap.getAsInt(MessageContext::getFeature);
-            final PaymentWay paymentWay = IntEnum.of(lambdaMap.getAsInt(MessageContext::getPaymentWay), PaymentWay.class).orElse(PaymentWay.Unknown);
+            final PaymentWay paymentWay = CodeEnum.of(lambdaMap.getAsInt(MessageContext::getPaymentWay), PaymentWay.class).orElse(PaymentWay.Unknown);
 
             final String outTradeNo = message.getOutTradeNo();
             final String tradeNo = message.getTradeNo();

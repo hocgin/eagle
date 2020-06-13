@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.oms.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.OrderRefundApplyStatus;
 import in.hocg.eagle.basic.constant.datadict.OrderStatus;
 import in.hocg.eagle.basic.exception.ServiceException;
@@ -68,7 +68,7 @@ public class OrderRefundApplyServiceImpl extends AbstractServiceImpl<OrderRefund
         final Optional<OrderRefundApply> orderRefundApplyOpt = this.selectOneByOrderItemId(orderItemId);
         if (orderRefundApplyOpt.isPresent()) {
             final OrderRefundApply apply = orderRefundApplyOpt.get();
-            final OrderRefundApplyStatus applyStatus = IntEnum.ofThrow(apply.getApplyStatus(), OrderRefundApplyStatus.class);
+            final OrderRefundApplyStatus applyStatus = CodeEnum.ofThrow(apply.getApplyStatus(), OrderRefundApplyStatus.class);
             throw ServiceException.wrap("已进行退款申请，申请状态为" + applyStatus.getName());
         }
 
@@ -107,7 +107,7 @@ public class OrderRefundApplyServiceImpl extends AbstractServiceImpl<OrderRefund
 
         final OrderRefundApply entity = getById(id);
         ValidUtils.notNull(entity, "未找到申请单");
-        final OrderRefundApplyStatus applyStatus = IntEnum.ofThrow(entity.getApplyStatus(), OrderRefundApplyStatus.class);
+        final OrderRefundApplyStatus applyStatus = CodeEnum.ofThrow(entity.getApplyStatus(), OrderRefundApplyStatus.class);
         if (!OrderRefundApplyStatus.Pending.equals(applyStatus)) {
             throw ServiceException.wrap("申请单已被处理");
         }

@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by hocgin on 2019/7/14.
@@ -20,6 +21,10 @@ import java.util.*;
 @Slf4j
 @UtilityClass
 public class ClassUtils {
+
+    public String getSimpleName(Class<?> clazz) {
+        return clazz.getSimpleName();
+    }
 
     /**
      * 获取对象字段的值
@@ -203,8 +208,7 @@ public class ClassUtils {
      * @param clazz
      * @return
      */
-    public List<Class<?>> getClassAllImpl(Class<?> clazz) {
-        List<Class<?>> subClasses = Lists.newArrayList();
+    public <T> List<Class<T>> getClassAllImpl(Class<T> clazz) {
         final ClassLoader classLoader = clazz.getClassLoader();
         final String basePackage = classLoader.getResource("").getPath();
         File[] files = new File(basePackage).listFiles();
@@ -218,23 +222,21 @@ public class ClassUtils {
             }
         }
 
-        for (String classpath : classPaths) {
-            Class<?> classObject;
-            try {
-                classObject = Class.forName(classpath, false, classLoader);
-            } catch (Exception e) {
-                log.warn("未找到类:" + classpath, e);
-                continue;
-            }
-            if (classObject.getSuperclass() == null) {
-                continue;
-            }
-            Set<Class<?>> interfaces = new HashSet<>(Arrays.asList(classObject.getInterfaces()));
-            if (interfaces.contains(clazz)) {
-                subClasses.add(classObject);
-            }
-        }
-        return subClasses;
+        return classPaths.parallelStream()
+            .map(classpath -> {
+                Class<T> clazz1 = null;
+                try {
+                    clazz1 = (Class<T>) Class.forName(classpath, false, classLoader);
+                } catch (Exception e) {
+                    log.warn("未找到类:" + classpath, e);
+                }
+                return clazz1;
+            }).filter(Objects::nonNull).filter(aClass -> {
+                if (aClass.getSuperclass() == null) {
+                    return false;
+                }
+                return Arrays.asList(aClass.getInterfaces()).contains(clazz);
+            }).collect(Collectors.toList());
     }
 
     private List<String> listPackages(String basePackage) {

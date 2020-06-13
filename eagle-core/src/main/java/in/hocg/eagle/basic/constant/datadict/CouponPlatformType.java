@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("优惠券适用平台")
 @RequiredArgsConstructor
-public enum CouponPlatformType implements IntEnum {
+public enum CouponPlatformType implements DataDictEnum {
     All(0, "所有"),
     APP(1, "APP"),
     PC(2, "PC");

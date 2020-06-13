@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("退款申请状态")
 @RequiredArgsConstructor
-public enum OrderRefundApplyStatus implements IntEnum {
+public enum OrderRefundApplyStatus implements DataDictEnum {
     Pending(0, "待处理"),
     Returning(1, "退货中"),
     Completed(2, "已完成"),

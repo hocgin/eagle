@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic.constant.datadict;
+package in.hocg.eagle.basic.constant;
 
 import com.alibaba.fastjson.JSON;
 import in.hocg.eagle.utils.string.JsonUtils;
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author hocgin
  */
-public interface IntJSONEnum extends IntEnum {
+public interface JSONasClass {
 
     default <T> T asClass(String json, Class<T> clazz) {
         if (List.class.isAssignableFrom(clazz)) {

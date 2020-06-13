@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.wx.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.WxMaterialType;
 import in.hocg.eagle.basic.pojo.qo.IdQo;
 import in.hocg.eagle.basic.security.SecurityContext;
@@ -139,7 +139,7 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
 
         final WxMaterial entity = getById(id);
         ValidUtils.notNull(entity, "图文不存在");
-        final WxMaterialType materialType = IntEnum.ofThrow(entity.getMaterialType(), WxMaterialType.class);
+        final WxMaterialType materialType = CodeEnum.ofThrow(entity.getMaterialType(), WxMaterialType.class);
         final WxMaterialType.News news = materialType.asContent(entity.getMaterialContent());
         final WxMaterialType.Result result = materialType.asResult(entity.getMaterialResult());
         ValidUtils.isTrue(news.size() >= index, "图文下标错误");
@@ -202,7 +202,7 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
 
     private WxMaterialComplexVo convertComplex(WxMaterial entity) {
         final WxMaterialComplexVo result = mapping.asWxMaterialComplex(entity);
-        final WxMaterialType materialType = IntEnum.ofThrow(entity.getMaterialType(), WxMaterialType.class);
+        final WxMaterialType materialType = CodeEnum.ofThrow(entity.getMaterialType(), WxMaterialType.class);
         result.setMaterialContent(materialType.asContent(entity.getMaterialContent()));
         result.setMaterialResult(materialType.asResult(entity.getMaterialResult()));
         return result;
@@ -214,7 +214,7 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
     private WxMaterial uploadFile(String appid, Integer materialType, String url) {
         final LocalDateTime createdAt = LocalDateTime.now();
         final Long userId = SecurityContext.getCurrentUserId();
-        final WxMaterialType wxMaterialType = IntEnum.ofThrow(materialType, WxMaterialType.class);
+        final WxMaterialType wxMaterialType = CodeEnum.ofThrow(materialType, WxMaterialType.class);
         final String mediaFileType = wxMaterialType.asMediaFileType();
 
         File file = null;

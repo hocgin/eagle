@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("群成员来源")
 @RequiredArgsConstructor
-public enum GroupMemberSource implements IntEnum {
+public enum GroupMemberSource implements DataDictEnum {
     All(0, "所有"),
     Custom(1, "自定义组员列表");
     private final Integer code;

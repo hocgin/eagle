@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("权限类型")
 @RequiredArgsConstructor
-public enum AuthorityType implements IntEnum {
+public enum AuthorityType implements DataDictEnum {
     Button(0, "按钮"),
     Menu(1, "菜单");
     private final Integer code;

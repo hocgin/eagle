@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("过期状态")
 @RequiredArgsConstructor
-public enum Expired implements IntEnum {
+public enum Expired implements DataDictEnum {
     Off(0, "已过期"),
     On(1, "正常");
     private final Integer code;

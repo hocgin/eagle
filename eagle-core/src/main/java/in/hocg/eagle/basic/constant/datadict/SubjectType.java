@@ -13,8 +13,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("订阅类型")
 @RequiredArgsConstructor
-public enum SubjectType implements IntEnum {
+public enum SubjectType implements DataDictEnum {
     Comment(0, "评论");
     private final Integer code;
     private final String name;
+    public static final String KEY = "SubjectType";
 }

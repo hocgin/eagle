@@ -1,7 +1,7 @@
 package in.hocg.eagle.basic.constant.datadict;
 
-import in.hocg.eagle.basic.constant.datadict.IntJSONEnum;
-import in.hocg.eagle.basic.constant.datadict.Valid;
+import in.hocg.eagle.basic.constant.JSONasClass;
+import in.hocg.eagle.basic.constant.Valid;
 import in.hocg.eagle.utils.ValidUtils;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @Getter
 @ApiModel("回复消息类型")
 @RequiredArgsConstructor
-public enum WxReplyMsgType implements IntJSONEnum {
+public enum WxReplyMsgType implements JSONasClass, DataDictEnum {
     Text(0, "文本", Text.class);
     private final Integer code;
     private final String name;

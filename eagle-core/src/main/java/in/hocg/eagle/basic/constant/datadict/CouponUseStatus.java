@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("使用状态")
 @RequiredArgsConstructor
-public enum CouponUseStatus implements IntEnum {
+public enum CouponUseStatus implements DataDictEnum {
     Unused(0, "未使用"),
     Used(1, "已使用"),
     Expired(2, "已过期");

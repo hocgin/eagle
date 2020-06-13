@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.helper.payment.resolve.message.rule.refund;
 
 import in.hocg.eagle.basic.SpringContext;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.RefundStatus;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
 import in.hocg.eagle.basic.constant.datadict.PaymentWay;
@@ -40,7 +40,7 @@ public class WxPayRefundMessageRule extends StringResolve.StringRule<PayRefundMe
             final String appid = lambdaMap.getAsString(MessageContext::getAppid);
             final Integer channel = lambdaMap.getAsInt(MessageContext::getPlatformTyp);
             final Integer feature = lambdaMap.getAsInt(MessageContext::getFeature);
-            final PaymentWay paymentWay = IntEnum.of(lambdaMap.getAsInt(MessageContext::getPaymentWay), PaymentWay.class).orElse(PaymentWay.Unknown);
+            final PaymentWay paymentWay = CodeEnum.of(lambdaMap.getAsInt(MessageContext::getPaymentWay), PaymentWay.class).orElse(PaymentWay.Unknown);
 
             final PayRefundMessage.ReqInfo reqInfo = message.getReqInfo();
             final String refundTradeNo = reqInfo.getRefundId();

@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.lang.invoke.MethodHandles;
+
 /**
  * Created by hocgin on 2020/3/17.
  * email: hocgin@gmail.com
@@ -13,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("订单来源")
 @RequiredArgsConstructor
-public enum OrderSourceType implements IntEnum {
+public enum OrderSourceType implements DataDictEnum {
     Unknown(0, "未知"),
     APP(1, "APP"),
     PC(2, "PC");

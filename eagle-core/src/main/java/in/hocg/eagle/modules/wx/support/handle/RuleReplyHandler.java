@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.wx.support.handle;
 
 import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.WxMatchMsgType;
 import in.hocg.eagle.basic.constant.datadict.WxReplyMsgType;
 import in.hocg.eagle.modules.wx.entity.WxMpReplyRule;
@@ -58,7 +58,7 @@ public class RuleReplyHandler extends AbstractHandler {
             return null;
         }
         final WxMpReplyRule wxMpReplyRule = matchedRule.get();
-        final Optional<WxReplyMsgType> replyMsgTypeOpt = IntEnum.of(wxMpReplyRule.getReplyMsgType(), WxReplyMsgType.class);
+        final Optional<WxReplyMsgType> replyMsgTypeOpt = CodeEnum.of(wxMpReplyRule.getReplyMsgType(), WxReplyMsgType.class);
 
         // 如果没有对应的回复类型
         if (!replyMsgTypeOpt.isPresent()) {

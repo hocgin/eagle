@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("交易退款状态")
 @RequiredArgsConstructor
-public enum RefundStatus implements IntEnum {
+public enum RefundStatus implements DataDictEnum {
     Init(0, "未退款"),
     Wait(1, "退款处理中"),
     Success(2, "退款成功"),

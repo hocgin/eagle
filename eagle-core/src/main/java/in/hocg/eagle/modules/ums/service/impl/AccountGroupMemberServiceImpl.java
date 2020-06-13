@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.ums.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.GroupMemberSource;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.ums.mapstruct.AccountGroupMemberMapping;
 import in.hocg.eagle.modules.ums.entity.Account;
@@ -60,7 +60,7 @@ public class AccountGroupMemberServiceImpl extends AbstractServiceImpl<AccountGr
         if (Objects.isNull(group)) {
             return ResultUtils.emptyPage(qo);
         }
-        Optional<GroupMemberSource> memberSourceOpt = IntEnum.of(group.getMemberSource(), GroupMemberSource.class);
+        Optional<GroupMemberSource> memberSourceOpt = CodeEnum.of(group.getMemberSource(), GroupMemberSource.class);
         if (!memberSourceOpt.isPresent()) {
             return ResultUtils.emptyPage(qo);
         }

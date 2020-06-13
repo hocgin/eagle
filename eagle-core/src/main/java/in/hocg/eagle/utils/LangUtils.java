@@ -9,6 +9,7 @@ import lombok.experimental.UtilityClass;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.util.CollectionUtils;
 
+import java.io.Serializable;
 import java.net.*;
 import java.util.*;
 import java.util.function.BiFunction;
@@ -236,7 +237,6 @@ public class LangUtils {
     public String md5(byte[] bytes) {
         return Hashing.md5().newHasher().putBytes(bytes).hash().toString();
     }
-
 
     public <T> Optional<T> parse(String text, Class<T> clazz) {
         if (Strings.isBlank(text)) {

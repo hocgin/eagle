@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.wx.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.WxMenuType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.security.SecurityContext;
@@ -50,7 +50,7 @@ public class WxMenuServiceImpl extends AbstractServiceImpl<WxMenuMapper, WxMenu>
     public void insertOne(WxMenuInsertQo qo) {
         final LocalDateTime requestDateTime = qo.getCreatedAt();
         final Long userId = qo.getUserId();
-        final WxMenuType wxMenuType = IntEnum.ofThrow(qo.getMenuType(), WxMenuType.class);
+        final WxMenuType wxMenuType = CodeEnum.ofThrow(qo.getMenuType(), WxMenuType.class);
 
         if (wxMenuType.equals(WxMenuType.Individuation)) {
             ValidUtils.notNull(qo.getMatchRule(), "个性化菜单匹配规则不能为空");

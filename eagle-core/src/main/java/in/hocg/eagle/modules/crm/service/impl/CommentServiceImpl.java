@@ -2,6 +2,7 @@ package in.hocg.eagle.modules.crm.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.MessageContext;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
@@ -61,7 +62,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
         final Long creatorId = qo.getUserId();
         final Integer targetTypeCode = qo.getRefType();
         final Long refId = qo.getRefId();
-        final CommentTargetType targetType = IntEnum.of(targetTypeCode, CommentTargetType.class)
+        final CommentTargetType targetType = CodeEnum.of(targetTypeCode, CommentTargetType.class)
             .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("参数错误"));
         final Long targetId = commentTargetService.getOrCreateCommentTarget(targetType, refId);
 
@@ -85,7 +86,7 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
     public IPage<RootCommentComplexVo> pagingRootComment(RootCommentPagingQo qo) throws Throwable {
         final Integer targetTypeCode = qo.getRefType();
         final Long refId = qo.getRefId();
-        final Optional<CommentTargetType> targetTypeOpt = IntEnum.of(targetTypeCode, CommentTargetType.class);
+        final Optional<CommentTargetType> targetTypeOpt = CodeEnum.of(targetTypeCode, CommentTargetType.class);
         if (!targetTypeOpt.isPresent()) {
             return ResultUtils.emptyPage(qo);
         }

@@ -13,11 +13,12 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("通知事件状态")
 @RequiredArgsConstructor
-public enum NotifyEventStatus implements IntEnum {
+public enum NotifyEventStatus implements DataDictEnum {
     Init(0, "初始化"),
     Pending(1, "进行中"),
     Success(2, "成功"),
     Fail(3, "失败");
     private final Integer code;
     private final String name;
+    public static final String KEY = "NotifyEventStatus";
 }

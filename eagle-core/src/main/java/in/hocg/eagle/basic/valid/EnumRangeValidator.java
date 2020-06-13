@@ -1,10 +1,10 @@
 package in.hocg.eagle.basic.valid;
 
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
-import in.hocg.eagle.utils.LangUtils;
+import in.hocg.eagle.basic.constant.CodeEnum;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -13,7 +13,7 @@ import java.util.Objects;
  *
  * @author hocgin
  */
-public class EnumRangeValidator implements ConstraintValidator<EnumRange, Integer> {
+public class EnumRangeValidator implements ConstraintValidator<EnumRange, Serializable> {
     private Class<? extends Enum>[] enumClass;
 
     @Override
@@ -22,17 +22,17 @@ public class EnumRangeValidator implements ConstraintValidator<EnumRange, Intege
     }
 
     @Override
-    public boolean isValid(Integer id, ConstraintValidatorContext context) {
-        if (Objects.isNull(id)) {
+    public boolean isValid(Serializable code, ConstraintValidatorContext context) {
+        if (Objects.isNull(code)) {
             return true;
         }
 
-        IntEnum intEnum;
+        CodeEnum intEnum;
         for (Class<? extends Enum> aClass : enumClass) {
-            if (IntEnum.class.isAssignableFrom(aClass)) {
+            if (CodeEnum.class.isAssignableFrom(aClass)) {
                 for (Enum enumConstant : aClass.getEnumConstants()) {
-                    intEnum = (IntEnum) enumConstant;
-                    if (LangUtils.equals(intEnum.getCode(), id)) {
+                    intEnum = (CodeEnum) enumConstant;
+                    if (intEnum.eq(code)) {
                         return true;
                     }
                 }

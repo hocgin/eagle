@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("确认状态")
 @RequiredArgsConstructor
-public enum ConfirmStatus implements IntEnum {
+public enum ConfirmStatus implements DataDictEnum {
     Unconfirmed(0, "未确认"),
     Confirmed(1, "已确认");
     private final Integer code;

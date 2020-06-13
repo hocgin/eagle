@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("性别")
 @RequiredArgsConstructor
-public enum Gender implements IntEnum {
+public enum Gender implements DataDictEnum {
     Female(0, "女"),
     Man(1, "男");
     private final Integer code;

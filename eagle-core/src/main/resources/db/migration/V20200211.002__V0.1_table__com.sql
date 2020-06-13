@@ -239,7 +239,7 @@ CREATE TABLE `com_data_dict`
     --
     `created_at`      DATETIME(6) NOT NULL
         COMMENT '创建时间',
-    `creator`         BIGINT      NOT NULL
+    `creator`         BIGINT
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',
@@ -272,7 +272,7 @@ CREATE TABLE `com_data_dict_item`
     --
     `created_at`      DATETIME(6) NOT NULL
         COMMENT '创建时间',
-    `creator`         BIGINT      NOT NULL
+    `creator`         BIGINT
         COMMENT '创建者',
     `last_updated_at` DATETIME(6)
         COMMENT '更新时间',

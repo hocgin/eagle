@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("业务日志变更类型")
 @RequiredArgsConstructor
-public enum ChangeLogChangeType implements IntEnum {
+public enum ChangeLogChangeType implements DataDictEnum {
     Insert(0, "新增"),
     Update(1, "更新"),
     Delete(2, "删除");

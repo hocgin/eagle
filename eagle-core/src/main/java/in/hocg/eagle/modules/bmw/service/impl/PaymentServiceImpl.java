@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.bmw.service.impl;
 
 import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.lang.SNCode;
@@ -89,7 +90,7 @@ public class PaymentServiceImpl implements PaymentService {
             final PaymentRecord record = entry.getValue();
             paymentPlatform = paymentPlatformService.getById(paymentPlatformId);
             final String platformAppid = paymentPlatform.getPlatformAppid();
-            platform = IntEnum.of(paymentPlatform.getPlatformType(), in.hocg.eagle.basic.constant.datadict.PaymentPlatform.class)
+            platform = CodeEnum.of(paymentPlatform.getPlatformType(), in.hocg.eagle.basic.constant.datadict.PaymentPlatform.class)
                 .orElseThrow(() -> ServiceException.wrap("暂不支持该平台方式"));
 
             boolean isClosedOk = new CloseTradeRequest(trade.getTradeSn(), platformAppid, platform).request();
@@ -127,7 +128,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         final String tradeSn = ro.getTradeSn();
         final String wxOpenId = ro.getWxOpenId();
-        final PaymentWay paymentWay = IntEnum.of(ro.getPaymentWay(), PaymentWay.class)
+        final PaymentWay paymentWay = CodeEnum.of(ro.getPaymentWay(), PaymentWay.class)
             .orElseThrow(() -> ServiceException.wrap("暂不支持该交易方式"));
         final PaymentTrade trade = paymentTradeService.selectOneByTradeSn(tradeSn)
             .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
@@ -178,7 +179,7 @@ public class PaymentServiceImpl implements PaymentService {
         if (!TradeStatus.Success.eq(trade.getTradeStatus())) {
             ValidUtils.fail("交易未完成");
         }
-        final PaymentWay paymentWay = IntEnum.of(trade.getPaymentWay(), PaymentWay.class)
+        final PaymentWay paymentWay = CodeEnum.of(trade.getPaymentWay(), PaymentWay.class)
             .orElseThrow(() -> ServiceException.wrap("暂不支持该交易方式"));
         final PaymentPlatform paymentPlatform = paymentPlatformService.getById(trade.getPaymentPlatformId());
         if (Objects.isNull(paymentPlatform)) {
@@ -368,7 +369,7 @@ public class PaymentServiceImpl implements PaymentService {
         ValidUtils.notNull(notifyApp, "未找到对应的通知");
 
         final String requestSn = notifyApp.getRequestSn();
-        final PaymentNotifyType notifyType = IntEnum.of(notifyApp.getNotifyType(), PaymentNotifyType.class)
+        final PaymentNotifyType notifyType = CodeEnum.of(notifyApp.getNotifyType(), PaymentNotifyType.class)
             .orElseThrow(() -> ServiceException.wrap("通知类型错误"));
         NotifyAppAsyncVo data;
 

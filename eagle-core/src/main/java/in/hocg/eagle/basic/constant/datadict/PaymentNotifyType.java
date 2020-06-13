@@ -1,6 +1,5 @@
 package in.hocg.eagle.basic.constant.datadict;
 
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +13,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("支付网关通知类型")
 @RequiredArgsConstructor
-public enum PaymentNotifyType implements IntEnum {
+public enum PaymentNotifyType implements DataDictEnum {
     Trade(0, "交易事件"),
     Refund(1, "退款事件"),;
     private final Integer code;
     private final String name;
+    public static final String KEY = "PaymentNotifyType";
 }

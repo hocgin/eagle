@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("优惠券类型")
 @RequiredArgsConstructor
-public enum CouponType implements IntEnum {
+public enum CouponType implements DataDictEnum {
     Credit(0, "满减"),
     Discount(1, "折扣");
     private final Integer code;

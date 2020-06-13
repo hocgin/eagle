@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("是否默认")
 @RequiredArgsConstructor
-public enum IsDefault implements IntEnum {
+public enum IsDefault implements DataDictEnum {
     Off(0, "否"),
     On(1, "是");
     private final Integer code;

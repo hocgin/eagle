@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic.constant.datadict;
+package in.hocg.eagle.basic.constant;
 
 /**
  * Created by hocgin on 2020/5/16.
@@ -8,6 +8,5 @@ package in.hocg.eagle.basic.constant.datadict;
  */
 public interface Valid {
     default void validThrow() {
-
     }
 }
