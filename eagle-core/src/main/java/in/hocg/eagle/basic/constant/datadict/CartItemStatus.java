@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("购物车商品状态")
 @RequiredArgsConstructor
-public enum CartItemStatus {
+public enum CartItemStatus implements DataDictEnum {
     Normal(0, "正常"),
     Expired(1, "已过期"),
     UnderStock(2, "库存不足");

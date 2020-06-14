@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("锁定状态")
 @RequiredArgsConstructor
-public enum Locked implements IntEnum {
+public enum Locked implements DataDictEnum {
     Off(0, "已锁定"),
     On(1, "正常");
     private final Integer code;

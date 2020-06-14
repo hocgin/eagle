@@ -13,11 +13,15 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("启用状态")
 @RequiredArgsConstructor
-public enum Enabled implements IntEnum {
+public enum Enabled implements DataDictEnum {
     Off(0, "禁用"),
     On(1, "启用");
     private final Integer code;
     private final String name;
 
     public static final String KEY = "enabled";
+
+    public static Enabled valueOf(boolean enabled) {
+        return enabled ? Enabled.On : Enabled.Off;
+    }
 }

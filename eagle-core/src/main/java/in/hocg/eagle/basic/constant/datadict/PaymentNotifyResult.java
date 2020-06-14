@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("通知调用结果")
 @RequiredArgsConstructor
-public enum PaymentNotifyResult implements IntEnum {
+public enum PaymentNotifyResult implements DataDictEnum {
     Init(0, "初始化"),
     Success(1, "响应成功"),
     Fail(2, "响应失败"),
@@ -21,4 +21,5 @@ public enum PaymentNotifyResult implements IntEnum {
     ;
     private final Integer code;
     private final String name;
+    public static final String KEY = "PaymentNotifyResult";
 }

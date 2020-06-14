@@ -2,11 +2,15 @@ package in.hocg.eagle.utils.clazz;
 
 import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by hocgin on 2019/7/14.
@@ -14,8 +18,13 @@ import java.util.*;
  *
  * @author hocgin
  */
+@Slf4j
 @UtilityClass
 public class ClassUtils {
+
+    public String getSimpleName(Class<?> clazz) {
+        return clazz.getSimpleName();
+    }
 
     /**
      * 获取对象字段的值
@@ -28,7 +37,7 @@ public class ClassUtils {
     public Object getFieldValue(Object fieldObject, Field field,
                                 Object def) {
         if (Objects.isNull(fieldObject)
-                || Objects.isNull(field)) {
+            || Objects.isNull(field)) {
             return def;
         }
 
@@ -44,7 +53,7 @@ public class ClassUtils {
     }
 
     public <T> T getObjectValue(Object fieldObject, Field field,
-                                       Object def) {
+                                Object def) {
         return ((T) getFieldValue(fieldObject, field, def));
     }
 
@@ -162,13 +171,13 @@ public class ClassUtils {
      */
     public boolean isBaseType(Class clazz) {
         return clazz.equals(Integer.class) ||
-                clazz.equals(Byte.class) ||
-                clazz.equals(Long.class) ||
-                clazz.equals(Double.class) ||
-                clazz.equals(Float.class) ||
-                clazz.equals(Character.class) ||
-                clazz.equals(Short.class) ||
-                clazz.equals(Boolean.class);
+            clazz.equals(Byte.class) ||
+            clazz.equals(Long.class) ||
+            clazz.equals(Double.class) ||
+            clazz.equals(Float.class) ||
+            clazz.equals(Character.class) ||
+            clazz.equals(Short.class) ||
+            clazz.equals(Boolean.class);
     }
 
     /**
@@ -191,5 +200,62 @@ public class ClassUtils {
     public Class getGenericSuperclass(Class clazz, int index) {
         ParameterizedType pt = (ParameterizedType) clazz.getGenericSuperclass();
         return (Class) pt.getActualTypeArguments()[index];
+    }
+
+    /**
+     * 获取某个接口的实现类
+     *
+     * @param clazz
+     * @return
+     */
+    public <T> List<Class<T>> getClassAllImpl(Class<T> clazz) {
+        final ClassLoader classLoader = clazz.getClassLoader();
+        final String basePackage = classLoader.getResource("").getPath();
+        File[] files = new File(basePackage).listFiles();
+        assert files != null;
+
+        List<String> classPaths = Lists.newArrayList();
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                classPaths.addAll(listPackages(file.getName()));
+            }
+        }
+
+        return classPaths.parallelStream()
+            .map(classpath -> {
+                Class<T> clazz1 = null;
+                try {
+                    clazz1 = (Class<T>) Class.forName(classpath, false, classLoader);
+                } catch (Exception e) {
+                    log.warn("未找到类:" + classpath, e);
+                }
+                return clazz1;
+            }).filter(Objects::nonNull).filter(aClass -> {
+                if (aClass.getSuperclass() == null) {
+                    return false;
+                }
+                return Arrays.asList(aClass.getInterfaces()).contains(clazz);
+            }).collect(Collectors.toList());
+    }
+
+    private List<String> listPackages(String basePackage) {
+        List<String> classPaths = Lists.newArrayList();
+        URL url = ClassUtils.class.getClassLoader().getResource("./" + basePackage.replaceAll("\\.", "/"));
+        assert url != null;
+        File directory = new File(url.getFile());
+        final File[] files = directory.listFiles();
+        assert files != null;
+        for (File file : files) {
+            if (file.isDirectory()) {
+                classPaths.addAll(listPackages(basePackage + "." + file.getName()));
+            } else {
+                String classpath = file.getName();
+                if (".class".equals(classpath.substring(classpath.length() - ".class".length()))) {
+                    classPaths.add(basePackage + "." + classpath.replaceAll(".class", ""));
+                }
+            }
+        }
+        return classPaths;
     }
 }

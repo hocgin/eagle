@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.mkt.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.CouponUseType;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.mkt.mapstruct.CouponMapping;
 import in.hocg.eagle.modules.mkt.entity.Coupon;
@@ -87,7 +87,7 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
         }
         validInsertOrUpdate(entity);
 
-        final CouponUseType useType = IntEnum.ofThrow(qo.getUseType(), CouponUseType.class);
+        final CouponUseType useType = CodeEnum.ofThrow(qo.getUseType(), CouponUseType.class);
         List<Long> targetId = null;
         if (CouponUseType.Universal.equals(useType)) {
             targetId = null;

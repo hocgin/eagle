@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.oms.pojo.qo.order;
 
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.OrderPayType;
 import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
 import in.hocg.eagle.basic.exception.ServiceException;
@@ -43,7 +43,7 @@ public class AsyncOrderMessageQo {
     }
 
     public OrderPayType getPayType() {
-        final PaymentPlatform platform = IntEnum.of(platformType, PaymentPlatform.class)
+        final PaymentPlatform platform = CodeEnum.of(platformType, PaymentPlatform.class)
             .orElseThrow(() -> ServiceException.wrap("错误的支付方式"));
         switch (platform) {
             case AliPay: {

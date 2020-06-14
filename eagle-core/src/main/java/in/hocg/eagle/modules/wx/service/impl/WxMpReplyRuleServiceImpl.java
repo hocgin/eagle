@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.wx.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.WxMatchMsgType;
 import in.hocg.eagle.basic.constant.datadict.WxReplyMsgType;
 import in.hocg.eagle.modules.wx.entity.WxMpReplyRule;
@@ -76,9 +76,9 @@ public class WxMpReplyRuleServiceImpl extends AbstractServiceImpl<WxMpReplyRuleM
         final String matchRuleString = qo.getMatchRuleString();
         final String replyContentString = qo.getReplyContentString();
 
-        IntEnum.ofThrow(entity.getMatchMsgType(), WxMatchMsgType.class)
+        CodeEnum.ofThrow(entity.getMatchMsgType(), WxMatchMsgType.class)
             .asObject(matchRuleString).validThrow();
-        IntEnum.ofThrow(entity.getReplyMsgType(), WxReplyMsgType.class)
+        CodeEnum.ofThrow(entity.getReplyMsgType(), WxReplyMsgType.class)
             .asObject(replyContentString).validThrow();
 
         entity.setReplyContent(replyContentString);
@@ -95,8 +95,8 @@ public class WxMpReplyRuleServiceImpl extends AbstractServiceImpl<WxMpReplyRuleM
 
     private WxReplyRuleComplexVo convertComplex(WxMpReplyRule entity) {
         WxReplyRuleComplexVo result = mapping.asWxReplyRuleComplexVo(entity);
-        final WxMatchMsgType matchMsgType = IntEnum.ofThrow(result.getMatchMsgType(), WxMatchMsgType.class);
-        final WxReplyMsgType replyMsgType = IntEnum.ofThrow(result.getReplyMsgType(), WxReplyMsgType.class);
+        final WxMatchMsgType matchMsgType = CodeEnum.ofThrow(result.getMatchMsgType(), WxMatchMsgType.class);
+        final WxReplyMsgType replyMsgType = CodeEnum.ofThrow(result.getReplyMsgType(), WxReplyMsgType.class);
         result.setReplyContent(replyMsgType.asObject(entity.getReplyContent()));
         result.setMatchRule(matchMsgType.asObject(entity.getMatchRule()));
         return result;

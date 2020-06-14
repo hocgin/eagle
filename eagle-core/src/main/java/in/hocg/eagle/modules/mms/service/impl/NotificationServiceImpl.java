@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.mms.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.NotifyType;
 import in.hocg.eagle.basic.constant.datadict.SubjectType;
 import in.hocg.eagle.basic.exception.ServiceException;
@@ -86,10 +86,10 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
         final PublishNotifyDto dto = new PublishNotifyDto();
         final Long subjectId = subscriptionDto.getSubjectId();
         final Integer notifyTypeCode = subscriptionDto.getNotifyType();
-        final NotifyType notifyType = IntEnum.of(notifyTypeCode, NotifyType.class)
+        final NotifyType notifyType = CodeEnum.of(notifyTypeCode, NotifyType.class)
             .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("通知类型错误"));
         final Integer subjectTypeCode = subscriptionDto.getSubjectType();
-        final SubjectType subjectType = IntEnum.of(subjectTypeCode, SubjectType.class)
+        final SubjectType subjectType = CodeEnum.of(subjectTypeCode, SubjectType.class)
             .orElseThrow((Supplier<Throwable>) () -> ServiceException.wrap("订阅类型错误"));
         dto.setNotifyType(notifyType);
         dto.setSubjectType(subjectType);

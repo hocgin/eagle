@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("交易状态")
 @RequiredArgsConstructor
-public enum TradeStatus implements IntEnum {
+public enum TradeStatus implements DataDictEnum {
     Init(0, "等待支付"),
     Wait(1, "待付款完成"),
     Success(2, "完成支付"),

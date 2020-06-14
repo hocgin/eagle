@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("支付方式")
 @RequiredArgsConstructor
-public enum PaymentWay implements IntEnum {
+public enum PaymentWay implements DataDictEnum {
     Unknown(PaymentPlatform.Unknown, 0, "未知"),
     // 支付宝
     AliPayWithApp(PaymentPlatform.AliPay, 1, "支付宝 - APP"),
@@ -28,6 +28,7 @@ public enum PaymentWay implements IntEnum {
     private final PaymentPlatform platform;
     private final Integer code;
     private final String name;
+    public static final String KEY = "PaymentWay";
 
     public String getNotifyUrl(FeatureType featureType, String appid) {
         final Integer paymentType = platform.getCode();

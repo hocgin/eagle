@@ -13,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("平台类型")
 @RequiredArgsConstructor
-public enum Platform implements IntEnum {
+public enum Platform implements DataDictEnum {
     Eagle(0, "Eagle 后台");
     private final Integer code;
     private final String name;
 
-    public static final String KEY = "platform";
+    public static final String KEY = "Platform";
 }

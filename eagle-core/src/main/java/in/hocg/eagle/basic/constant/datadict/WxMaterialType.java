@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.constant.datadict;
 
+import in.hocg.eagle.basic.constant.JSONasClass;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +21,7 @@ import java.util.Collection;
 @Getter
 @ApiModel("微信素材类型")
 @RequiredArgsConstructor
-public enum WxMaterialType implements IntJSONEnum {
+public enum WxMaterialType implements JSONasClass, DataDictEnum {
     Image(0, "图片", File.class, Result.class),
     Voice(1, "语音", File.class, Result.class),
     Video(2, "视频", Video.class, Result.class),

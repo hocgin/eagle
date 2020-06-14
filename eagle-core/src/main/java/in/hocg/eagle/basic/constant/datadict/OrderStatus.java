@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.lang.invoke.MethodHandles;
+
 /**
  * Created by hocgin on 2020/3/15.
  * email: hocgin@gmail.com
@@ -13,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("订单状态")
 @RequiredArgsConstructor
-public enum OrderStatus implements IntEnum {
+public enum OrderStatus implements DataDictEnum {
     PendingPayment(0, "待付款"),
     ToBeDelivered(1, "待发货"),
     Shipped(2, "已发货"),

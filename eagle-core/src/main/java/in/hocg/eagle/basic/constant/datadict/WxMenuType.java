@@ -1,6 +1,5 @@
 package in.hocg.eagle.basic.constant.datadict;
 
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("微信菜单类型")
 @RequiredArgsConstructor
-public enum WxMenuType implements IntEnum {
+public enum WxMenuType implements DataDictEnum {
     General(0, "通用菜单"),
     Individuation(1, "个性化菜单");
     private final Integer code;

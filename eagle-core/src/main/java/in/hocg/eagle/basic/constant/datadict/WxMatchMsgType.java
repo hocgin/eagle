@@ -1,6 +1,8 @@
 package in.hocg.eagle.basic.constant.datadict;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import in.hocg.eagle.basic.constant.JSONasClass;
+import in.hocg.eagle.basic.constant.Valid;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import io.swagger.annotations.ApiModel;
@@ -25,7 +27,7 @@ import java.util.regex.Pattern;
 @Getter
 @ApiModel("匹配消息类型")
 @RequiredArgsConstructor
-public enum WxMatchMsgType implements IntJSONEnum {
+public enum WxMatchMsgType implements JSONasClass, DataDictEnum {
     Text(0, "文本", Text.class),
     Event(1, "事件", Event.class);
     private final Integer code;

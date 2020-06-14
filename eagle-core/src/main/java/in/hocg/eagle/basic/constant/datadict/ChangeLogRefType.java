@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ApiModel("业务日志引用类型")
 @RequiredArgsConstructor
-public enum ChangeLogRefType implements IntEnum {
+public enum ChangeLogRefType implements DataDictEnum {
     OrderLog(0, "订单日志");
     private final Integer code;
     private final String name;

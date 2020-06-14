@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.service.impl;
 
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.IntEnum;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.RefundStatus;
 import in.hocg.eagle.basic.constant.datadict.TradeStatus;
 import in.hocg.eagle.basic.exception.ServiceException;
@@ -41,7 +41,7 @@ public class NotifyAppServiceImpl extends AbstractServiceImpl<NotifyAppMapper, N
     public Long savePaymentNotify(Long tradeId) {
         final PaymentTrade paymentTrade = paymentTradeService.getById(tradeId);
         ValidUtils.notNull(paymentTrade, "交易单据不存在");
-        final TradeStatus status = IntEnum.of(paymentTrade.getTradeStatus(), TradeStatus.class)
+        final TradeStatus status = CodeEnum.of(paymentTrade.getTradeStatus(), TradeStatus.class)
             .orElseThrow(() -> ServiceException.wrap("交易状态错误"));
 
         final PaymentNotifyStatus notifyStatus = status.asPaymentNotifyStatus();
@@ -61,7 +61,7 @@ public class NotifyAppServiceImpl extends AbstractServiceImpl<NotifyAppMapper, N
     public Long saveRefundNotify(Long refundId) {
         final RefundRecord refundRecord = refundRecordService.getById(refundId);
         ValidUtils.notNull(refundRecord, "退款单据不存在");
-        final RefundStatus status = IntEnum.of(refundRecord.getRefundStatus(), RefundStatus.class)
+        final RefundStatus status = CodeEnum.of(refundRecord.getRefundStatus(), RefundStatus.class)
             .orElseThrow(() -> ServiceException.wrap("交易状态错误"));
         final String tradeSn = refundRecord.getTradeSn();
 
