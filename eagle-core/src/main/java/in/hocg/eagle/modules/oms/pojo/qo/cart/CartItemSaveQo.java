@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.oms.pojo.qo.cart;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.Update;
+import in.hocg.web.pojo.qo.BaseQo;
+import in.hocg.web.pojo.qo.Insert;
+import in.hocg.web.pojo.qo.Update;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

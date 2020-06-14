@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.wx.controller;
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.result.Result;
+import in.hocg.web.aspect.logger.UseLogger;
+import in.hocg.web.result.Result;
 import in.hocg.eagle.modules.wx.pojo.qo.message.SendMessageToGroupQo;
 import in.hocg.eagle.modules.wx.pojo.qo.message.SendMessageToUserQo;
 import in.hocg.eagle.modules.wx.pojo.qo.message.SendPreviewMessageToUserQo;

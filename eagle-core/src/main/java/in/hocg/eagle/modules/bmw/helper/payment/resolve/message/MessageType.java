@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.bmw.helper.payment.resolve.message;
 
-import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
+import in.hocg.web.constant.datadict.PaymentPlatform;
+import in.hocg.web.payment.FeatureType;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

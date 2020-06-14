@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.wx.support.handle;
 
-import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.constant.CodeEnum;
-import in.hocg.eagle.basic.constant.datadict.WxMatchMsgType;
-import in.hocg.eagle.basic.constant.datadict.WxReplyMsgType;
+import in.hocg.web.constant.datadict.Enabled;
+import in.hocg.web.constant.CodeEnum;
+import in.hocg.web.constant.datadict.WxMatchMsgType;
+import in.hocg.web.constant.datadict.WxReplyMsgType;
 import in.hocg.eagle.modules.wx.entity.WxMpReplyRule;
 import in.hocg.eagle.modules.wx.service.WxMpReplyRuleService;
 import lombok.RequiredArgsConstructor;

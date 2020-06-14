@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.oms.pojo.qo.refund;
 
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.web.pojo.qo.IdQo;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

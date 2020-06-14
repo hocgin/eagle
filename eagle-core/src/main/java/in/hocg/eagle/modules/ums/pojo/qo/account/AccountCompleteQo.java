@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.ums.pojo.qo.account;
 
-import in.hocg.eagle.basic.pojo.qo.CompleteQo;
+import in.hocg.web.pojo.qo.CompleteQo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

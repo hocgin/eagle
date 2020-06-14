@@ -2,11 +2,11 @@ package in.hocg.eagle.modules.ums.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.constant.AuthorizeConstant;
-import in.hocg.eagle.basic.constant.GlobalConstant;
-import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.basic.security.SecurityContext;
+import in.hocg.web.aspect.logger.UseLogger;
+import in.hocg.web.constant.AuthorizeConstant;
+import in.hocg.web.constant.GlobalConstant;
+import in.hocg.web.result.Result;
+import in.hocg.web.security.SecurityContext;
 import in.hocg.eagle.modules.ums.pojo.qo.account.*;
 import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;

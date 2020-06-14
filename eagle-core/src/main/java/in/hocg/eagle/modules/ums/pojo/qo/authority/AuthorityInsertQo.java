@@ -1,10 +1,10 @@
 package in.hocg.eagle.modules.ums.pojo.qo.authority;
 
-import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.constant.PatternConstant;
-import in.hocg.eagle.basic.constant.datadict.Platform;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.valid.EnumRange;
+import in.hocg.web.constant.datadict.Enabled;
+import in.hocg.web.constant.PatternConstant;
+import in.hocg.web.constant.datadict.Platform;
+import in.hocg.web.pojo.qo.BaseQo;
+import in.hocg.web.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

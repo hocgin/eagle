@@ -1,10 +1,10 @@
 package in.hocg.eagle.modules.com.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.basic.pojo.KeyValue;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.Enabled;
+import in.hocg.web.exception.ServiceException;
+import in.hocg.web.pojo.KeyValue;
 import in.hocg.eagle.modules.com.entity.DataDict;
 import in.hocg.eagle.modules.com.entity.DataDictItem;
 import in.hocg.eagle.modules.com.mapper.DataDictMapper;
@@ -21,8 +21,8 @@ import in.hocg.eagle.modules.com.pojo.vo.datadict.DataDictSearchVo;
 import in.hocg.eagle.modules.com.pojo.vo.datadict.item.DataDictItemVo;
 import in.hocg.eagle.modules.com.service.DataDictItemService;
 import in.hocg.eagle.modules.com.service.DataDictService;
-import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.LangUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;

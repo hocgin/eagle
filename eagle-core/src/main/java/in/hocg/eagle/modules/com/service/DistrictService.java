@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.com.service;
 
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.web.AbstractService;
 import in.hocg.eagle.modules.com.entity.District;
 import in.hocg.eagle.modules.com.pojo.vo.district.DistrictComplexVo;
 import in.hocg.eagle.modules.com.pojo.vo.district.DistrictTreeVo;

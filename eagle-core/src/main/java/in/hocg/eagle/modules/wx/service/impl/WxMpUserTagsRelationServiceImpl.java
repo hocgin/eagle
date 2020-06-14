@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.wx.service.impl;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.exception.ServiceException;
 import in.hocg.eagle.modules.wx.entity.WxMpUserTags;
 import in.hocg.eagle.modules.wx.entity.WxMpUserTagsRelation;
 import in.hocg.eagle.modules.wx.entity.WxUser;
@@ -11,8 +11,8 @@ import in.hocg.eagle.modules.wx.mapper.WxMpUserTagsRelationMapper;
 import in.hocg.eagle.modules.wx.service.WxMpUserTagsRelationService;
 import in.hocg.eagle.modules.wx.service.WxMpUserTagsService;
 import in.hocg.eagle.modules.wx.service.WxUserService;
-import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.LangUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

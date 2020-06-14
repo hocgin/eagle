@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.ums.pojo.vo.authority;
 
-import in.hocg.eagle.basic.datastruct.tree.AbstractTreeNode;
+import in.hocg.web.datastruct.tree.AbstractTreeNode;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

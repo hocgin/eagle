@@ -1,10 +1,10 @@
 package in.hocg.eagle.modules.oms.pojo.vo.order;
 
-import in.hocg.eagle.basic.aspect.named.InjectNamed;
-import in.hocg.eagle.basic.aspect.named.Named;
-import in.hocg.eagle.basic.aspect.named.NamedType;
-import in.hocg.eagle.basic.constant.datadict.OrderRefundApplyStatus;
-import in.hocg.eagle.basic.pojo.KeyValue;
+import in.hocg.web.aspect.named.InjectNamed;
+import in.hocg.web.aspect.named.Named;
+import in.hocg.web.aspect.named.NamedType;
+import in.hocg.web.constant.datadict.OrderRefundApplyStatus;
+import in.hocg.web.pojo.KeyValue;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.com.pojo.qo.systemsettings;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
+import in.hocg.web.pojo.qo.BaseQo;
+import in.hocg.web.pojo.qo.Insert;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

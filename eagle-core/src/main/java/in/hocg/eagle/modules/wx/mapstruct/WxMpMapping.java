@@ -1,12 +1,12 @@
 package in.hocg.eagle.modules.wx.mapstruct;
 
-import in.hocg.eagle.basic.constant.datadict.WxMaterialType;
+import in.hocg.web.constant.datadict.WxMaterialType;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
 import in.hocg.eagle.modules.wx.entity.WxMpMessageTemplate;
 import in.hocg.eagle.modules.wx.entity.WxMpQrcode;
 import in.hocg.eagle.modules.wx.entity.WxMpUserTags;
-import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.string.JsonUtils;
+import in.hocg.web.utils.LangUtils;
+import in.hocg.web.utils.string.JsonUtils;
 import lombok.NonNull;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;

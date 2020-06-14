@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.bmw.entity;
 import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import in.hocg.eagle.basic.AbstractEntity;
+import in.hocg.web.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;

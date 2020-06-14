@@ -2,14 +2,14 @@ package in.hocg.eagle.modules.oms.pojo.vo.order;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.aspect.named.InjectNamed;
-import in.hocg.eagle.basic.aspect.named.Named;
-import in.hocg.eagle.basic.aspect.named.NamedType;
-import in.hocg.eagle.basic.constant.datadict.ConfirmStatus;
-import in.hocg.eagle.basic.constant.datadict.OrderPayType;
-import in.hocg.eagle.basic.constant.datadict.OrderSourceType;
-import in.hocg.eagle.basic.constant.datadict.OrderStatus;
-import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
+import in.hocg.web.aspect.named.InjectNamed;
+import in.hocg.web.aspect.named.Named;
+import in.hocg.web.aspect.named.NamedType;
+import in.hocg.web.constant.datadict.ConfirmStatus;
+import in.hocg.web.constant.datadict.OrderPayType;
+import in.hocg.web.constant.datadict.OrderSourceType;
+import in.hocg.web.constant.datadict.OrderStatus;
+import in.hocg.web.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

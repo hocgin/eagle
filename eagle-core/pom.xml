@@ -16,64 +16,16 @@
 
   <dependencies>
     <dependency>
-      <groupId>cn.afterturn</groupId>
-      <artifactId>easypoi-base</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>cn.afterturn</groupId>
-      <artifactId>easypoi-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>cn.afterturn</groupId>
-      <artifactId>easypoi-annotation</artifactId>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>web-basic</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.statemachine</groupId>
       <artifactId>spring-statemachine-starter</artifactId>
     </dependency>
     <dependency>
-      <groupId>in.hocg.swagger2</groupId>
-      <artifactId>swagger2-spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>in.hocg.payment</groupId>
-      <artifactId>payment-module-alipay</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>in.hocg.payment</groupId>
-      <artifactId>payment-module-wxpay</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.talanlabs</groupId>
-      <artifactId>avatar-generator</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-mail</artifactId>
-    </dependency>
-    <dependency>
       <groupId>com.github.ulisesbocchio</groupId>
       <artifactId>jasypt-spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-redis</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.zxing</groupId>
-      <artifactId>javase</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>in.hocg.alioss</groupId>
-      <artifactId>alioss-spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
     <dependency>
       <groupId>org.mapstruct</groupId>
@@ -136,29 +88,8 @@
       <artifactId>velocity-engine-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus-boot-starter</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-aop</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>fastjson</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.github.binarywang</groupId>
-      <artifactId>weixin-java-mp</artifactId>
     </dependency>
   </dependencies>
 

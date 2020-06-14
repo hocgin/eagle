@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.mms.pojo.qo.notify;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.web.pojo.qo.BaseQo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

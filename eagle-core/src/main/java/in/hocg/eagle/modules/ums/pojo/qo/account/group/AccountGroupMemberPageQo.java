@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.ums.pojo.qo.account.group;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.web.pojo.qo.PageQo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

@@ -1,11 +1,11 @@
 package in.hocg.eagle.modules.crm.service.impl;
 
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.CommentTargetType;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.CommentTargetType;
 import in.hocg.eagle.modules.crm.entity.CommentTarget;
 import in.hocg.eagle.modules.crm.mapper.CommentTargetMapper;
 import in.hocg.eagle.modules.crm.service.CommentTargetService;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

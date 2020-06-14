@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.ums.service;
 
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.web.AbstractService;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthorityInsertQo;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthoritySearchQo;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthorityUpdateQo;

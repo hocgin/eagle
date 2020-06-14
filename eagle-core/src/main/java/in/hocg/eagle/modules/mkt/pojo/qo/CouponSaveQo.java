@@ -1,12 +1,12 @@
 package in.hocg.eagle.modules.mkt.pojo.qo;
 
-import in.hocg.eagle.basic.constant.datadict.CouponPlatformType;
-import in.hocg.eagle.basic.constant.datadict.CouponType;
-import in.hocg.eagle.basic.constant.datadict.CouponUseType;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.Update;
-import in.hocg.eagle.basic.valid.EnumRange;
+import in.hocg.web.constant.datadict.CouponPlatformType;
+import in.hocg.web.constant.datadict.CouponType;
+import in.hocg.web.constant.datadict.CouponUseType;
+import in.hocg.web.pojo.qo.BaseQo;
+import in.hocg.web.pojo.qo.Insert;
+import in.hocg.web.pojo.qo.Update;
+import in.hocg.web.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

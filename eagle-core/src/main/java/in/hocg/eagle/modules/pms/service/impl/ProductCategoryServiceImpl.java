@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.pms.service.impl;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.datastruct.tree.Tree;
-import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
+import in.hocg.web.datastruct.tree.Tree;
+import in.hocg.web.exception.ServiceException;
+import in.hocg.web.mybatis.tree.TreeServiceImpl;
 import in.hocg.eagle.modules.pms.mapstruct.ProductCategoryMapping;
 import in.hocg.eagle.modules.pms.entity.ProductCategory;
 import in.hocg.eagle.modules.pms.mapper.ProductCategoryMapper;
@@ -13,8 +13,8 @@ import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
 import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryTreeVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import in.hocg.eagle.modules.pms.service.ProductService;
-import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.LangUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

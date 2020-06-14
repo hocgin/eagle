@@ -1,13 +1,13 @@
 package in.hocg.eagle.modules.wx.controller;
 
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.basic.result.Result;
+import in.hocg.web.aspect.logger.UseLogger;
+import in.hocg.web.pojo.qo.IdQo;
+import in.hocg.web.result.Result;
 import in.hocg.eagle.modules.wx.pojo.qo.qrcode.WxMpQrcodeInsertQo;
 import in.hocg.eagle.modules.wx.pojo.qo.qrcode.WxMpQrcodePageQo;
 import in.hocg.eagle.modules.wx.service.WxMpQrcodeService;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;

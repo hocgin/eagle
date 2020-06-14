@@ -1,13 +1,13 @@
 package in.hocg.eagle.modules.mkt.service.impl;
 
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.web.AbstractServiceImpl;
 import in.hocg.eagle.modules.mkt.entity.CouponProductCategoryRelation;
 import in.hocg.eagle.modules.mkt.mapper.CouponProductCategoryRelationMapper;
 import in.hocg.eagle.modules.mkt.service.CouponProductCategoryRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
 import in.hocg.eagle.modules.pms.entity.ProductCategory;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

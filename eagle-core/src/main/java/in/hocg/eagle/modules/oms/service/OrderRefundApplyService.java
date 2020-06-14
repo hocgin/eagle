@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.oms.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.web.AbstractService;
 import in.hocg.eagle.modules.oms.entity.OrderRefundApply;
 import in.hocg.eagle.modules.oms.pojo.qo.order.RefundApplyQo;
 import in.hocg.eagle.modules.oms.pojo.qo.refund.HandleQo;

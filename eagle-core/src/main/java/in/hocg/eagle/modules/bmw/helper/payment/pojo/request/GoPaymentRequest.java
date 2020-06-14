@@ -1,10 +1,10 @@
 package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 
-import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
-import in.hocg.eagle.basic.constant.datadict.PaymentWay;
-import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.web.constant.datadict.PaymentPlatform;
+import in.hocg.web.constant.datadict.PaymentWay;
+import in.hocg.web.exception.ServiceException;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoPaymentResponse;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.ValidUtils;
 import in.hocg.payment.PaymentResponse;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeAppPayRequest;

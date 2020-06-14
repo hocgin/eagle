@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.com.pojo.qo.requestlog;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.web.pojo.qo.PageQo;
 
 /**
  * Created by hocgin on 2020/4/4.

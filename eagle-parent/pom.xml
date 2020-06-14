@@ -85,6 +85,11 @@
         <artifactId>eagle-core</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>web-basic</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <!--三方库-->
       <dependency>
         <groupId>com.github.binarywang</groupId>

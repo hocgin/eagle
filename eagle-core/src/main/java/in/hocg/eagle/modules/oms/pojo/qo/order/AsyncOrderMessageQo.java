@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.oms.pojo.qo.order;
 
-import in.hocg.eagle.basic.constant.CodeEnum;
-import in.hocg.eagle.basic.constant.datadict.OrderPayType;
-import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
-import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.web.constant.CodeEnum;
+import in.hocg.web.constant.datadict.OrderPayType;
+import in.hocg.web.constant.datadict.PaymentPlatform;
+import in.hocg.web.exception.ServiceException;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

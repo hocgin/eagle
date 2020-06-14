@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.com.pojo.qo.datadict;
 
-import in.hocg.eagle.basic.pojo.qo.IdsQo;
+import in.hocg.web.pojo.qo.IdsQo;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

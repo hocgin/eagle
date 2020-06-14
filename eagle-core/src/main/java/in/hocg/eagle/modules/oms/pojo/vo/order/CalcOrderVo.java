@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.oms.pojo.vo.order;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.pojo.KeyValue;
+import in.hocg.web.pojo.KeyValue;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;

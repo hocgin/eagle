@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.mkt.service;
 
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.web.AbstractService;
 import in.hocg.eagle.modules.mkt.entity.CouponProductRelation;
 import in.hocg.eagle.modules.pms.entity.Product;
 

@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.bmw.helper.payment.resolve.message;
 
-import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.web.exception.ServiceException;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

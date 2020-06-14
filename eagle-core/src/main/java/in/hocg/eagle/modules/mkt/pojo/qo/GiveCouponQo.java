@@ -2,8 +2,8 @@ package in.hocg.eagle.modules.mkt.pojo.qo;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.jackson.LocalDateTimeDeserializer;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.web.jackson.LocalDateTimeDeserializer;
+import in.hocg.web.pojo.qo.IdQo;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

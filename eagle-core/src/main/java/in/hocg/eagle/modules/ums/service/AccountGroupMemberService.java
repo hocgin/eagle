@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.web.AbstractService;
 import in.hocg.eagle.modules.ums.entity.AccountGroupMember;
 import in.hocg.eagle.modules.ums.pojo.qo.account.group.AccountGroupMemberDeleteQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.group.AccountGroupMemberPageQo;

@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.com.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.basic.aspect.logger.Logger;
+import in.hocg.web.AbstractService;
+import in.hocg.web.aspect.logger.Logger;
 import in.hocg.eagle.modules.com.entity.RequestLog;
 import in.hocg.eagle.modules.com.pojo.qo.requestlog.RequestLogPagingQo;
 import in.hocg.eagle.modules.com.pojo.vo.requestlog.RequestLogComplexVo;

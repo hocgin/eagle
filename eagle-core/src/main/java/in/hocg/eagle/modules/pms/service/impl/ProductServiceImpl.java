@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.pms.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.DeleteStatus;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.DeleteStatus;
 import in.hocg.eagle.modules.pms.mapstruct.ProductMapping;
 import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.com.entity.File;
@@ -17,8 +17,8 @@ import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.pms.service.SkuService;
-import in.hocg.eagle.utils.string.JsonUtils;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.string.JsonUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

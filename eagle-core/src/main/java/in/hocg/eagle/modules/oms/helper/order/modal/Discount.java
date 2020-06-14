@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.oms.helper.order.modal;
 
-import in.hocg.eagle.utils.LangUtils;
+import in.hocg.web.utils.LangUtils;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.wx.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.pojo.qo.IdQo;
 import in.hocg.eagle.modules.wx.entity.WxUser;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxUserMapper;
@@ -12,7 +12,7 @@ import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserRefreshQo;
 import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserSearchQo;
 import in.hocg.eagle.modules.wx.pojo.vo.user.WxMpUserComplexVo;
 import in.hocg.eagle.modules.wx.service.WxUserService;
-import in.hocg.eagle.utils.LangUtils;
+import in.hocg.web.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;

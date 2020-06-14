@@ -1,14 +1,14 @@
 package in.hocg.eagle.modules.wx.manager;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.constant.datadict.WxMaterialType;
-import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.web.constant.datadict.WxMaterialType;
+import in.hocg.web.exception.ServiceException;
 import in.hocg.eagle.modules.wx.entity.*;
 import in.hocg.eagle.modules.wx.mapstruct.WxMpMapping;
 import in.hocg.eagle.modules.wx.pojo.qo.message.SendTemplateMessageToUserQo;
-import in.hocg.eagle.utils.DateUtils;
-import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.DateUtils;
+import in.hocg.web.utils.LangUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

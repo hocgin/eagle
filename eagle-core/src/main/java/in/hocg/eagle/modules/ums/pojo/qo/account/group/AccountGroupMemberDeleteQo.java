@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.pojo.qo.account.group;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.web.pojo.qo.BaseQo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

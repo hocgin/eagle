@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.wx.support.handle;
 
-import in.hocg.eagle.basic.env.Env;
-import in.hocg.eagle.utils.LangUtils;
+import in.hocg.web.env.Env;
+import in.hocg.web.utils.LangUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;

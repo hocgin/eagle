@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.mms.pojo.dto.notify;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.constant.datadict.NotifyType;
-import in.hocg.eagle.basic.constant.datadict.SubjectType;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.web.constant.datadict.NotifyType;
+import in.hocg.web.constant.datadict.SubjectType;
+import in.hocg.web.pojo.qo.BaseQo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

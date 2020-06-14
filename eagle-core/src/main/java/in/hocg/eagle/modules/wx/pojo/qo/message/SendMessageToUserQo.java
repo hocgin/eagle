@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.wx.pojo.qo.message;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.valid.StringRange;
+import in.hocg.web.pojo.qo.BaseQo;
+import in.hocg.web.valid.StringRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

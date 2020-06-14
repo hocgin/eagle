@@ -1,12 +1,12 @@
 package in.hocg.eagle.modules.com.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.basic.constant.datadict.ChangeLogRefType;
+import in.hocg.web.AbstractService;
+import in.hocg.web.constant.datadict.ChangeLogRefType;
 import in.hocg.eagle.modules.com.entity.ChangeLog;
 import in.hocg.eagle.modules.com.pojo.qo.changelog.ChangeLogPagingQo;
 import in.hocg.eagle.modules.com.pojo.vo.changelog.ChangeLogComplexVo;
-import in.hocg.eagle.utils.compare.FieldChangeDto;
+import in.hocg.web.utils.compare.FieldChangeDto;
 import lombok.NonNull;
 
 import java.util.List;

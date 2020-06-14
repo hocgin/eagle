@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.mms.pojo.qo.notify;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.web.pojo.qo.PageQo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

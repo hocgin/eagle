@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.wx.pojo.qo.material;
 
-import in.hocg.eagle.basic.constant.datadict.WxMaterialType;
-import in.hocg.eagle.basic.pojo.qo.PageQo;
-import in.hocg.eagle.basic.valid.EnumRange;
+import in.hocg.web.constant.datadict.WxMaterialType;
+import in.hocg.web.pojo.qo.PageQo;
+import in.hocg.web.valid.EnumRange;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

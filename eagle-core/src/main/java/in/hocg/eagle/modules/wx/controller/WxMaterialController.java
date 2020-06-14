@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.wx.controller;
 
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.basic.result.Result;
+import in.hocg.web.aspect.logger.UseLogger;
+import in.hocg.web.pojo.qo.IdQo;
+import in.hocg.web.result.Result;
 import in.hocg.eagle.modules.wx.pojo.qo.material.*;
 import in.hocg.eagle.modules.wx.service.WxMaterialService;
 import lombok.RequiredArgsConstructor;

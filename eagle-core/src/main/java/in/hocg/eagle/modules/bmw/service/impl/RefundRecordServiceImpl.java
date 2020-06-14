@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.bmw.service.impl;
 
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.web.AbstractServiceImpl;
 import in.hocg.eagle.modules.bmw.entity.RefundRecord;
 import in.hocg.eagle.modules.bmw.mapper.RefundRecordMapper;
 import in.hocg.eagle.modules.bmw.service.RefundRecordService;

@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.ums.service.impl;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.Enabled;
 import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.entity.Role;
@@ -11,8 +11,8 @@ import in.hocg.eagle.modules.ums.mapper.RoleAccountMapper;
 import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.modules.ums.service.RoleAccountService;
 import in.hocg.eagle.modules.ums.service.RoleService;
-import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.LangUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.mkt.controller;
 
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.result.Result;
+import in.hocg.web.aspect.logger.UseLogger;
+import in.hocg.web.result.Result;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponAccountPagingQo;
 import in.hocg.eagle.modules.mkt.service.CouponAccountService;
 import lombok.RequiredArgsConstructor;

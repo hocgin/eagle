@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.bmw.service.impl;
 import in.hocg.eagle.modules.bmw.entity.NotifyAppLog;
 import in.hocg.eagle.modules.bmw.mapper.NotifyAppLogMapper;
 import in.hocg.eagle.modules.bmw.service.NotifyAppLogService;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.web.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;

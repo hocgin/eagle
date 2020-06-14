@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.com.service.impl;
 
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.pojo.qo.IdsQo;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.pojo.qo.IdsQo;
 import in.hocg.eagle.modules.com.mapstruct.DataDictItemMapping;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemInsertQo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemUpdateQo;
@@ -10,7 +10,7 @@ import in.hocg.eagle.modules.com.pojo.vo.datadict.item.DataDictItemComplexVo;
 import in.hocg.eagle.modules.com.entity.DataDictItem;
 import in.hocg.eagle.modules.com.mapper.DataDictItemMapper;
 import in.hocg.eagle.modules.com.service.DataDictItemService;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

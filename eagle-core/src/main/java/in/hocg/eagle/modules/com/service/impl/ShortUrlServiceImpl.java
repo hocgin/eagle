@@ -1,10 +1,10 @@
 package in.hocg.eagle.modules.com.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.basic.security.SecurityContext;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.Enabled;
+import in.hocg.web.exception.ServiceException;
+import in.hocg.web.security.SecurityContext;
 import in.hocg.eagle.modules.com.mapstruct.ShortUrlMapping;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.com.mapper.ShortUrlMapper;
@@ -12,8 +12,8 @@ import in.hocg.eagle.modules.com.pojo.qo.shorturl.ShortUrlPagingQo;
 import in.hocg.eagle.modules.com.pojo.qo.shorturl.ShortUrlSaveQo;
 import in.hocg.eagle.modules.com.pojo.vo.shorturl.ShortUrlComplexVo;
 import in.hocg.eagle.modules.com.service.ShortUrlService;
-import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.ShortUrlUtils;
+import in.hocg.web.utils.LangUtils;
+import in.hocg.web.utils.ShortUrlUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.context.annotation.Lazy;

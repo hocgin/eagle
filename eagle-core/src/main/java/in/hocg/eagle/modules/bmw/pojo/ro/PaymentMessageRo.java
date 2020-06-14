@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.pojo.ro;
 
-import in.hocg.eagle.basic.constant.datadict.TradeStatus;
-import in.hocg.eagle.basic.constant.datadict.PaymentWay;
+import in.hocg.web.constant.datadict.TradeStatus;
+import in.hocg.web.constant.datadict.PaymentWay;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;

@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.support;
 
-import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.web.constant.datadict.Enabled;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapstruct.WxMpMapping;

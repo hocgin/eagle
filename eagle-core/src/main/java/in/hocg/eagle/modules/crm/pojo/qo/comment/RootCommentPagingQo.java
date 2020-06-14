@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.crm.pojo.qo.comment;
 
-import in.hocg.eagle.basic.constant.datadict.CommentTargetType;
-import in.hocg.eagle.basic.pojo.qo.PageQo;
-import in.hocg.eagle.basic.valid.EnumRange;
+import in.hocg.web.constant.datadict.CommentTargetType;
+import in.hocg.web.pojo.qo.PageQo;
+import in.hocg.web.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

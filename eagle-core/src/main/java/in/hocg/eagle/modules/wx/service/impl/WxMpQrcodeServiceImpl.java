@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.wx.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.pojo.qo.IdQo;
 import in.hocg.eagle.modules.wx.entity.WxMpQrcode;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxMpQrcodeMapper;

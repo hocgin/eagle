@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.oms.helper.order.modal;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.web.exception.ServiceException;
 
 import java.math.BigDecimal;
 import java.util.*;

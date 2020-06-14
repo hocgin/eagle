@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.wx.controller;
 
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.result.Result;
+import in.hocg.web.aspect.logger.UseLogger;
+import in.hocg.web.result.Result;
 import in.hocg.eagle.modules.wx.pojo.qo.user.tags.*;
 import in.hocg.eagle.modules.wx.service.WxMpUserTagsService;
 import lombok.RequiredArgsConstructor;

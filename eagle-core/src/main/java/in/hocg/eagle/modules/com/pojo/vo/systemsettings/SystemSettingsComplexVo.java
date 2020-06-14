@@ -1,10 +1,10 @@
 package in.hocg.eagle.modules.com.pojo.vo.systemsettings;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import in.hocg.eagle.basic.aspect.named.InjectNamed;
-import in.hocg.eagle.basic.aspect.named.Named;
-import in.hocg.eagle.basic.aspect.named.NamedType;
-import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
+import in.hocg.web.aspect.named.InjectNamed;
+import in.hocg.web.aspect.named.Named;
+import in.hocg.web.aspect.named.NamedType;
+import in.hocg.web.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

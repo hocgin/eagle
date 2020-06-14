@@ -1,19 +1,21 @@
 package in.hocg.eagle.modules.com.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.aspect.logger.Logger;
-import in.hocg.eagle.manager.LangManager;
-import in.hocg.eagle.manager.dto.IpAndAddressDto;
-import in.hocg.eagle.modules.com.mapstruct.RequestLogMapping;
+import in.hocg.web.manager.LangManager;
+import in.hocg.web.manager.dto.IpAndAddressDto;
 import in.hocg.eagle.modules.com.entity.RequestLog;
 import in.hocg.eagle.modules.com.mapper.RequestLogMapper;
+import in.hocg.eagle.modules.com.mapstruct.RequestLogMapping;
 import in.hocg.eagle.modules.com.pojo.qo.requestlog.RequestLogPagingQo;
 import in.hocg.eagle.modules.com.pojo.vo.requestlog.RequestLogComplexVo;
 import in.hocg.eagle.modules.com.service.RequestLogService;
-import in.hocg.eagle.utils.ValidUtils;
-import in.hocg.eagle.utils.web.UserAgent;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.aspect.logger.Logger;
+import in.hocg.web.security.User;
+import in.hocg.web.utils.ValidUtils;
+import in.hocg.web.utils.web.UserAgent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -23,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -48,7 +51,7 @@ public class RequestLogServiceImpl extends AbstractServiceImpl<RequestLogMapper,
     public void asyncSave(Logger logger) {
         final String uri = logger.getUri();
         if (IGNORE_URI.parallelStream().noneMatch(pattern -> MATCHER.match(pattern, uri))) {
-            RequestLog entity = logger.asRequestLog();
+            RequestLog entity = this.asRequestLog(logger);
             final UserAgent userAgent = new UserAgent(entity.getUserAgent());
             entity.setShell(userAgent.getShell().getName());
             entity.setShellVersion(userAgent.getShellVersion());
@@ -90,5 +93,29 @@ public class RequestLogServiceImpl extends AbstractServiceImpl<RequestLogMapper,
 
     private RequestLogComplexVo convertComplex(RequestLog entity) {
         return mapping.asRequestLogComplexVo(entity);
+    }
+
+
+    public RequestLog asRequestLog(Logger logger) {
+        final RequestLog entity = new RequestLog();
+        entity.setArgs(JSON.toJSONString(logger.getArgs()));
+        entity.setRet(JSON.toJSONString(logger.getRet()));
+        entity.setSource(logger.getSource());
+        entity.setClientIp(logger.getClientIp());
+        entity.setCreatedAt(logger.getCreatedAt());
+        entity.setMapping(logger.getMapping());
+        entity.setMethod(logger.getMethod());
+        entity.setTotalTimeMillis(logger.getTotalTimeMillis());
+        entity.setEnterRemark(logger.getEnterRemark());
+        entity.setUri(logger.getUri());
+        entity.setException(logger.getException());
+        entity.setHost(logger.getHost());
+        entity.setUserAgent(logger.getUserAgent());
+        entity.setLogs(JSON.toJSONString(logger.getLogs()));
+        final User currentUser = logger.getCurrentUser();
+        if (Objects.nonNull(currentUser)) {
+            entity.setCreator(currentUser.getId());
+        }
+        return entity;
     }
 }

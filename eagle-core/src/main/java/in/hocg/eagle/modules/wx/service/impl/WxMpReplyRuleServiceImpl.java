@@ -1,11 +1,11 @@
 package in.hocg.eagle.modules.wx.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.constant.CodeEnum;
-import in.hocg.eagle.basic.constant.datadict.WxMatchMsgType;
-import in.hocg.eagle.basic.constant.datadict.WxReplyMsgType;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.Enabled;
+import in.hocg.web.constant.CodeEnum;
+import in.hocg.web.constant.datadict.WxMatchMsgType;
+import in.hocg.web.constant.datadict.WxReplyMsgType;
 import in.hocg.eagle.modules.wx.entity.WxMpReplyRule;
 import in.hocg.eagle.modules.wx.mapper.WxMpReplyRuleMapper;
 import in.hocg.eagle.modules.wx.mapstruct.WxMpReplyRuleMapping;
@@ -13,7 +13,7 @@ import in.hocg.eagle.modules.wx.pojo.qo.reply.WxReplyRulePageQo;
 import in.hocg.eagle.modules.wx.pojo.qo.reply.WxReplyRuleSaveQo;
 import in.hocg.eagle.modules.wx.pojo.qo.reply.WxReplyRuleComplexVo;
 import in.hocg.eagle.modules.wx.service.WxMpReplyRuleService;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

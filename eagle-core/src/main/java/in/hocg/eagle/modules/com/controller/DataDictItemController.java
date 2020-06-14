@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.com.controller;
 
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.qo.IdsQo;
-import in.hocg.eagle.basic.result.Result;
+import in.hocg.web.aspect.logger.UseLogger;
+import in.hocg.web.pojo.qo.IdsQo;
+import in.hocg.web.result.Result;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemUpdateQo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemsBatchInsertQo;
 import in.hocg.eagle.modules.com.pojo.vo.datadict.item.DataDictItemComplexVo;

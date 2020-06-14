@@ -2,11 +2,11 @@ package in.hocg.eagle.modules.pms.pojo.vo.product;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.aspect.named.InjectNamed;
-import in.hocg.eagle.basic.aspect.named.Named;
-import in.hocg.eagle.basic.aspect.named.NamedType;
-import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
-import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
+import in.hocg.web.aspect.named.InjectNamed;
+import in.hocg.web.aspect.named.Named;
+import in.hocg.web.aspect.named.NamedType;
+import in.hocg.web.constant.datadict.ProductPublishStatus;
+import in.hocg.web.jackson.LocalDateTimeSerializer;
 import in.hocg.eagle.modules.com.pojo.vo.file.FileVo;
 import in.hocg.eagle.modules.pms.pojo.vo.sku.SkuComplexVo;
 import io.swagger.annotations.ApiModelProperty;

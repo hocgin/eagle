@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.oms.helper.order;
 
 import in.hocg.eagle.modules.oms.helper.order.modal.AbsDiscount;
 import in.hocg.eagle.modules.oms.helper.order.modal.AbsProduct;
-import in.hocg.eagle.utils.LangUtils;
+import in.hocg.web.utils.LangUtils;
 import lombok.Getter;
 
 import java.math.BigDecimal;

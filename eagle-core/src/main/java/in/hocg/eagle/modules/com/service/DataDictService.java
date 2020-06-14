@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.com.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.basic.pojo.KeyValue;
+import in.hocg.web.AbstractService;
+import in.hocg.web.pojo.KeyValue;
 import in.hocg.eagle.modules.com.pojo.dto.DataDictInitDto;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.DataDictDeleteQo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.DataDictInsertQo;

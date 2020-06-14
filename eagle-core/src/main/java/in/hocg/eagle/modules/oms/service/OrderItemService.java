@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.oms.service;
 
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.web.AbstractService;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderItemComplexVo;
 

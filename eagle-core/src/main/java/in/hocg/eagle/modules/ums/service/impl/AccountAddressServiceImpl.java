@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.ums.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.IsDefault;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.IsDefault;
+import in.hocg.web.pojo.qo.IdQo;
 import in.hocg.eagle.modules.ums.mapstruct.AccountAddressMapping;
 import in.hocg.eagle.modules.ums.entity.AccountAddress;
 import in.hocg.eagle.modules.ums.mapper.AccountAddressMapper;
@@ -11,7 +11,7 @@ import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressPageQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressSaveQo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.address.AccountAddressComplexVo;
 import in.hocg.eagle.modules.ums.service.AccountAddressService;
-import in.hocg.eagle.utils.LangUtils;
+import in.hocg.web.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

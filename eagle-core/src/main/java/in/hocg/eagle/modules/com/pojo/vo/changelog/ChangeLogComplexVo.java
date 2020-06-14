@@ -2,12 +2,12 @@ package in.hocg.eagle.modules.com.pojo.vo.changelog;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.aspect.named.InjectNamed;
-import in.hocg.eagle.basic.aspect.named.Named;
-import in.hocg.eagle.basic.aspect.named.NamedType;
-import in.hocg.eagle.basic.constant.datadict.ChangeLogChangeType;
-import in.hocg.eagle.basic.constant.datadict.ChangeLogRefType;
-import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
+import in.hocg.web.aspect.named.InjectNamed;
+import in.hocg.web.aspect.named.Named;
+import in.hocg.web.aspect.named.NamedType;
+import in.hocg.web.constant.datadict.ChangeLogChangeType;
+import in.hocg.web.constant.datadict.ChangeLogRefType;
+import in.hocg.web.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;

@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.helper.payment;
 
-import in.hocg.eagle.basic.constant.datadict.RefundStatus;
-import in.hocg.eagle.basic.constant.datadict.TradeStatus;
+import in.hocg.web.constant.datadict.RefundStatus;
+import in.hocg.web.constant.datadict.TradeStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

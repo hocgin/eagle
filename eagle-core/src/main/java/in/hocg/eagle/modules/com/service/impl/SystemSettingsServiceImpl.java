@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.com.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.web.AbstractServiceImpl;
 import in.hocg.eagle.modules.com.mapstruct.SystemSettingsMapping;
 import in.hocg.eagle.modules.com.entity.SystemSettings;
 import in.hocg.eagle.modules.com.mapper.SystemSettingsMapper;
@@ -9,7 +9,7 @@ import in.hocg.eagle.modules.com.pojo.qo.systemsettings.SystemSettingsPagingQo;
 import in.hocg.eagle.modules.com.pojo.qo.systemsettings.SystemSettingsSaveQo;
 import in.hocg.eagle.modules.com.pojo.vo.systemsettings.SystemSettingsComplexVo;
 import in.hocg.eagle.modules.com.service.SystemSettingsService;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

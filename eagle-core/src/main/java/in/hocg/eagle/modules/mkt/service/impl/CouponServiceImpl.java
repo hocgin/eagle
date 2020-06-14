@@ -1,10 +1,10 @@
 package in.hocg.eagle.modules.mkt.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.CouponUseType;
-import in.hocg.eagle.basic.constant.CodeEnum;
-import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.CouponUseType;
+import in.hocg.web.constant.CodeEnum;
+import in.hocg.web.exception.ServiceException;
 import in.hocg.eagle.modules.mkt.mapstruct.CouponMapping;
 import in.hocg.eagle.modules.mkt.entity.Coupon;
 import in.hocg.eagle.modules.mkt.entity.CouponProductCategoryRelation;
@@ -22,8 +22,8 @@ import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
 import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import in.hocg.eagle.modules.pms.service.ProductService;
-import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.LangUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

@@ -18,6 +18,8 @@
     <module>eagle-parent</module>
     <module>eagle-core</module>
     <module>eagle-generator</module>
+    <module>eagle-basic</module>
+    <module>eagle-modules</module>
   </modules>
 
   <properties>

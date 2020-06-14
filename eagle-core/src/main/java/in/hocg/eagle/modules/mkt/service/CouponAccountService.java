@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.mkt.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.modules.mkt.entity.CouponAccount;
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.web.AbstractService;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponAccountPagingQo;
 import in.hocg.eagle.modules.mkt.pojo.qo.GiveCouponQo;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;

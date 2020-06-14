@@ -1,11 +1,11 @@
 package in.hocg.eagle.modules.pms.controller;
 
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.constant.AuthorizeConstant;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.Update;
-import in.hocg.eagle.basic.result.Result;
+import in.hocg.web.aspect.logger.UseLogger;
+import in.hocg.web.constant.AuthorizeConstant;
+import in.hocg.web.pojo.qo.Insert;
+import in.hocg.web.pojo.qo.Update;
+import in.hocg.web.result.Result;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductCompleteQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;

@@ -1,10 +1,10 @@
 package in.hocg.eagle.modules.bmw.service.impl;
 
-import in.hocg.eagle.basic.SpringContext;
-import in.hocg.eagle.basic.constant.CodeEnum;
-import in.hocg.eagle.basic.constant.datadict.*;
-import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.basic.lang.SNCode;
+import in.hocg.web.SpringContext;
+import in.hocg.web.constant.CodeEnum;
+import in.hocg.web.constant.datadict.*;
+import in.hocg.web.exception.ServiceException;
+import in.hocg.web.lang.SNCode;
 import in.hocg.eagle.modules.bmw.datastruct.PaymentMapping;
 import in.hocg.eagle.modules.bmw.datastruct.PaymentTradeMapping;
 import in.hocg.eagle.modules.bmw.datastruct.RefundRecordMapping;
@@ -20,11 +20,11 @@ import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
 import in.hocg.eagle.modules.bmw.pojo.ro.*;
 import in.hocg.eagle.modules.bmw.pojo.vo.*;
 import in.hocg.eagle.modules.bmw.service.*;
-import in.hocg.eagle.utils.LangUtils;
-import in.hocg.eagle.utils.ValidUtils;
-import in.hocg.eagle.utils.lambda.map.LambdaMap;
-import in.hocg.eagle.utils.lambda.map.StringMap;
-import in.hocg.eagle.utils.string.JsonUtils;
+import in.hocg.web.utils.LangUtils;
+import in.hocg.web.utils.ValidUtils;
+import in.hocg.web.utils.lambda.map.LambdaMap;
+import in.hocg.web.utils.lambda.map.StringMap;
+import in.hocg.web.utils.string.JsonUtils;
 import in.hocg.payment.PaymentMessage;
 import io.netty.handler.timeout.TimeoutException;
 import lombok.RequiredArgsConstructor;
@@ -84,13 +84,13 @@ public class PaymentServiceImpl implements PaymentService {
         final List<PaymentRecord> paymentRecords = paymentRecordService.selectListByTradeId(trade.getId());
         final Map<Long, PaymentRecord> recordsMap = LangUtils.toMap(paymentRecords, PaymentRecord::getPaymentPlatformId);
         PaymentPlatform paymentPlatform;
-        in.hocg.eagle.basic.constant.datadict.PaymentPlatform platform;
+        in.hocg.web.constant.datadict.PaymentPlatform platform;
         for (Map.Entry<Long, PaymentRecord> entry : recordsMap.entrySet()) {
             final Long paymentPlatformId = entry.getKey();
             final PaymentRecord record = entry.getValue();
             paymentPlatform = paymentPlatformService.getById(paymentPlatformId);
             final String platformAppid = paymentPlatform.getPlatformAppid();
-            platform = CodeEnum.of(paymentPlatform.getPlatformType(), in.hocg.eagle.basic.constant.datadict.PaymentPlatform.class)
+            platform = CodeEnum.of(paymentPlatform.getPlatformType(), in.hocg.web.constant.datadict.PaymentPlatform.class)
                 .orElseThrow(() -> ServiceException.wrap("暂不支持该平台方式"));
 
             boolean isClosedOk = new CloseTradeRequest(trade.getTradeSn(), platformAppid, platform).request();

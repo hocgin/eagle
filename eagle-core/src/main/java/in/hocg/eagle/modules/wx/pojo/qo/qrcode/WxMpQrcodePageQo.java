@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.qrcode;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.web.pojo.qo.PageQo;
 import lombok.Data;
 
 /**

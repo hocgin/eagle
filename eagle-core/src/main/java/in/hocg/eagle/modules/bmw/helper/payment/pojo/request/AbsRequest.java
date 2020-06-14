@@ -1,13 +1,13 @@
 package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 
-import in.hocg.eagle.basic.SpringContext;
-import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
-import in.hocg.eagle.basic.constant.datadict.PaymentWay;
-import in.hocg.eagle.basic.env.Env;
-import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.FeatureType;
-import in.hocg.eagle.utils.ValidUtils;
-import in.hocg.eagle.utils.string.JsonUtils;
-import in.hocg.eagle.utils.web.RequestUtils;
+import in.hocg.web.SpringContext;
+import in.hocg.web.constant.datadict.PaymentPlatform;
+import in.hocg.web.constant.datadict.PaymentWay;
+import in.hocg.web.env.Env;
+import in.hocg.web.payment.FeatureType;
+import in.hocg.web.utils.ValidUtils;
+import in.hocg.web.utils.string.JsonUtils;
+import in.hocg.web.utils.web.RequestUtils;
 import in.hocg.payment.PaymentRequest;
 import in.hocg.payment.PaymentService;
 import in.hocg.payment.alipay.v2.AliPayService;

@@ -2,9 +2,9 @@ package in.hocg.eagle.modules.com.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.KeyValue;
-import in.hocg.eagle.basic.result.Result;
+import in.hocg.web.aspect.logger.UseLogger;
+import in.hocg.web.pojo.KeyValue;
+import in.hocg.web.result.Result;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.DataDictDeleteQo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.DataDictInsertQo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.DataDictUpdateQo;

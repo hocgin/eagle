@@ -2,9 +2,9 @@ package in.hocg.eagle.api.controller;
 
 import in.hocg.eagle.api.pojo.qo.SelfCouponPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.constant.AuthorizeConstant;
-import in.hocg.eagle.basic.result.Result;
+import in.hocg.web.aspect.logger.UseLogger;
+import in.hocg.web.constant.AuthorizeConstant;
+import in.hocg.web.result.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.prepost.PreAuthorize;

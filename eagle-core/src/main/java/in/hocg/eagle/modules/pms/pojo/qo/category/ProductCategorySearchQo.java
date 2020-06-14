@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.pms.pojo.qo.category;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.web.pojo.qo.BaseQo;
 import lombok.Data;
 
 /**

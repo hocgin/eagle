@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.crm.pojo.vo.comment;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
+import in.hocg.web.jackson.LocalDateTimeSerializer;
 import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

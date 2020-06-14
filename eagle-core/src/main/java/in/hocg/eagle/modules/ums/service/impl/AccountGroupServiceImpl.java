@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.ums.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.pojo.qo.IdQo;
 import in.hocg.eagle.modules.ums.mapstruct.AccountGroupMapping;
 import in.hocg.eagle.modules.ums.entity.AccountGroup;
 import in.hocg.eagle.modules.ums.mapper.AccountGroupMapper;
@@ -11,7 +11,7 @@ import in.hocg.eagle.modules.ums.pojo.vo.account.group.AccountGroupComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.group.AccountGroupMemberComplexVo;
 import in.hocg.eagle.modules.ums.service.AccountGroupMemberService;
 import in.hocg.eagle.modules.ums.service.AccountGroupService;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

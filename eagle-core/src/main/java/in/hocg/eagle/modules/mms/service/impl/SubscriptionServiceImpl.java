@@ -1,15 +1,15 @@
 package in.hocg.eagle.modules.mms.service.impl;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.NotifyType;
-import in.hocg.eagle.basic.constant.datadict.SubjectType;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.NotifyType;
+import in.hocg.web.constant.datadict.SubjectType;
 import in.hocg.eagle.modules.crm.entity.Comment;
 import in.hocg.eagle.modules.crm.service.CommentService;
 import in.hocg.eagle.modules.mms.entity.Subscription;
 import in.hocg.eagle.modules.mms.mapper.SubscriptionMapper;
 import in.hocg.eagle.modules.mms.service.SubscriptionService;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

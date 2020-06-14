@@ -1,7 +1,8 @@
 package in.hocg.eagle.modules.oms.pojo.qo.order;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.web.constant.datadict.OrderSourceType;
+import in.hocg.web.pojo.qo.BaseQo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,7 +28,7 @@ public class CalcOrderQo extends BaseQo {
     @ApiModelProperty("优惠券ID")
     private Long userCouponId;
     /**
-     * @see in.hocg.eagle.basic.constant.datadict.OrderSourceType
+     * @see OrderSourceType
      */
     @ApiModelProperty("订单来源")
     private Integer sourceType;

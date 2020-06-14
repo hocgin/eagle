@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.service.impl;
 
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.Enabled;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.entity.Role;
 import in.hocg.eagle.modules.ums.entity.RoleAuthority;
@@ -9,7 +9,7 @@ import in.hocg.eagle.modules.ums.mapper.RoleAuthorityMapper;
 import in.hocg.eagle.modules.ums.service.AuthorityService;
 import in.hocg.eagle.modules.ums.service.RoleAuthorityService;
 import in.hocg.eagle.modules.ums.service.RoleService;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

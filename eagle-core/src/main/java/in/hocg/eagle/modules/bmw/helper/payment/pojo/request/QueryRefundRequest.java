@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 
-import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
+import in.hocg.web.constant.datadict.PaymentPlatform;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.QueryRefundResponse;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeRefundRequest;

@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.pms.pojo.vo.category;
 
-import in.hocg.eagle.basic.datastruct.tree.AbstractTreeNode;
+import in.hocg.web.datastruct.tree.AbstractTreeNode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.wx.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.web.AbstractService;
 import in.hocg.eagle.modules.wx.entity.WxMpUserTags;
 import in.hocg.eagle.modules.wx.pojo.qo.user.tags.*;
 import in.hocg.eagle.modules.wx.pojo.vo.user.tags.WxMpUserTagsComplexVo;

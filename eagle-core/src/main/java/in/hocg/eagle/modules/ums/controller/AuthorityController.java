@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.ums.controller;
 
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.result.Result;
+import in.hocg.web.aspect.logger.UseLogger;
+import in.hocg.web.result.Result;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthorityInsertQo;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthoritySearchQo;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthorityUpdateQo;

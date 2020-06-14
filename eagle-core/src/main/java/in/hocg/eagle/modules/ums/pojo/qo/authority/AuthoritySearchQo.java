@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.pojo.qo.authority;
 
-import in.hocg.eagle.basic.constant.datadict.Platform;
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.web.constant.datadict.Platform;
+import in.hocg.web.pojo.qo.PageQo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

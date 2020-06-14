@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.bmw.pojo.ro;
 
-import in.hocg.eagle.basic.constant.datadict.RefundStatus;
+import in.hocg.web.constant.datadict.RefundStatus;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;

@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.bmw.service;
 
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.web.AbstractService;
 import in.hocg.eagle.modules.bmw.entity.PaymentTrade;
 
 import java.util.Optional;

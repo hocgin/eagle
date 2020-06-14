@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.mms.service;
 
-import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.basic.constant.datadict.NotifyType;
-import in.hocg.eagle.basic.constant.datadict.SubjectType;
+import in.hocg.web.AbstractService;
+import in.hocg.web.constant.datadict.NotifyType;
+import in.hocg.web.constant.datadict.SubjectType;
 import in.hocg.eagle.modules.mms.entity.Subscription;
 
 import java.util.List;

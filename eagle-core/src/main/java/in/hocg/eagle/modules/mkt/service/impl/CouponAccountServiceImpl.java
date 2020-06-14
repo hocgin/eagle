@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.mkt.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.CouponUseStatus;
-import in.hocg.eagle.basic.lang.SNCode;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.CouponUseStatus;
+import in.hocg.web.lang.SNCode;
 import in.hocg.eagle.modules.mkt.mapstruct.CouponAccountMapping;
 import in.hocg.eagle.modules.mkt.mapstruct.CouponMapping;
 import in.hocg.eagle.modules.mkt.entity.CouponAccount;
@@ -17,7 +17,7 @@ import in.hocg.eagle.modules.mkt.service.CouponProductCategoryRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponProductRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
 import in.hocg.eagle.modules.ums.service.AccountService;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

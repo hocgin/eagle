@@ -4,12 +4,12 @@ import com.google.common.collect.Lists;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.Coupon;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedAmountCoupon;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedScaleCoupon;
-import in.hocg.eagle.basic.constant.datadict.CouponType;
-import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.web.constant.datadict.CouponType;
+import in.hocg.web.exception.ServiceException;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
 import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
-import in.hocg.eagle.utils.LangUtils;
+import in.hocg.web.utils.LangUtils;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;

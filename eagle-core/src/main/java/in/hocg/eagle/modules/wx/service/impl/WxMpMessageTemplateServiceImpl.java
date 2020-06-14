@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.wx.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.web.AbstractServiceImpl;
 import in.hocg.eagle.modules.wx.entity.WxMpMessageTemplate;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxMpMessageTemplateMapper;
@@ -10,7 +10,7 @@ import in.hocg.eagle.modules.wx.pojo.qo.message.template.WxMpMessageTemplateRefr
 import in.hocg.eagle.modules.wx.pojo.qo.message.template.WxMpMessageTemplatePageQo;
 import in.hocg.eagle.modules.wx.pojo.vo.message.template.WxMpMessageTemplateComplexVo;
 import in.hocg.eagle.modules.wx.service.WxMpMessageTemplateService;
-import in.hocg.eagle.utils.LangUtils;
+import in.hocg.web.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

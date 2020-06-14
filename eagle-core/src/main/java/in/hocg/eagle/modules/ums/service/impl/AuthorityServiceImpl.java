@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.ums.service.impl;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.datastruct.tree.Tree;
-import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
+import in.hocg.web.datastruct.tree.Tree;
+import in.hocg.web.exception.ServiceException;
+import in.hocg.web.mybatis.tree.TreeServiceImpl;
 import in.hocg.eagle.modules.ums.mapstruct.AuthorityMapping;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.entity.Role;
@@ -16,7 +16,7 @@ import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityComplexAndRoleVo;
 import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.ums.service.AuthorityService;
 import in.hocg.eagle.modules.ums.service.RoleAuthorityService;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

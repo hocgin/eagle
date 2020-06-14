@@ -1,14 +1,14 @@
 package in.hocg.eagle.modules.pms.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.web.AbstractServiceImpl;
 import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.pms.entity.Sku;
 import in.hocg.eagle.modules.pms.mapper.SkuMapper;
 import in.hocg.eagle.modules.pms.pojo.vo.sku.SkuComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.pms.service.SkuService;
-import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.context.annotation.Lazy;

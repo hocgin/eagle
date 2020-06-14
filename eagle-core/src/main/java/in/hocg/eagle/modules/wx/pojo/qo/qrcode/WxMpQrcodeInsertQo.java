@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.qrcode;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.web.pojo.qo.BaseQo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

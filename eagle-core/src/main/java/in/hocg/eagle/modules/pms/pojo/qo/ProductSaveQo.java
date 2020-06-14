@@ -1,10 +1,10 @@
 package in.hocg.eagle.modules.pms.pojo.qo;
 
-import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.Update;
-import in.hocg.eagle.basic.valid.EnumRange;
+import in.hocg.web.constant.datadict.ProductPublishStatus;
+import in.hocg.web.pojo.qo.IdQo;
+import in.hocg.web.pojo.qo.Insert;
+import in.hocg.web.pojo.qo.Update;
+import in.hocg.web.valid.EnumRange;
 import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

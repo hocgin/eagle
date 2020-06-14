@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.mms.message;
 
 import in.hocg.eagle.modules.mms.pojo.qo.notify.PublishSubscriptionDto;
-import in.hocg.eagle.modules.mms.message.event.SubscriptionEvent;
+import in.hocg.web.message.event.SubscriptionEvent;
 import in.hocg.eagle.modules.mms.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

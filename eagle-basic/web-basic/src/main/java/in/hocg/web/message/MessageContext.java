@@ -1,0 +1,21 @@
+package in.hocg.web.message;
+
+import in.hocg.web.SpringContext;
+import in.hocg.web.message.event.SubscriptionEvent;
+import org.springframework.context.ApplicationContext;
+
+/**
+ * Created by hocgin on 2020/3/8.
+ * email: hocgin@gmail.com
+ *
+ * @author hocgin
+ */
+public class MessageContext {
+    public static ApplicationContext getApplicationContext() {
+        return SpringContext.getApplicationContext();
+    }
+
+    public static void publish(SubscriptionEvent event) {
+        getApplicationContext().publishEvent(event);
+    }
+}

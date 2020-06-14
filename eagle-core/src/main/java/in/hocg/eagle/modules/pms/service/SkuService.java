@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.pms.service;
 
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.web.AbstractService;
 import in.hocg.eagle.modules.pms.entity.Sku;
 import in.hocg.eagle.modules.pms.pojo.vo.sku.SkuComplexVo;
 

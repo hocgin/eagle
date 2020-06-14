@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.wx.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.Enabled;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxMpConfigMapper;
@@ -11,7 +11,7 @@ import in.hocg.eagle.modules.wx.pojo.qo.WxMpConfigPagingQo;
 import in.hocg.eagle.modules.wx.pojo.qo.WxMpConfigSaveQo;
 import in.hocg.eagle.modules.wx.pojo.vo.WxMpConfigComplexVo;
 import in.hocg.eagle.modules.wx.service.WxMpConfigService;
-import in.hocg.eagle.utils.LangUtils;
+import in.hocg.web.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

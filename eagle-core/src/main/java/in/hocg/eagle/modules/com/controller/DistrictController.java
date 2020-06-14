@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.com.controller;
 
 
-import in.hocg.eagle.basic.result.Result;
+import in.hocg.web.result.Result;
 import in.hocg.eagle.modules.com.service.DistrictService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

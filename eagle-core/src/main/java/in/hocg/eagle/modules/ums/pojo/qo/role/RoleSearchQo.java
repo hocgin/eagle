@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.pojo.qo.role;
 
-import in.hocg.eagle.basic.constant.datadict.Platform;
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.web.constant.datadict.Platform;
+import in.hocg.web.pojo.qo.PageQo;
 import lombok.Data;
 
 /**

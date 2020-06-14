@@ -2,10 +2,10 @@ package in.hocg.eagle.modules.com.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.Update;
-import in.hocg.eagle.basic.result.Result;
+import in.hocg.web.aspect.logger.UseLogger;
+import in.hocg.web.pojo.qo.Insert;
+import in.hocg.web.pojo.qo.Update;
+import in.hocg.web.result.Result;
 import in.hocg.eagle.modules.com.pojo.qo.systemsettings.SystemSettingsPagingQo;
 import in.hocg.eagle.modules.com.pojo.qo.systemsettings.SystemSettingsSaveQo;
 import in.hocg.eagle.modules.com.pojo.vo.systemsettings.SystemSettingsComplexVo;

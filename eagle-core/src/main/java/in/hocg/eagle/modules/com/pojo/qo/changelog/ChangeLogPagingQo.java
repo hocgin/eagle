@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.com.pojo.qo.changelog;
 
-import in.hocg.eagle.basic.constant.datadict.ChangeLogRefType;
-import in.hocg.eagle.basic.pojo.qo.PageQo;
-import in.hocg.eagle.basic.valid.EnumRange;
+import in.hocg.web.constant.datadict.ChangeLogRefType;
+import in.hocg.web.pojo.qo.PageQo;
+import in.hocg.web.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

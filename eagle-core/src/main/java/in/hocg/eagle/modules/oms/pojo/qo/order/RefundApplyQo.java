@@ -1,12 +1,11 @@
 package in.hocg.eagle.modules.oms.pojo.qo.order;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.web.pojo.qo.BaseQo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 
 /**
  * Created by hocgin on 2020/3/15.

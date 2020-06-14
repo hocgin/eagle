@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.com.pojo.qo.file;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.constant.GlobalConstant;
+import in.hocg.web.constant.GlobalConstant;
 import in.hocg.eagle.modules.com.entity.File;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -1,11 +1,11 @@
 package in.hocg.eagle.modules.mms.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.CodeEnum;
-import in.hocg.eagle.basic.constant.datadict.NotifyType;
-import in.hocg.eagle.basic.constant.datadict.SubjectType;
-import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.CodeEnum;
+import in.hocg.web.constant.datadict.NotifyType;
+import in.hocg.web.constant.datadict.SubjectType;
+import in.hocg.web.exception.ServiceException;
 import in.hocg.eagle.modules.mms.mapstruct.NotificationMapping;
 import in.hocg.eagle.modules.mms.entity.Notification;
 import in.hocg.eagle.modules.mms.entity.Notify;

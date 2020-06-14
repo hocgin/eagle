@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.com.mapstruct;
 
 import in.hocg.eagle.modules.com.entity.ChangeLog;
 import in.hocg.eagle.modules.com.pojo.vo.changelog.ChangeLogComplexVo;
-import in.hocg.eagle.utils.compare.ChangeLogDto;
+import in.hocg.web.utils.compare.ChangeLogDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.pojo.qo.role;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.web.pojo.qo.IdQo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

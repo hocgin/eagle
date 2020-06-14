@@ -1,14 +1,14 @@
 package in.hocg.eagle.modules.ums.pojo.vo.account;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import in.hocg.eagle.basic.aspect.named.InjectNamed;
-import in.hocg.eagle.basic.aspect.named.Named;
-import in.hocg.eagle.basic.aspect.named.NamedType;
-import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.constant.datadict.Expired;
-import in.hocg.eagle.basic.constant.datadict.Gender;
-import in.hocg.eagle.basic.constant.datadict.Locked;
-import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
+import in.hocg.web.aspect.named.InjectNamed;
+import in.hocg.web.aspect.named.Named;
+import in.hocg.web.aspect.named.NamedType;
+import in.hocg.web.constant.datadict.Enabled;
+import in.hocg.web.constant.datadict.Expired;
+import in.hocg.web.constant.datadict.Gender;
+import in.hocg.web.constant.datadict.Locked;
+import in.hocg.web.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

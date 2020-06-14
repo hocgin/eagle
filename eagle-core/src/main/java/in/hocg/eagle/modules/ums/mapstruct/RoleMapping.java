@@ -1,7 +1,6 @@
 package in.hocg.eagle.modules.ums.mapstruct;
 
 
-import in.hocg.eagle.basic.security.GrantedAuthority;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.entity.Role;
 import in.hocg.eagle.modules.ums.pojo.qo.role.RoleInsertQo;
@@ -86,26 +85,6 @@ public interface RoleMapping {
         RoleComplexAndAuthorityVo result = asRoleComplexAndAuthorityVo(role);
         result.setAuthorities(asRoleComplexVoAuthorityVo(authorities));
         return result;
-    }
-
-    /**
-     * List<Role> -> List<GrantedAuthority>
-     *
-     * @param roles
-     * @return
-     */
-    List<GrantedAuthority> asGrantedAuthority(List<Role> roles);
-
-
-    /**
-     * Role -> SimpleGrantedAuthority
-     *
-     * @param role
-     * @return
-     */
-    default GrantedAuthority asGrantedAuthority(Role role) {
-        return new GrantedAuthority()
-            .setAuthority("ROLE_" + role.getRoleCode());
     }
 
     @Mapping(target = "platformName", ignore = true)

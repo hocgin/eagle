@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.mms.service.impl;
 
-import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.NotifyType;
-import in.hocg.eagle.basic.constant.datadict.SubjectType;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.NotifyType;
+import in.hocg.web.constant.datadict.SubjectType;
 import in.hocg.eagle.modules.mms.mapstruct.NotifyMapping;
 import in.hocg.eagle.modules.mms.entity.Notification;
 import in.hocg.eagle.modules.mms.entity.Notify;
@@ -10,7 +10,7 @@ import in.hocg.eagle.modules.mms.mapper.NotifyMapper;
 import in.hocg.eagle.modules.mms.pojo.dto.notify.PublishNotifyDto;
 import in.hocg.eagle.modules.mms.service.NotificationService;
 import in.hocg.eagle.modules.mms.service.NotifyService;
-import in.hocg.eagle.utils.LangUtils;
+import in.hocg.web.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

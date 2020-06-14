@@ -1,16 +1,14 @@
 package in.hocg.eagle.modules.ums.mapstruct;
 
-import in.hocg.eagle.basic.security.GrantedAuthority;
+import in.hocg.eagle.modules.ums.entity.Authority;
+import in.hocg.eagle.modules.ums.entity.Role;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthorityInsertQo;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthorityUpdateQo;
 import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityComplexAndRoleVo;
 import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
-import in.hocg.eagle.modules.ums.entity.Authority;
-import in.hocg.eagle.modules.ums.entity.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -59,26 +57,6 @@ public interface AuthorityMapping {
      */
     @Mapping(target = "children", ignore = true)
     AuthorityTreeNodeVo asAuthorityTreeNodeVo(Authority authority);
-
-    /**
-     * Authority -> GrantedAuthority
-     *
-     * @param authority
-     * @return
-     */
-    default GrantedAuthority asGrantedAuthority(Authority authority) {
-        final GrantedAuthority grantedAuthority = new GrantedAuthority();
-        grantedAuthority.setAuthority(authority.getAuthorityCode());
-        return grantedAuthority;
-    }
-
-    /**
-     * Collection<Authority> -> List<GrantedAuthority>
-     *
-     * @param authorities
-     * @return
-     */
-    List<GrantedAuthority> asGrantedAuthority(Collection<Authority> authorities);
 
     @Mapping(target = "roles", ignore = true)
     @Mapping(target = "parentName", ignore = true)
