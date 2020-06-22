@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.eagle.modules.wx.mapper.WxMaterialMapper">
+
+  <select id="paging" resultType="in.hocg.eagle.modules.wx.entity.WxMaterial">
+    SELECT * FROM wx_material wm
+    <where>
+      <if test="qo.appid != null">
+        AND wm.appid = #{qo.appid}
+      </if>
+      <if test="qo.materialType != null">
+        AND wm.material_type = #{qo.materialType}
+      </if>
+    </where>
+  </select>
+</mapper>
