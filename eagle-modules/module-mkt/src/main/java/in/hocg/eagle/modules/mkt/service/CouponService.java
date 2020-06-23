@@ -6,7 +6,7 @@ import in.hocg.eagle.modules.mkt.entity.Coupon;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponPagingQo;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponSaveQo;
 import in.hocg.eagle.modules.mkt.pojo.qo.GiveCouponQo;
-import in.hocg.eagle.modules.mkt.pojo.vo.CouponComplexVo;
+import in.hocg.basic.api.vo.CouponComplexVo;
 
 /**
  * <p>

@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.mkt.service;
 
-import in.hocg.web.AbstractService;
+import in.hocg.basic.api.vo.ProductComplexVo;
 import in.hocg.eagle.modules.mkt.entity.CouponProductRelation;
-import in.hocg.eagle.modules.pms.entity.Product;
+import in.hocg.web.AbstractService;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public interface CouponProductRelationService extends AbstractService<CouponProd
 
     List<CouponProductRelation> selectAllByCouponId(Long couponId);
 
-    List<Product> selectAllProductByCouponId(Long couponId);
+    List<ProductComplexVo> selectAllProductByCouponId(Long couponId);
 
     void validInsertOrUpdateByCouponId(Long couponId, List<CouponProductRelation> entities);
 }

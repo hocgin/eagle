@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.mkt.pojo.vo;
+package in.hocg.basic.api.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
@@ -10,8 +10,6 @@ import in.hocg.web.constant.datadict.CouponType;
 import in.hocg.web.constant.datadict.CouponUseStatus;
 import in.hocg.web.constant.datadict.CouponUseType;
 import in.hocg.web.jackson.LocalDateTimeSerializer;
-import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

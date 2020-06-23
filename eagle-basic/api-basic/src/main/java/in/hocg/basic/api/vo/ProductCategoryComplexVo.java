@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.pms.pojo.vo.category;
+package in.hocg.basic.api.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.web.aspect.named.InjectNamed;

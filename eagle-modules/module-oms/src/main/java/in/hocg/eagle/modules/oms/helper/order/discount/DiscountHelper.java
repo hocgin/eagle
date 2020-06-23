@@ -1,14 +1,14 @@
 package in.hocg.eagle.modules.oms.helper.order.discount;
 
 import com.google.common.collect.Lists;
+import in.hocg.basic.api.vo.CouponAccountComplexVo;
+import in.hocg.basic.api.vo.ProductCategoryComplexVo;
+import in.hocg.basic.api.vo.ProductComplexVo;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.Coupon;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedAmountCoupon;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedScaleCoupon;
 import in.hocg.web.constant.datadict.CouponType;
 import in.hocg.web.exception.ServiceException;
-import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
-import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import in.hocg.web.utils.LangUtils;
 import lombok.experimental.UtilityClass;
 

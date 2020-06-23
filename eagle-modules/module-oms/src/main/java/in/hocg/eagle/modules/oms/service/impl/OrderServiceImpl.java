@@ -3,23 +3,15 @@ package in.hocg.eagle.modules.oms.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
-import in.hocg.web.AbstractServiceImpl;
-import in.hocg.web.env.Env;
-import in.hocg.web.env.EnvConfigs;
-import in.hocg.web.constant.datadict.*;
-import in.hocg.web.exception.ServiceException;
-import in.hocg.web.lang.SNCode;
-import in.hocg.web.pojo.KeyValue;
-import in.hocg.web.pojo.qo.IdQo;
+import in.hocg.basic.api.vo.CouponAccountComplexVo;
+import in.hocg.basic.api.vo.ProductComplexVo;
+import in.hocg.basic.api.vo.SkuComplexVo;
 import in.hocg.eagle.modules.bmw.api.PaymentAPI;
-import in.hocg.eagle.modules.bmw.pojo.ro.CreateTradeRo;
-import in.hocg.eagle.modules.bmw.pojo.ro.GoPayRo;
-import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
-import in.hocg.eagle.modules.com.service.ChangeLogService;
-import in.hocg.eagle.modules.mkt.entity.CouponAccount;
-import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
-import in.hocg.eagle.modules.mkt.service.CouponAccountService;
-import in.hocg.eagle.modules.mkt.service.CouponService;
+import in.hocg.eagle.modules.bmw.api.ro.CreateTradeRo;
+import in.hocg.eagle.modules.bmw.api.ro.GoPayRo;
+import in.hocg.eagle.modules.bmw.api.vo.GoPayVo;
+import in.hocg.eagle.modules.com.api.ChangeLogAPI;
+import in.hocg.eagle.modules.mkt.api.CouponAccountAPI;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.helper.order.GeneralOrder;
@@ -34,11 +26,16 @@ import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
 import in.hocg.eagle.modules.oms.service.OrderService;
-import in.hocg.eagle.modules.pms.entity.Product;
-import in.hocg.eagle.modules.pms.entity.Sku;
-import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
-import in.hocg.eagle.modules.pms.service.ProductService;
-import in.hocg.eagle.modules.pms.service.SkuService;
+import in.hocg.eagle.modules.pms.api.ProductAPI;
+import in.hocg.eagle.modules.pms.api.SkuAPI;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.*;
+import in.hocg.web.env.Env;
+import in.hocg.web.env.EnvConfigs;
+import in.hocg.web.exception.ServiceException;
+import in.hocg.web.lang.SNCode;
+import in.hocg.web.pojo.KeyValue;
+import in.hocg.web.pojo.qo.IdQo;
 import in.hocg.web.utils.LangUtils;
 import in.hocg.web.utils.ValidUtils;
 import in.hocg.web.utils.compare.EntityCompare;
@@ -71,15 +68,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     implements OrderService {
-    private final ProductService productService;
+    private final ProductAPI productService;
     private final OrderItemService orderItemService;
-    private final CouponService couponService;
     private final PaymentAPI paymentApi;
-    private final CouponAccountService couponAccountService;
-    private final SkuService skuService;
-    private final SkuMapping skuMapping;
+    private final CouponAccountAPI couponAccountService;
+    private final SkuAPI skuService;
     private final OrderMapping mapping;
-    private final ChangeLogService changeLogService;
+    private final ChangeLogAPI changeLogService;
     private final SNCode snCode;
 
     @Override
@@ -90,10 +85,10 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         // 1. 检查商品 和 检查库存
         final List<GeneralProduct> products = qo.getItems().stream()
             .map(item -> {
-                final Sku sku = skuService.getById(item.getSkuId());
+                final SkuComplexVo sku = skuService.getById(item.getSkuId());
                 ValidUtils.notNull(sku, "商品规格错误");
                 final Long productId = sku.getProductId();
-                final Product product = productService.selectOneByIdAndNotDeleted(productId);
+                final ProductComplexVo product = productService.selectOneByIdAndNotDeleted(productId);
                 ValidUtils.notNull(product, "未找到商品");
                 ValidUtils.isFalse(LangUtils.equals(product.getPublishStatus(), ProductPublishStatus.SoldOut.getCode()), "商品已下架");
                 return new GeneralProduct(sku.getPrice(), item.getQuantity())
@@ -374,10 +369,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         // 归还优惠券
         final Long accountCouponId = order.getCouponAccountId();
         if (Objects.nonNull(accountCouponId)) {
-            final CouponAccount updated = new CouponAccount();
-            updated.setId(accountCouponId);
-            updated.setUseStatus(CouponUseStatus.Unused.getCode());
-            couponAccountService.validUpdateById(updated);
+            ValidUtils.isTrue(couponAccountService.updateUnusedStatus(accountCouponId), "系统繁忙，请稍后");
         }
     }
 

@@ -3,8 +3,8 @@ package in.hocg.eagle.modules.mkt.mapstruct;
 import in.hocg.eagle.modules.mkt.entity.Coupon;
 import in.hocg.eagle.modules.mkt.entity.CouponAccount;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponSaveQo;
-import in.hocg.eagle.modules.mkt.pojo.vo.CouponComplexVo;
-import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
+import in.hocg.basic.api.vo.CouponComplexVo;
+import in.hocg.basic.api.vo.CouponAccountComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

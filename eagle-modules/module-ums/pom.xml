@@ -11,4 +11,10 @@
 
   <artifactId>module-ums</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>api-ums</artifactId>
+    </dependency>
+  </dependencies>
 </project>

@@ -1,12 +1,10 @@
-package in.hocg.eagle.modules.pms.pojo.vo.sku;
+package in.hocg.basic.api.vo;
 
 import com.google.common.collect.Lists;
-import in.hocg.web.pojo.qo.Insert;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -20,9 +18,11 @@ import java.util.List;
 @Accessors(chain = true)
 public class SkuComplexVo {
     @ApiModelProperty("SKU ID")
-    private Integer id;
+    private Long id;
     @ApiModelProperty("SKU编码")
     private String skuCode;
+    private Long productId;
+    private String specData;
     @ApiModelProperty("价格")
     private BigDecimal price;
     @ApiModelProperty("库存")
@@ -36,10 +36,8 @@ public class SkuComplexVo {
 
     @Data
     public static class Spec {
-        @NotNull(groups = {Insert.class})
         @ApiModelProperty("规格属性")
         private String key;
-        @NotNull(groups = {Insert.class})
         @ApiModelProperty("规格值")
         private String value;
     }

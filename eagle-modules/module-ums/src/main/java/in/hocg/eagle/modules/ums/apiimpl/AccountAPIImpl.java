@@ -20,7 +20,7 @@ public class AccountAPIImpl implements AccountAPI {
     private final AccountService service;
 
     @Override
-    public AccountComplexVo selectOneComplex(Long id) {
+    public AccountComplexVo selectOne(Long id) {
         return LangUtils.copyProperties(service.selectOneComplex(id), new AccountComplexVo());
     }
 }

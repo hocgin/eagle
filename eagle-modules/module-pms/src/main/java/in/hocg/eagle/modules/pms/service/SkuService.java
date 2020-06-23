@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.pms.service;
 
-import in.hocg.web.AbstractService;
+import in.hocg.basic.api.vo.SkuComplexVo;
 import in.hocg.eagle.modules.pms.entity.Sku;
-import in.hocg.eagle.modules.pms.pojo.vo.sku.SkuComplexVo;
+import in.hocg.web.AbstractService;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -18,6 +18,8 @@ import java.util.List;
 public interface SkuService extends AbstractService<Sku> {
 
     void deleteAllByProductId(Long productId);
+
+    SkuComplexVo selectOne(Long id);
 
     List<SkuComplexVo> selectListByProductId(Long productId);
 

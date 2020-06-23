@@ -62,6 +62,10 @@ public class LangUtils {
         return Optional.empty();
     }
 
+    public <K, V> List<V> covert(Collection<K> v, Function<K, V> func) {
+        return v.parallelStream().map(func).collect(Collectors.toList());
+    }
+
     /**
      * 如果传入的值不为 NULL，则当作入参执行后续函数
      *

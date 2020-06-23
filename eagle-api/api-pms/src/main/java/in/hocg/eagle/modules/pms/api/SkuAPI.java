@@ -1,5 +1,8 @@
 package in.hocg.eagle.modules.pms.api;
 
+
+import in.hocg.basic.api.vo.SkuComplexVo;
+
 /**
  * Created by hocgin on 2020/6/14.
  * email: hocgin@gmail.com
@@ -8,4 +11,9 @@ package in.hocg.eagle.modules.pms.api;
  */
 public interface SkuAPI {
 
+    SkuComplexVo getById(Long skuId);
+
+    boolean casValidAndPlusStock(Long skuId, Integer quantity);
+
+    boolean casValidAndSubtractStock(Long skuId, Integer quantity);
 }

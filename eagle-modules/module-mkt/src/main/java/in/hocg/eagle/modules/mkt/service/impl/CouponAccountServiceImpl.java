@@ -1,22 +1,20 @@
 package in.hocg.eagle.modules.mkt.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.basic.api.vo.CouponAccountComplexVo;
+import in.hocg.eagle.modules.mkt.entity.CouponAccount;
+import in.hocg.eagle.modules.mkt.mapper.CouponAccountMapper;
+import in.hocg.eagle.modules.mkt.mapstruct.CouponAccountMapping;
+import in.hocg.eagle.modules.mkt.mapstruct.CouponMapping;
+import in.hocg.eagle.modules.mkt.pojo.qo.CouponAccountPagingQo;
+import in.hocg.eagle.modules.mkt.pojo.qo.GiveCouponQo;
+import in.hocg.basic.api.vo.CouponComplexVo;
+import in.hocg.eagle.modules.mkt.service.CouponAccountService;
+import in.hocg.eagle.modules.mkt.service.CouponService;
+import in.hocg.eagle.modules.ums.api.AccountAPI;
 import in.hocg.web.AbstractServiceImpl;
 import in.hocg.web.constant.datadict.CouponUseStatus;
 import in.hocg.web.lang.SNCode;
-import in.hocg.eagle.modules.mkt.mapstruct.CouponAccountMapping;
-import in.hocg.eagle.modules.mkt.mapstruct.CouponMapping;
-import in.hocg.eagle.modules.mkt.entity.CouponAccount;
-import in.hocg.eagle.modules.mkt.mapper.CouponAccountMapper;
-import in.hocg.eagle.modules.mkt.pojo.qo.CouponAccountPagingQo;
-import in.hocg.eagle.modules.mkt.pojo.qo.GiveCouponQo;
-import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
-import in.hocg.eagle.modules.mkt.pojo.vo.CouponComplexVo;
-import in.hocg.eagle.modules.mkt.service.CouponAccountService;
-import in.hocg.eagle.modules.mkt.service.CouponProductCategoryRelationService;
-import in.hocg.eagle.modules.mkt.service.CouponProductRelationService;
-import in.hocg.eagle.modules.mkt.service.CouponService;
-import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -40,9 +38,7 @@ import java.util.Objects;
 public class CouponAccountServiceImpl extends AbstractServiceImpl<CouponAccountMapper, CouponAccount> implements CouponAccountService {
 
     private final CouponService couponService;
-    private final AccountService accountService;
-    private final CouponProductRelationService couponProductRelationService;
-    private final CouponProductCategoryRelationService couponProductCategoryRelationService;
+    private final AccountAPI accountService;
     private final CouponMapping couponMapping;
     private final CouponAccountMapping mapping;
     private final SNCode snCode;
@@ -87,6 +83,14 @@ public class CouponAccountServiceImpl extends AbstractServiceImpl<CouponAccountM
         return baseMapper.paging(qo, qo.page()).convert(this::convertCouponAccountComplex);
     }
 
+    @Override
+    public boolean updateUnusedStatus(Long accountCouponId) {
+        final CouponAccount updated = new CouponAccount();
+        updated.setId(accountCouponId);
+        updated.setUseStatus(CouponUseStatus.Unused.getCode());
+        return this.validUpdateById(updated);
+    }
+
     private CouponAccountComplexVo convertCouponAccountComplex(CouponAccount entity) {
         final Long couponId = entity.getCouponId();
         final CouponComplexVo coupon = couponService.selectOne(couponId);
@@ -101,7 +105,7 @@ public class CouponAccountServiceImpl extends AbstractServiceImpl<CouponAccountM
             ValidUtils.notNull(couponService.getById(couponId), "未找到优惠券");
         }
         if (Objects.nonNull(accountId)) {
-            ValidUtils.notNull(accountService.getById(accountId), "未找到用户");
+            ValidUtils.notNull(accountService.selectOne(accountId), "未找到用户");
         }
     }
 }

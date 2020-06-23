@@ -1,12 +1,13 @@
 package in.hocg.eagle.modules.mkt.service.impl;
 
-import in.hocg.web.AbstractServiceImpl;
+import in.hocg.basic.api.vo.ProductCategoryComplexVo;
 import in.hocg.eagle.modules.mkt.entity.CouponProductCategoryRelation;
 import in.hocg.eagle.modules.mkt.mapper.CouponProductCategoryRelationMapper;
 import in.hocg.eagle.modules.mkt.service.CouponProductCategoryRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
-import in.hocg.eagle.modules.pms.entity.ProductCategory;
-import in.hocg.eagle.modules.pms.service.ProductCategoryService;
+import in.hocg.eagle.modules.pms.api.ProductCategoryAPI;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.utils.LangUtils;
 import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -28,7 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class CouponProductCategoryRelationServiceImpl extends AbstractServiceImpl<CouponProductCategoryRelationMapper, CouponProductCategoryRelation> implements CouponProductCategoryRelationService {
-    private final ProductCategoryService productCategoryService;
+    private final ProductCategoryAPI productCategoryService;
     private final CouponService couponService;
 
     @Override
@@ -62,8 +63,9 @@ public class CouponProductCategoryRelationServiceImpl extends AbstractServiceImp
     }
 
     @Override
-    public List<ProductCategory> selectAllProductCategoryByCouponId(Long couponId) {
-        return baseMapper.selectAllProductCategoryByCouponId(couponId);
+    public List<ProductCategoryComplexVo> selectAllProductCategoryByCouponId(Long couponId) {
+        return LangUtils.covert(baseMapper.selectAllProductCategoryByCouponId(couponId), CouponProductCategoryRelation::getProductCategoryId)
+            .stream().map(productCategoryService::selectOne).collect(Collectors.toList());
     }
 
     @Override
@@ -71,7 +73,7 @@ public class CouponProductCategoryRelationServiceImpl extends AbstractServiceImp
         final Long productCategoryId = entity.getProductCategoryId();
         final Long couponId = entity.getCouponId();
         if (Objects.nonNull(productCategoryId)) {
-            ValidUtils.notNull(productCategoryService.getById(productCategoryId), "商品分类不存在");
+            ValidUtils.notNull(productCategoryService.selectOne(productCategoryId), "商品分类不存在");
         }
         if (Objects.nonNull(couponId)) {
             ValidUtils.notNull(couponService.getById(couponId), "优惠券不存在");

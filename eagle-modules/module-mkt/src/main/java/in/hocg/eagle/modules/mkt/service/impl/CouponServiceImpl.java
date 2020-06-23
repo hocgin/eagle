@@ -1,27 +1,27 @@
 package in.hocg.eagle.modules.mkt.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.web.AbstractServiceImpl;
-import in.hocg.web.constant.datadict.CouponUseType;
-import in.hocg.web.constant.CodeEnum;
-import in.hocg.web.exception.ServiceException;
-import in.hocg.eagle.modules.mkt.mapstruct.CouponMapping;
+import in.hocg.basic.api.vo.ProductCategoryComplexVo;
+import in.hocg.basic.api.vo.ProductComplexVo;
 import in.hocg.eagle.modules.mkt.entity.Coupon;
 import in.hocg.eagle.modules.mkt.entity.CouponProductCategoryRelation;
 import in.hocg.eagle.modules.mkt.entity.CouponProductRelation;
 import in.hocg.eagle.modules.mkt.mapper.CouponMapper;
+import in.hocg.eagle.modules.mkt.mapstruct.CouponMapping;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponPagingQo;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponSaveQo;
 import in.hocg.eagle.modules.mkt.pojo.qo.GiveCouponQo;
-import in.hocg.eagle.modules.mkt.pojo.vo.CouponComplexVo;
+import in.hocg.basic.api.vo.CouponComplexVo;
 import in.hocg.eagle.modules.mkt.service.CouponAccountService;
 import in.hocg.eagle.modules.mkt.service.CouponProductCategoryRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponProductRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
-import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
-import in.hocg.eagle.modules.pms.service.ProductCategoryService;
-import in.hocg.eagle.modules.pms.service.ProductService;
+import in.hocg.eagle.modules.pms.api.ProductAPI;
+import in.hocg.eagle.modules.pms.api.ProductCategoryAPI;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.CodeEnum;
+import in.hocg.web.constant.datadict.CouponUseType;
+import in.hocg.web.exception.ServiceException;
 import in.hocg.web.utils.LangUtils;
 import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
@@ -48,8 +48,8 @@ import java.util.stream.Collectors;
 public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon> implements CouponService {
     private final CouponMapping mapping;
     private final CouponAccountService couponAccountService;
-    private final ProductService productService;
-    private final ProductCategoryService productCategoryService;
+    private final ProductAPI productService;
+    private final ProductCategoryAPI productCategoryService;
     private final CouponProductCategoryRelationService couponProductCategoryRelationService;
     private final CouponProductRelationService couponProductRelationService;
 
@@ -144,14 +144,12 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
 
         // 指定商品
         if (LangUtils.equals(CouponUseType.DesignatedProduct.getCode(), useType)) {
-            final List<ProductComplexVo> products = couponProductRelationService.selectAllProductByCouponId(id).stream()
-                .map(productService::convertComplex).collect(Collectors.toList());
+            final List<ProductComplexVo> products = couponProductRelationService.selectAllProductByCouponId(id);
             result.setCanUseProduct(products);
         }
         // 指定品类
         else if (LangUtils.equals(CouponUseType.SpecifiedCategory.getCode(), useType)) {
-            final List<ProductCategoryComplexVo> productCategory = couponProductCategoryRelationService.selectAllProductCategoryByCouponId(id)
-                .stream().map(productCategoryService::convertProductCategoryComplex).collect(Collectors.toList());
+            final List<ProductCategoryComplexVo> productCategory = couponProductCategoryRelationService.selectAllProductCategoryByCouponId(id);
             result.setCanUseProductCategory(productCategory);
         } else if (LangUtils.equals(CouponUseType.Universal.getCode(), useType)) {
             // 通用类型的优惠券

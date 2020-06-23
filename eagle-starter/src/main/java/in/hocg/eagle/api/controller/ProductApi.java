@@ -7,7 +7,7 @@ import in.hocg.web.aspect.logger.UseLogger;
 import in.hocg.web.constant.AuthorizeConstant;
 import in.hocg.web.pojo.qo.IdQo;
 import in.hocg.web.result.Result;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.prepost.PreAuthorize;

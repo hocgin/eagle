@@ -8,7 +8,7 @@ import in.hocg.web.constant.datadict.CouponType;
 import in.hocg.web.constant.datadict.CouponUseStatus;
 import in.hocg.web.constant.datadict.CouponUseType;
 import in.hocg.web.constant.datadict.OrderSourceType;
-import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
+import in.hocg.basic.api.vo.CouponAccountComplexVo;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 

@@ -3,9 +3,8 @@
 <mapper namespace="in.hocg.eagle.modules.mkt.mapper.CouponProductCategoryRelationMapper">
 
     <select id="selectAllProductCategoryByCouponId"
-            resultType="in.hocg.eagle.modules.pms.entity.ProductCategory">
-      SELECT ppc.* FROM mkt_coupon_product_category_relation mcpcr
-        LEFT JOIN pms_product_category ppc ON ppc.id = mcpcr.product_category_id
+            resultType="in.hocg.eagle.modules.mkt.entity.CouponProductCategoryRelation">
+      SELECT mcpcr.* FROM mkt_coupon_product_category_relation mcpcr
       WHERE mcpcr.coupon_id = #{couponId}
     </select>
 </mapper>

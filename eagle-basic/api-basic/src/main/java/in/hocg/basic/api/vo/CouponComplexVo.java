@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.mkt.pojo.vo;
+package in.hocg.basic.api.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;

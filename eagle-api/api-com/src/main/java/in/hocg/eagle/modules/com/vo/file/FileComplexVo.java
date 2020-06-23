@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.com.pojo.vo.file;
+package in.hocg.eagle.modules.com.vo.file;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-public class FileVo implements Serializable {
+public class FileComplexVo implements Serializable {
     @ApiModelProperty("地址")
     private String url;
     @ApiModelProperty("文件名")

@@ -11,4 +11,19 @@
 
   <artifactId>module-mkt</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>api-mkt</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>api-ums</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>api-pms</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

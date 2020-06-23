@@ -1,9 +1,10 @@
 package in.hocg.eagle.modules.com.service;
 
-import in.hocg.web.AbstractService;
 import in.hocg.eagle.modules.com.entity.File;
-import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
-import in.hocg.eagle.modules.com.pojo.vo.file.FileVo;
+import in.hocg.eagle.modules.com.ro.UploadFileRo;
+import in.hocg.eagle.modules.com.vo.file.FileComplexVo;
+import in.hocg.web.AbstractService;
+import in.hocg.web.constant.datadict.FileRelType;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -23,7 +24,7 @@ public interface FileService extends AbstractService<File> {
      *
      * @param dto
      */
-    void upload(UploadFileDto dto);
+    void upload(UploadFileRo dto);
 
     /**
      * 查询文件列表
@@ -32,6 +33,5 @@ public interface FileService extends AbstractService<File> {
      * @param relId
      * @return
      */
-    List<FileVo> selectListByRelTypeAndRelId2(@NotNull File.RelType relType,
-                                              @NotNull Long relId);
+    List<FileComplexVo> selectListByRelTypeAndRelId2(@NotNull FileRelType relType, @NotNull Long relId);
 }

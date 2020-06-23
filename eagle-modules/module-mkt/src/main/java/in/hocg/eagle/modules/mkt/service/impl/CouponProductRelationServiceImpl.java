@@ -1,12 +1,13 @@
 package in.hocg.eagle.modules.mkt.service.impl;
 
-import in.hocg.web.AbstractServiceImpl;
+import in.hocg.basic.api.vo.ProductComplexVo;
 import in.hocg.eagle.modules.mkt.entity.CouponProductRelation;
 import in.hocg.eagle.modules.mkt.mapper.CouponProductRelationMapper;
 import in.hocg.eagle.modules.mkt.service.CouponProductRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
-import in.hocg.eagle.modules.pms.entity.Product;
-import in.hocg.eagle.modules.pms.service.ProductService;
+import in.hocg.eagle.modules.pms.api.ProductAPI;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.utils.LangUtils;
 import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class CouponProductRelationServiceImpl extends AbstractServiceImpl<CouponProductRelationMapper, CouponProductRelation> implements CouponProductRelationService {
     private final CouponService couponService;
-    private final ProductService productService;
+    private final ProductAPI productService;
 
     @Override
     public List<CouponProductRelation> selectAllByCouponId(Long couponId) {
@@ -37,8 +38,9 @@ public class CouponProductRelationServiceImpl extends AbstractServiceImpl<Coupon
     }
 
     @Override
-    public List<Product> selectAllProductByCouponId(Long couponId) {
-        return baseMapper.selectAllProductByCouponId(couponId);
+    public List<ProductComplexVo> selectAllProductByCouponId(Long couponId) {
+        final List<Long> ids = LangUtils.covert(baseMapper.selectAllProductByCouponId(couponId), CouponProductRelation::getProductId);
+        return ids.stream().map(productService::selectOne).collect(Collectors.toList());
     }
 
     @Override
@@ -71,7 +73,7 @@ public class CouponProductRelationServiceImpl extends AbstractServiceImpl<Coupon
         final Long productId = entity.getProductId();
         final Long couponId = entity.getCouponId();
         if (Objects.nonNull(productId)) {
-            ValidUtils.notNull(productService.getById(productId), "商品不存在");
+            ValidUtils.notNull(productService.selectOne(productId), "商品不存在");
         }
         if (Objects.nonNull(couponId)) {
             ValidUtils.notNull(couponService.getById(couponId), "优惠券不存在");

@@ -1,11 +1,13 @@
 package in.hocg.eagle.modules.com.service.impl;
 
-import in.hocg.web.AbstractServiceImpl;
 import in.hocg.eagle.modules.com.entity.File;
 import in.hocg.eagle.modules.com.mapper.FileMapper;
-import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
-import in.hocg.eagle.modules.com.pojo.vo.file.FileVo;
+import in.hocg.eagle.modules.com.ro.FileRo;
+import in.hocg.eagle.modules.com.ro.UploadFileRo;
 import in.hocg.eagle.modules.com.service.FileService;
+import in.hocg.eagle.modules.com.vo.file.FileComplexVo;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.FileRelType;
 import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -33,12 +35,12 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void upload(UploadFileDto dto) {
+    public void upload(UploadFileRo dto) {
         final Long relId = dto.getRelId();
         ValidUtils.notNull(relId, "上传失败，ID 错误");
-        final File.RelType relType = dto.getRelType();
+        final FileRelType relType = dto.getRelType();
         ValidUtils.notNull(relType, "上传失败，类型错误");
-        final List<UploadFileDto.FileDto> files = dto.getFiles();
+        final List<FileRo> files = dto.getFiles();
         deleteAllByRelTypeAndRelId(relType, relId);
         final LocalDateTime now = LocalDateTime.now();
         if (!CollectionUtils.isEmpty(files)) {
@@ -57,19 +59,18 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File>
     }
 
     @Override
-    public List<FileVo> selectListByRelTypeAndRelId2(@NotNull File.RelType relType,
-                                                     @NotNull Long relId) {
+    public List<FileComplexVo> selectListByRelTypeAndRelId2(@NotNull FileRelType relType, @NotNull Long relId) {
         return selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(relType, relId)
             .parallelStream()
-            .map(item -> new FileVo().setFilename(item.getFilename()).setUrl(item.getFileUrl()))
+            .map(item -> new FileComplexVo().setFilename(item.getFilename()).setUrl(item.getFileUrl()))
             .collect(Collectors.toList());
     }
 
-    public List<File> selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(@NotNull File.RelType relType, @NotNull Long relId) {
+    public List<File> selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(@NotNull FileRelType relType, @NotNull Long relId) {
         return baseMapper.selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(relType.getCode(), relId);
     }
 
-    private void deleteAllByRelTypeAndRelId(@NotNull File.RelType relType, @NotNull Long relId) {
+    private void deleteAllByRelTypeAndRelId(@NotNull FileRelType relType, @NotNull Long relId) {
         baseMapper.deleteAllByRelTypeAndRelId(relType.getCode(), relId);
     }
 }

@@ -11,4 +11,10 @@
 
   <artifactId>module-com</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>api-com</artifactId>
+    </dependency>
+  </dependencies>
 </project>

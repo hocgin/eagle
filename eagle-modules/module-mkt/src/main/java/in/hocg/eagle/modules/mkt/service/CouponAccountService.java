@@ -5,7 +5,7 @@ import in.hocg.eagle.modules.mkt.entity.CouponAccount;
 import in.hocg.web.AbstractService;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponAccountPagingQo;
 import in.hocg.eagle.modules.mkt.pojo.qo.GiveCouponQo;
-import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
+import in.hocg.basic.api.vo.CouponAccountComplexVo;
 
 import java.math.BigDecimal;
 
@@ -26,4 +26,6 @@ public interface CouponAccountService extends AbstractService<CouponAccount> {
     void giveToUsers(GiveCouponQo qo);
 
     IPage<CouponAccountComplexVo> paging(CouponAccountPagingQo qo);
+
+    boolean updateUnusedStatus(Long accountCouponId);
 }

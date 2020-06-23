@@ -9,7 +9,7 @@ import in.hocg.eagle.modules.pms.entity.ProductCategory;
 import in.hocg.eagle.modules.pms.mapper.ProductCategoryMapper;
 import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySaveQo;
 import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySearchQo;
-import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
+import in.hocg.basic.api.vo.ProductCategoryComplexVo;
 import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryTreeVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import in.hocg.eagle.modules.pms.service.ProductService;

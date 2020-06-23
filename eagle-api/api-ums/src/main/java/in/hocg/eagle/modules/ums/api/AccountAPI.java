@@ -1,6 +1,5 @@
 package in.hocg.eagle.modules.ums.api;
 
-import in.hocg.eagle.modules.ums.api.vo.Account;
 import in.hocg.eagle.modules.ums.api.vo.AccountComplexVo;
 
 /**
@@ -10,7 +9,5 @@ import in.hocg.eagle.modules.ums.api.vo.AccountComplexVo;
  * @author hocgin
  */
 public interface AccountAPI {
-    AccountComplexVo selectOneComplex(Long id);
-
-    Account getById(Long id);
+    AccountComplexVo selectOne(Long id);
 }

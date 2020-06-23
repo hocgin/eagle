@@ -1,24 +1,23 @@
 package in.hocg.eagle.modules.oms.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.basic.api.vo.ProductComplexVo;
+import in.hocg.basic.api.vo.SkuComplexVo;
+import in.hocg.eagle.modules.oms.entity.CartItem;
+import in.hocg.eagle.modules.oms.mapper.CartItemMapper;
+import in.hocg.eagle.modules.oms.mapstruct.CartItemMapping;
+import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemPagingQo;
+import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemSaveQo;
+import in.hocg.eagle.modules.oms.pojo.vo.cart.CartItemComplexVo;
+import in.hocg.eagle.modules.oms.service.CartItemService;
+import in.hocg.eagle.modules.pms.api.ProductAPI;
+import in.hocg.eagle.modules.pms.api.SkuAPI;
 import in.hocg.eagle.modules.ums.api.AccountAPI;
 import in.hocg.web.AbstractServiceImpl;
 import in.hocg.web.constant.datadict.CartItemStatus;
 import in.hocg.web.constant.datadict.DeleteStatus;
 import in.hocg.web.constant.datadict.ProductPublishStatus;
 import in.hocg.web.pojo.qo.IdQo;
-import in.hocg.eagle.modules.oms.mapstruct.CartItemMapping;
-import in.hocg.eagle.modules.oms.entity.CartItem;
-import in.hocg.eagle.modules.oms.mapper.CartItemMapper;
-import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemPagingQo;
-import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemSaveQo;
-import in.hocg.eagle.modules.oms.pojo.vo.cart.CartItemComplexVo;
-import in.hocg.eagle.modules.oms.service.CartItemService;
-import in.hocg.eagle.modules.pms.entity.Product;
-import in.hocg.eagle.modules.pms.entity.Sku;
-import in.hocg.eagle.modules.pms.service.ProductService;
-import in.hocg.eagle.modules.pms.service.SkuService;
-import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.web.utils.LangUtils;
 import in.hocg.web.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
@@ -43,8 +42,8 @@ import java.util.Optional;
 public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, CartItem> implements CartItemService {
     private final CartItemMapping mapping;
     private final AccountAPI accountAPI;
-    private final SkuService skuService;
-    private final ProductService productService;
+    private final SkuAPI skuService;
+    private final ProductAPI productService;
 
     private Optional<CartItem> selectOneBySkuIdAndAccountId(Long skuId, Long accountId) {
         return this.lambdaQuery().eq(CartItem::getSkuId, skuId)
@@ -65,9 +64,9 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
             entity.setLastUpdatedAt(createdAt);
             entity.setLastUpdater(userId);
         } else {
-            final Sku sku = skuService.getById(skuId);
+            final SkuComplexVo sku = skuService.getById(skuId);
             ValidUtils.notNull(sku, "商品规格错误");
-            final Product product = productService.getById(skuId);
+            final ProductComplexVo product = productService.selectOne(skuId);
             ValidUtils.notNull(sku, "商品错误");
             entity.setSkuId(skuId);
             entity.setProductId(product.getId());
@@ -99,13 +98,13 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
     private CartItemComplexVo convertComplex(CartItem entity) {
         CartItemComplexVo result = mapping.asCartItemComplexVo(entity);
         final Long skuId = result.getSkuId();
-        final Sku sku = skuService.getById(skuId);
+        final SkuComplexVo sku = skuService.getById(skuId);
         if (Objects.isNull(sku)) {
             result.setCartItemStatus(CartItemStatus.Expired.getCode());
             return result;
         }
 
-        final Product product = productService.getById(sku.getProductId());
+        final ProductComplexVo product = productService.selectOne(sku.getProductId());
         if (Objects.isNull(product)
             || LangUtils.equals(product.getPublishStatus(), ProductPublishStatus.SoldOut.getCode())
             || LangUtils.equals(product.getDeleteStatus(), DeleteStatus.On.getCode())) {
@@ -131,17 +130,17 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
     public void validEntity(CartItem entity) {
         final Long accountId = entity.getAccountId();
         if (Objects.nonNull(accountId)) {
-            ValidUtils.notNull(accountAPI.getById(accountId), "账号错误");
+            ValidUtils.notNull(accountAPI.selectOne(accountId), "账号错误");
         }
 
         final Long productId = entity.getProductId();
         if (Objects.nonNull(productId)) {
-            ValidUtils.notNull(productService.getById(productId), "商品错误");
+            ValidUtils.notNull(productService.selectOne(productId), "商品错误");
         }
 
         final Long skuId = entity.getSkuId();
         if (Objects.nonNull(skuId)) {
-            ValidUtils.notNull(productService.getById(skuId), "商品规格错误");
+            ValidUtils.notNull(skuService.getById(skuId), "商品规格错误");
         }
 
     }

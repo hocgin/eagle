@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.pms.pojo.vo.product;
+package in.hocg.basic.api.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
@@ -7,8 +7,6 @@ import in.hocg.web.aspect.named.Named;
 import in.hocg.web.aspect.named.NamedType;
 import in.hocg.web.constant.datadict.ProductPublishStatus;
 import in.hocg.web.jackson.LocalDateTimeSerializer;
-import in.hocg.eagle.modules.com.pojo.vo.file.FileVo;
-import in.hocg.eagle.modules.pms.pojo.vo.sku.SkuComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -41,6 +39,7 @@ public class ProductComplexVo {
     private String procurement;
     @ApiModelProperty("上架状态")
     private Integer publishStatus;
+    private Integer deleteStatus;
     @ApiModelProperty("单位")
     private String unit;
     @ApiModelProperty("商品重量(克)")
@@ -52,7 +51,7 @@ public class ProductComplexVo {
     private List<SkuComplexVo> sku = Lists.newArrayList();
 
     @ApiModelProperty("图片列表")
-    private List<FileVo> photos = Lists.newArrayList();
+    private List<PhotoComplexVo> photos = Lists.newArrayList();
 
     @ApiModelProperty("创建时间")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -68,4 +67,12 @@ public class ProductComplexVo {
     private Long lastUpdater;
     @Named(idFor = "lastUpdater", type = NamedType.Nickname)
     private String lastUpdaterName;
+
+    @Data
+    public static class PhotoComplexVo {
+        @ApiModelProperty("地址")
+        private String url;
+        @ApiModelProperty("文件名")
+        private String filename;
+    }
 }
