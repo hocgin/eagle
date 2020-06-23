@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.datastruct;
 
+import in.hocg.eagle.modules.bmw.api.ro.GoRefundRo;
 import in.hocg.eagle.modules.bmw.entity.RefundRecord;
-import in.hocg.eagle.modules.bmw.pojo.ro.GoRefundRo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

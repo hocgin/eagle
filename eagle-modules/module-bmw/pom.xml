@@ -11,4 +11,11 @@
 
   <artifactId>module-bmw</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>api-bmw</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

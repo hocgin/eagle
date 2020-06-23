@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.bmw.service;
 
+import in.hocg.eagle.modules.bmw.api.ro.*;
+import in.hocg.eagle.modules.bmw.api.vo.*;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
-import in.hocg.eagle.modules.bmw.pojo.ro.*;
-import in.hocg.eagle.modules.bmw.pojo.vo.*;
 
 /**
  * Created by hocgin on 2020/6/7.

@@ -6,5 +6,5 @@ package in.hocg.eagle.modules.bmw.api.vo;
  *
  * @author hocgin
  */
-public class GoPayVo {
+public class CloseTradeVo {
 }

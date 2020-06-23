@@ -4,9 +4,9 @@ import in.hocg.eagle.modules.bmw.entity.RequestPlatformLog;
 import in.hocg.eagle.modules.bmw.mapper.RequestPlatformLogMapper;
 import in.hocg.eagle.modules.bmw.service.RequestPlatformLogService;
 import in.hocg.web.AbstractServiceImpl;
-import org.springframework.stereotype.Service;
-import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 
 /**
  * <p>

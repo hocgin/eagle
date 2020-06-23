@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.bmw.pojo.vo;
+package in.hocg.eagle.modules.bmw.api.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

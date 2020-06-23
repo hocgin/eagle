@@ -4,6 +4,7 @@ import in.hocg.web.constant.datadict.RefundStatus;
 import in.hocg.web.constant.datadict.TradeStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 
 import javax.annotation.Nonnull;
 import java.math.BigDecimal;

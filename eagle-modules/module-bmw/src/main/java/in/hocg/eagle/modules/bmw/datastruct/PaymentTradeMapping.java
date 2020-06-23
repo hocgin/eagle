@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.datastruct;
 
 import in.hocg.eagle.modules.bmw.entity.PaymentTrade;
-import in.hocg.eagle.modules.bmw.pojo.ro.CreateTradeRo;
+import in.hocg.eagle.modules.bmw.api.ro.CreateTradeRo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

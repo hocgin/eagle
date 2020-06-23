@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.helper.payment.resolve.message.rule.payment;
 
+import in.hocg.eagle.modules.bmw.api.ro.PaymentMessageRo;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
-import in.hocg.eagle.modules.bmw.pojo.ro.PaymentMessageRo;
 import in.hocg.eagle.modules.bmw.service.PaymentService;
 import in.hocg.payment.convert.StringConvert;
 import in.hocg.payment.resolve.StringResolve;

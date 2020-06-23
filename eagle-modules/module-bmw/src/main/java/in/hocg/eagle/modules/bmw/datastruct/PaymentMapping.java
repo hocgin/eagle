@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.datastruct;
 
+import in.hocg.eagle.modules.bmw.api.vo.GoPayVo;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoPaymentResponse;
-import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import org.mapstruct.Mapper;
 
 /**

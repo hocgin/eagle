@@ -1,11 +1,11 @@
 package in.hocg.eagle.modules.bmw.service.impl;
 
-import in.hocg.web.AbstractServiceImpl;
-import in.hocg.web.constant.datadict.Enabled;
-import in.hocg.web.constant.datadict.PaymentWay;
 import in.hocg.eagle.modules.bmw.entity.PaymentPlatform;
 import in.hocg.eagle.modules.bmw.mapper.PaymentPlatformMapper;
 import in.hocg.eagle.modules.bmw.service.PaymentPlatformService;
+import in.hocg.web.AbstractServiceImpl;
+import in.hocg.web.constant.datadict.Enabled;
+import in.hocg.web.constant.datadict.PaymentWay;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

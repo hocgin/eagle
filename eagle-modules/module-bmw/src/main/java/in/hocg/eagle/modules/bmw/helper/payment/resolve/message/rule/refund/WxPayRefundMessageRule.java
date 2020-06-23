@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.helper.payment.resolve.message.rule.refund;
 
+import in.hocg.eagle.modules.bmw.api.ro.RefundMessageRo;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
-import in.hocg.eagle.modules.bmw.pojo.ro.RefundMessageRo;
 import in.hocg.payment.convert.StringConvert;
 import in.hocg.payment.resolve.StringResolve;
 import in.hocg.payment.wxpay.v2.WxPayService;
