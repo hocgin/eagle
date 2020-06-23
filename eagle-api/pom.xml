@@ -30,12 +30,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>api-basic</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>web-basic</artifactId>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>

@@ -15,7 +15,6 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>web-basic</artifactId>
-      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>

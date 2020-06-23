@@ -28,50 +28,15 @@
   </modules>
 
   <dependencies>
-<!--    <dependency>-->
-<!--      <groupId>${project.groupId}</groupId>-->
-<!--      <artifactId>api-oms</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>${project.groupId}</groupId>-->
-<!--      <artifactId>api-pms</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>${project.groupId}</groupId>-->
-<!--      <artifactId>api-wx</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>${project.groupId}</groupId>-->
-<!--      <artifactId>api-ums</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>${project.groupId}</groupId>-->
-<!--      <artifactId>api-mms</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>${project.groupId}</groupId>-->
-<!--      <artifactId>api-bmw</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>${project.groupId}</groupId>-->
-<!--      <artifactId>api-mkt</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>${project.groupId}</groupId>-->
-<!--      <artifactId>api-lang</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>${project.groupId}</groupId>-->
-<!--      <artifactId>api-com</artifactId>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>${project.groupId}</groupId>-->
-<!--      <artifactId>api-crm</artifactId>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>api-basic</artifactId>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>web-basic</artifactId>
-<!--      <scope>runtime</scope>-->
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
