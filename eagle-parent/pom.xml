@@ -80,14 +80,149 @@
         <artifactId>payment-module-wxpay</artifactId>
         <version>0.1.1-SNAPSHOT</version>
       </dependency>
+      <!-- BMW Start -->
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>eagle-core</artifactId>
+        <artifactId>module-bmw</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>api-bmw</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- BMW End -->
+      <!-- COM Start -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>module-com</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>api-com</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- COM End -->
+      <!-- CRM Start -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>module-crm</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>api-crm</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- CRM End -->
+      <!-- LANG Start -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>module-lang</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>api-lang</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- LANG End -->
+      <!-- MKT Start -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>module-mkt</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>api-mkt</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- MKT End -->
+      <!-- MMS Start -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>module-mms</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>api-mms</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- MMS End -->
+      <!-- OMS Start -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>module-oms</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>api-oms</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- OMS End -->
+      <!-- PMS Start -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>module-pms</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>api-pms</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- OMS End -->
+      <!-- UMS Start -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>module-ums</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>api-ums</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- UMS End -->
+      <!-- WX Start -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>module-wx</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>api-wx</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- WX End -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>eagle-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>eagle-modules</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>eagle-basic</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>web-basic</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>eagle-starter</artifactId>
         <version>${project.version}</version>
       </dependency>
       <!--三方库-->

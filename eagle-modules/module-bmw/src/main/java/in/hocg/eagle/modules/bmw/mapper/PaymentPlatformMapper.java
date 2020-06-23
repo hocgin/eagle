@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.mapper;
 
-import in.hocg.eagle.modules.bmw.entity.PaymentPlatform;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.eagle.modules.bmw.entity.PaymentPlatform;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

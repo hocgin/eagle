@@ -3,7 +3,6 @@ package in.hocg.web.utils.lambda.map;
 import in.hocg.web.utils.clazz.PropertyNamer;
 import in.hocg.web.utils.lambda.SFunction;
 import in.hocg.web.utils.lambda.SerializedLambda;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public interface LambdaMap<V> extends Map<String, V> {
         return ((Integer) this.get(key(keyFunction)));
     }
 
-    default V getOrDefault(SFunction<T, ?> keyFunction, V defaultValue) {
+    default <T> V getOrDefault(SFunction<T, ?> keyFunction, V defaultValue) {
         return this.getOrDefault(key(keyFunction), defaultValue);
     }
 

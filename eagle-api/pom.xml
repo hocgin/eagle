@@ -2,14 +2,35 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>eagle</artifactId>
-        <groupId>in.hocg</groupId>
-        <version>0.1.0-SNAPSHOT</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>eagle-parent</artifactId>
+    <groupId>in.hocg</groupId>
+    <version>${revision}</version>
+    <relativePath>../eagle-parent/pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>pom</packaging>
 
-    <artifactId>eagle-api</artifactId>
+  <artifactId>eagle-api</artifactId>
 
+  <modules>
+    <module>api-com</module>
+    <module>api-crm</module>
+    <module>api-lang</module>
+    <module>api-mkt</module>
+    <module>api-bmw</module>
+    <module>api-mms</module>
+    <module>api-ums</module>
+    <module>api-wx</module>
+    <module>api-pms</module>
+    <module>api-oms</module>
+  </modules>
 
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>web-basic</artifactId>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
 </project>

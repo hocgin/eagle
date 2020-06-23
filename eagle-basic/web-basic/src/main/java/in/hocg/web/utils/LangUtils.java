@@ -5,8 +5,13 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.hash.Hashing;
 import in.hocg.web.utils.clazz.ClassUtils;
+import in.hocg.web.utils.clazz.PropertyNamer;
+import in.hocg.web.utils.lambda.SFunction;
+import in.hocg.web.utils.lambda.SerializedLambda;
+import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.net.*;
@@ -319,6 +324,30 @@ public class LangUtils {
             startIndex = toIndex;
         }
         return result;
+    }
+
+
+    /**
+     * 拷贝属性（先都调用这边，方便更换）
+     *
+     * @param source
+     * @param target
+     */
+    public static <T extends Object> T copyProperties(Object source, T target) {
+        BeanUtils.copyProperties(source, target);
+        return target;
+    }
+
+    public <T extends Object> T copyProperties(Object source, T target,
+                                               @NonNull List<String> ignore) {
+        BeanUtils.copyProperties(source, target, ignore.toArray(new String[0]));
+        return target;
+    }
+
+    public <T extends Object> T copyProperties(Object source, T target, SFunction<T, ?>... ignoreFunc) {
+        final List<String> ignoreFieldNames = Arrays.stream(ignoreFunc).map(func -> PropertyNamer.methodToProperty(SerializedLambda.resolve(func).getImplMethodName()))
+            .collect(Collectors.toList());
+        return copyProperties(source, target, ignoreFieldNames);
     }
 
     public Integer getIntRandomCode(int i) {

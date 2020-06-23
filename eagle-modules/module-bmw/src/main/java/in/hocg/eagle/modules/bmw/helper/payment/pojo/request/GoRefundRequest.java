@@ -1,7 +1,5 @@
 package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 
-import in.hocg.web.constant.datadict.PaymentPlatform;
-import in.hocg.web.constant.datadict.PaymentWay;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoRefundResponse;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeRefundRequest;
@@ -9,6 +7,8 @@ import in.hocg.payment.alipay.v2.response.TradeRefundResponse;
 import in.hocg.payment.wxpay.v2.request.PayRefundRequest;
 import in.hocg.payment.wxpay.v2.request.WxPayRequest;
 import in.hocg.payment.wxpay.v2.response.PayRefundResponse;
+import in.hocg.web.constant.datadict.PaymentPlatform;
+import in.hocg.web.constant.datadict.PaymentWay;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;

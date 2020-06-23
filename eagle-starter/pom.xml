@@ -3,56 +3,71 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>eagle-modules</artifactId>
+    <artifactId>eagle-parent</artifactId>
     <groupId>in.hocg</groupId>
     <version>${revision}</version>
+    <relativePath>../eagle-parent/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <name>Eagle :: Modules :: Web Starter</name>
-  <artifactId>web-starter</artifactId>
+  <name>Eagle :: Eagle Starter</name>
+  <artifactId>eagle-starter</artifactId>
   <packaging>jar</packaging>
 
   <dependencies>
+    <!-- 一方库 Start -->
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>bmw-core</artifactId>
+      <artifactId>web-basic</artifactId>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>com-core</artifactId>
+      <artifactId>module-bmw</artifactId>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>crm-core</artifactId>
+      <artifactId>module-com</artifactId>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>lang-core</artifactId>
+      <artifactId>module-crm</artifactId>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>mkt-core</artifactId>
+      <artifactId>module-lang</artifactId>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>mms-core</artifactId>
+      <artifactId>module-mkt</artifactId>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>oms-core</artifactId>
+      <artifactId>module-mms</artifactId>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>pms-core</artifactId>
+      <artifactId>module-oms</artifactId>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>ums-core</artifactId>
+      <artifactId>module-pms</artifactId>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>wx-core</artifactId>
+      <artifactId>module-ums</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>module-wx</artifactId>
+    </dependency>
+    <!-- 一方库 End-->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-jose</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

@@ -99,6 +99,10 @@
       <groupId>in.hocg.alioss</groupId>
       <artifactId>alioss-spring-boot-starter</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.github.whvcse</groupId>
+      <artifactId>easy-captcha</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

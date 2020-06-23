@@ -1,13 +1,16 @@
 package in.hocg.web.result;
 
+import in.hocg.web.utils.LangUtils;
 import in.hocg.web.utils.string.JsonUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -90,5 +93,18 @@ public class Result<T> implements Serializable {
             }})
             .contentType(MediaType.parseMediaType("application/octet-stream"))
             .body(new InputStreamResource(is));
+    }
+
+    public static ResponseEntity<FileSystemResource> file(File file) {
+        return ResponseEntity
+            .ok()
+            .headers(new HttpHeaders() {{
+                add(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName=" + LangUtils.getOrDefault(file.getName(), "下载文件"));
+                add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
+                add(HttpHeaders.PRAGMA, "no-cache");
+                add(HttpHeaders.EXPIRES, "0");
+            }})
+            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .body(new FileSystemResource(file));
     }
 }

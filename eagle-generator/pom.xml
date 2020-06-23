@@ -15,6 +15,10 @@
 
   <dependencies>
     <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>web-basic</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.baomidou</groupId>
       <artifactId>mybatis-plus-generator</artifactId>
     </dependency>
@@ -25,10 +29,6 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>in.hocg</groupId>
-      <artifactId>eagle-core</artifactId>
     </dependency>
   </dependencies>
 </project>

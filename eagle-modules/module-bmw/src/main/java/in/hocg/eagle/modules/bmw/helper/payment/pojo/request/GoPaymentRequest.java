@@ -1,10 +1,6 @@
 package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 
-import in.hocg.web.constant.datadict.PaymentPlatform;
-import in.hocg.web.constant.datadict.PaymentWay;
-import in.hocg.web.exception.ServiceException;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoPaymentResponse;
-import in.hocg.web.utils.ValidUtils;
 import in.hocg.payment.PaymentResponse;
 import in.hocg.payment.alipay.v2.request.AliPayRequest;
 import in.hocg.payment.alipay.v2.request.TradeAppPayRequest;
@@ -14,6 +10,10 @@ import in.hocg.payment.alipay.v2.response.TradePreCreateResponse;
 import in.hocg.payment.wxpay.v2.request.UnifiedOrderRequest;
 import in.hocg.payment.wxpay.v2.request.WxPayRequest;
 import in.hocg.payment.wxpay.v2.response.UnifiedOrderResponse;
+import in.hocg.web.constant.datadict.PaymentPlatform;
+import in.hocg.web.constant.datadict.PaymentWay;
+import in.hocg.web.exception.ServiceException;
+import in.hocg.web.utils.ValidUtils;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;

@@ -9,7 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>crm-api</artifactId>
+  <artifactId>api-crm</artifactId>
 
 
 </project>

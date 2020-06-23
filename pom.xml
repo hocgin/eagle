@@ -16,10 +16,11 @@
 
   <modules>
     <module>eagle-parent</module>
-    <module>eagle-core</module>
     <module>eagle-generator</module>
     <module>eagle-basic</module>
     <module>eagle-modules</module>
+    <module>eagle-api</module>
+    <module>eagle-starter</module>
   </modules>
 
   <properties>

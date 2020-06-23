@@ -1,10 +1,9 @@
 package in.hocg.eagle.modules.bmw.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.context.annotation.Lazy;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
