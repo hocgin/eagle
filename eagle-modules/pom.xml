@@ -71,7 +71,7 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>web-basic</artifactId>
-      <scope>runtime</scope>
+<!--      <scope>runtime</scope>-->
     </dependency>
   </dependencies>
 
