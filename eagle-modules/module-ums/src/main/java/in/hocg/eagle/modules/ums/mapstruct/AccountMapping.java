@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.ums.mapstruct;
 
 import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountUpdateStatusQo;
-import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
+import in.hocg.basic.api.vo.AccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.role.RoleComplexAndAuthorityVo;
 import org.mapstruct.Mapper;

@@ -1,26 +1,26 @@
 package in.hocg.eagle.modules.mms.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.basic.api.vo.AccountComplexVo;
+import in.hocg.basic.api.vo.NotifyComplexVo;
+import in.hocg.eagle.modules.mms.entity.Notification;
+import in.hocg.eagle.modules.mms.entity.Notify;
+import in.hocg.eagle.modules.mms.mapper.NotificationMapper;
+import in.hocg.eagle.modules.mms.mapstruct.NotificationMapping;
+import in.hocg.eagle.modules.mms.pojo.dto.notify.PublishNotifyDto;
+import in.hocg.eagle.modules.mms.pojo.qo.notify.PublishPrivateLetterQo;
+import in.hocg.eagle.modules.mms.pojo.qo.notify.PublishSubscriptionDto;
+import in.hocg.eagle.modules.mms.pojo.qo.notify.SearchNotifyPagingQo;
+import in.hocg.eagle.modules.mms.pojo.vo.notify.SummaryVo;
+import in.hocg.eagle.modules.mms.service.NotificationService;
+import in.hocg.eagle.modules.mms.service.NotifyService;
+import in.hocg.eagle.modules.mms.service.SubscriptionService;
+import in.hocg.eagle.modules.ums.api.AccountAPI;
 import in.hocg.web.AbstractServiceImpl;
 import in.hocg.web.constant.CodeEnum;
 import in.hocg.web.constant.datadict.NotifyType;
 import in.hocg.web.constant.datadict.SubjectType;
 import in.hocg.web.exception.ServiceException;
-import in.hocg.eagle.modules.mms.mapstruct.NotificationMapping;
-import in.hocg.eagle.modules.mms.entity.Notification;
-import in.hocg.eagle.modules.mms.entity.Notify;
-import in.hocg.eagle.modules.mms.mapper.NotificationMapper;
-import in.hocg.eagle.modules.mms.pojo.dto.notify.PublishNotifyDto;
-import in.hocg.eagle.modules.mms.pojo.qo.notify.PublishPrivateLetterQo;
-import in.hocg.eagle.modules.mms.pojo.qo.notify.PublishSubscriptionDto;
-import in.hocg.eagle.modules.mms.pojo.qo.notify.SearchNotifyPagingQo;
-import in.hocg.eagle.modules.mms.pojo.vo.notify.NotifyComplexVo;
-import in.hocg.eagle.modules.mms.pojo.vo.notify.SummaryVo;
-import in.hocg.eagle.modules.mms.service.NotificationService;
-import in.hocg.eagle.modules.mms.service.NotifyService;
-import in.hocg.eagle.modules.mms.service.SubscriptionService;
-import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
-import in.hocg.eagle.modules.ums.service.AccountService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
 public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMapper, Notification>
     implements NotificationService {
 
-    private final AccountService accountService;
+    private final AccountAPI accountService;
     private final NotifyService notifyService;
     private final SubscriptionService subscriptionService;
     private final NotificationMapping mapping;
@@ -62,8 +62,8 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
         final Long receiverId = notification.getReceiverId();
         final Notify notify = notifyService.getById(notifyId);
         final Long actorId = notify.getActorId();
-        final AccountComplexVo receiver = accountService.selectOneComplex(receiverId);
-        final AccountComplexVo actor = accountService.selectOneComplex(actorId);
+        final AccountComplexVo receiver = accountService.selectOne(receiverId);
+        final AccountComplexVo actor = accountService.selectOne(actorId);
         return mapping.asSearchNotifyVo(notification, notify, receiver, actor);
     }
 

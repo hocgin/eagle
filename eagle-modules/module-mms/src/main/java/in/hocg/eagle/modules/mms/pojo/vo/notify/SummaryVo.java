@@ -1,10 +1,11 @@
 package in.hocg.eagle.modules.mms.pojo.vo.notify;
 
-import com.google.common.collect.Lists;
+import in.hocg.basic.api.vo.NotifyComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,12 +23,12 @@ public class SummaryVo {
     private Integer unready;
 
     @ApiModelProperty("5条私信")
-    private List<NotifyComplexVo> privateLetter = Lists.newArrayList();
+    private List<NotifyComplexVo> privateLetter = Collections.emptyList();
 
     @ApiModelProperty("5条订阅")
-    private List<NotifyComplexVo> subscription = Lists.newArrayList();
+    private List<NotifyComplexVo> subscription = Collections.emptyList();
 
     @ApiModelProperty("5条公告")
-    private List<NotifyComplexVo> announcement = Lists.newArrayList();
+    private List<NotifyComplexVo> announcement = Collections.emptyList();
 
 }

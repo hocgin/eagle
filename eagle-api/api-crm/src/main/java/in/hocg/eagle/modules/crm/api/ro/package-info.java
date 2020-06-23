@@ -4,4 +4,4 @@
  *
  * @author hocgin
  */
-package in.hocg.eagle.modules.com.vo;
+package in.hocg.eagle.modules.crm.api.ro;

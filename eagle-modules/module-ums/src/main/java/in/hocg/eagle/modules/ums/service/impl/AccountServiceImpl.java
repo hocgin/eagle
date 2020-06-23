@@ -14,7 +14,7 @@ import in.hocg.eagle.modules.ums.mapstruct.AccountMapping;
 import in.hocg.eagle.modules.ums.mapstruct.AuthorityMapping;
 import in.hocg.eagle.modules.ums.mapstruct.RoleMapping;
 import in.hocg.eagle.modules.ums.pojo.qo.account.*;
-import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
+import in.hocg.basic.api.vo.AccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.ums.pojo.vo.role.RoleComplexAndAuthorityVo;

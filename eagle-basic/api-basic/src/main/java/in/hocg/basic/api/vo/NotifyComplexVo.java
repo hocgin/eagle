@@ -1,8 +1,7 @@
-package in.hocg.eagle.modules.mms.pojo.vo.notify;
+package in.hocg.basic.api.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.web.jackson.LocalDateTimeSerializer;
-import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

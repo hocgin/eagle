@@ -1,7 +1,6 @@
 package in.hocg.basic.api.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.common.collect.Lists;
 import in.hocg.web.aspect.named.InjectNamed;
 import in.hocg.web.aspect.named.Named;
 import in.hocg.web.aspect.named.NamedType;
@@ -12,6 +11,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -48,10 +48,10 @@ public class ProductComplexVo {
     private String publishStatusName;
 
     @ApiModelProperty("SKU")
-    private List<SkuComplexVo> sku = Lists.newArrayList();
+    private List<SkuComplexVo> sku = Collections.emptyList();
 
     @ApiModelProperty("图片列表")
-    private List<PhotoComplexVo> photos = Lists.newArrayList();
+    private List<PhotoComplexVo> photos = Collections.emptyList();
 
     @ApiModelProperty("创建时间")
     @JsonSerialize(using = LocalDateTimeSerializer.class)

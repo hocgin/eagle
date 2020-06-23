@@ -1,7 +1,6 @@
-package in.hocg.eagle.modules.crm.pojo.vo.comment;
+package in.hocg.basic.api.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import in.hocg.eagle.modules.ums.api.vo.AccountComplexVo;
 import in.hocg.web.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
  */
 @Data
 public class CommentComplexVo {
-    @ApiModelProperty("crm_comment::id")
+    @ApiModelProperty("id")
     private Long id;
     @ApiModelProperty("评论内容")
     private String content;

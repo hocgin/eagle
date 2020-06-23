@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.ums.api;
 
-import in.hocg.eagle.modules.ums.api.vo.AccountComplexVo;
+import in.hocg.basic.api.vo.AccountComplexVo;
 
 /**
  * Created by hocgin on 2020/6/14.

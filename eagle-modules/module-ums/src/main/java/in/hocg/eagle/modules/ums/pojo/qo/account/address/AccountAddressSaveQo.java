@@ -1,10 +1,10 @@
 package in.hocg.eagle.modules.ums.pojo.qo.account.address;
 
-import in.hocg.eagle.basic.constant.datadict.IsDefault;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.Update;
-import in.hocg.eagle.basic.valid.EnumRange;
+import in.hocg.web.constant.datadict.IsDefault;
+import in.hocg.web.pojo.qo.BaseQo;
+import in.hocg.web.pojo.qo.Insert;
+import in.hocg.web.pojo.qo.Update;
+import in.hocg.web.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

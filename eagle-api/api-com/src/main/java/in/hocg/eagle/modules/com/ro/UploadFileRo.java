@@ -1,6 +1,5 @@
 package in.hocg.eagle.modules.com.ro;
 
-import com.google.common.collect.Lists;
 import in.hocg.web.constant.GlobalConstant;
 import in.hocg.web.constant.datadict.FileRelType;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,6 +7,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,7 +25,7 @@ public class UploadFileRo implements Serializable {
     @ApiModelProperty("引用ID(必须)")
     private Long relId;
     @ApiModelProperty("文件列表")
-    private List<FileRo> files = Lists.newArrayList();
+    private List<FileRo> files = Collections.emptyList();
     @ApiModelProperty("创建人ID(可选)")
     private Long creator = GlobalConstant.SUPPER_ADMIN_USER_ID;
 

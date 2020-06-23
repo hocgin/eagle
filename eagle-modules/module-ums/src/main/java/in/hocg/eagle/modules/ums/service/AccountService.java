@@ -4,7 +4,7 @@ package in.hocg.eagle.modules.ums.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.web.AbstractService;
 import in.hocg.eagle.modules.ums.pojo.qo.account.*;
-import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
+import in.hocg.basic.api.vo.AccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
 import in.hocg.eagle.modules.ums.entity.Account;

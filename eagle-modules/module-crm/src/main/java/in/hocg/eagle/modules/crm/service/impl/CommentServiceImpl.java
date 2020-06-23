@@ -8,7 +8,7 @@ import in.hocg.eagle.modules.crm.pojo.qo.comment.ChildCommentPagingQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPostQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPutQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.RootCommentPagingQo;
-import in.hocg.eagle.modules.crm.pojo.vo.comment.CommentComplexVo;
+import in.hocg.basic.api.vo.CommentComplexVo;
 import in.hocg.eagle.modules.crm.pojo.vo.comment.RootCommentComplexVo;
 import in.hocg.eagle.modules.crm.service.CommentService;
 import in.hocg.eagle.modules.crm.service.CommentTargetService;
@@ -126,6 +126,11 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
         return result.convert(this::convertComplex);
     }
 
+    @Override
+    public CommentComplexVo selectOne(Long id) {
+        return this.convertComplex(getById(id));
+    }
+
     private CommentComplexVo convertComplex(Comment entity) {
         final CommentComplexVo result = mapping.asCommentComplexVo(entity);
         final String content = LangUtils.equals(entity.getEnabled(), Enabled.On.getCode())
@@ -133,12 +138,12 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
             : "已删除";
         result.setContent(content);
         final Long parentId = entity.getParentId();
-        result.setCommenter(accountAPI.selectOneComplex(result.getCommenterId()));
+        result.setCommenter(accountAPI.selectOne(result.getCommenterId()));
         if (Objects.nonNull(parentId)) {
             final Comment pComment = baseMapper.selectById(parentId);
             final Long pCommentCreatorId = pComment.getCreator();
             result.setPCommenterId(pCommentCreatorId);
-            result.setPCommenter(accountAPI.selectOneComplex(pCommentCreatorId));
+            result.setPCommenter(accountAPI.selectOne(pCommentCreatorId));
         }
         return result;
     }

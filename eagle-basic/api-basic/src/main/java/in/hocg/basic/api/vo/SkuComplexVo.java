@@ -1,11 +1,11 @@
 package in.hocg.basic.api.vo;
 
-import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,7 +32,7 @@ public class SkuComplexVo {
     @ApiModelProperty("规格图片")
     private String imageUrl;
     @ApiModelProperty("规格")
-    private List<Spec> spec = Lists.newArrayList();
+    private List<Spec> spec = Collections.emptyList();
 
     @Data
     public static class Spec {

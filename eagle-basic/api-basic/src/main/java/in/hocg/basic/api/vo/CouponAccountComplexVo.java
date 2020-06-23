@@ -1,7 +1,6 @@
 package in.hocg.basic.api.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.common.collect.Lists;
 import in.hocg.web.aspect.named.InjectNamed;
 import in.hocg.web.aspect.named.Named;
 import in.hocg.web.aspect.named.NamedType;
@@ -15,6 +14,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -86,7 +86,7 @@ public class CouponAccountComplexVo {
     private String useTypeName;
 
     @ApiModelProperty("可用商品品类")
-    private List<ProductCategoryComplexVo> canUseProductCategory = Lists.newArrayList();
+    private List<ProductCategoryComplexVo> canUseProductCategory = Collections.emptyList();
     @ApiModelProperty("可用商品")
-    private List<ProductComplexVo> canUseProduct = Lists.newArrayList();
+    private List<ProductComplexVo> canUseProduct = Collections.emptyList();
 }

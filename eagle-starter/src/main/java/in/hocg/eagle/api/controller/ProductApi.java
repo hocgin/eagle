@@ -1,13 +1,13 @@
 package in.hocg.eagle.api.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.basic.api.vo.ProductComplexVo;
 import in.hocg.eagle.api.pojo.qo.ProductPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.web.aspect.logger.UseLogger;
 import in.hocg.web.constant.AuthorizeConstant;
 import in.hocg.web.pojo.qo.IdQo;
 import in.hocg.web.result.Result;
-import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.prepost.PreAuthorize;

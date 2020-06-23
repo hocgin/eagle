@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.apiimpl;
 
 import in.hocg.eagle.modules.ums.api.AccountAPI;
-import in.hocg.eagle.modules.ums.api.vo.AccountComplexVo;
+import in.hocg.basic.api.vo.AccountComplexVo;
 import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.web.utils.LangUtils;
 import lombok.RequiredArgsConstructor;

@@ -7,7 +7,7 @@ import in.hocg.eagle.modules.crm.pojo.qo.comment.ChildCommentPagingQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPostQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPutQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.RootCommentPagingQo;
-import in.hocg.eagle.modules.crm.pojo.vo.comment.CommentComplexVo;
+import in.hocg.basic.api.vo.CommentComplexVo;
 import in.hocg.eagle.modules.crm.pojo.vo.comment.RootCommentComplexVo;
 
 /**
@@ -51,4 +51,6 @@ public interface CommentService extends AbstractService<Comment> {
      * @return
      */
     IPage<CommentComplexVo> pagingChildComment(ChildCommentPagingQo qo);
+
+    CommentComplexVo selectOne(Long id);
 }

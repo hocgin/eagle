@@ -12,4 +12,14 @@
 
   <artifactId>module-crm</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>api-crm</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>api-ums</artifactId>
+    </dependency>
+  </dependencies>
 </project>

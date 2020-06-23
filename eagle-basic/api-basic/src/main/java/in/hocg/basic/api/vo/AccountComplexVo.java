@@ -1,7 +1,12 @@
-package in.hocg.eagle.modules.ums.api.vo;
+package in.hocg.basic.api.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import in.hocg.web.aspect.named.InjectNamed;
 import in.hocg.web.aspect.named.Named;
+import in.hocg.web.aspect.named.NamedType;
+import in.hocg.web.constant.datadict.Enabled;
+import in.hocg.web.constant.datadict.Expired;
+import in.hocg.web.constant.datadict.Locked;
 import in.hocg.web.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,6 +21,7 @@ import java.time.LocalDateTime;
  * @author hocgin
  */
 @Data
+@InjectNamed
 public class AccountComplexVo implements Serializable {
     private Integer id;
     @ApiModelProperty("昵称;显示使用")
@@ -35,14 +41,17 @@ public class AccountComplexVo implements Serializable {
 
     @ApiModelProperty("过期状态")
     private Integer expired;
+    @Named(idFor = "expired", type = NamedType.DataDict, args = {Expired.KEY})
     private String expiredName;
 
     @ApiModelProperty("锁定状态")
     private Integer locked;
+    @Named(idFor = "locked", type = NamedType.DataDict, args = {Locked.KEY})
     private String lockedName;
 
     @ApiModelProperty("启用状态")
     private Integer enabled;
+    @Named(idFor = "enabled", type = NamedType.DataDict, args = {Enabled.KEY})
     private String enabledName;
 
     @ApiModelProperty("创建时IP")
