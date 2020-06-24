@@ -17,6 +17,7 @@
   <modules>
     <module>web-basic</module>
     <module>api-basic</module>
+    <module>named-basic</module>
   </modules>
 
 </project>

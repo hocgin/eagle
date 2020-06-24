@@ -1,4 +1,4 @@
-package in.hocg.web.aspect.named;
+package in.hocg.basic.named;
 
 import java.lang.annotation.*;
 

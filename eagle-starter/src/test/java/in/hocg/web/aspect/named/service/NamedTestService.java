@@ -1,4 +1,4 @@
-package in.hocg.web.aspect.named.service;
+package in.hocg.basic.named.service;
 
 import in.hocg.web.aspect.logger.UseLogger;
 import org.springframework.stereotype.Service;

@@ -30,7 +30,6 @@ public class WxMaterialUploadNewsQo extends BaseQo {
     public static class NewsItem {
         @NotBlank(message = "标题不能为空")
         private String title;
-        @URL(message = "图片地址错误")
         private String originalUrl;
         private String thumbMediaId;
         private String author;

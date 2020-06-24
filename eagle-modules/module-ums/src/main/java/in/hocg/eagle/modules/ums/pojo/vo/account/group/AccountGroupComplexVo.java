@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.ums.pojo.vo.account.group;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import in.hocg.web.aspect.named.InjectNamed;
-import in.hocg.web.aspect.named.Named;
-import in.hocg.web.aspect.named.NamedType;
+import in.hocg.basic.named.InjectNamed;
+import in.hocg.basic.named.Named;
+import in.hocg.basic.named.NamedType;
 import in.hocg.web.constant.datadict.AccountGroupType;
 import in.hocg.web.constant.datadict.GroupMemberSource;
 import in.hocg.web.jackson.LocalDateTimeSerializer;

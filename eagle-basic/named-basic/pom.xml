@@ -9,19 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>api-basic</artifactId>
+  <artifactId>named-basic</artifactId>
 
-  <dependencies>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>web-basic</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>in.hocg.swagger2</groupId>
-      <artifactId>swagger2-spring-boot-starter</artifactId>
-      <scope>provided</scope>
-      <optional>true</optional>
-    </dependency>
-  </dependencies>
+
 </project>

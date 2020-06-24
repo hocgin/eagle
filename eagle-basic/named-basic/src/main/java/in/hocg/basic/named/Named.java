@@ -1,4 +1,4 @@
-package in.hocg.web.aspect.named;
+package in.hocg.basic.named;
 
 import java.lang.annotation.*;
 
@@ -26,7 +26,7 @@ public @interface Named {
      *
      * @return
      */
-    NamedType type() default NamedType.DataDict;
+    NamedType type() default NamedType.Unknown;
 
     /**
      * 参数(默认为: {named.idFor()})

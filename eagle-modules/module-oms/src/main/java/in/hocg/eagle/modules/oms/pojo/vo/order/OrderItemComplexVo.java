@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.oms.pojo.vo.order;
 
-import in.hocg.web.aspect.named.InjectNamed;
-import in.hocg.web.aspect.named.Named;
-import in.hocg.web.aspect.named.NamedType;
+import in.hocg.basic.named.InjectNamed;
+import in.hocg.basic.named.Named;
+import in.hocg.basic.named.NamedType;
 import in.hocg.web.constant.datadict.OrderRefundApplyStatus;
 import in.hocg.web.pojo.KeyValue;
 import io.swagger.annotations.ApiModelProperty;

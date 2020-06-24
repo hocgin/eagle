@@ -1,7 +1,7 @@
-package in.hocg.web.aspect.named.service;
+package in.hocg.basic.named.service;
 
-import in.hocg.web.aspect.named.InjectNamed;
-import in.hocg.web.aspect.named.Named;
+import in.hocg.basic.named.InjectNamed;
+import in.hocg.basic.named.Named;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

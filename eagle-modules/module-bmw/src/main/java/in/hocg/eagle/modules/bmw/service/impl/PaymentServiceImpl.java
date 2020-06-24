@@ -26,7 +26,6 @@ import in.hocg.web.utils.ValidUtils;
 import in.hocg.web.utils.lambda.map.LambdaMap;
 import in.hocg.web.utils.lambda.map.StringMap;
 import in.hocg.web.utils.string.JsonUtils;
-import io.netty.handler.timeout.TimeoutException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
@@ -425,7 +424,7 @@ public class PaymentServiceImpl implements PaymentService {
             } else {
                 entity.setNotifyResult(PaymentNotifyResult.Fail.getCode());
             }
-        } catch (TimeoutException e) {
+        } catch (ServiceException e) {
             entity.setNotifyResult(PaymentNotifyResult.Timeout.getCode());
         } catch (Exception e) {
             entity.setNotifyResult(PaymentNotifyResult.Fail.getCode());

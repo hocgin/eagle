@@ -8,7 +8,9 @@ import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.modules.ums.service.AuthorityService;
-import in.hocg.web.aspect.named.NamedService;
+import in.hocg.basic.named.NamedHandler;
+import in.hocg.basic.named.NamedService;
+import in.hocg.basic.named.NamedType;
 import in.hocg.web.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
@@ -33,15 +35,7 @@ public class DefaultNamedService implements NamedService {
     private final AuthorityService authorityService;
     private final ProductCategoryService productCategoryService;
 
-
-    /**
-     * 查询枚举值
-     *
-     * @param id   type
-     * @param args {item}
-     * @return
-     */
-    @Override
+    @NamedHandler(NamedType.DataDict)
     public Object selectOneByDataDict(Object id, String[] args) {
         if (Objects.isNull(id)) {
             return null;
@@ -55,14 +49,7 @@ public class DefaultNamedService implements NamedService {
         return dataDictItemOptional.<Object>map(DataDictItem::getTitle).orElse(null);
     }
 
-    /**
-     * 查询用户昵称
-     *
-     * @param id
-     * @param args
-     * @return
-     */
-    @Override
+    @NamedHandler(NamedType.Nickname)
     public Object selectOneNicknameByAccountId(Object id, String[] args) {
         if (Objects.isNull(id)) {
             return null;
@@ -74,7 +61,7 @@ public class DefaultNamedService implements NamedService {
         return entity.getNickname();
     }
 
-    @Override
+    @NamedHandler(NamedType.AuthorityTitle)
     public Object selectOneAuthorityTitleByAuthorityId(Object id, String[] args) {
         if (Objects.isNull(id)) {
             return null;
@@ -86,7 +73,7 @@ public class DefaultNamedService implements NamedService {
         return entity.getTitle();
     }
 
-    @Override
+    @NamedHandler(NamedType.ProductCategoryName)
     public Object selectOneProductCategoryNameByProductCategoryId(Object id, String[] args) {
         if (Objects.isNull(id)) {
             return null;

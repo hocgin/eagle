@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.ums.pojo.vo.account;
 
 import com.google.common.collect.Lists;
-import in.hocg.web.aspect.named.InjectNamed;
-import in.hocg.web.aspect.named.Named;
-import in.hocg.web.aspect.named.NamedType;
+import in.hocg.basic.named.InjectNamed;
+import in.hocg.basic.named.Named;
+import in.hocg.basic.named.NamedType;
 import in.hocg.web.constant.datadict.Enabled;
 import in.hocg.web.constant.datadict.Expired;
 import in.hocg.web.constant.datadict.Locked;

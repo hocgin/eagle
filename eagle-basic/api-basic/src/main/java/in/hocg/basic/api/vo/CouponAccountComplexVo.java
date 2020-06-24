@@ -1,9 +1,9 @@
 package in.hocg.basic.api.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import in.hocg.web.aspect.named.InjectNamed;
-import in.hocg.web.aspect.named.Named;
-import in.hocg.web.aspect.named.NamedType;
+import in.hocg.basic.named.InjectNamed;
+import in.hocg.basic.named.Named;
+import in.hocg.basic.named.NamedType;
 import in.hocg.web.constant.datadict.CouponPlatformType;
 import in.hocg.web.constant.datadict.CouponType;
 import in.hocg.web.constant.datadict.CouponUseStatus;

@@ -2,9 +2,9 @@ package in.hocg.eagle.modules.com.pojo.vo.datadict;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
-import in.hocg.web.aspect.named.InjectNamed;
-import in.hocg.web.aspect.named.Named;
-import in.hocg.web.aspect.named.NamedType;
+import in.hocg.basic.named.InjectNamed;
+import in.hocg.basic.named.Named;
+import in.hocg.basic.named.NamedType;
 import in.hocg.web.constant.datadict.Enabled;
 import in.hocg.web.jackson.LocalDateTimeSerializer;
 import in.hocg.eagle.modules.com.pojo.vo.datadict.item.DataDictItemVo;
