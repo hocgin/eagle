@@ -101,8 +101,7 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
         return lambdaQuery().eq(Product::getId, id).eq(Product::getDeleteStatus, DeleteStatus.Off.getCode()).one();
     }
 
-    @Override
-    public ProductComplexVo convertComplex(Product entity) {
+    private ProductComplexVo convertComplex(Product entity) {
         final Long productId = entity.getId();
         ProductComplexVo result = mapping.asProductComplex(entity);
         result.setPhotos(fileService.selectListByRelTypeAndRelId2(FileRelType.Product, productId));

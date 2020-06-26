@@ -42,7 +42,5 @@ public interface ProductService extends AbstractService<Product> {
 
     Product selectOneByIdAndNotDeleted(Long id);
 
-    ProductComplexVo convertComplex(Product entity);
-
     IPage<ProductComplexVo> pagingWithComplete(ProductCompleteQo qo);
 }
