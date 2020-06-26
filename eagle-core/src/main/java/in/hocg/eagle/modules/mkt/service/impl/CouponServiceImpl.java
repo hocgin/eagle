@@ -56,14 +56,14 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<CouponComplexVo> paging(CouponPagingQo qo) {
-        return baseMapper.paging(qo, qo.page()).convert(this::convertCouponComplex);
+        return baseMapper.paging(qo, qo.page()).convert(this::convertComplex);
     }
 
     @Override
     public CouponComplexVo selectOne(Long id) {
         final Coupon entity = getById(id);
         ValidUtils.notNull(entity, "未找到优惠券");
-        return convertCouponComplex(entity);
+        return convertComplex(entity);
     }
 
     @Override
@@ -137,7 +137,7 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
         }
     }
 
-    private CouponComplexVo convertCouponComplex(Coupon entity) {
+    private CouponComplexVo convertComplex(Coupon entity) {
         final Integer useType = entity.getUseType();
         final Long id = entity.getId();
         final CouponComplexVo result = mapping.asCouponComplex(entity);
