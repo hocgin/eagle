@@ -69,11 +69,10 @@ public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryM
     public ProductCategoryComplexVo selectOne(Long id) {
         final ProductCategory entity = getById(id);
         ValidUtils.notNull(entity);
-        return convertProductCategoryComplex(entity);
+        return this.convertComplex(entity);
     }
 
-    @Override
-    public ProductCategoryComplexVo convertProductCategoryComplex(ProductCategory entity) {
+    private ProductCategoryComplexVo convertComplex(ProductCategory entity) {
         final ProductCategoryComplexVo result = mapping.asProductCategoryComplexVo(entity);
         result.setKeywords((List<String>) LangUtils.getOrDefault(entity.getKeywords(), Lists.newArrayList()));
         return result;

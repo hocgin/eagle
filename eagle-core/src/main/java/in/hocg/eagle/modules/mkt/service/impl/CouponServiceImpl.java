@@ -2,14 +2,14 @@ package in.hocg.eagle.modules.mkt.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.constant.datadict.CouponUseType;
 import in.hocg.eagle.basic.constant.CodeEnum;
+import in.hocg.eagle.basic.constant.datadict.CouponUseType;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.modules.mkt.mapstruct.CouponMapping;
 import in.hocg.eagle.modules.mkt.entity.Coupon;
 import in.hocg.eagle.modules.mkt.entity.CouponProductCategoryRelation;
 import in.hocg.eagle.modules.mkt.entity.CouponProductRelation;
 import in.hocg.eagle.modules.mkt.mapper.CouponMapper;
+import in.hocg.eagle.modules.mkt.mapstruct.CouponMapping;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponPagingQo;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponSaveQo;
 import in.hocg.eagle.modules.mkt.pojo.qo.GiveCouponQo;
@@ -144,14 +144,12 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
 
         // 指定商品
         if (LangUtils.equals(CouponUseType.DesignatedProduct.getCode(), useType)) {
-            final List<ProductComplexVo> products = couponProductRelationService.selectAllProductByCouponId(id).stream()
-                .map(productService::convertComplex).collect(Collectors.toList());
+            final List<ProductComplexVo> products = couponProductRelationService.selectAllProductByCouponId(id);
             result.setCanUseProduct(products);
         }
         // 指定品类
         else if (LangUtils.equals(CouponUseType.SpecifiedCategory.getCode(), useType)) {
-            final List<ProductCategoryComplexVo> productCategory = couponProductCategoryRelationService.selectAllProductCategoryByCouponId(id)
-                .stream().map(productCategoryService::convertProductCategoryComplex).collect(Collectors.toList());
+            final List<ProductCategoryComplexVo> productCategory = couponProductCategoryRelationService.selectAllProductCategoryByCouponId(id);
             result.setCanUseProductCategory(productCategory);
         } else if (LangUtils.equals(CouponUseType.Universal.getCode(), useType)) {
             // 通用类型的优惠券

@@ -5,7 +5,7 @@ import in.hocg.eagle.modules.mkt.entity.CouponProductCategoryRelation;
 import in.hocg.eagle.modules.mkt.mapper.CouponProductCategoryRelationMapper;
 import in.hocg.eagle.modules.mkt.service.CouponProductCategoryRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
-import in.hocg.eagle.modules.pms.entity.ProductCategory;
+import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
@@ -62,8 +62,11 @@ public class CouponProductCategoryRelationServiceImpl extends AbstractServiceImp
     }
 
     @Override
-    public List<ProductCategory> selectAllProductCategoryByCouponId(Long couponId) {
-        return baseMapper.selectAllProductCategoryByCouponId(couponId);
+    public List<ProductCategoryComplexVo> selectAllProductCategoryByCouponId(Long couponId) {
+        return this.selectAllByCouponId(couponId).stream()
+            .map(CouponProductCategoryRelation::getProductCategoryId)
+            .map(productCategoryService::selectOne)
+            .collect(Collectors.toList());
     }
 
     @Override
