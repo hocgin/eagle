@@ -26,20 +26,12 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class NamedService {
-
     private final DataDictService service;
     private final AccountService accountService;
     private final AuthorityService authorityService;
     private final ProductCategoryService productCategoryService;
 
-
-    /**
-     * 查询枚举值
-     *
-     * @param id   type
-     * @param args {item}
-     * @return
-     */
+    @NamedHandler(NamedType.DataDict)
     public Object selectOneByDataDict(Object id, String[] args) {
         if (Objects.isNull(id)) {
             return null;
@@ -53,13 +45,7 @@ public class NamedService {
         return dataDictItemOptional.<Object>map(DataDictItem::getTitle).orElse(null);
     }
 
-    /**
-     * 查询用户昵称
-     *
-     * @param id
-     * @param args
-     * @return
-     */
+    @NamedHandler(NamedType.Nickname)
     public Object selectOneNicknameByAccountId(Object id, String[] args) {
         if (Objects.isNull(id)) {
             return null;
@@ -71,6 +57,7 @@ public class NamedService {
         return entity.getNickname();
     }
 
+    @NamedHandler(NamedType.AuthorityTitle)
     public Object selectOneAuthorityTitleByAuthorityId(Object id, String[] args) {
         if (Objects.isNull(id)) {
             return null;
@@ -82,6 +69,7 @@ public class NamedService {
         return entity.getTitle();
     }
 
+    @NamedHandler(NamedType.ProductCategoryName)
     public Object selectOneProductCategoryNameByProductCategoryId(Object id, String[] args) {
         if (Objects.isNull(id)) {
             return null;
