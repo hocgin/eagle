@@ -55,8 +55,4 @@ public class CommentTargetServiceImpl extends AbstractServiceImpl<CommentTargetM
             .map(CommentTarget::getId);
     }
 
-    @Override
-    public void validEntity(CommentTarget entity) {
-
-    }
 }
