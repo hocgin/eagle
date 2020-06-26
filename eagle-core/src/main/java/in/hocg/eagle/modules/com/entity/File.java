@@ -74,12 +74,4 @@ public class File extends AbstractEntity<File> {
         return this.id;
     }
 
-
-    @RequiredArgsConstructor
-    @Getter
-    public enum RelType {
-        Unknown(0),
-        Product(1);
-        private final Integer code;
-    }
 }

@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.com.service.impl;
 
 import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.constant.datadict.FileRelType;
 import in.hocg.eagle.modules.com.entity.File;
 import in.hocg.eagle.modules.com.mapper.FileMapper;
 import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
@@ -36,7 +37,7 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File>
     public void upload(UploadFileDto dto) {
         final Long relId = dto.getRelId();
         ValidUtils.notNull(relId, "上传失败，ID 错误");
-        final File.RelType relType = dto.getRelType();
+        final FileRelType relType = dto.getRelType();
         ValidUtils.notNull(relType, "上传失败，类型错误");
         final List<UploadFileDto.FileDto> files = dto.getFiles();
         deleteAllByRelTypeAndRelId(relType, relId);
@@ -57,7 +58,7 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File>
     }
 
     @Override
-    public List<FileVo> selectListByRelTypeAndRelId2(@NotNull File.RelType relType,
+    public List<FileVo> selectListByRelTypeAndRelId2(@NotNull FileRelType relType,
                                                      @NotNull Long relId) {
         return selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(relType, relId)
             .parallelStream()
@@ -65,11 +66,11 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File>
             .collect(Collectors.toList());
     }
 
-    public List<File> selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(@NotNull File.RelType relType, @NotNull Long relId) {
+    public List<File> selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(@NotNull FileRelType relType, @NotNull Long relId) {
         return baseMapper.selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(relType.getCode(), relId);
     }
 
-    private void deleteAllByRelTypeAndRelId(@NotNull File.RelType relType, @NotNull Long relId) {
+    private void deleteAllByRelTypeAndRelId(@NotNull FileRelType relType, @NotNull Long relId) {
         baseMapper.deleteAllByRelTypeAndRelId(relType.getCode(), relId);
     }
 }

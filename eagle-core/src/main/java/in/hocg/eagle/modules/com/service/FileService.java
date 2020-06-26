@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.com.service;
 
 import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.basic.constant.datadict.FileRelType;
 import in.hocg.eagle.modules.com.entity.File;
 import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
 import in.hocg.eagle.modules.com.pojo.vo.file.FileVo;
@@ -32,6 +33,6 @@ public interface FileService extends AbstractService<File> {
      * @param relId
      * @return
      */
-    List<FileVo> selectListByRelTypeAndRelId2(@NotNull File.RelType relType,
+    List<FileVo> selectListByRelTypeAndRelId2(@NotNull FileRelType relType,
                                               @NotNull Long relId);
 }

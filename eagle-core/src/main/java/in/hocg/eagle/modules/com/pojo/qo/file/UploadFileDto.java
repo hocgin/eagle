@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.com.pojo.qo.file;
 
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.constant.GlobalConstant;
-import in.hocg.eagle.modules.com.entity.File;
+import in.hocg.eagle.basic.constant.datadict.FileRelType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -21,7 +21,7 @@ import java.util.List;
 public class UploadFileDto implements Serializable {
 
     @ApiModelProperty("引用类型(必须)")
-    private File.RelType relType;
+    private FileRelType relType;
     @ApiModelProperty("引用ID(必须)")
     private Long relId;
     @ApiModelProperty("文件列表")

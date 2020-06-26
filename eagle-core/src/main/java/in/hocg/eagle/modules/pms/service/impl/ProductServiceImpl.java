@@ -3,13 +3,13 @@ package in.hocg.eagle.modules.pms.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.DeleteStatus;
-import in.hocg.eagle.modules.pms.mapstruct.ProductMapping;
-import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
-import in.hocg.eagle.modules.com.entity.File;
+import in.hocg.eagle.basic.constant.datadict.FileRelType;
 import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
 import in.hocg.eagle.modules.com.service.FileService;
 import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.mapper.ProductMapper;
+import in.hocg.eagle.modules.pms.mapstruct.ProductMapping;
+import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductCompleteQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
@@ -17,8 +17,8 @@ import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.pms.service.SkuService;
-import in.hocg.eagle.utils.string.JsonUtils;
 import in.hocg.eagle.utils.ValidUtils;
+import in.hocg.eagle.utils.string.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -75,7 +75,7 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
         final List<UploadFileDto.FileDto> photos = qo.getPhotos();
         if (Objects.nonNull(photos)) {
             fileService.upload(new UploadFileDto()
-                .setRelType(File.RelType.Product)
+                .setRelType(FileRelType.Product)
                 .setCreator(userId)
                 .setRelId(productId)
                 .setFiles(photos));
@@ -105,7 +105,7 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     public ProductComplexVo convertComplex(Product entity) {
         final Long productId = entity.getId();
         ProductComplexVo result = mapping.asProductComplex(entity);
-        result.setPhotos(fileService.selectListByRelTypeAndRelId2(File.RelType.Product, productId));
+        result.setPhotos(fileService.selectListByRelTypeAndRelId2(FileRelType.Product, productId));
         result.setSku(skuService.selectListByProductId(productId));
         return result;
     }
