@@ -75,8 +75,8 @@ public class RequestLogServiceImpl extends AbstractServiceImpl<RequestLogMapper,
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public IPage<RequestLogComplexVo> pagingWithComplex(RequestLogPagingQo qo) {
-        return baseMapper.pagingWithComplex(qo, qo.page())
+    public IPage<RequestLogComplexVo> paging(RequestLogPagingQo qo) {
+        return baseMapper.paging(qo, qo.page())
             .convert(this::convertComplex);
     }
 
@@ -85,7 +85,7 @@ public class RequestLogServiceImpl extends AbstractServiceImpl<RequestLogMapper,
     public RequestLogComplexVo selectOne(Long id) {
         final RequestLog entity = getById(id);
         ValidUtils.notNull(entity, "请求日志不存在");
-        return convertComplex(entity);
+        return this.convertComplex(entity);
     }
 
     private RequestLogComplexVo convertComplex(RequestLog entity) {

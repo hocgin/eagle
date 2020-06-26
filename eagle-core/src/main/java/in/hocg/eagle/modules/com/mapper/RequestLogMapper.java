@@ -19,5 +19,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface RequestLogMapper extends BaseMapper<RequestLog> {
 
-    IPage<RequestLog> pagingWithComplex(@Param("qo") RequestLogPagingQo qo, @Param("page") Page page);
+    IPage<RequestLog> paging(@Param("qo") RequestLogPagingQo qo, @Param("page") Page page);
 }

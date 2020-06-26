@@ -26,7 +26,7 @@ public class RequestLogController {
     @PostMapping({"/_paging"})
     @UseLogger("分页查询 - 请求日志")
     public Result<IPage<RequestLogComplexVo>> paging(@Validated @RequestBody RequestLogPagingQo qo) {
-        return Result.success(service.pagingWithComplex(qo));
+        return Result.success(service.paging(qo));
     }
 
     @GetMapping("/{id:\\d+}:complex")
