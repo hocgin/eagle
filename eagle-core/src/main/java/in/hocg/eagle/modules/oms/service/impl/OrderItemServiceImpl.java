@@ -36,7 +36,7 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
     @Override
     public List<OrderItemComplexVo> selectListByOrderId(Long orderId) {
         return selectListByOrderId2(orderId).stream()
-            .map(this::convertOrderItemComplex)
+            .map(this::convertComplex)
             .collect(Collectors.toList());
     }
 
@@ -44,7 +44,7 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
     public OrderItemComplexVo selectOne(Long id) {
         final OrderItem entity = getById(id);
         ValidUtils.notNull(entity);
-        return convertOrderItemComplex(entity);
+        return convertComplex(entity);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
         return lambdaQuery().eq(OrderItem::getOrderId, orderId).list();
     }
 
-    private OrderItemComplexVo convertOrderItemComplex(OrderItem entity) {
+    private OrderItemComplexVo convertComplex(OrderItem entity) {
         final OrderItemComplexVo result = mapping.asOrderItemComplexVo(entity);
         final Long id = entity.getId();
         final Optional<OrderRefundApply> orderRefundApply = orderRefundApplyService.selectOneByOrderItemId(id);
