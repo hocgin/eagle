@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic.lang;
+package in.hocg.eagle.basic.ext.lang;
 
 import com.google.common.collect.Maps;
 import com.google.zxing.BarcodeFormat;

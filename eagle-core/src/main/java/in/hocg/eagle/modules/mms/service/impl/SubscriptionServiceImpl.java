@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.mms.service.impl;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.NotifyType;
 import in.hocg.eagle.basic.constant.datadict.SubjectType;
 import in.hocg.eagle.modules.crm.entity.Comment;

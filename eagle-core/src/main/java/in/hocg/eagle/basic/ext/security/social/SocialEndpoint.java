@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.ext.security.social;
 
-import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.ext.security.User;
 import in.hocg.eagle.basic.ext.security.authentication.token.TokenUtility;
 import in.hocg.eagle.manager.redis.RedisManager;

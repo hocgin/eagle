@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.com.service;
 
 import in.hocg.eagle.modules.com.entity.FieldChange;
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
 import in.hocg.eagle.modules.com.pojo.vo.changelog.FieldChangeComplexVo;
 
 import java.util.List;

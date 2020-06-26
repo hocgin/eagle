@@ -9,7 +9,7 @@ import in.hocg.eagle.basic.constant.datadict.ConfirmStatus;
 import in.hocg.eagle.basic.constant.datadict.OrderPayType;
 import in.hocg.eagle.basic.constant.datadict.OrderSourceType;
 import in.hocg.eagle.basic.constant.datadict.OrderStatus;
-import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
+import in.hocg.eagle.basic.ext.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

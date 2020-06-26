@@ -4,9 +4,9 @@ package in.hocg.generator.core;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import in.hocg.eagle.basic.AbstractEntity;
-import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractEntity;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import lombok.experimental.UtilityClass;
 
 import java.nio.file.Path;

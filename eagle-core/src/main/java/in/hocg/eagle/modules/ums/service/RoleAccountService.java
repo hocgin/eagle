@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.ums.service;
 
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.entity.Role;
 import in.hocg.eagle.modules.ums.entity.RoleAccount;

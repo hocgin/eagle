@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.bmw.helper.payment.pojo.request;
 
-import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.constant.datadict.PaymentPlatform;
 import in.hocg.eagle.basic.constant.datadict.PaymentWay;
 import in.hocg.eagle.basic.env.Env;

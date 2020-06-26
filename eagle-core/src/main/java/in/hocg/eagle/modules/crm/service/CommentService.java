@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.crm.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
 import in.hocg.eagle.modules.crm.entity.Comment;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.ChildCommentPagingQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPostQo;

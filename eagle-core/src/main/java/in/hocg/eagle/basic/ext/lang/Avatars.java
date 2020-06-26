@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic.lang;
+package in.hocg.eagle.basic.ext.lang;
 
 import com.talanlabs.avatargenerator.Avatar;
 import com.talanlabs.avatargenerator.GitHubAvatar;

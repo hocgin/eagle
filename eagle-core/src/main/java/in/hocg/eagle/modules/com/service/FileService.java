@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.com.service;
 
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
 import in.hocg.eagle.basic.constant.datadict.FileRelType;
 import in.hocg.eagle.modules.com.entity.File;
 import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;

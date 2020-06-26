@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.env;
 
-import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;

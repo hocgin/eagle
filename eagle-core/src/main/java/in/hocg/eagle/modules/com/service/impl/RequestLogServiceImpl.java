@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.com.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.aspect.logger.Logger;
 import in.hocg.eagle.manager.LangManager;
 import in.hocg.eagle.manager.dto.IpAndAddressDto;

@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.mkt.service;
 
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
 import in.hocg.eagle.modules.mkt.entity.CouponProductCategoryRelation;
 import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
 

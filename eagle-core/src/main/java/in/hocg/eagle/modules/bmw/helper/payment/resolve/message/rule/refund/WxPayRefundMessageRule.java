@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.bmw.helper.payment.resolve.message.rule.refund;
 
-import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.RefundStatus;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;

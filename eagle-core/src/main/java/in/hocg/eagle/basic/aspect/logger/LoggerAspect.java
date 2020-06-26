@@ -1,7 +1,7 @@
 package in.hocg.eagle.basic.aspect.logger;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.ext.security.SecurityContext;
 import in.hocg.eagle.utils.web.RequestUtils;
 import lombok.extern.slf4j.Slf4j;

@@ -8,7 +8,7 @@ import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.constant.datadict.AuthorityType;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.Platform;
-import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
+import in.hocg.eagle.basic.ext.jackson.LocalDateTimeSerializer;
 import in.hocg.eagle.modules.ums.entity.Role;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

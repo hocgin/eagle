@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.crm.service.impl;
 
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.CommentTargetType;
 import in.hocg.eagle.modules.crm.entity.CommentTarget;
 import in.hocg.eagle.modules.crm.mapper.CommentTargetMapper;

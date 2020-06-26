@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic.jackson;
+package in.hocg.eagle.basic.ext.jackson;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.pms.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.pms.entity.Sku;
 import in.hocg.eagle.modules.pms.mapper.SkuMapper;

@@ -6,7 +6,7 @@ import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.constant.datadict.AccountGroupType;
 import in.hocg.eagle.basic.constant.datadict.GroupMemberSource;
-import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
+import in.hocg.eagle.basic.ext.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

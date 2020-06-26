@@ -1,7 +1,7 @@
 package in.hocg.eagle.basic.aspect.named;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.clazz.ClassUtils;
 import lombok.RequiredArgsConstructor;

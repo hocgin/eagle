@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.bmw.service.impl;
 import in.hocg.eagle.modules.bmw.entity.PaymentApp;
 import in.hocg.eagle.modules.bmw.mapper.PaymentAppMapper;
 import in.hocg.eagle.modules.bmw.service.PaymentAppService;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;

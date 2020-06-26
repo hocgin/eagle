@@ -5,7 +5,7 @@ import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.constant.datadict.CartItemStatus;
-import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
+import in.hocg.eagle.basic.ext.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

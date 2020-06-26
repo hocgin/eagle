@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic;
+package in.hocg.eagle.basic.ext.web;
 
 import in.hocg.eagle.utils.web.RequestUtils;
 import lombok.extern.slf4j.Slf4j;

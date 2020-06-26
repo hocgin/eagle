@@ -7,7 +7,7 @@ import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.Expired;
 import in.hocg.eagle.basic.constant.datadict.Locked;
-import in.hocg.eagle.basic.jackson.LocalDateTimeSerializer;
+import in.hocg.eagle.basic.ext.jackson.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

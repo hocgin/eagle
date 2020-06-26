@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.GrantAuthorityQo;
 import in.hocg.eagle.modules.ums.pojo.qo.role.RoleInsertQo;
 import in.hocg.eagle.modules.ums.pojo.qo.role.RoleUpdateQo;

@@ -1,8 +1,7 @@
 package in.hocg.eagle.modules.mkt.service;
 
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
 import in.hocg.eagle.modules.mkt.entity.CouponProductRelation;
-import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 
 import java.util.List;

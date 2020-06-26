@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.ums.service;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
 import in.hocg.eagle.modules.ums.pojo.qo.account.*;
 import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;

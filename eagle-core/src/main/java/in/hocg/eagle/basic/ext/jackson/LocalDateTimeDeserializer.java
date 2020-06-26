@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic.jackson;
+package in.hocg.eagle.basic.ext.jackson;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

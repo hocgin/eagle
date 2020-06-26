@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.ext.security;
 
-import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.result.ResultCode;
 import lombok.experimental.UtilityClass;

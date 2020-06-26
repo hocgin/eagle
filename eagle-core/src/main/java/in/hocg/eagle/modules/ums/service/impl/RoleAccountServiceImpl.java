@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.service.impl;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.entity.Authority;

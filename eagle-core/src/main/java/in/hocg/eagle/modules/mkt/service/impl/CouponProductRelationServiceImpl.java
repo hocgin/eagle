@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.mkt.service.impl;
 
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.modules.mkt.entity.CouponProductRelation;
 import in.hocg.eagle.modules.mkt.mapper.CouponProductRelationMapper;
 import in.hocg.eagle.modules.mkt.service.CouponProductRelationService;

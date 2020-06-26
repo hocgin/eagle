@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.oms.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.modules.oms.mapstruct.OrderItemMapping;
 import in.hocg.eagle.modules.oms.entity.OrderItem;

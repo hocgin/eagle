@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.bmw.service.impl;
 import in.hocg.eagle.modules.bmw.entity.RequestPlatformLog;
 import in.hocg.eagle.modules.bmw.mapper.RequestPlatformLogMapper;
 import in.hocg.eagle.modules.bmw.service.RequestPlatformLogService;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Lazy;
 import lombok.RequiredArgsConstructor;

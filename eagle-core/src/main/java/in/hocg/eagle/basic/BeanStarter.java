@@ -2,6 +2,7 @@ package in.hocg.eagle.basic;
 
 import in.hocg.eagle.basic.aspect.logger.DefaultLoggerService;
 import in.hocg.eagle.basic.aspect.logger.LoggerService;
+import in.hocg.eagle.basic.ext.lang.SnowFlake;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

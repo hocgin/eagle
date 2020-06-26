@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.pms.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.DeleteStatus;
 import in.hocg.eagle.basic.constant.datadict.FileRelType;
 import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;

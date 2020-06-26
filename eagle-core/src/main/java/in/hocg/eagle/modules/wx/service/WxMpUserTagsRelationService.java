@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.service;
 
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
 import in.hocg.eagle.modules.wx.entity.WxMpUserTagsRelation;
 
 import java.util.List;

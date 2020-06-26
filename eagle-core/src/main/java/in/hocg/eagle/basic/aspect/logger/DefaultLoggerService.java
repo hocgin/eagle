@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.aspect.logger;
 
-import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.ext.security.SecurityContext;
 import in.hocg.eagle.basic.ext.security.User;
 import in.hocg.eagle.modules.com.service.RequestLogService;

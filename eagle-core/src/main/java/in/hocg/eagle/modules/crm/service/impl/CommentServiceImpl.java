@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.crm.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.MessageContext;
+import in.hocg.eagle.basic.message.MessageContext;
 import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;

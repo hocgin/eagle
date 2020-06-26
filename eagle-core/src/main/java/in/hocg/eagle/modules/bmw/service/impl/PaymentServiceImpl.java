@@ -1,10 +1,10 @@
 package in.hocg.eagle.modules.bmw.service.impl;
 
-import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.basic.lang.SNCode;
+import in.hocg.eagle.basic.ext.lang.SNCode;
 import in.hocg.eagle.modules.bmw.datastruct.PaymentMapping;
 import in.hocg.eagle.modules.bmw.datastruct.PaymentTradeMapping;
 import in.hocg.eagle.modules.bmw.datastruct.RefundRecordMapping;

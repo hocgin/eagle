@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.bmw.service.impl;
 
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.modules.bmw.entity.PaymentRecord;
 import in.hocg.eagle.modules.bmw.mapper.PaymentRecordMapper;
 import in.hocg.eagle.modules.bmw.service.PaymentRecordService;

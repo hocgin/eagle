@@ -2,10 +2,10 @@ package in.hocg.eagle.modules.com.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.ChangeLogChangeType;
 import in.hocg.eagle.basic.constant.datadict.ChangeLogRefType;
-import in.hocg.eagle.basic.lang.SNCode;
+import in.hocg.eagle.basic.ext.lang.SNCode;
 import in.hocg.eagle.basic.ext.security.SecurityContext;
 import in.hocg.eagle.basic.ext.security.User;
 import in.hocg.eagle.modules.com.mapstruct.ChangeLogMapping;

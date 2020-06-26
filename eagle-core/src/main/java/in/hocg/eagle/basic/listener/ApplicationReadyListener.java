@@ -1,7 +1,7 @@
 package in.hocg.eagle.basic.listener;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.SpringContext;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.constant.datadict.DataDictEnum;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.modules.com.pojo.dto.DataDictInitDto;

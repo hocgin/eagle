@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.mkt.pojo.qo;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.jackson.LocalDateTimeDeserializer;
+import in.hocg.eagle.basic.ext.jackson.LocalDateTimeDeserializer;
 import in.hocg.eagle.basic.pojo.ro.IdRo;
 import lombok.Data;
 

@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.com.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.modules.com.mapstruct.SystemSettingsMapping;
 import in.hocg.eagle.modules.com.entity.SystemSettings;
 import in.hocg.eagle.modules.com.mapper.SystemSettingsMapper;

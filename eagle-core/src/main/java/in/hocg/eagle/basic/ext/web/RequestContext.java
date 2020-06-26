@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic;
+package in.hocg.eagle.basic.ext.web;
 
 /**
  * Created by hocgin on 2020/2/15.

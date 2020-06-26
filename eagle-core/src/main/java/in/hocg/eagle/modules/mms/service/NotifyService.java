@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.mms.service;
 
-import in.hocg.eagle.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
 import in.hocg.eagle.modules.mms.entity.Notify;
 import in.hocg.eagle.modules.mms.pojo.dto.notify.PublishNotifyDto;
 

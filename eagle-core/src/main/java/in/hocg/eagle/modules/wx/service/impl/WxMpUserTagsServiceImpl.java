@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.wx.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.modules.wx.entity.WxMpUserTags;
 import in.hocg.eagle.modules.wx.entity.WxMpUserTagsRelation;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
