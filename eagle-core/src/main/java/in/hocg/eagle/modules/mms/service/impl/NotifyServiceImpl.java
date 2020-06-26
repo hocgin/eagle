@@ -56,8 +56,4 @@ public class NotifyServiceImpl extends AbstractServiceImpl<NotifyMapper, Notify>
         }
     }
 
-    @Override
-    public void validEntity(Notify entity) {
-
-    }
 }

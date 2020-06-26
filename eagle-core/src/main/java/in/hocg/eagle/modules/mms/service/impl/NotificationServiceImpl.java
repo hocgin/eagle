@@ -142,8 +142,4 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
         baseMapper.updateReadyAtNowByNotifyId(notifyId, receiverId);
     }
 
-    @Override
-    public void validEntity(Notification entity) {
-
-    }
 }
