@@ -1,6 +1,7 @@
-package in.hocg.eagle.manager.dto;
+package in.hocg.eagle.manager.lang.dto;
 
 import lombok.Data;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +36,45 @@ public class IpAndAddressDto {
      */
     public Optional<String> getAddress() {
         return get(0, 3);
+    }
+
+    /**
+     * 获取国家名称
+     *
+     * @return
+     */
+    public Optional<String> getNation() {
+        if (CollectionUtils.isEmpty(data)) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(data.get(0));
+    }
+
+    /**
+     * 获取省名称
+     *
+     * @return
+     */
+    public Optional<String> getProvince() {
+        if (CollectionUtils.isEmpty(data) && data.size() >= 1) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(data.get(1));
+    }
+
+    /**
+     * 获取市名称
+     *
+     * @return
+     */
+    public Optional<String> getCity() {
+        if (CollectionUtils.isEmpty(data) && data.size() >= 2) {
+            return Optional.empty();
+        }
+
+        return Optional.ofNullable(data.get(2));
     }
 
     /**

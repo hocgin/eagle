@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.com.controller;
 
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.manager.OssManager;
+import in.hocg.eagle.manager.oss.OssManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.PostMapping;

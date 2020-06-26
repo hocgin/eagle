@@ -1,4 +1,4 @@
-package in.hocg.eagle.manager.dto;
+package in.hocg.eagle.manager.lang.dto;
 
 import in.hocg.eagle.modules.com.pojo.qo.district.AMapDistrictDto;
 import io.swagger.annotations.ApiModelProperty;

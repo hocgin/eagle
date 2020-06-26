@@ -1,4 +1,4 @@
-package in.hocg.eagle.manager;
+package in.hocg.eagle.manager.oss;
 
 import com.aliyun.oss.OSSClient;
 import com.google.common.io.Files;

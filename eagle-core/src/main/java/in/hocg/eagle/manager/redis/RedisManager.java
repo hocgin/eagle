@@ -1,7 +1,7 @@
 package in.hocg.eagle.manager.redis;
 
 import com.alibaba.fastjson.JSON;
-import in.hocg.eagle.manager.dto.IpAndAddressDto;
+import in.hocg.eagle.manager.lang.dto.IpAndAddressDto;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.lang.service.impl;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.ext.security.authentication.token.TokenUtility;
-import in.hocg.eagle.manager.SmsManager;
+import in.hocg.eagle.manager.sms.SmsManager;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.com.service.ShortUrlService;
 import in.hocg.eagle.modules.lang.pojo.SendSmsCode;

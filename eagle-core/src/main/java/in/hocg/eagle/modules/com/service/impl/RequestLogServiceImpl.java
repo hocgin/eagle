@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.aspect.logger.Logger;
-import in.hocg.eagle.manager.LangManager;
-import in.hocg.eagle.manager.dto.IpAndAddressDto;
+import in.hocg.eagle.manager.lang.LangManager;
+import in.hocg.eagle.manager.lang.dto.IpAndAddressDto;
 import in.hocg.eagle.modules.com.mapstruct.RequestLogMapping;
 import in.hocg.eagle.modules.com.entity.RequestLog;
 import in.hocg.eagle.modules.com.mapper.RequestLogMapper;
@@ -62,9 +62,9 @@ public class RequestLogServiceImpl extends AbstractServiceImpl<RequestLogMapper,
             entity.setPlatform(userAgent.getPlatform().getName());
 
             final IpAndAddressDto address = langManager.getAddressByIp(entity.getClientIp());
-            entity.setNation(address.getData().get(0));
-            entity.setProvince(address.getData().get(1));
-            entity.setCity(address.getData().get(2));
+            entity.setNation(address.getNation().orElse(null));
+            entity.setProvince(address.getProvince().orElse(null));
+            entity.setCity(address.getCity().orElse(null));
             entity.setZipCode(address.getZipCode().orElse(null));
             entity.setOperator(address.getOperator().orElse(null));
             entity.setCityCode(address.getCityCode().orElse(null));

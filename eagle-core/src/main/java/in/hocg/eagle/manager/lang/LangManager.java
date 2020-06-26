@@ -1,10 +1,10 @@
-package in.hocg.eagle.manager;
+package in.hocg.eagle.manager.lang;
 
 import com.alibaba.fastjson.JSON;
 import in.hocg.eagle.basic.env.Env;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.manager.dto.AMapDistrictResultDto;
-import in.hocg.eagle.manager.dto.IpAndAddressDto;
+import in.hocg.eagle.manager.lang.dto.AMapDistrictResultDto;
+import in.hocg.eagle.manager.lang.dto.IpAndAddressDto;
 import in.hocg.eagle.manager.redis.RedisManager;
 import in.hocg.eagle.modules.com.pojo.qo.district.AMapDistrictDto;
 import lombok.RequiredArgsConstructor;

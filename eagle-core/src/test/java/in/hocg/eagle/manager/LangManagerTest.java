@@ -1,7 +1,8 @@
 package in.hocg.eagle.manager;
 
 import in.hocg.eagle.basic.AbstractSpringBootTest;
-import in.hocg.eagle.manager.dto.IpAndAddressDto;
+import in.hocg.eagle.manager.lang.dto.IpAndAddressDto;
+import in.hocg.eagle.manager.lang.LangManager;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

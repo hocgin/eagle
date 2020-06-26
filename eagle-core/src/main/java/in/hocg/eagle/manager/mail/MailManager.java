@@ -1,4 +1,4 @@
-package in.hocg.eagle.manager;
+package in.hocg.eagle.manager.mail;
 
 import com.beust.jcommander.internal.Sets;
 import com.google.common.collect.Lists;

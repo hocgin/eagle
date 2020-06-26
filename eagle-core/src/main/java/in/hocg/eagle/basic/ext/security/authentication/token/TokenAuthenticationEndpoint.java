@@ -6,7 +6,7 @@ import in.hocg.eagle.basic.constant.datadict.Expired;
 import in.hocg.eagle.basic.constant.datadict.Locked;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.manager.SmsManager;
+import in.hocg.eagle.manager.sms.SmsManager;
 import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.utils.LangUtils;

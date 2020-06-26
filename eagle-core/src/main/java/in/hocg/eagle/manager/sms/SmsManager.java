@@ -1,4 +1,4 @@
-package in.hocg.eagle.manager;
+package in.hocg.eagle.manager.sms;
 
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.manager.redis.RedisManager;
