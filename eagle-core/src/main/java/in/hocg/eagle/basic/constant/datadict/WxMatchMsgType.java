@@ -14,7 +14,6 @@ import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
@@ -33,22 +32,6 @@ public enum WxMatchMsgType implements JSONasClass, DataDictEnum {
     private final String name;
     private final Class<? extends Valid> clazz;
     public static final String KEY = "wxMatchMsgType";
-
-    public static Optional<WxMatchMsgType> convert(String msgType) {
-        WxMatchMsgType result = null;
-        switch (msgType) {
-            case "event": {
-                result = WxMatchMsgType.Event;
-                break;
-            }
-            case "text": {
-                result = WxMatchMsgType.Text;
-                break;
-            }
-            default:
-        }
-        return Optional.ofNullable(result);
-    }
 
     public <T extends Valid> T asObject(String json) {
         return (T) this.asClass(json, this.getClazz());

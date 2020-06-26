@@ -1,13 +1,14 @@
 package in.hocg.eagle.modules.wx.support.handle;
 
-import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.CodeEnum;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.WxMatchMsgType;
 import in.hocg.eagle.basic.constant.datadict.WxReplyMsgType;
 import in.hocg.eagle.modules.wx.entity.WxMpReplyRule;
 import in.hocg.eagle.modules.wx.service.WxMpReplyRuleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -42,7 +43,7 @@ public class RuleReplyHandler extends AbstractHandler {
         final String eventKey = wxMessage.getEventKey();
         final String content = wxMessage.getContent();
 
-        final Optional<WxMatchMsgType> matchMsgTypeOpt = WxMatchMsgType.convert(msgType);
+        final Optional<WxMatchMsgType> matchMsgTypeOpt = this.convert(msgType);
 
         // 如果回复规则不支持的消息类型
         if (!matchMsgTypeOpt.isPresent()) {
@@ -75,6 +76,22 @@ public class RuleReplyHandler extends AbstractHandler {
         message.fromUser(wxMessage.getToUser());
         message.toUser(wxMessage.getFromUser());
         return message.build();
+    }
+
+    private Optional<WxMatchMsgType> convert(String msgType) {
+        WxMatchMsgType result = null;
+        switch (msgType) {
+            case WxConsts.XmlMsgType.EVENT: {
+                result = WxMatchMsgType.Event;
+                break;
+            }
+            case WxConsts.XmlMsgType.TEXT: {
+                result = WxMatchMsgType.Text;
+                break;
+            }
+            default:
+        }
+        return Optional.ofNullable(result);
     }
 
     private Optional<BaseBuilder<?, ? extends WxMpXmlOutMessage>> buildReplyMessage(WxReplyMsgType replyMsgType, String replyContent) {
