@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ChangePasswordQo extends BaseRo {
+public class ChangePasswordUseMailRo extends BaseRo {
     @NotBlank(message = "信息缺失")
     @NotNull(message = "信息缺失")
     @ApiModelProperty("验证Token")

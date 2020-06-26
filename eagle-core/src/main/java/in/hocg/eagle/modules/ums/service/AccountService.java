@@ -3,14 +3,13 @@ package in.hocg.eagle.modules.ums.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.modules.ums.entity.Account;
+import in.hocg.eagle.modules.ums.entity.Authority;
+import in.hocg.eagle.modules.ums.entity.Role;
 import in.hocg.eagle.modules.ums.pojo.qo.account.*;
 import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityTreeNodeVo;
-import in.hocg.eagle.modules.ums.entity.Account;
-import in.hocg.eagle.modules.ums.entity.Authority;
-import in.hocg.eagle.modules.ums.entity.Role;
-import lombok.NonNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -95,9 +94,9 @@ public interface AccountService extends AbstractService<Account> {
 
     void resetPassword(Long id);
 
-    void changePassword(ChangePasswordQo qo);
+    void changePasswordUseMail(ChangePasswordUseMailRo qo);
 
-    void changePassword(@NonNull Long id, @NonNull String newPassword);
+    String changePasswordUseSmsCode(ChangePasswordUseSmsCodeQo ro);
 
     String signUp(AccountSignUpQo qo);
 }

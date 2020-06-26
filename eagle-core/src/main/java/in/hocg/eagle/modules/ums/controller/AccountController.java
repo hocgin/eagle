@@ -94,8 +94,8 @@ public class AccountController {
 
     @PostMapping("/change-password")
     @UseLogger("修改密码 - 账号")
-    public Result changePassword(@Validated @RequestBody ChangePasswordQo qo) {
-        service.changePassword(qo);
+    public Result changePassword(@Validated @RequestBody ChangePasswordUseMailRo qo) {
+        service.changePasswordUseMail(qo);
         return Result.success();
     }
 }

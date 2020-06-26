@@ -1,14 +1,11 @@
 package in.hocg.eagle.modules.lang.service.impl;
 
-import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.ext.security.authentication.token.TokenUtility;
 import in.hocg.eagle.manager.sms.SmsManager;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.com.service.ShortUrlService;
 import in.hocg.eagle.modules.lang.pojo.SendSmsCodeRo;
 import in.hocg.eagle.modules.lang.service.IndexService;
-import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSignUpQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.ChangePasswordUseSmsCodeQo;
 import in.hocg.eagle.modules.ums.service.AccountService;
@@ -55,22 +52,7 @@ public class IndexServiceImpl implements IndexService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String changePasswordUsePhone(ChangePasswordUseSmsCodeQo qo) {
-        final String phone = qo.getPhone();
-        final String smsCode = qo.getSmsCode();
-        final String password = qo.getPassword();
-        if (!smsManager.validSmsCode(phone, smsCode)) {
-            throw ServiceException.wrap("验证码错误");
-        }
-        final Optional<Account> accountOpt = accountService.selectOneByPhone(phone);
-        if (!accountOpt.isPresent()) {
-            throw ServiceException.wrap("找不到账号");
-        }
-        final Account account = accountOpt.get();
-        if (!LangUtils.equals(Enabled.On.getCode(), account.getEnabled())) {
-            throw ServiceException.wrap("账号被禁用了");
-        }
-
-        accountService.changePassword(account.getId(), password);
-        return TokenUtility.encode(account.getUsername());
+        final String token = accountService.changePasswordUseSmsCode(qo);
+        return TokenUtility.encode(token);
     }
 }

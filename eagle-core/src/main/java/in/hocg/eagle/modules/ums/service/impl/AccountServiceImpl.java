@@ -2,8 +2,6 @@ package in.hocg.eagle.modules.ums.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.Gender;
@@ -12,18 +10,20 @@ import in.hocg.eagle.basic.datastruct.tree.Tree;
 import in.hocg.eagle.basic.env.Env;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.ext.lang.Avatars;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.ext.security.authentication.token.TokenUtility;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.manager.mail.MailManager;
 import in.hocg.eagle.manager.oss.OssManager;
-import in.hocg.eagle.manager.sms.SmsManager;
 import in.hocg.eagle.manager.redis.RedisManager;
-import in.hocg.eagle.modules.ums.mapstruct.AccountMapping;
-import in.hocg.eagle.modules.ums.mapstruct.AuthorityMapping;
-import in.hocg.eagle.modules.ums.mapstruct.RoleMapping;
+import in.hocg.eagle.manager.sms.SmsManager;
 import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.entity.Role;
 import in.hocg.eagle.modules.ums.mapper.AccountMapper;
+import in.hocg.eagle.modules.ums.mapstruct.AccountMapping;
+import in.hocg.eagle.modules.ums.mapstruct.AuthorityMapping;
+import in.hocg.eagle.modules.ums.mapstruct.RoleMapping;
 import in.hocg.eagle.modules.ums.pojo.qo.account.*;
 import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;
@@ -35,7 +35,6 @@ import in.hocg.eagle.modules.ums.service.RoleAuthorityService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.web.RequestUtils;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -192,7 +191,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void changePassword(ChangePasswordQo qo) {
+    public void changePasswordUseMail(ChangePasswordUseMailRo qo) {
         final String mail = qo.getMail();
         String token = qo.getToken();
         final String newPassword = qo.getNewPassword();
@@ -212,11 +211,27 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void changePassword(@NonNull Long id, @NonNull String newPassword) {
+    public String changePasswordUseSmsCode(ChangePasswordUseSmsCodeQo ro) {
+        final String phone = ro.getPhone();
+        final String smsCode = ro.getSmsCode();
+        final String password = ro.getPassword();
+        if (!smsManager.validSmsCode(phone, smsCode)) {
+            throw ServiceException.wrap("验证码错误");
+        }
+        final Optional<Account> accountOpt = this.selectOneByPhone(phone);
+        if (!accountOpt.isPresent()) {
+            throw ServiceException.wrap("找不到账号");
+        }
+        final Account account = accountOpt.get();
+        if (!LangUtils.equals(Enabled.On.getCode(), account.getEnabled())) {
+            throw ServiceException.wrap("账号被禁用了");
+        }
+
         final Account update = new Account();
-        update.setId(id);
-        update.setPassword(passwordEncoder.encode(newPassword));
+        update.setId(account.getId());
+        update.setPassword(passwordEncoder.encode(password));
         validUpdateById(update);
+        return TokenUtility.encode(update.getUsername());
     }
 
     @Override
@@ -258,11 +273,6 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
             .setAvatar(ossManager.uploadToOss(file, file.getName()));
         this.validUpdateById(update);
         return TokenUtility.encode(update.getUsername());
-    }
-
-    public void validResetPasswordToken(String email, String token) {
-        final boolean isOk = redisManager.validResetPasswordToken(email, token);
-        ValidUtils.isTrue(isOk, "Token 已经失效");
     }
 
     public AccountComplexVo convertComplex(Account entity) {
