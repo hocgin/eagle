@@ -11,7 +11,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
-import me.chanjar.weixin.common.api.WxConsts;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
@@ -38,11 +37,11 @@ public enum WxMatchMsgType implements JSONasClass, DataDictEnum {
     public static Optional<WxMatchMsgType> convert(String msgType) {
         WxMatchMsgType result = null;
         switch (msgType) {
-            case WxConsts.XmlMsgType.EVENT: {
+            case "event": {
                 result = WxMatchMsgType.Event;
                 break;
             }
-            case WxConsts.XmlMsgType.TEXT: {
+            case "text": {
                 result = WxMatchMsgType.Text;
                 break;
             }
