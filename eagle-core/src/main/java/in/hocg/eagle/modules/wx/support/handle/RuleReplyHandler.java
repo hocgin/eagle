@@ -65,7 +65,7 @@ public class RuleReplyHandler extends AbstractHandler {
             return null;
         }
         final WxReplyMsgType replyMsgType = replyMsgTypeOpt.get();
-        final Optional<BaseBuilder<?, ? extends WxMpXmlOutMessage>> builderOpt = replyMsgType.asWxMpMessageBuilder(wxMpReplyRule.getReplyContent());
+        final Optional<BaseBuilder<?, ? extends WxMpXmlOutMessage>> builderOpt = this.buildReplyMessage(replyMsgType, wxMpReplyRule.getReplyContent());
 
         // 如果没有封包
         if (!builderOpt.isPresent()) {
@@ -75,5 +75,15 @@ public class RuleReplyHandler extends AbstractHandler {
         message.fromUser(wxMessage.getToUser());
         message.toUser(wxMessage.getFromUser());
         return message.build();
+    }
+
+    private Optional<BaseBuilder<?, ? extends WxMpXmlOutMessage>> buildReplyMessage(WxReplyMsgType replyMsgType, String replyContent) {
+        BaseBuilder<?, ? extends WxMpXmlOutMessage> result = null;
+        if (replyMsgType == WxReplyMsgType.Text) {
+            final WxReplyMsgType.Text replyObject = replyMsgType.asObject(replyContent);
+            result = WxMpXmlOutMessage.TEXT()
+                .content(replyObject.getContent());
+        }
+        return Optional.ofNullable(result);
     }
 }
