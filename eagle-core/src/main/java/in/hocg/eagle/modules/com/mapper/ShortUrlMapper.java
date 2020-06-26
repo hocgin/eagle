@@ -19,5 +19,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface ShortUrlMapper extends BaseMapper<ShortUrl> {
 
-    IPage<ShortUrl> pagingWithComplex(@Param("qo") ShortUrlPagingQo qo, @Param("page") Page page);
+    IPage<ShortUrl> paging(@Param("qo") ShortUrlPagingQo qo, @Param("page") Page page);
 }

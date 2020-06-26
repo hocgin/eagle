@@ -84,8 +84,8 @@ public class ShortUrlServiceImpl extends AbstractServiceImpl<ShortUrlMapper, Sho
     }
 
     @Override
-    public IPage<ShortUrlComplexVo> pagingWithComplex(ShortUrlPagingQo qo) {
-        return baseMapper.pagingWithComplex(qo, qo.page())
+    public IPage<ShortUrlComplexVo> paging(ShortUrlPagingQo qo) {
+        return baseMapper.paging(qo, qo.page())
             .convert(this::convertComplex);
     }
 

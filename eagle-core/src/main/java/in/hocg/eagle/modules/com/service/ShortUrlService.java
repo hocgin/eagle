@@ -25,7 +25,7 @@ public interface ShortUrlService extends AbstractService<ShortUrl> {
 
     Optional<ShortUrl> selectOneByCode(String code);
 
-    IPage<ShortUrlComplexVo> pagingWithComplex(ShortUrlPagingQo qo);
+    IPage<ShortUrlComplexVo> paging(ShortUrlPagingQo qo);
 
     void saveOne(ShortUrlSaveQo qo);
 }

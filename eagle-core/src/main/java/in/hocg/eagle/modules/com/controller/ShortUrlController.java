@@ -32,7 +32,7 @@ public class ShortUrlController {
     @PostMapping({"/_paging"})
     @UseLogger("分页查询 - 短链接")
     public Result<IPage<ShortUrlComplexVo>> paging(@Validated @RequestBody ShortUrlPagingQo qo) {
-        return Result.success(service.pagingWithComplex(qo));
+        return Result.success(service.paging(qo));
     }
 
     @PostMapping
