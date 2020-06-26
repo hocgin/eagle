@@ -21,7 +21,7 @@ public interface SystemSettingsService extends AbstractService<SystemSettings> {
 
     Optional<String> selectOneWithString(String configCode);
 
-    IPage<SystemSettingsComplexVo> pagingWithComplex(SystemSettingsPagingQo qo);
+    IPage<SystemSettingsComplexVo> paging(SystemSettingsPagingQo qo);
 
     void saveOne(SystemSettingsSaveQo qo);
 

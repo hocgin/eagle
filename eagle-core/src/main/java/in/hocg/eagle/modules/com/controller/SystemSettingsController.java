@@ -32,7 +32,7 @@ public class SystemSettingsController {
     @PostMapping({"/_paging"})
     @UseLogger("分页查询 - 系统配置")
     public Result<IPage<SystemSettingsComplexVo>> paging(@Validated @RequestBody SystemSettingsPagingQo qo) {
-        return Result.success(service.pagingWithComplex(qo));
+        return Result.success(service.paging(qo));
     }
 
     @GetMapping("/{id:\\d+}:complex")

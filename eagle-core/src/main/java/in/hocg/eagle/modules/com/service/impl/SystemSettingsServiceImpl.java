@@ -46,8 +46,8 @@ public class SystemSettingsServiceImpl extends AbstractServiceImpl<SystemSetting
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public IPage<SystemSettingsComplexVo> pagingWithComplex(SystemSettingsPagingQo qo) {
-        return baseMapper.pagingWithComplex(qo, qo.page())
+    public IPage<SystemSettingsComplexVo> paging(SystemSettingsPagingQo qo) {
+        return baseMapper.paging(qo, qo.page())
             .convert(this::convertComplex);
     }
 

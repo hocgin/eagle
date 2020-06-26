@@ -19,7 +19,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface SystemSettingsMapper extends BaseMapper<SystemSettings> {
 
-    IPage<SystemSettings> pagingWithComplex(@Param("qo") SystemSettingsPagingQo qo, @Param("page") Page page);
+    IPage<SystemSettings> paging(@Param("qo") SystemSettingsPagingQo qo, @Param("page") Page page);
 
     Integer countAndConfigCodeIgnoreId(@Param("code") String code, @Param("id") Long id);
 }
