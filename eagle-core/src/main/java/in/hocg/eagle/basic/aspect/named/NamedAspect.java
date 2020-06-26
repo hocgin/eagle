@@ -1,6 +1,7 @@
 package in.hocg.eagle.basic.aspect.named;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.eagle.basic.SpringContext;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.clazz.ClassUtils;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -111,7 +114,29 @@ public class NamedAspect {
 
     private Object getValue(NamedType namedType, Object id, String[] args) {
         final String key = String.format("%s-%s-%s", namedType.name(), id, Arrays.toString(args));
-        return cache.get().computeIfAbsent(key, s -> namedType.getFunction().apply(id, args));
+        return cache.get().computeIfAbsent(key, s ->
+            this.callNamedHandleMethod(namedType, id, args).orElse(null)
+        );
     }
+
+    private Optional<Object> callNamedHandleMethod(NamedType namedType, Object id, Object[] args) {
+        final NamedService namedService = SpringContext.getBean(NamedService.class);
+        for (Method method : NamedService.class.getMethods()) {
+            final NamedHandler annotation = method.getAnnotation(NamedHandler.class);
+            if (Objects.isNull(annotation)) {
+                continue;
+            }
+            final NamedType value = annotation.value();
+            if (value.equals(namedType)) {
+                try {
+                    return Optional.ofNullable(method.invoke(namedService, id, args));
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    return Optional.empty();
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
 
 }

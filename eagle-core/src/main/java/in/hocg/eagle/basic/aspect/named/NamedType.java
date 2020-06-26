@@ -1,10 +1,7 @@
 package in.hocg.eagle.basic.aspect.named;
 
-import in.hocg.eagle.basic.SpringContext;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import java.util.function.BiFunction;
 
 /**
  * Created by hocgin on 2020/2/17.
@@ -14,11 +11,12 @@ import java.util.function.BiFunction;
  */
 @RequiredArgsConstructor
 public enum NamedType {
-    DataDict(SpringContext.getBean(NamedService.class)::selectOneByDataDict),
-    Nickname(SpringContext.getBean(NamedService.class)::selectOneNicknameByAccountId),
-    ProductCategoryName(SpringContext.getBean(NamedService.class)::selectOneProductCategoryNameByProductCategoryId),
-    AuthorityTitle(SpringContext.getBean(NamedService.class)::selectOneAuthorityTitleByAuthorityId);
+    Unknown("未知"),
+    DataDict("查询枚举值"),
+    Nickname("用户昵称"),
+    ProductCategoryName("商品品类名"),
+    AuthorityTitle("权限名称");
 
     @Getter
-    private final BiFunction<Object, String[], Object> function;
+    private final String name;
 }
