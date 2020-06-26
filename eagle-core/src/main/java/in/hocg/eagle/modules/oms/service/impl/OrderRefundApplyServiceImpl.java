@@ -84,7 +84,7 @@ public class OrderRefundApplyServiceImpl extends AbstractServiceImpl<OrderRefund
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<OrderRefundApplyComplexVo> paging(OrderRefundApplyPagingQo qo) {
-        return baseMapper.paging(qo, qo.page()).convert(this::convertOrderRefundApplyComplex);
+        return baseMapper.paging(qo, qo.page()).convert(this::convertComplex);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class OrderRefundApplyServiceImpl extends AbstractServiceImpl<OrderRefund
     public OrderRefundApplyComplexVo selectOne(Long id) {
         final OrderRefundApply entity = getById(id);
         ValidUtils.notNull(entity, "未找对退费申请单");
-        return convertOrderRefundApplyComplex(entity);
+        return convertComplex(entity);
     }
 
     @Override
@@ -123,7 +123,7 @@ public class OrderRefundApplyServiceImpl extends AbstractServiceImpl<OrderRefund
         validUpdateById(updated);
     }
 
-    private OrderRefundApplyComplexVo convertOrderRefundApplyComplex(OrderRefundApply entity) {
+    private OrderRefundApplyComplexVo convertComplex(OrderRefundApply entity) {
         final Long orderItemId = entity.getOrderItemId();
         final OrderRefundApplyComplexVo result = mapping.asOrderRefundApplyComplex(entity);
         result.setOrderItem(orderItemService.selectOne(orderItemId));
