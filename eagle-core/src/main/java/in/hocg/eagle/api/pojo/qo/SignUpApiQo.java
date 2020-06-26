@@ -1,6 +1,6 @@
 package in.hocg.eagle.api.pojo.qo;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SignUpApiQo extends BaseQo {
+public class SignUpApiQo extends BaseRo {
     private String nickname;
     private String username;
     private String password;

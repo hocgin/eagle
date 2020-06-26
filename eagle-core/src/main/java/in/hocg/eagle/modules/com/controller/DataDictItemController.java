@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.com.controller;
 
 
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.qo.IdsQo;
+import in.hocg.eagle.basic.pojo.ro.IdsRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemUpdateQo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemsBatchInsertQo;
@@ -29,7 +29,7 @@ public class DataDictItemController {
 
     @UseLogger("删除数据字典项")
     @DeleteMapping
-    public Result<Void> deletes(@RequestBody IdsQo qo) {
+    public Result<Void> deletes(@RequestBody IdsRo qo) {
         service.batchDelete(qo);
         return Result.success();
     }

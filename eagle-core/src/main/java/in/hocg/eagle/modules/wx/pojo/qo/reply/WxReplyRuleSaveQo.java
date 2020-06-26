@@ -2,8 +2,8 @@ package in.hocg.eagle.modules.wx.pojo.qo.reply;
 
 import in.hocg.eagle.basic.constant.datadict.WxMatchMsgType;
 import in.hocg.eagle.basic.constant.datadict.WxReplyMsgType;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
+import in.hocg.eagle.basic.pojo.ro.Insert;
 import in.hocg.eagle.basic.valid.EnumRange;
 import in.hocg.eagle.utils.string.JsonUtils;
 import io.swagger.annotations.ApiModelProperty;
@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WxReplyRuleSaveQo extends BaseQo {
+public class WxReplyRuleSaveQo extends BaseRo {
     private Long id;
 
     @NotBlank(groups = {Insert.class}, message = "APPID 不能为空")

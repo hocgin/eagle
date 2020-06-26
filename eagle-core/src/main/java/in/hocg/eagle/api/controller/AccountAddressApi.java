@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.api.pojo.qo.SelfAccountAddressPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressSaveQo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.address.AccountAddressComplexVo;
@@ -53,7 +53,7 @@ public class AccountAddressApi {
 
     @DeleteMapping
     @UseLogger("删除 - 收货地址")
-    public Result deleteOne(@Validated @RequestBody IdQo qo) {
+    public Result deleteOne(@Validated @RequestBody IdRo qo) {
         appService.deleteOneWithAccountAddress(qo);
         return Result.success();
     }

@@ -3,7 +3,7 @@ package in.hocg.eagle.basic.aspect.logger;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.SpringContext;
-import in.hocg.eagle.basic.security.User;
+import in.hocg.eagle.basic.ext.security.User;
 import in.hocg.eagle.modules.com.entity.RequestLog;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

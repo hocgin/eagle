@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.oms.pojo.qo.cart;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.Update;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
+import in.hocg.eagle.basic.pojo.ro.Insert;
+import in.hocg.eagle.basic.pojo.ro.Update;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CartItemSaveQo extends BaseQo {
+public class CartItemSaveQo extends BaseRo {
     @NotNull(groups = {Insert.class, Update.class}, message = "请选择商品")
     @ApiModelProperty("SKU ID")
     private Long skuId;

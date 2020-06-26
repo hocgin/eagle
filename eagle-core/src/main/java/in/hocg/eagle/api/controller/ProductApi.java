@@ -5,7 +5,7 @@ import in.hocg.eagle.api.pojo.qo.ProductPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.constant.AuthorizeConstant;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +36,7 @@ public class ProductApi {
     @UseLogger("商品详情")
     @GetMapping("/{id:\\d+}")
     public Result<ProductComplexVo> selectOne(@PathVariable Long id) {
-        final IdQo qo = new IdQo();
+        final IdRo qo = new IdRo();
         qo.setId(id);
         return Result.success(appService.getProductById(qo));
     }

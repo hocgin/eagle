@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.pms.pojo.qo.category;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import lombok.Data;
 
 /**
@@ -10,7 +10,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class ProductCategorySearchQo extends BaseQo {
+public class ProductCategorySearchQo extends BaseRo {
     private Long parentId;
 
 }

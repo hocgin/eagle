@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.oms.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
@@ -83,7 +83,7 @@ public interface OrderService extends AbstractService<Order> {
      *
      * @param qo
      */
-    void deleteOne(IdQo qo);
+    void deleteOne(IdRo qo);
 
     /**
      * 更新订单

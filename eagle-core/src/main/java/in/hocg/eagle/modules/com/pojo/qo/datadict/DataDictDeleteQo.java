@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.com.pojo.qo.datadict;
 
-import in.hocg.eagle.basic.pojo.qo.IdsQo;
+import in.hocg.eagle.basic.pojo.ro.IdsRo;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * @author hocgin
  */
 @Data
-public class DataDictDeleteQo extends IdsQo {
+public class DataDictDeleteQo extends IdsRo {
 
     @NotNull
     private Boolean force;

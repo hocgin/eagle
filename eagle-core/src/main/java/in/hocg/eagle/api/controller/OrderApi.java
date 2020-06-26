@@ -5,7 +5,7 @@ import in.hocg.eagle.api.pojo.qo.SelfOrderPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.constant.AuthorizeConstant;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
@@ -74,7 +74,7 @@ public class OrderApi {
     @UseLogger("订单详情")
     @GetMapping("/{id}")
     public Result<OrderComplexVo> selectOne(@PathVariable("id") Long id) {
-        final IdQo qo = new IdQo();
+        final IdRo qo = new IdRo();
         qo.setId(id);
         return Result.success(appService.getSelfOrderById(qo));
     }

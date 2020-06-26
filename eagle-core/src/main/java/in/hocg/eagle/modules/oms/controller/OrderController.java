@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.oms.controller;
 
 
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.service.OrderService;
@@ -63,7 +63,7 @@ public class OrderController {
     @UseLogger("删除 - 订单")
     @DeleteMapping("/{id}")
     public Result deleteOne(@PathVariable Long id) {
-        final IdQo qo = new IdQo();
+        final IdRo qo = new IdRo();
         qo.setId(id);
         service.deleteOne(qo);
         return Result.success();

@@ -5,7 +5,7 @@ import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.CartItemStatus;
 import in.hocg.eagle.basic.constant.datadict.DeleteStatus;
 import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.oms.mapstruct.CartItemMapping;
 import in.hocg.eagle.modules.oms.entity.CartItem;
 import in.hocg.eagle.modules.oms.mapper.CartItemMapper;
@@ -83,7 +83,7 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteOne(IdQo qo) {
+    public void deleteOne(IdRo qo) {
         final Long id = qo.getId();
         this.removeById(id);
     }

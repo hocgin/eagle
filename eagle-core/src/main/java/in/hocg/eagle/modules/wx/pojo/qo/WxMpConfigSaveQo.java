@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.wx.pojo.qo;
 
 import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
+import in.hocg.eagle.basic.pojo.ro.Insert;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,7 +18,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WxMpConfigSaveQo extends BaseQo {
+public class WxMpConfigSaveQo extends BaseRo {
     @NotBlank(groups = {Insert.class}, message = "AppID 不能为空")
     @ApiModelProperty("开发者ID(AppID)")
     private String appid;

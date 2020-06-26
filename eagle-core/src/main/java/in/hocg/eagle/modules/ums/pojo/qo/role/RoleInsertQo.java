@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.constant.PatternConstant;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.Platform;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,7 +23,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class RoleInsertQo extends BaseQo {
+public class RoleInsertQo extends BaseRo {
     @NotBlank(message = "角色名称不能为空")
     @ApiModelProperty("角色名称")
     private String title;

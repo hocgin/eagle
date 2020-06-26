@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.WxMaterialType;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.basic.security.SecurityContext;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
+import in.hocg.eagle.basic.ext.security.SecurityContext;
 import in.hocg.eagle.modules.wx.entity.WxMaterial;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxMaterialMapper;
@@ -195,7 +195,7 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public WxMaterialComplexVo selectOne(IdQo qo) {
+    public WxMaterialComplexVo selectOne(IdRo qo) {
         final WxMaterial entity = getById(qo.getId());
         return this.convertComplex(entity);
     }

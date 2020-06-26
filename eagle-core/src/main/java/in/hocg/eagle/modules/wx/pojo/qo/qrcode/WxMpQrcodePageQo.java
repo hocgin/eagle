@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.qrcode;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 import lombok.Data;
 
 /**
@@ -10,6 +10,6 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class WxMpQrcodePageQo extends PageQo {
+public class WxMpQrcodePageQo extends PageRo {
     private String appid;
 }

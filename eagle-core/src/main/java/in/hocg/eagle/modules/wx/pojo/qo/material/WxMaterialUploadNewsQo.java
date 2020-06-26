@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.material;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WxMaterialUploadNewsQo extends BaseQo {
+public class WxMaterialUploadNewsQo extends BaseRo {
     @NotNull(message = "APP ID不能为空")
     private String appid;
     @Size(min = 1, message = "文章")

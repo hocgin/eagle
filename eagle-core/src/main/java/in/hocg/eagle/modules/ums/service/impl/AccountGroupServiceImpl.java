@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.ums.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.ums.mapstruct.AccountGroupMapping;
 import in.hocg.eagle.modules.ums.entity.AccountGroup;
 import in.hocg.eagle.modules.ums.mapper.AccountGroupMapper;
@@ -53,7 +53,7 @@ public class AccountGroupServiceImpl extends AbstractServiceImpl<AccountGroupMap
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteOne(IdQo qo) {
+    public void deleteOne(IdRo qo) {
         final Long groupId = qo.getId();
         removeById(groupId);
         accountGroupMemberService.deleteAllByGroupId(groupId);

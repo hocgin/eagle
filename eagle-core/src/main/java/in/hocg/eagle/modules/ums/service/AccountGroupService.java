@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.ums.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.ums.entity.AccountGroup;
 import in.hocg.eagle.modules.ums.pojo.qo.account.group.*;
 import in.hocg.eagle.modules.ums.pojo.vo.account.group.AccountGroupComplexVo;
@@ -28,7 +28,7 @@ public interface AccountGroupService extends AbstractService<AccountGroup> {
 
     void deleteListWithMember(AccountGroupMemberDeleteQo qo);
 
-    void deleteOne(IdQo qo);
+    void deleteOne(IdRo qo);
 
     AccountGroupComplexVo selectOne(Long id);
 }

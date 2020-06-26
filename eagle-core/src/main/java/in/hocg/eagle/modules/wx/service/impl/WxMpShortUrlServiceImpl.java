@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.wx.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.wx.entity.WxMpShortUrl;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxMpShortUrlMapper;
@@ -57,7 +57,7 @@ public class WxMpShortUrlServiceImpl extends AbstractServiceImpl<WxMpShortUrlMap
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public WxMpShortUrlComplexVo selectOne(IdQo qo) {
+    public WxMpShortUrlComplexVo selectOne(IdRo qo) {
         return this.convertComplex(getById(qo.getId()));
     }
 

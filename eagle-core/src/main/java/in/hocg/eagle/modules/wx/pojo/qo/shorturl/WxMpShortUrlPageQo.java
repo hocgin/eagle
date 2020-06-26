@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.shorturl;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,6 +12,6 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class WxMpShortUrlPageQo extends PageQo {
+public class WxMpShortUrlPageQo extends PageRo {
     private String appid;
 }

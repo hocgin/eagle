@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.message.template;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class WxMpMessageTemplateRefreshQo extends BaseQo {
+public class WxMpMessageTemplateRefreshQo extends BaseRo {
     @NotBlank(message = "APP ID 不能为空")
     private String appid;
 }

@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.wx.pojo.qo.menu;
 
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.WxMenuType;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WxMenuInsertQo extends BaseQo {
+public class WxMenuInsertQo extends BaseRo {
     @NotBlank(message = "APP ID 不能为空")
     private String appid;
     @NotNull(message = "菜单类型不能为空")

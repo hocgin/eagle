@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.wx.pojo.qo.menu;
 
 import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.Update;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
+import in.hocg.eagle.basic.pojo.ro.Insert;
+import in.hocg.eagle.basic.pojo.ro.Update;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WxMenuUpdateQo extends BaseQo {
+public class WxMenuUpdateQo extends BaseRo {
     private Long id;
     private String title;
     @Valid

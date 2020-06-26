@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.wx.controller;
 
 
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.wx.pojo.qo.qrcode.WxMpQrcodeInsertQo;
 import in.hocg.eagle.modules.wx.pojo.qo.qrcode.WxMpQrcodePageQo;
@@ -56,7 +56,7 @@ public class WxMpQrcodeController {
     @UseLogger("查看详情 - 二维码")
     @GetMapping("/{id:\\d+}")
     public Result selectOne(@PathVariable Long id) {
-        final IdQo qo = new IdQo();
+        final IdRo qo = new IdRo();
         qo.setId(id);
         return Result.success(service.selectOne(qo));
     }

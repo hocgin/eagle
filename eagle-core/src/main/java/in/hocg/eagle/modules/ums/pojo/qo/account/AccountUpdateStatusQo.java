@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.ums.pojo.qo.account;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.Expired;
 import in.hocg.eagle.basic.constant.datadict.Locked;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AccountUpdateStatusQo extends IdQo {
+public class AccountUpdateStatusQo extends IdRo {
     @ApiModelProperty("启用状态")
     @EnumRange(enumClass = Enabled.class)
     private Integer enabled;

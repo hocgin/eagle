@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.pojo.qo.authority;
 
 import in.hocg.eagle.basic.constant.datadict.Platform;
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AuthoritySearchQo extends PageQo {
+public class AuthoritySearchQo extends PageRo {
     @ApiModelProperty("父ID")
     private Long parentId;
     @ApiModelProperty("平台")

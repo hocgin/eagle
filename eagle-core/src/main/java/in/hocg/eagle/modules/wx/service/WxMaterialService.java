@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.wx.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.wx.entity.WxMaterial;
 import in.hocg.eagle.modules.wx.pojo.qo.material.*;
 import in.hocg.eagle.modules.wx.pojo.vo.material.WxMaterialComplexVo;
@@ -37,5 +37,5 @@ public interface WxMaterialService extends AbstractService<WxMaterial> {
 
     IPage<WxMaterialComplexVo> paging(WxMaterialPageQo qo);
 
-    WxMaterialComplexVo selectOne(IdQo qo);
+    WxMaterialComplexVo selectOne(IdRo qo);
 }

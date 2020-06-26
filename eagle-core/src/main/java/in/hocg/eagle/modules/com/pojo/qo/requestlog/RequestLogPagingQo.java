@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.com.pojo.qo.requestlog;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 
 /**
  * Created by hocgin on 2020/4/4.
@@ -8,5 +8,5 @@ import in.hocg.eagle.basic.pojo.qo.PageQo;
  *
  * @author hocgin
  */
-public class RequestLogPagingQo extends PageQo {
+public class RequestLogPagingQo extends PageRo {
 }

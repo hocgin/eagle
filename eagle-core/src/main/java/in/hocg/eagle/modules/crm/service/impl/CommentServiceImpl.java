@@ -5,7 +5,7 @@ import in.hocg.eagle.basic.MessageContext;
 import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.tree.TreeServiceImpl;
 import in.hocg.eagle.modules.crm.mapstruct.CommentMapping;
 import in.hocg.eagle.modules.crm.entity.Comment;
 import in.hocg.eagle.modules.crm.mapper.CommentMapper;

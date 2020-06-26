@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.crm.pojo.qo.comment;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ChildCommentPagingQo extends PageQo {
+public class ChildCommentPagingQo extends PageRo {
     @ApiModelProperty("父级评论ID")
     private Long parentId;
 }

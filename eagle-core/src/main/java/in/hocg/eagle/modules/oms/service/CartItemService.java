@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.oms.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.oms.entity.CartItem;
 import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemPagingQo;
 import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemSaveQo;
@@ -20,7 +20,7 @@ public interface CartItemService extends AbstractService<CartItem> {
 
     void saveOne(CartItemSaveQo qo);
 
-    void deleteOne(IdQo qo);
+    void deleteOne(IdRo qo);
 
     IPage<CartItemComplexVo> paging(CartItemPagingQo qo);
 }

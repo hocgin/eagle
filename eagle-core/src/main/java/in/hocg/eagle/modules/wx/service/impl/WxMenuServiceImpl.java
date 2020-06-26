@@ -6,7 +6,7 @@ import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.WxMenuType;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.basic.security.SecurityContext;
+import in.hocg.eagle.basic.ext.security.SecurityContext;
 import in.hocg.eagle.modules.wx.entity.WxMenu;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxMenuMapper;

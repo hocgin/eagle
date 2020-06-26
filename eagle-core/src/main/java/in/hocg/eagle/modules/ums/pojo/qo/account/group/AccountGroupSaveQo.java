@@ -2,9 +2,9 @@ package in.hocg.eagle.modules.ums.pojo.qo.account.group;
 
 import in.hocg.eagle.basic.constant.datadict.AccountGroupType;
 import in.hocg.eagle.basic.constant.datadict.GroupMemberSource;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.Update;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
+import in.hocg.eagle.basic.pojo.ro.Insert;
+import in.hocg.eagle.basic.pojo.ro.Update;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,7 +22,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class AccountGroupSaveQo extends BaseQo {
+public class AccountGroupSaveQo extends BaseRo {
 
     @ApiModelProperty("ID")
     private Long id;

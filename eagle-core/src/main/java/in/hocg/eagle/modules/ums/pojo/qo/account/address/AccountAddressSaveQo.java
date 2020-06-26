@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.ums.pojo.qo.account.address;
 
 import in.hocg.eagle.basic.constant.datadict.IsDefault;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.Update;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
+import in.hocg.eagle.basic.pojo.ro.Insert;
+import in.hocg.eagle.basic.pojo.ro.Update;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -21,7 +21,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class AccountAddressSaveQo extends BaseQo {
+public class AccountAddressSaveQo extends BaseRo {
     private Long id;
     @NotBlank(groups = {Insert.class}, message = "收件人姓名不能为空")
     @ApiModelProperty("收件人姓名")

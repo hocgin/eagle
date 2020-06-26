@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.crm.pojo.qo.comment;
 
 import in.hocg.eagle.basic.constant.datadict.CommentTargetType;
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class RootCommentPagingQo extends PageQo {
+public class RootCommentPagingQo extends PageRo {
     /**
      * @see CommentTargetType 的名称
      */

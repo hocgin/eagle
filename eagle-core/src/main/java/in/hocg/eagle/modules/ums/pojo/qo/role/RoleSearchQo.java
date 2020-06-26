@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.pojo.qo.role;
 
 import in.hocg.eagle.basic.constant.datadict.Platform;
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 import lombok.Data;
 
 /**
@@ -11,7 +11,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class RoleSearchQo extends PageQo {
+public class RoleSearchQo extends PageRo {
     private String keyword;
     private Integer platform = Platform.Eagle.getCode();
 }

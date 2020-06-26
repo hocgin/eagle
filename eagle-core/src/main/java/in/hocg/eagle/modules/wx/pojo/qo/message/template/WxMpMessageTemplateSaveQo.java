@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.message.template;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class WxMpMessageTemplateSaveQo extends BaseQo {
+public class WxMpMessageTemplateSaveQo extends BaseRo {
     private Long id;
 
 }

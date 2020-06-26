@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.pms.service.impl;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.datastruct.tree.Tree;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.tree.TreeServiceImpl;
 import in.hocg.eagle.modules.pms.mapstruct.ProductCategoryMapping;
 import in.hocg.eagle.modules.pms.entity.ProductCategory;
 import in.hocg.eagle.modules.pms.mapper.ProductCategoryMapper;

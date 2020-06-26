@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.com.pojo.qo.datadict;
 
 import in.hocg.eagle.basic.constant.PatternConstant;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import in.hocg.eagle.basic.valid.EnumRange;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemInsertQo;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,7 +22,7 @@ import java.util.List;
  * @author hocgin
  */
 @Data
-public class DataDictInsertQo extends BaseQo {
+public class DataDictInsertQo extends BaseRo {
 
     @NotBlank(message = "字典名称")
     @ApiModelProperty("字典名称")

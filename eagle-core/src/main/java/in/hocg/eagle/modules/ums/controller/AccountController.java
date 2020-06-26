@@ -6,7 +6,7 @@ import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.basic.security.SecurityContext;
+import in.hocg.eagle.basic.ext.security.SecurityContext;
 import in.hocg.eagle.modules.ums.pojo.qo.account.*;
 import in.hocg.eagle.modules.ums.pojo.vo.account.AccountComplexVo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.IdAccountComplexVo;

@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.ums.pojo.qo.account;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 import lombok.Data;
 
 /**
@@ -10,6 +10,6 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class AccountSearchQo extends PageQo {
+public class AccountSearchQo extends PageRo {
     private String keyword;
 }

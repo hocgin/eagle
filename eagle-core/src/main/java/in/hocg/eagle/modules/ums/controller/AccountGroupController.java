@@ -3,9 +3,9 @@ package in.hocg.eagle.modules.ums.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.Update;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
+import in.hocg.eagle.basic.pojo.ro.Insert;
+import in.hocg.eagle.basic.pojo.ro.Update;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.ums.pojo.qo.account.group.*;
 import in.hocg.eagle.modules.ums.pojo.vo.account.group.AccountGroupComplexVo;
@@ -61,7 +61,7 @@ public class AccountGroupController {
     @DeleteMapping("/{id:\\d+}")
     @UseLogger("删除 - 账号组")
     public Result deleteOne(@PathVariable Long id) {
-        final IdQo qo = new IdQo();
+        final IdRo qo = new IdRo();
         qo.setId(id);
         service.deleteOne(qo);
         return Result.success();

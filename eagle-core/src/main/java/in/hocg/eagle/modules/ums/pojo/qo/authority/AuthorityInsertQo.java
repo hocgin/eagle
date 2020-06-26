@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.ums.pojo.qo.authority;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.PatternConstant;
 import in.hocg.eagle.basic.constant.datadict.Platform;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -21,7 +21,7 @@ import javax.validation.constraints.Pattern;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AuthorityInsertQo extends BaseQo {
+public class AuthorityInsertQo extends BaseRo {
 
     @NotBlank(message = "权限名称")
     @ApiModelProperty("权限名称")

@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.qrcode;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class WxMpQrcodeInsertQo extends BaseQo {
+public class WxMpQrcodeInsertQo extends BaseRo {
     @NotNull(message = "APP ID不能为空")
     private String appid;
     @NotNull

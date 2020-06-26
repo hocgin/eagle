@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.ums.service.impl;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.datastruct.tree.Tree;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.basic.mybatis.tree.TreeServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.tree.TreeServiceImpl;
 import in.hocg.eagle.modules.ums.mapstruct.AuthorityMapping;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.entity.Role;

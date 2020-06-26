@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.com.pojo.qo.datadict.item;
 
 import in.hocg.eagle.basic.constant.PatternConstant;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,7 +17,7 @@ import javax.validation.constraints.Pattern;
  * @author hocgin
  */
 @Data
-public class DataDictItemInsertQo extends BaseQo {
+public class DataDictItemInsertQo extends BaseRo {
     @ApiModelProperty("排序")
     private Integer sort;
     @NotNull(message = "启用状态")

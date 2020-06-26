@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.wx.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.wx.entity.WxMpQrcode;
 import in.hocg.eagle.modules.wx.pojo.qo.qrcode.WxMpQrcodeInsertQo;
 import in.hocg.eagle.modules.wx.pojo.qo.qrcode.WxMpQrcodePageQo;
@@ -20,7 +20,7 @@ public interface WxMpQrcodeService extends AbstractService<WxMpQrcode> {
 
     void insertOne(WxMpQrcodeInsertQo qo);
 
-    WxMpQrcodeComplexVo selectOne(IdQo qo);
+    WxMpQrcodeComplexVo selectOne(IdRo qo);
 
     IPage<WxMpQrcodeComplexVo> paging(WxMpQrcodePageQo qo);
 

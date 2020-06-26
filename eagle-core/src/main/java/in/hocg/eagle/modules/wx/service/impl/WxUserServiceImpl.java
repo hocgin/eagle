@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.wx.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.wx.entity.WxUser;
 import in.hocg.eagle.modules.wx.manager.WxMpManager;
 import in.hocg.eagle.modules.wx.mapper.WxUserMapper;
@@ -82,7 +82,7 @@ public class WxUserServiceImpl extends AbstractServiceImpl<WxUserMapper, WxUser>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public WxMpUserComplexVo selectOne(IdQo qo) {
+    public WxMpUserComplexVo selectOne(IdRo qo) {
         final Long id = qo.getId();
         final WxUser entity = getById(id);
         return this.convertComplex(entity);

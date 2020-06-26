@@ -4,7 +4,7 @@ package in.hocg.eagle.api.controller;
 import in.hocg.eagle.api.pojo.qo.SelfCartItemPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemSaveQo;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +41,7 @@ public class CartItemApi {
 
     @UseLogger("删除 - 购物车")
     @DeleteMapping
-    public Result deleteOne(@Validated @RequestBody IdQo qo) {
+    public Result deleteOne(@Validated @RequestBody IdRo qo) {
         service.deleteOneWithCartItem(qo);
         return Result.success();
     }

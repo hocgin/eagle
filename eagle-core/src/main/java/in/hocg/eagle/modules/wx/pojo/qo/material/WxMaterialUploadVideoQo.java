@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.material;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.URL;
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WxMaterialUploadVideoQo extends BaseQo {
+public class WxMaterialUploadVideoQo extends BaseRo {
     @NotNull(message = "APP ID不能为空")
     private String appid;
     @NotNull(message = "文件链接不能为空")

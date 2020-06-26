@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.com.pojo.qo.systemsettings;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
+import in.hocg.eagle.basic.pojo.ro.Insert;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
  * @author hocgin
  */
 @Data
-public class SystemSettingsSaveQo extends BaseQo {
+public class SystemSettingsSaveQo extends BaseRo {
     @ApiModelProperty("ID")
     private Long id;
     @NotBlank(groups = {Insert.class}, message = "配置名称不能为空")

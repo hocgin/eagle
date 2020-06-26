@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.ums.pojo.qo.authority;
 
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.PatternConstant;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,7 +18,7 @@ import javax.validation.constraints.Pattern;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AuthorityUpdateQo extends IdQo {
+public class AuthorityUpdateQo extends IdRo {
 
     @ApiModelProperty("权限名称")
     private String title;

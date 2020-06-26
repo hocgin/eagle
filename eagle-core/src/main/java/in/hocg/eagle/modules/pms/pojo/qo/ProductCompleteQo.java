@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.pms.pojo.qo;
 
-import in.hocg.eagle.basic.pojo.qo.CompleteQo;
+import in.hocg.eagle.basic.pojo.ro.CompleteRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ProductCompleteQo extends CompleteQo {
+public class ProductCompleteQo extends CompleteRo {
     @ApiModelProperty("商品名称/商品ID")
     private String keyword;
 }

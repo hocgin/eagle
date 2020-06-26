@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.ums.pojo.qo.account;
 
-import in.hocg.eagle.basic.pojo.qo.CompleteQo;
+import in.hocg.eagle.basic.pojo.ro.CompleteRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AccountCompleteQo extends CompleteQo {
+public class AccountCompleteQo extends CompleteRo {
     @ApiModelProperty("昵称/用户名/手机号/邮箱")
     private String keyword;
 }

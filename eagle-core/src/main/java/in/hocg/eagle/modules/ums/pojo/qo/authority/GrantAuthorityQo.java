@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.pojo.qo.authority;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class GrantAuthorityQo extends IdQo {
+public class GrantAuthorityQo extends IdRo {
     @Size(min = 1, message = "请先选择权限")
     private List<Long> authorities = Lists.newArrayList();
 }

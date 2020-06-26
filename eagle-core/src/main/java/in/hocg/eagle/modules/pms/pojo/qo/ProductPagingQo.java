@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.pms.pojo.qo;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class ProductPagingQo extends PageQo {
+public class ProductPagingQo extends PageRo {
     @ApiModelProperty("发布状态")
     private Integer publishStatus;
 }

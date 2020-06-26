@@ -12,7 +12,7 @@ import in.hocg.eagle.basic.datastruct.tree.Tree;
 import in.hocg.eagle.basic.env.Env;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.lang.Avatars;
-import in.hocg.eagle.basic.security.authentication.token.TokenUtility;
+import in.hocg.eagle.basic.ext.security.authentication.token.TokenUtility;
 import in.hocg.eagle.manager.MailManager;
 import in.hocg.eagle.manager.OssManager;
 import in.hocg.eagle.manager.SmsManager;

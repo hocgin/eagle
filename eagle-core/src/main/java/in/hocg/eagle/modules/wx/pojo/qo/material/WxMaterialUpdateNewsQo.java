@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.material;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WxMaterialUpdateNewsQo extends BaseQo {
+public class WxMaterialUpdateNewsQo extends BaseRo {
     private Long id;
     @NotNull(message = "下标错误")
     private Integer index;

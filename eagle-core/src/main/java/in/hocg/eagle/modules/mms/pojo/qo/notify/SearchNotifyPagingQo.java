@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.mms.pojo.qo.notify;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SearchNotifyPagingQo extends PageQo {
+public class SearchNotifyPagingQo extends PageRo {
     @ApiModelProperty("接收者")
     private Long receiverId;
     @ApiModelProperty("通知类型")

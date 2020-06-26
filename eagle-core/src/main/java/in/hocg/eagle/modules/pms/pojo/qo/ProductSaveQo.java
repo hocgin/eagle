@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.pms.pojo.qo;
 
 import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.Update;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
+import in.hocg.eagle.basic.pojo.ro.Insert;
+import in.hocg.eagle.basic.pojo.ro.Update;
 import in.hocg.eagle.basic.valid.EnumRange;
 import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ProductSaveQo extends IdQo {
+public class ProductSaveQo extends IdRo {
     @NotBlank(groups = {Insert.class}, message = "商品名称不能为空")
     @ApiModelProperty("商品名称")
     private String title;
@@ -62,7 +62,7 @@ public class ProductSaveQo extends IdQo {
 
     @Data
     @EqualsAndHashCode(callSuper = true)
-    public static class Sku extends IdQo {
+    public static class Sku extends IdRo {
         @NotNull(groups = {Insert.class, Update.class}, message = "规格不能为空")
         @Size(min = 1, groups = {Insert.class, Update.class}, message = "规格不能为空")
         @ApiModelProperty("规格列表")

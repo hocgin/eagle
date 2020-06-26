@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.mms.pojo.dto.notify;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.constant.datadict.NotifyType;
 import in.hocg.eagle.basic.constant.datadict.SubjectType;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class PublishNotifyDto extends BaseQo {
+public class PublishNotifyDto extends BaseRo {
 
     @ApiModelProperty("通知类型")
     private NotifyType notifyType;

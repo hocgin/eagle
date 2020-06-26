@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.ums.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.IsDefault;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.ums.mapstruct.AccountAddressMapping;
 import in.hocg.eagle.modules.ums.entity.AccountAddress;
 import in.hocg.eagle.modules.ums.mapper.AccountAddressMapper;
@@ -62,7 +62,7 @@ public class AccountAddressServiceImpl extends AbstractServiceImpl<AccountAddres
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteOne(IdQo qo) {
+    public void deleteOne(IdRo qo) {
         removeById(qo.getId());
     }
 

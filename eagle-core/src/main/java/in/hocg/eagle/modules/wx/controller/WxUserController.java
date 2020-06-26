@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.wx.controller;
 
 
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserPagingQo;
 import in.hocg.eagle.modules.wx.pojo.qo.user.WxMpUserRefreshQo;
@@ -49,7 +49,7 @@ public class WxUserController {
     @UseLogger("查看详情 - 微信用户")
     @GetMapping("/{id:\\d+}")
     public Result updateOne(@PathVariable Long id) {
-        final IdQo qo = new IdQo();
+        final IdRo qo = new IdRo();
         qo.setId(id);
         return Result.success(service.selectOne(qo));
     }

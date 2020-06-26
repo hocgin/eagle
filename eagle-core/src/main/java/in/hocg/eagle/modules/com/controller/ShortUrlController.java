@@ -3,8 +3,8 @@ package in.hocg.eagle.modules.com.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.Update;
+import in.hocg.eagle.basic.pojo.ro.Insert;
+import in.hocg.eagle.basic.pojo.ro.Update;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.com.pojo.qo.shorturl.ShortUrlPagingQo;
 import in.hocg.eagle.modules.com.pojo.qo.shorturl.ShortUrlSaveQo;

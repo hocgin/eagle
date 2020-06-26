@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.com.service;
 
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.basic.pojo.qo.IdsQo;
+import in.hocg.eagle.basic.pojo.ro.IdsRo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemInsertQo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemUpdateQo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemsBatchInsertQo;
@@ -24,7 +24,7 @@ public interface DataDictItemService extends AbstractService<DataDictItem> {
     void insertOne(Long id, DataDictItemInsertQo item);
 
     @Transactional(rollbackFor = Exception.class)
-    void batchDelete(IdsQo qo);
+    void batchDelete(IdsRo qo);
 
     void deleteByDictId(Long id);
 

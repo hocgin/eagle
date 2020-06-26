@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.message;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import in.hocg.eagle.basic.valid.StringRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SendPreviewMessageToUserQo extends BaseQo {
+public class SendPreviewMessageToUserQo extends BaseRo {
     @ApiModelProperty("微信用户ID")
     @Size(min = 1, message = "接收人不能为空")
     private List<Long> toUsers;

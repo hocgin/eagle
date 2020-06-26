@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.oms.pojo.qo.cart;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,6 +12,6 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CartItemPagingQo extends PageQo {
+public class CartItemPagingQo extends PageRo {
     private Long accountId;
 }

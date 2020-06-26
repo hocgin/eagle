@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.crm.pojo.qo.comment;
 
 import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,7 +17,7 @@ import javax.validation.constraints.NotEmpty;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class CommentPutQo extends IdQo {
+public class CommentPutQo extends IdRo {
     @NotEmpty(message = "评论内容不能为空")
     @ApiModelProperty(value = "评论内容", required = true)
     private String content;

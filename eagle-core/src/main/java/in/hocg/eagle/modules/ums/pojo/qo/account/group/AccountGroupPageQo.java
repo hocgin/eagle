@@ -3,9 +3,9 @@ package in.hocg.eagle.modules.ums.pojo.qo.account.group;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.constant.datadict.AccountGroupType;
 import in.hocg.eagle.basic.constant.datadict.GroupMemberSource;
-import in.hocg.eagle.basic.pojo.qo.Insert;
-import in.hocg.eagle.basic.pojo.qo.PageQo;
-import in.hocg.eagle.basic.pojo.qo.Update;
+import in.hocg.eagle.basic.pojo.ro.Insert;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
+import in.hocg.eagle.basic.pojo.ro.Update;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,7 +24,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class AccountGroupPageQo extends PageQo {
+public class AccountGroupPageQo extends PageRo {
 
     @ApiModelProperty("ID")
     private Long id;

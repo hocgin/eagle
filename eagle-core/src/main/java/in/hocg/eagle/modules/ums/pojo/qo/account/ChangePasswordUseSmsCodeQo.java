@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.ums.pojo.qo.account;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ChangePasswordUseSmsCodeQo extends BaseQo {
+public class ChangePasswordUseSmsCodeQo extends BaseRo {
     @NotBlank(message = "手机号码不能为空")
     @ApiModelProperty("手机号码")
     private String phone;

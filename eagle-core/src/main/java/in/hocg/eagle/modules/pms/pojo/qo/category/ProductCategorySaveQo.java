@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.pms.pojo.qo.category;
 
 import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
+import in.hocg.eagle.basic.pojo.ro.Insert;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ProductCategorySaveQo extends IdQo {
+public class ProductCategorySaveQo extends IdRo {
     @ApiModelProperty("父级")
     private Long parentId;
     @NotNull(groups = {Insert.class})

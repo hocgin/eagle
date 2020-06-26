@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.user.tags;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,6 +12,6 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class WxMpUserTagsPageQo extends PageQo {
+public class WxMpUserTagsPageQo extends PageRo {
     private String appid;
 }

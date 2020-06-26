@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.message;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SendTemplateMessageToUserQo extends BaseQo {
+public class SendTemplateMessageToUserQo extends BaseRo {
     @ApiModelProperty("微信用户ID")
     @Size(min = 1, message = "接收人不能为空")
     private List<Long> toUsers;

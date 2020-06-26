@@ -2,7 +2,7 @@ package in.hocg.eagle.utils.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +21,7 @@ public class ResultUtils {
      * @param pageQo 分页请求
      * @return 分页对象
      */
-    public static <T> IPage<T> emptyPage(PageQo pageQo) {
+    public static <T> IPage<T> emptyPage(PageRo pageQo) {
         return emptyPage(pageQo.getPage(), pageQo.getSize());
     }
 

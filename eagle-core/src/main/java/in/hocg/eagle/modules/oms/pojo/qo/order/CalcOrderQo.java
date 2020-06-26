@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.oms.pojo.qo.order;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CalcOrderQo extends BaseQo {
+public class CalcOrderQo extends BaseRo {
     @NotNull
     @Size(min = 1)
     @ApiModelProperty("订单项")

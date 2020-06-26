@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.pojo.qo.account.group;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class AccountGroupMemberDeleteQo extends BaseQo {
+public class AccountGroupMemberDeleteQo extends BaseRo {
     private Long groupId;
     private List<Long> members = Lists.newArrayList();
 }

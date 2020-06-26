@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.user;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class WxMpUserSearchQo extends BaseQo {
+public class WxMpUserSearchQo extends BaseRo {
     private String appid;
     @ApiModelProperty("商品名称/商品ID")
     private String keyword;

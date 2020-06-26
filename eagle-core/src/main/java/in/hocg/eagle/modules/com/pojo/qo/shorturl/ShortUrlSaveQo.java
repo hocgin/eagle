@@ -1,8 +1,8 @@
 package in.hocg.eagle.modules.com.pojo.qo.shorturl;
 
 import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
-import in.hocg.eagle.basic.pojo.qo.Insert;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
+import in.hocg.eagle.basic.pojo.ro.Insert;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ShortUrlSaveQo extends IdQo {
+public class ShortUrlSaveQo extends IdRo {
     @NotBlank(groups = {Insert.class}, message = "请输入链接")
     @ApiModelProperty("原链")
     private String originalUrl;

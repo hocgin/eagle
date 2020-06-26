@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.ums.pojo.qo.account.address;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 import lombok.Data;
 
 /**
@@ -10,7 +10,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class AccountAddressPageQo extends PageQo {
+public class AccountAddressPageQo extends PageRo {
     private Long accountId;
 
 }

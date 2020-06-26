@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.api.AppMapping;
 import in.hocg.eagle.api.pojo.qo.*;
 import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponAccountPagingQo;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
@@ -58,7 +58,7 @@ public class AppService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public OrderComplexVo getSelfOrderById(IdQo qo) {
+    public OrderComplexVo getSelfOrderById(IdRo qo) {
         final Long orderId = qo.getId();
         final Long userId = qo.getUserId();
         final OrderComplexVo result = orderService.selectOne(orderId);
@@ -81,7 +81,7 @@ public class AppService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public ProductComplexVo getProductById(IdQo qo) {
+    public ProductComplexVo getProductById(IdRo qo) {
         final ProductComplexVo result = productService.selectOne(qo.getId());
         ValidUtils.isTrue(LangUtils.equals(result.getPublishStatus(), ProductPublishStatus.Shelves.getCode()), "商品已下架");
         return result;
@@ -148,7 +148,7 @@ public class AppService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void deleteOneWithCartItem(IdQo qo) {
+    public void deleteOneWithCartItem(IdRo qo) {
         cartItemService.deleteOne(qo);
     }
 
@@ -165,7 +165,7 @@ public class AppService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void deleteOneWithAccountAddress(IdQo qo) {
+    public void deleteOneWithAccountAddress(IdRo qo) {
         accountAddressService.deleteOne(qo);
     }
 }

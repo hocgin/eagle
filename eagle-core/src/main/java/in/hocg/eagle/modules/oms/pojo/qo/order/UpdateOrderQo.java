@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.oms.pojo.qo.order;
 
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UpdateOrderQo extends IdQo {
+public class UpdateOrderQo extends IdRo {
     @ApiModelProperty("收货人姓名")
     private String receiverName;
     @ApiModelProperty("收货人电话")

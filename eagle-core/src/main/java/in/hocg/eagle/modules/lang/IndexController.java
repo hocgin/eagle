@@ -4,7 +4,7 @@ package in.hocg.eagle.modules.lang;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.cache.CacheKeys;
+import in.hocg.eagle.basic.ext.cache.CacheKeys;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.com.entity.ShortUrl;

@@ -1,12 +1,11 @@
 package in.hocg.eagle.modules.oms.pojo.qo.order;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 
 /**
  * Created by hocgin on 2020/3/15.
@@ -16,7 +15,7 @@ import java.math.BigDecimal;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class RefundApplyQo extends BaseQo {
+public class RefundApplyQo extends BaseRo {
     @NotNull
     @ApiModelProperty("Id")
     private Long orderItemId;

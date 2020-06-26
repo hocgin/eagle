@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.com.pojo.qo.systemsettings;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 
 /**
  * Created by hocgin on 2020/4/18.
@@ -8,5 +8,5 @@ import in.hocg.eagle.basic.pojo.qo.PageQo;
  *
  * @author hocgin
  */
-public class SystemSettingsPagingQo extends PageQo {
+public class SystemSettingsPagingQo extends PageRo {
 }

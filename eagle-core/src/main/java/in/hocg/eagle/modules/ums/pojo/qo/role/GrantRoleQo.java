@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.pojo.qo.role;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class GrantRoleQo extends IdQo {
+public class GrantRoleQo extends IdRo {
     @Size(min = 1, message = "请先选择角色")
     private List<Long> roles = Lists.newArrayList();
 }

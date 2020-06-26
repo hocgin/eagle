@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.user.tags;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class WxMpUnsetUserTagsQo extends BaseQo {
+public class WxMpUnsetUserTagsQo extends BaseRo {
     private Long tagsId;
     @NotNull(message = "请选择微信用户")
     @Size(min = 1, message = "请选择微信用户")

@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.ums.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.AbstractService;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.ums.entity.AccountAddress;
 import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressPageQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressSaveQo;
@@ -22,5 +22,5 @@ public interface AccountAddressService extends AbstractService<AccountAddress> {
 
     IPage<AccountAddressComplexVo> paging(AccountAddressPageQo qo);
 
-    void deleteOne(IdQo qo);
+    void deleteOne(IdRo qo);
 }

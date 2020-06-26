@@ -4,7 +4,7 @@ package in.hocg.eagle.modules.mms.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.basic.security.SecurityContext;
+import in.hocg.eagle.basic.ext.security.SecurityContext;
 import in.hocg.eagle.modules.mms.pojo.qo.notify.PublishPrivateLetterQo;
 import in.hocg.eagle.modules.mms.pojo.qo.notify.SearchNotifyPagingQo;
 import in.hocg.eagle.modules.mms.pojo.vo.notify.NotifyComplexVo;

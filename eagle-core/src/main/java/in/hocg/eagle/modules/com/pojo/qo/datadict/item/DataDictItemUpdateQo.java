@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.com.pojo.qo.datadict.item;
 
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import lombok.Data;
 
 /**
@@ -10,7 +10,7 @@ import lombok.Data;
  * @author hocgin
  */
 @Data
-public class DataDictItemUpdateQo extends IdQo {
+public class DataDictItemUpdateQo extends IdRo {
     private String title;
     private String code;
     private String remark;

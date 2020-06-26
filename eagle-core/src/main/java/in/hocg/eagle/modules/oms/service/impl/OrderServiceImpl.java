@@ -10,7 +10,7 @@ import in.hocg.eagle.basic.env.EnvConfigs;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.lang.SNCode;
 import in.hocg.eagle.basic.pojo.KeyValue;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.bmw.api.PaymentAPI;
 import in.hocg.eagle.modules.bmw.pojo.ro.CreateTradeRo;
 import in.hocg.eagle.modules.bmw.pojo.ro.GoPayRo;
@@ -383,7 +383,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteOne(IdQo qo) {
+    public void deleteOne(IdRo qo) {
         final Long id = qo.getId();
         final Order updated = new Order();
         updated.setId(id);

@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.com.service.impl;
 
 import in.hocg.eagle.basic.AbstractServiceImpl;
-import in.hocg.eagle.basic.pojo.qo.IdsQo;
+import in.hocg.eagle.basic.pojo.ro.IdsRo;
 import in.hocg.eagle.modules.com.mapstruct.DataDictItemMapping;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemInsertQo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemUpdateQo;
@@ -44,7 +44,7 @@ public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMap
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void batchDelete(IdsQo qo) {
+    public void batchDelete(IdsRo qo) {
         for (Long id : qo.getId()) {
             removeById(id);
         }

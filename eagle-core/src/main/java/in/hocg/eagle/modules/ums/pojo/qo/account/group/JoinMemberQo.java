@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.pojo.qo.account.group;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class JoinMemberQo extends BaseQo {
+public class JoinMemberQo extends BaseRo {
     @ApiModelProperty("ID")
     private Long groupId;
     @ApiModelProperty("群成员")

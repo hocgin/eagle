@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.mms.pojo.qo.notify;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class PublishPrivateLetterQo extends BaseQo {
+public class PublishPrivateLetterQo extends BaseRo {
     @NotBlank(message = "消息文本不能为空")
     @ApiModelProperty("消息文本")
     private String content;

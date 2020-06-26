@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.mkt.pojo.qo;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 
 /**
  * Created by hocgin on 2020/3/29.
@@ -8,6 +8,6 @@ import in.hocg.eagle.basic.pojo.qo.PageQo;
  *
  * @author hocgin
  */
-public class CouponPagingQo extends PageQo {
+public class CouponPagingQo extends PageRo {
 
 }

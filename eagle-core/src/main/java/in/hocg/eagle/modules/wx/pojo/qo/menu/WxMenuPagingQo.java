@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.menu;
 
-import in.hocg.eagle.basic.pojo.qo.PageQo;
+import in.hocg.eagle.basic.pojo.ro.PageRo;
 
 /**
  * Created by hocgin on 2020/5/4.
@@ -8,6 +8,6 @@ import in.hocg.eagle.basic.pojo.qo.PageQo;
  *
  * @author hocgin
  */
-public class WxMenuPagingQo extends PageQo {
+public class WxMenuPagingQo extends PageRo {
 
 }

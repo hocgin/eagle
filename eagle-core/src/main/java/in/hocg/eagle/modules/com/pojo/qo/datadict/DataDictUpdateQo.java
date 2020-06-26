@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.com.pojo.qo.datadict;
 
 import in.hocg.eagle.basic.constant.PatternConstant;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
-import in.hocg.eagle.basic.pojo.qo.IdQo;
+import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,7 +16,7 @@ import javax.validation.constraints.Pattern;
  * @author hocgin
  */
 @Data
-public class DataDictUpdateQo extends IdQo {
+public class DataDictUpdateQo extends IdRo {
     @ApiModelProperty("字典名称")
     private String title;
     @ApiModelProperty("字典备注")

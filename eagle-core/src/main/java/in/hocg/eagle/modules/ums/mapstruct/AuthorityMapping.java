@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.ums.mapstruct;
 
-import in.hocg.eagle.basic.security.GrantedAuthority;
+import in.hocg.eagle.basic.ext.security.GrantedAuthority;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthorityInsertQo;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthorityUpdateQo;
 import in.hocg.eagle.modules.ums.pojo.vo.authority.AuthorityComplexAndRoleVo;

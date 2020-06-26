@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.pms.service;
 
-import in.hocg.eagle.basic.mybatis.tree.TreeService;
+import in.hocg.eagle.basic.ext.mybatis.tree.TreeService;
 import in.hocg.eagle.modules.pms.entity.ProductCategory;
 import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySaveQo;
 import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySearchQo;

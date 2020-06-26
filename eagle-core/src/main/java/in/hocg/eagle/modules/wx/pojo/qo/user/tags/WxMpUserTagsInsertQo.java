@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.wx.pojo.qo.user.tags;
 
-import in.hocg.eagle.basic.pojo.qo.BaseQo;
+import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,7 +16,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class WxMpUserTagsInsertQo extends BaseQo {
+public class WxMpUserTagsInsertQo extends BaseRo {
     @NotBlank(message = "APP ID 不能为空")
     private String appid;
     @NotBlank(message = "标签名称不能为空")
