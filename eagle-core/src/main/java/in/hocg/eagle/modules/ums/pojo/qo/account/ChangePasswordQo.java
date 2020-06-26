@@ -25,7 +25,7 @@ public class ChangePasswordQo extends BaseRo {
     private String token;
     @NotNull(message = "请输入邮箱号")
     @Email(message = "请输入邮箱号")
-    @ApiModelProperty("验证Token")
+    @ApiModelProperty("邮箱")
     private String mail;
     @NotNull(message = "请输入新密码")
     @Length(min = 6, max = 32, message = "密码长度不符合要求(6~32)")
