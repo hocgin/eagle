@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SendSmsCode extends BaseRo {
+public class SendSmsCodeRo extends BaseRo {
     @NotBlank(message = "手机号码错误")
     private String phone;
 }

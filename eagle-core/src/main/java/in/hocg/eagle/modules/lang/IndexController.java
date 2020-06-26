@@ -8,7 +8,7 @@ import in.hocg.eagle.basic.ext.cache.CacheKeys;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
-import in.hocg.eagle.modules.lang.pojo.SendSmsCode;
+import in.hocg.eagle.modules.lang.pojo.SendSmsCodeRo;
 import in.hocg.eagle.modules.lang.service.IndexService;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSignUpQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.ChangePasswordUseSmsCodeQo;
@@ -64,7 +64,7 @@ public class IndexController {
     @UseLogger("发送验证码")
     @PostMapping("/api/sms-code")
     @ResponseBody
-    public Result<Void> sendSmsCode(@Validated @RequestBody SendSmsCode qo) {
+    public Result<Void> sendSmsCode(@Validated @RequestBody SendSmsCodeRo qo) {
         service.sendSmsCode(qo);
         return Result.success();
     }

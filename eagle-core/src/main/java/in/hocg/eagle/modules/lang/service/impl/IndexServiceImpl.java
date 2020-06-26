@@ -6,7 +6,7 @@ import in.hocg.eagle.basic.ext.security.authentication.token.TokenUtility;
 import in.hocg.eagle.manager.sms.SmsManager;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.com.service.ShortUrlService;
-import in.hocg.eagle.modules.lang.pojo.SendSmsCode;
+import in.hocg.eagle.modules.lang.pojo.SendSmsCodeRo;
 import in.hocg.eagle.modules.lang.service.IndexService;
 import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSignUpQo;
@@ -41,7 +41,7 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    public void sendSmsCode(SendSmsCode qo) {
+    public void sendSmsCode(SendSmsCodeRo qo) {
         final String phone = qo.getPhone();
         String smsCode = String.valueOf(LangUtils.getIntRandomCode(4));
         smsManager.sendSmsCode(phone, smsCode);
