@@ -2,12 +2,13 @@ package in.hocg.eagle.modules.pms.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
-import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.pms.entity.Sku;
 import in.hocg.eagle.modules.pms.mapper.SkuMapper;
+import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.pms.pojo.vo.sku.SkuComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.pms.service.SkuService;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.framework.AopContext;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 /**
@@ -51,24 +53,24 @@ public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implemen
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void validInsertOrUpdateByProductId(@NotNull Long productId, List<Sku> entities) {
-        final List<Long> allSkuIds = selectListByProductId2(productId).parallelStream().map(Sku::getId).collect(Collectors.toList());
+        final List<Sku> allData = this.selectListByProductId2(productId);
 
-        // 需要更新的 ID
-        final List<Long> updateIds = entities.parallelStream()
-            .peek(sku -> {
-                final Long id = sku.getId();
-                if (Objects.nonNull(id) && !allSkuIds.contains(id)) {
-                    sku.setId(null);
-                }
-            })
-            .filter(sku -> Objects.nonNull(sku.getId()))
-            .map(Sku::getId).collect(Collectors.toList());
+        final BiFunction<Sku, Sku, Boolean> isSame =
+            (t1, t2) -> LangUtils.equals(t1.getId(), t2.getId());
+        final List<Sku> mixedList = LangUtils.getMixed(allData, entities, isSame);
+        List<Sku> deleteList = LangUtils.removeIfExits(allData, mixedList, isSame);
+        List<Sku> addList = LangUtils.removeIfExits(entities, mixedList, isSame);
 
-        // 需要删除的ID
-        final List<Long> deleteIds = allSkuIds.parallelStream()
-            .filter(id -> !updateIds.contains(id)).collect(Collectors.toList());
+        // 删除
+        final List<Long> deleteIds = deleteList.parallelStream().map(Sku::getId)
+            .collect(Collectors.toList());
         this.removeByIds(deleteIds);
-        entities.forEach(this::validInsertOrUpdate);
+
+        // 新增
+        addList.forEach(this::validInsertOrUpdate);
+
+        // 更新
+        mixedList.forEach(this::validInsertOrUpdate);
     }
 
 
