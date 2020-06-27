@@ -49,9 +49,11 @@ public class SubscriptionServiceImpl extends AbstractServiceImpl<SubscriptionMap
             receivers.add(comment.getCreator());
         }
 
-        receivers.addAll(selectListBySubjectIdAndSubjectTypeAndNotifyType(subjectId, subjectType.getCode(), notifyType.getCode())
-            .stream().map(Subscription::getSubscriberId)
-            .collect(Collectors.toList()));
-        return receivers.stream().distinct().collect(Collectors.toList());
+        final List<Long> accountIds = selectListBySubjectIdAndSubjectTypeAndNotifyType(subjectId, subjectType.getCode(), notifyType.getCode())
+            .parallelStream().map(Subscription::getSubscriberId)
+            .collect(Collectors.toList());
+        receivers.addAll(accountIds);
+        return receivers.parallelStream().distinct()
+            .collect(Collectors.toList());
     }
 }
