@@ -29,7 +29,8 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class SystemSettingsServiceImpl extends AbstractServiceImpl<SystemSettingsMapper, SystemSettings> implements SystemSettingsService {
+public class SystemSettingsServiceImpl extends AbstractServiceImpl<SystemSettingsMapper, SystemSettings>
+    implements SystemSettingsService {
 
     private final SystemSettingsMapping mapping;
 
