@@ -52,7 +52,7 @@ public class CouponAccountServiceImpl extends AbstractServiceImpl<CouponAccountM
     public CouponAccountComplexVo selectOne(Long couponAccountId) {
         final CouponAccount entity = getById(couponAccountId);
         ValidUtils.notNull(entity, "未找到优惠券");
-        return convertCouponAccountComplex(entity);
+        return convertComplex(entity);
     }
 
     @Override
@@ -84,10 +84,10 @@ public class CouponAccountServiceImpl extends AbstractServiceImpl<CouponAccountM
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<CouponAccountComplexVo> paging(CouponAccountPagingQo qo) {
-        return baseMapper.paging(qo, qo.page()).convert(this::convertCouponAccountComplex);
+        return baseMapper.paging(qo, qo.page()).convert(this::convertComplex);
     }
 
-    private CouponAccountComplexVo convertCouponAccountComplex(CouponAccount entity) {
+    private CouponAccountComplexVo convertComplex(CouponAccount entity) {
         final Long couponId = entity.getCouponId();
         final CouponComplexVo coupon = couponService.selectOne(couponId);
         return couponMapping.asCouponAccountComplexVo(entity, coupon);
