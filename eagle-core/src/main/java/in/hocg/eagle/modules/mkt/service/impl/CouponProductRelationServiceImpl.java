@@ -7,6 +7,7 @@ import in.hocg.eagle.modules.mkt.service.CouponProductRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
 import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductService;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 /**
@@ -47,26 +49,24 @@ public class CouponProductRelationServiceImpl extends AbstractServiceImpl<Coupon
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void validInsertOrUpdateByCouponId(Long couponId, List<CouponProductRelation> entities) {
-        final List<Long> allProductCategoryId = selectAllByCouponId(couponId).parallelStream()
+        final List<CouponProductRelation> allData = this.selectAllByCouponId(couponId);
+
+        final BiFunction<CouponProductRelation, CouponProductRelation, Boolean> isSame =
+            (t1, t2) -> LangUtils.equals(t1.getId(), t2.getId());
+        final List<CouponProductRelation> mixedList = LangUtils.getMixed(allData, entities, isSame);
+        List<CouponProductRelation> deleteList = LangUtils.removeIfExits(allData, mixedList, isSame);
+        List<CouponProductRelation> addList = LangUtils.removeIfExits(entities, mixedList, isSame);
+
+        // 删除
+        this.removeByIds(deleteList.parallelStream()
             .map(CouponProductRelation::getId)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList()));
 
-        // 需要更新的 ID
-        final List<Long> updateIds = entities.parallelStream()
-            .peek(sku -> {
-                final Long id = sku.getId();
-                if (Objects.nonNull(id) && !allProductCategoryId.contains(id)) {
-                    sku.setId(null);
-                }
-            })
-            .filter(sku -> Objects.nonNull(sku.getId()))
-            .map(CouponProductRelation::getId).collect(Collectors.toList());
+        // 新增
+        addList.forEach(this::validInsertOrUpdate);
 
-        // 需要删除的ID
-        final List<Long> deleteIds = allProductCategoryId.parallelStream()
-            .filter(id -> !updateIds.contains(id)).collect(Collectors.toList());
-        this.removeByIds(deleteIds);
-        entities.forEach(this::validInsertOrUpdate);
+        // 更新
+        mixedList.forEach(this::validInsertOrUpdate);
     }
 
     @Override
