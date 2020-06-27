@@ -26,4 +26,6 @@ public interface CouponAccountService extends AbstractService<CouponAccount> {
     void giveToUsers(GiveCouponQo qo);
 
     IPage<CouponAccountComplexVo> paging(CouponAccountPagingQo qo);
+
+    void updateUnusedStatus(Long accountCouponId);
 }

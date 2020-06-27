@@ -3,12 +3,12 @@ package in.hocg.eagle.modules.oms.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.env.Env;
 import in.hocg.eagle.basic.env.EnvConfigs;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.ext.lang.SNCode;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.bmw.api.PaymentAPI;
@@ -16,7 +16,6 @@ import in.hocg.eagle.modules.bmw.pojo.ro.CreateTradeRo;
 import in.hocg.eagle.modules.bmw.pojo.ro.GoPayRo;
 import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.com.service.ChangeLogService;
-import in.hocg.eagle.modules.mkt.entity.CouponAccount;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import in.hocg.eagle.modules.mkt.service.CouponAccountService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
@@ -73,11 +72,9 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     implements OrderService {
     private final ProductService productService;
     private final OrderItemService orderItemService;
-    private final CouponService couponService;
     private final PaymentAPI paymentApi;
     private final CouponAccountService couponAccountService;
     private final SkuService skuService;
-    private final SkuMapping skuMapping;
     private final OrderMapping mapping;
     private final ChangeLogService changeLogService;
     private final SNCode snCode;
@@ -374,10 +371,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         // 归还优惠券
         final Long accountCouponId = order.getCouponAccountId();
         if (Objects.nonNull(accountCouponId)) {
-            final CouponAccount updated = new CouponAccount();
-            updated.setId(accountCouponId);
-            updated.setUseStatus(CouponUseStatus.Unused.getCode());
-            couponAccountService.validUpdateById(updated);
+            couponAccountService.updateUnusedStatus(accountCouponId);
         }
     }
 

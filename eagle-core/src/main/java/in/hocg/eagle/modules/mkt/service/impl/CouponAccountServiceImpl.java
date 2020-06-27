@@ -1,20 +1,18 @@
 package in.hocg.eagle.modules.mkt.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.CouponUseStatus;
 import in.hocg.eagle.basic.ext.lang.SNCode;
-import in.hocg.eagle.modules.mkt.mapstruct.CouponAccountMapping;
-import in.hocg.eagle.modules.mkt.mapstruct.CouponMapping;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.modules.mkt.entity.CouponAccount;
 import in.hocg.eagle.modules.mkt.mapper.CouponAccountMapper;
+import in.hocg.eagle.modules.mkt.mapstruct.CouponAccountMapping;
+import in.hocg.eagle.modules.mkt.mapstruct.CouponMapping;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponAccountPagingQo;
 import in.hocg.eagle.modules.mkt.pojo.qo.GiveCouponQo;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponComplexVo;
 import in.hocg.eagle.modules.mkt.service.CouponAccountService;
-import in.hocg.eagle.modules.mkt.service.CouponProductCategoryRelationService;
-import in.hocg.eagle.modules.mkt.service.CouponProductRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
 import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.utils.ValidUtils;
@@ -41,8 +39,6 @@ public class CouponAccountServiceImpl extends AbstractServiceImpl<CouponAccountM
 
     private final CouponService couponService;
     private final AccountService accountService;
-    private final CouponProductRelationService couponProductRelationService;
-    private final CouponProductCategoryRelationService couponProductCategoryRelationService;
     private final CouponMapping couponMapping;
     private final CouponAccountMapping mapping;
     private final SNCode snCode;
@@ -85,6 +81,13 @@ public class CouponAccountServiceImpl extends AbstractServiceImpl<CouponAccountM
     @Transactional(rollbackFor = Exception.class)
     public IPage<CouponAccountComplexVo> paging(CouponAccountPagingQo qo) {
         return baseMapper.paging(qo, qo.page()).convert(this::convertComplex);
+    }
+
+    @Override
+    public void updateUnusedStatus(Long accountCouponId) {
+        final CouponAccount updated = new CouponAccount();
+        updated.setId(accountCouponId);
+        updated.setUseStatus(CouponUseStatus.Unused.getCode());
     }
 
     private CouponAccountComplexVo convertComplex(CouponAccount entity) {
