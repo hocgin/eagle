@@ -63,6 +63,7 @@ public class CouponProductCategoryRelationServiceImpl extends AbstractServiceImp
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<ProductCategoryComplexVo> selectAllProductCategoryByCouponId(Long couponId) {
         final List<Long> idList = this.selectAllByCouponId(couponId).parallelStream()
             .map(CouponProductCategoryRelation::getProductCategoryId)

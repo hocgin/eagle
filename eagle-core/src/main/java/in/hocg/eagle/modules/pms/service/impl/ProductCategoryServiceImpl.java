@@ -93,6 +93,7 @@ public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryM
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<ProductCategoryComplexVo> selectList(List<Long> idList) {
         final List<ProductCategory> entities = this.selectListById(idList);
         return entities.stream().map(this::convertComplex).collect(Collectors.toList());
