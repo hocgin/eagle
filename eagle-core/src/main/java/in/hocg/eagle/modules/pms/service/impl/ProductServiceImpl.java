@@ -38,7 +38,8 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Product> implements ProductService {
+public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Product>
+    implements ProductService {
     private final ProductCategoryService productCategoryService;
     private final SkuService skuService;
     private final FileService fileService;
@@ -87,7 +88,14 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     public ProductComplexVo selectOne(Long id) {
         final Product entity = getById(id);
         ValidUtils.notNull(entity, "商品不存在");
-        return convertComplex(entity);
+        return this.convertComplex(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<ProductComplexVo> selectList(List<Long> ids) {
+        final List<Product> entities = this.selectListById(ids);
+        return entities.stream().map(this::convertComplex).collect(Collectors.toList());
     }
 
     @Override

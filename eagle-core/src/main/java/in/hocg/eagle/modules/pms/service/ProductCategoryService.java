@@ -37,4 +37,6 @@ public interface ProductCategoryService extends TreeService<ProductCategory> {
     ProductCategoryComplexVo selectOne(Long id);
 
     void deleteAll(Long id);
+
+    List<ProductCategoryComplexVo> selectList(List<Long> idList);
 }

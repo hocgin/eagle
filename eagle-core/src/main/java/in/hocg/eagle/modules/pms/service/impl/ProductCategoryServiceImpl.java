@@ -4,15 +4,14 @@ import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.datastruct.tree.Tree;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.ext.mybatis.tree.TreeServiceImpl;
-import in.hocg.eagle.modules.pms.mapstruct.ProductCategoryMapping;
 import in.hocg.eagle.modules.pms.entity.ProductCategory;
 import in.hocg.eagle.modules.pms.mapper.ProductCategoryMapper;
+import in.hocg.eagle.modules.pms.mapstruct.ProductCategoryMapping;
 import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySaveQo;
 import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySearchQo;
 import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
 import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryTreeVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
-import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +36,6 @@ import java.util.stream.Collectors;
 public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryMapper, ProductCategory>
     implements ProductCategoryService {
     private final ProductCategoryMapping mapping;
-    private final ProductService productService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -92,6 +90,12 @@ public class ProductCategoryServiceImpl extends TreeServiceImpl<ProductCategoryM
         checkUsedThrowMessage(regexTreePath);
 
         super.deleteCurrentAndChildren(id);
+    }
+
+    @Override
+    public List<ProductCategoryComplexVo> selectList(List<Long> idList) {
+        final List<ProductCategory> entities = this.selectListById(idList);
+        return entities.stream().map(this::convertComplex).collect(Collectors.toList());
     }
 
     public void checkUsedThrowMessage(String regexTreePath) {

@@ -64,10 +64,10 @@ public class CouponProductCategoryRelationServiceImpl extends AbstractServiceImp
 
     @Override
     public List<ProductCategoryComplexVo> selectAllProductCategoryByCouponId(Long couponId) {
-        return this.selectAllByCouponId(couponId).stream()
+        final List<Long> idList = this.selectAllByCouponId(couponId).parallelStream()
             .map(CouponProductCategoryRelation::getProductCategoryId)
-            .map(productCategoryService::selectOne)
             .collect(Collectors.toList());
+        return productCategoryService.selectList(idList);
     }
 
     @Override

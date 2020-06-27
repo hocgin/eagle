@@ -7,6 +7,9 @@ import in.hocg.eagle.modules.pms.pojo.qo.ProductCompleteQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
 import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * <p>
@@ -32,6 +35,8 @@ public interface ProductService extends AbstractService<Product> {
      * @return
      */
     ProductComplexVo selectOne(Long id);
+
+    List<ProductComplexVo> selectList(List<Long> ids);
 
     /**
      * 分页查询商品
