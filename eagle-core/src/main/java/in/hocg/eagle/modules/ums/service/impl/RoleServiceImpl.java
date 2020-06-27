@@ -2,22 +2,23 @@ package in.hocg.eagle.modules.ums.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.modules.ums.mapstruct.RoleMapping;
-import in.hocg.eagle.modules.ums.pojo.qo.authority.GrantAuthorityQo;
-import in.hocg.eagle.modules.ums.pojo.qo.role.RoleInsertQo;
-import in.hocg.eagle.modules.ums.pojo.qo.role.RoleUpdateQo;
-import in.hocg.eagle.modules.ums.pojo.qo.role.RoleSearchQo;
-import in.hocg.eagle.modules.ums.pojo.vo.role.RoleComplexAndAuthorityVo;
-import in.hocg.eagle.modules.ums.pojo.vo.role.RoleComplexVo;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.modules.ums.entity.Authority;
 import in.hocg.eagle.modules.ums.entity.Role;
 import in.hocg.eagle.modules.ums.mapper.RoleMapper;
+import in.hocg.eagle.modules.ums.mapstruct.RoleMapping;
+import in.hocg.eagle.modules.ums.pojo.qo.authority.GrantAuthorityQo;
+import in.hocg.eagle.modules.ums.pojo.qo.role.RoleInsertQo;
+import in.hocg.eagle.modules.ums.pojo.qo.role.RoleSearchQo;
+import in.hocg.eagle.modules.ums.pojo.qo.role.RoleUpdateQo;
+import in.hocg.eagle.modules.ums.pojo.vo.role.RoleComplexAndAuthorityVo;
+import in.hocg.eagle.modules.ums.pojo.vo.role.RoleComplexVo;
 import in.hocg.eagle.modules.ums.service.RoleAccountService;
 import in.hocg.eagle.modules.ums.service.RoleAuthorityService;
 import in.hocg.eagle.modules.ums.service.RoleService;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 /**
@@ -84,28 +86,22 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     @Transactional(rollbackFor = Exception.class)
     public void grantAuthority(GrantAuthorityQo qo) {
         final Long roleId = qo.getId();
+        final List<Long> entities = qo.getAuthorities();
 
-
-
-        final List<Long> currentAuthorityIds = roleAuthorityService.selectListAuthorityByRoleIds(Lists.newArrayList(roleId))
-            .stream()
-            .map(Authority::getId)
+        final BiFunction<Long, Long, Boolean> isSame = LangUtils::equals;
+        final List<Long> allData = roleAuthorityService.selectListAuthorityByRoleIds(Lists.newArrayList(roleId))
+            .parallelStream().map(Authority::getId)
             .collect(Collectors.toList());
-        final List<Long> authorityIds = qo.getAuthorities();
+        final List<Long> mixedList = LangUtils.getMixed(allData, entities, isSame);
+        List<Long> deleteList = LangUtils.removeIfExits(allData, mixedList, isSame);
+        List<Long> addList = LangUtils.removeIfExits(entities, mixedList, isSame);
 
         // 删除
-        for (Long authorityId : currentAuthorityIds) {
-            if (!authorityIds.contains(authorityId)) {
-                roleAuthorityService.deleteByRoleIdAndAuthorityId(roleId, authorityId);
-            }
-        }
+        deleteList.forEach(id -> roleAuthorityService.deleteByRoleIdAndAuthorityId(roleId, id));
 
         // 新增
-        for (Long authorityId : authorityIds) {
-            if (!currentAuthorityIds.contains(authorityId)) {
-                roleAuthorityService.grantAuthority(roleId, authorityId);
-            }
-        }
+        addList.forEach(id -> roleAuthorityService.grantAuthority(roleId, id));
+
     }
 
     @Override
