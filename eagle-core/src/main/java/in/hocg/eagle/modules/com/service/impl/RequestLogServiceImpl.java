@@ -47,30 +47,34 @@ public class RequestLogServiceImpl extends AbstractServiceImpl<RequestLogMapper,
     @Transactional(rollbackFor = Exception.class)
     public void asyncSave(Logger logger) {
         final String uri = logger.getUri();
-        if (IGNORE_URI.parallelStream().noneMatch(pattern -> MATCHER.match(pattern, uri))) {
-            RequestLog entity = logger.asRequestLog();
-            final UserAgent userAgent = new UserAgent(entity.getUserAgent());
-            entity.setShell(userAgent.getShell().getName());
-            entity.setShellVersion(userAgent.getShellVersion());
-            entity.setSupporter(userAgent.getSupporter().getName());
-            entity.setSupporterVersion(userAgent.getSupporterVersion());
-            entity.setSystemOs(userAgent.getSystem().getName());
-            entity.setSystemVersion(userAgent.getShellVersion());
-            entity.setEngine(userAgent.getEngine().getName());
-            entity.setEngineVersion(userAgent.getEngineVersion());
-            entity.setNetType(userAgent.getNetType());
-            entity.setPlatform(userAgent.getPlatform().getName());
 
-            final IpAndAddressDto address = langManager.getAddressByIp(entity.getClientIp());
-            entity.setNation(address.getNation().orElse(null));
-            entity.setProvince(address.getProvince().orElse(null));
-            entity.setCity(address.getCity().orElse(null));
-            entity.setZipCode(address.getZipCode().orElse(null));
-            entity.setOperator(address.getOperator().orElse(null));
-            entity.setCityCode(address.getCityCode().orElse(null));
-
-            baseMapper.insert(entity);
+        // 如果满足忽略的URI配置
+        if (IGNORE_URI.parallelStream().anyMatch(pattern -> MATCHER.match(pattern, uri))) {
+            return;
         }
+
+        RequestLog entity = logger.asRequestLog();
+        final UserAgent userAgent = new UserAgent(entity.getUserAgent());
+        entity.setShell(userAgent.getShell().getName());
+        entity.setShellVersion(userAgent.getShellVersion());
+        entity.setSupporter(userAgent.getSupporter().getName());
+        entity.setSupporterVersion(userAgent.getSupporterVersion());
+        entity.setSystemOs(userAgent.getSystem().getName());
+        entity.setSystemVersion(userAgent.getShellVersion());
+        entity.setEngine(userAgent.getEngine().getName());
+        entity.setEngineVersion(userAgent.getEngineVersion());
+        entity.setNetType(userAgent.getNetType());
+        entity.setPlatform(userAgent.getPlatform().getName());
+
+        final IpAndAddressDto address = langManager.getAddressByIp(entity.getClientIp());
+        entity.setNation(address.getNation().orElse(null));
+        entity.setProvince(address.getProvince().orElse(null));
+        entity.setCity(address.getCity().orElse(null));
+        entity.setZipCode(address.getZipCode().orElse(null));
+        entity.setOperator(address.getOperator().orElse(null));
+        entity.setCityCode(address.getCityCode().orElse(null));
+
+        baseMapper.insert(entity);
     }
 
     @Override

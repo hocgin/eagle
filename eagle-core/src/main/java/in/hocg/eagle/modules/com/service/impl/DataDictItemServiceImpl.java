@@ -29,7 +29,8 @@ import java.util.Objects;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMapper, DataDictItem> implements DataDictItemService {
+public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMapper, DataDictItem>
+    implements DataDictItemService {
 
     private final DataDictItemMapping mapping;
 
@@ -45,9 +46,7 @@ public class DataDictItemServiceImpl extends AbstractServiceImpl<DataDictItemMap
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void batchDelete(IdsRo qo) {
-        for (Long id : qo.getId()) {
-            removeById(id);
-        }
+        removeByIds(qo.getId());
     }
 
 
