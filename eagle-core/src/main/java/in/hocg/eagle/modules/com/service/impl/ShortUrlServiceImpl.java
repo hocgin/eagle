@@ -1,13 +1,13 @@
 package in.hocg.eagle.modules.com.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.basic.ext.security.SecurityContext;
-import in.hocg.eagle.modules.com.mapstruct.ShortUrlMapping;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.com.mapper.ShortUrlMapper;
+import in.hocg.eagle.modules.com.mapstruct.ShortUrlMapping;
 import in.hocg.eagle.modules.com.pojo.qo.shorturl.ShortUrlPagingQo;
 import in.hocg.eagle.modules.com.pojo.qo.shorturl.ShortUrlSaveQo;
 import in.hocg.eagle.modules.com.pojo.vo.shorturl.ShortUrlComplexVo;
@@ -79,8 +79,7 @@ public class ShortUrlServiceImpl extends AbstractServiceImpl<ShortUrlMapper, Sho
 
     @Override
     public Optional<ShortUrl> selectOneByCode(String code) {
-        return lambdaQuery()
-            .eq(ShortUrl::getCode, code).oneOpt();
+        return lambdaQuery().eq(ShortUrl::getCode, code).oneOpt();
     }
 
     @Override
@@ -101,17 +100,18 @@ public class ShortUrlServiceImpl extends AbstractServiceImpl<ShortUrlMapper, Sho
         if (Objects.isNull(id)) {
             final String code = getOrCreateShortUrlCode(qo.getOriginalUrl());
             final Optional<ShortUrl> shortUrlOpt = selectOneByCode(code);
-            if (shortUrlOpt.isPresent()) {
-                final ShortUrl shortUrl = shortUrlOpt.get();
-                if (LangUtils.equals(shortUrl.getEnabled(), qo.getEnabled())) {
-                    return;
-                }
-
-                final ShortUrl update = new ShortUrl();
-                update.setId(shortUrl.getId());
-                update.setEnabled(qo.getEnabled());
-                validUpdateById(update);
+            if (!shortUrlOpt.isPresent()) {
+                return;
             }
+            final ShortUrl shortUrl = shortUrlOpt.get();
+            if (LangUtils.equals(shortUrl.getEnabled(), qo.getEnabled())) {
+                return;
+            }
+
+            final ShortUrl update = new ShortUrl();
+            update.setId(shortUrl.getId());
+            update.setEnabled(qo.getEnabled());
+            validUpdateById(update);
         } else {
             validUpdateById(entity);
         }
