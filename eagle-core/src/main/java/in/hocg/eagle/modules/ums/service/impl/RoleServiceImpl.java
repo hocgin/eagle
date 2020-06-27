@@ -84,6 +84,9 @@ public class RoleServiceImpl extends AbstractServiceImpl<RoleMapper, Role> imple
     @Transactional(rollbackFor = Exception.class)
     public void grantAuthority(GrantAuthorityQo qo) {
         final Long roleId = qo.getId();
+
+
+
         final List<Long> currentAuthorityIds = roleAuthorityService.selectListAuthorityByRoleIds(Lists.newArrayList(roleId))
             .stream()
             .map(Authority::getId)

@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 /**
@@ -117,23 +118,20 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     public void grantRole(GrantRoleQo qo) {
         final Long accountId = qo.getId();
         final Integer platform = Platform.Eagle.getCode();
-        final List<Long> currentRoleIds = roleAccountService.selectListRoleByAccountId(accountId, platform)
-            .stream().map(Role::getId).collect(Collectors.toList());
+        final List<Long> entities = qo.getRoles();
 
-        final List<Long> roleIds = qo.getRoles();
+        final BiFunction<Long, Long, Boolean> isSame = LangUtils::equals;
+        final List<Long> allData = roleAccountService.selectListRoleByAccountId(accountId, platform)
+            .parallelStream().map(Role::getId).collect(Collectors.toList());
+        final List<Long> mixedList = LangUtils.getMixed(allData, entities, isSame);
+        List<Long> deleteList = LangUtils.removeIfExits(allData, mixedList, isSame);
+        List<Long> addList = LangUtils.removeIfExits(entities, mixedList, isSame);
+
         // 删除
-        for (Long roleId : currentRoleIds) {
-            if (!roleIds.contains(roleId)) {
-                roleAccountService.deleteByAccountIdAndRoleId(accountId, roleId);
-            }
-        }
+        deleteList.forEach(id -> roleAccountService.deleteByAccountIdAndRoleId(accountId, id));
 
         // 新增
-        for (Long roleId : roleIds) {
-            if (!currentRoleIds.contains(roleId)) {
-                roleAccountService.grantRole(accountId, roleId);
-            }
-        }
+        addList.forEach(id -> roleAccountService.grantRole(accountId, id));
     }
 
     @Override
