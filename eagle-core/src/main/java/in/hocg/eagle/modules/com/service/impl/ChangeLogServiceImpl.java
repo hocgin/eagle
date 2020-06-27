@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -53,11 +54,12 @@ public class ChangeLogServiceImpl extends AbstractServiceImpl<ChangeLogMapper, C
         validInsert(entity);
         final Long changeLogId = entity.getId();
         final List<FieldChangeDto> change = dto.getChange();
-        if (!change.isEmpty()) {
-            fieldChangeService.validInsertOrUpdateByChangeLogId(changeLogId, change.parallelStream()
-                .map(fieldChange -> fieldChangeMapping.asFieldChange(fieldChange).setChangeLog(changeLogId))
-                .collect(Collectors.toList()));
+        if (CollectionUtils.isEmpty(change)) {
+            return;
         }
+        fieldChangeService.validInsertOrUpdateByChangeLogId(changeLogId, change.parallelStream()
+            .map(fieldChange -> fieldChangeMapping.asFieldChange(fieldChange).setChangeLog(changeLogId))
+            .collect(Collectors.toList()));
     }
 
     @Override

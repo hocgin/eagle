@@ -1,11 +1,11 @@
 package in.hocg.eagle.utils.compare;
 
-import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,5 +28,5 @@ public class ChangeLogDto {
     @ApiModelProperty("创建人")
     private Long creator;
     @ApiModelProperty("字段变更记录")
-    private List<FieldChangeDto> change = Lists.newArrayList();
+    private List<FieldChangeDto> change = Collections.emptyList();
 }
