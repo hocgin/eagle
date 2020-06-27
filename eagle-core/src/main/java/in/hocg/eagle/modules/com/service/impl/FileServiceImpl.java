@@ -1,12 +1,14 @@
 package in.hocg.eagle.modules.com.service.impl;
 
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.constant.datadict.FileRelType;
+import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
 import in.hocg.eagle.modules.com.entity.File;
 import in.hocg.eagle.modules.com.mapper.FileMapper;
 import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
 import in.hocg.eagle.modules.com.pojo.vo.file.FileVo;
 import in.hocg.eagle.modules.com.service.FileService;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -42,19 +44,21 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File>
         final List<UploadFileDto.FileDto> files = dto.getFiles();
         deleteAllByRelTypeAndRelId(relType, relId);
         final LocalDateTime now = LocalDateTime.now();
-        if (!CollectionUtils.isEmpty(files)) {
-            files.stream()
-                .map(item -> new File()
-                    .setRelId(relId)
-                    .setRelType(relType.getCode())
-                    .setSort(item.getSort())
-                    .setCreator(dto.getCreator())
-                    .setFilename(item.getFilename())
-                    .setCreatedAt(now)
-                    .setFileUrl(item.getUrl())
-                )
-                .forEach(file -> baseMapper.insert(file));
+        final Long creator = LangUtils.getOrDefault(dto.getCreator(), GlobalConstant.SUPPER_ADMIN_USER_ID);
+        if (CollectionUtils.isEmpty(files)) {
+            return;
         }
+        final List<File> list = files.parallelStream()
+            .map(item -> new File()
+                .setRelId(relId)
+                .setRelType(relType.getCode())
+                .setSort(item.getSort())
+                .setCreator(creator)
+                .setFilename(item.getFilename())
+                .setCreatedAt(now)
+                .setFileUrl(item.getUrl())
+            ).collect(Collectors.toList());
+        this.saveBatch(list);
     }
 
     @Override

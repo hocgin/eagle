@@ -1,7 +1,6 @@
 package in.hocg.eagle.modules.com.pojo.qo.file;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.constant.datadict.FileRelType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,7 +26,7 @@ public class UploadFileDto implements Serializable {
     @ApiModelProperty("文件列表")
     private List<FileDto> files = Lists.newArrayList();
     @ApiModelProperty("创建人ID(可选)")
-    private Long creator = GlobalConstant.SUPPER_ADMIN_USER_ID;
+    private Long creator;
 
     @Data
     @Accessors(chain = true)
