@@ -63,7 +63,7 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
     public CouponComplexVo selectOne(Long id) {
         final Coupon entity = getById(id);
         ValidUtils.notNull(entity, "未找到优惠券");
-        return convertComplex(entity);
+        return this.convertComplex(entity);
     }
 
     @Override
@@ -115,20 +115,22 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
             }
             case SpecifiedCategory: {
                 ValidUtils.notNull(targetId);
-                couponProductCategoryRelationService.validInsertOrUpdateByCouponId(couponId, targetId.parallelStream()
+                final List<CouponProductCategoryRelation> entities = targetId.parallelStream()
                     .map(productCategoryId -> new CouponProductCategoryRelation()
                         .setCouponId(couponId)
                         .setProductCategoryId(productCategoryId))
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toList());
+                couponProductCategoryRelationService.validInsertOrUpdateByCouponId(couponId, entities);
                 break;
             }
             case DesignatedProduct: {
                 ValidUtils.notNull(targetId);
-                couponProductRelationService.validInsertOrUpdateByCouponId(couponId, targetId.parallelStream()
+                final List<CouponProductRelation> entities = targetId.parallelStream()
                     .map(productId -> new CouponProductRelation()
                         .setCouponId(couponId)
                         .setProductId(productId))
-                    .collect(Collectors.toList()));
+                    .collect(Collectors.toList());
+                couponProductRelationService.validInsertOrUpdateByCouponId(couponId, entities);
                 break;
             }
             default: {
