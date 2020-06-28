@@ -74,8 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/login/oauth2/code/*",
                 // 注册账号
                 "/sign-up",
-                // 验证码
-                "/sms-code",
+                // 发送验证码
+                "/api/sms-code",
                 "/captcha",
                 TokenAuthenticationEndpoint.ACCOUNT_TOKEN_URI).permitAll()
             .anyRequest().authenticated()
