@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.ums.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractEntity;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractEntity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;

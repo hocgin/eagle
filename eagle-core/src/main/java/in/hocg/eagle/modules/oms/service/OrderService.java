@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.oms.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.oms.entity.Order;

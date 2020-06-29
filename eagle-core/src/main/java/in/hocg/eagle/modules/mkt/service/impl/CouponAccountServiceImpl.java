@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.mkt.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.constant.datadict.CouponUseStatus;
 import in.hocg.eagle.basic.ext.lang.SNCode;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.modules.mkt.entity.CouponAccount;
 import in.hocg.eagle.modules.mkt.mapper.CouponAccountMapper;
 import in.hocg.eagle.modules.mkt.mapstruct.CouponAccountMapping;

@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.bmw.service;
 
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 import in.hocg.eagle.modules.bmw.entity.PaymentRecord;
 
 import java.util.List;

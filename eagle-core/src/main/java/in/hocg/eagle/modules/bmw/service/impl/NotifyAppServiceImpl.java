@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.bmw.service.impl;
 
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.RefundStatus;
 import in.hocg.eagle.basic.constant.datadict.TradeStatus;

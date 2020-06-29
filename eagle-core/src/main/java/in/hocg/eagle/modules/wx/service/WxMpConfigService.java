@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.wx.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
 import in.hocg.eagle.modules.wx.pojo.qo.WxMpConfigPagingQo;
 import in.hocg.eagle.modules.wx.pojo.qo.WxMpConfigSaveQo;

@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.com.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 import in.hocg.eagle.basic.aspect.logger.Logger;
 import in.hocg.eagle.modules.com.entity.RequestLog;
 import in.hocg.eagle.modules.com.pojo.qo.requestlog.RequestLogPagingQo;

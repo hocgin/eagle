@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.ums.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.IsDefault;
 import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.ums.mapstruct.AccountAddressMapping;

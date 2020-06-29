@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.com.service.impl;
 
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.modules.com.mapstruct.FieldChangeMapping;
 import in.hocg.eagle.modules.com.entity.FieldChange;
 import in.hocg.eagle.modules.com.mapper.FieldChangeMapper;

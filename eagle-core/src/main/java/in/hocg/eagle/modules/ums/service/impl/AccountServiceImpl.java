@@ -10,7 +10,7 @@ import in.hocg.eagle.basic.datastruct.tree.Tree;
 import in.hocg.eagle.basic.env.Env;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.ext.lang.Avatars;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.ext.security.authentication.token.TokenUtility;
 import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.manager.mail.MailManager;

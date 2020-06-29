@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.service;
 
 import in.hocg.eagle.modules.bmw.entity.NotifyApp;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 
 /**
  * <p>

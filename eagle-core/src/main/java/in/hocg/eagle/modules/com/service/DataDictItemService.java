@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.com.service;
 
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 import in.hocg.eagle.basic.pojo.ro.IdsRo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemInsertQo;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemUpdateQo;

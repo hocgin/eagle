@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.service.impl;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.modules.bmw.entity.PaymentTrade;
 import in.hocg.eagle.modules.bmw.mapper.PaymentTradeMapper;
 import in.hocg.eagle.modules.bmw.service.PaymentTradeService;

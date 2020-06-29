@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.mms.service;
 
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 import in.hocg.eagle.basic.constant.datadict.NotifyType;
 import in.hocg.eagle.basic.constant.datadict.SubjectType;
 import in.hocg.eagle.modules.mms.entity.Subscription;

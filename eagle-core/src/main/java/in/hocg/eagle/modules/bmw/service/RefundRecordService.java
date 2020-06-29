@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.bmw.service;
 
 import in.hocg.eagle.modules.bmw.entity.RefundRecord;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 
 import java.util.Optional;
 

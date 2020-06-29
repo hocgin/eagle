@@ -1,13 +1,12 @@
 package in.hocg.eagle.modules.pms.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductCompleteQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
 import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

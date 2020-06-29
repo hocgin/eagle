@@ -3,7 +3,7 @@ package in.hocg.eagle.basic.ext.mybatis.tree;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractEntity;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

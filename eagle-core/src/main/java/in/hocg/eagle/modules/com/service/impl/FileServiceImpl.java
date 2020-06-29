@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.com.service.impl;
 
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.constant.datadict.FileRelType;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.modules.com.entity.File;
 import in.hocg.eagle.modules.com.mapper.FileMapper;
 import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;

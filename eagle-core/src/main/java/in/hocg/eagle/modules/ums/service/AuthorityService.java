@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.ums.service;
 
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthorityInsertQo;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthoritySearchQo;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.AuthorityUpdateQo;

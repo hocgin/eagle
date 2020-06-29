@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.com.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.com.pojo.qo.shorturl.ShortUrlPagingQo;
 import in.hocg.eagle.modules.com.pojo.qo.shorturl.ShortUrlSaveQo;

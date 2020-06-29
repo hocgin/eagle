@@ -1,4 +1,4 @@
-package in.hocg.eagle.basic.ext.mybatis.basic;
+package in.hocg.eagle.basic.ext.mybatis.core;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

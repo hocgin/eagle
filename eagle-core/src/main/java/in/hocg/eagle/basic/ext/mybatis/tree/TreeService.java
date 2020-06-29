@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.ext.mybatis.tree;
 
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 
 import java.io.Serializable;
 import java.util.List;

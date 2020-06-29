@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.com.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.ChangeLogChangeType;
 import in.hocg.eagle.basic.constant.datadict.ChangeLogRefType;
 import in.hocg.eagle.basic.ext.lang.SNCode;

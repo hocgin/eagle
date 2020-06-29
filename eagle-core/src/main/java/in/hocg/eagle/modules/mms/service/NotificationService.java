@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.mms.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.ext.mybatis.basic.AbstractService;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 import in.hocg.eagle.modules.mms.pojo.qo.notify.PublishPrivateLetterQo;
 import in.hocg.eagle.modules.mms.pojo.qo.notify.PublishSubscriptionDto;
 import in.hocg.eagle.modules.mms.pojo.qo.notify.SearchNotifyPagingQo;

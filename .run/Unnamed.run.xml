@@ -1,0 +1,40 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="编译 &amp; 部署" type="DEPLOY_HOST_RUN_CONFIGURATION" factoryName="Deploy to Host">
+    <option name="accountModel" />
+    <option name="accountModels" />
+    <option name="address" />
+    <option name="afterCommand" value=". ~/env.sh; nohup java -Djava.security.egd=file:/dev/./urandom -jar /data/java/app.jar --spring.profiles.active=dev &gt; /logs/dev/nohup.log 2&gt;&amp;1 &amp;" />
+    <option name="alreadyReset" value="true" />
+    <option name="autoOpen" value="false" />
+    <option name="beforeCommand" value="kill `ps -ef | grep java | grep -v grep | awk '{print $2}'`" />
+    <option name="defaultTabIdx" value="0" />
+    <option name="ecsInstance">
+      <EcsInstance>
+        <option name="OSType" />
+        <option name="instanceId" />
+        <option name="instanceName" />
+        <option name="netType" />
+        <option name="privateIps" />
+        <option name="publicIps" />
+        <option name="regionId" />
+        <option name="tags" />
+      </EcsInstance>
+    </option>
+    <option name="ecsInstances" />
+    <option name="hostIds">
+      <list>
+        <option value="1" />
+      </list>
+    </option>
+    <option name="hostTagId" value="0" />
+    <option name="location" value="/data/java/" />
+    <option name="pathOrUrl" value="$PROJECT_DIR$/target/eagle-0.1.0-SNAPSHOT.pom" />
+    <option name="tagId" value="0" />
+    <option name="terminalCommand" />
+    <option name="type" value="HOST" />
+    <option name="uploadType" value="MAVEN" />
+    <method v="2">
+      <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="clean install -Dmaven.test.skip=true" />
+    </method>
+  </configuration>
+</component>
