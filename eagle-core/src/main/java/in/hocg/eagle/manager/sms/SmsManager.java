@@ -27,7 +27,7 @@ public class SmsManager {
 
     public void sendSmsCode(String phone, String code) {
         if (Boolean.TRUE.compareTo(redisManager.exitsSmsCode(phone)) == 0) {
-            throw ServiceException.wrap("稍后获取验证码");
+            throw ServiceException.wrap("验证码已发送，请注意查收");
         }
         redisManager.setSmsCode(phone, code);
         this.sendSms(phone, TextBlock.format("短信验证码: {}", code));

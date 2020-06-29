@@ -4,6 +4,7 @@ import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.lang.pojo.SendSmsCodeRo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSignUpQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.ChangePasswordUseSmsCodeQo;
+import in.hocg.eagle.modules.ums.pojo.qo.account.ResetPasswordUseMailRo;
 
 import java.util.Optional;
 
@@ -22,4 +23,6 @@ public interface IndexService {
     Optional<ShortUrl> selectOneByCode(String code);
 
     String changePasswordUsePhone(ChangePasswordUseSmsCodeQo qo);
+
+    void sendResetPasswordUseMail(ResetPasswordUseMailRo ro);
 }

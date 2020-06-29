@@ -104,6 +104,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         return baseMapper.selectOneByUsername(username);
     }
 
+    @Override
     public Optional<Account> selectOneByEmail(String email) {
         return lambdaQuery().eq(Account::getEmail, email).oneOpt();
     }
@@ -229,7 +230,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
         update.setId(account.getId());
         update.setPassword(passwordEncoder.encode(password));
         validUpdateById(update);
-        return TokenUtility.encode(update.getUsername());
+        return TokenUtility.encode(account.getUsername());
     }
 
     @Override
@@ -270,7 +271,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
             .setId(entityId)
             .setAvatar(ossManager.uploadToOss(file, file.getName()));
         this.validUpdateById(update);
-        return TokenUtility.encode(update.getUsername());
+        return TokenUtility.encode(entity.getUsername());
     }
 
     public AccountComplexVo convertComplex(Account entity) {

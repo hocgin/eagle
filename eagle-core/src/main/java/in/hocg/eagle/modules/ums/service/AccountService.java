@@ -48,6 +48,8 @@ public interface AccountService extends AbstractService<Account> {
      */
     Optional<Account> selectOneByUsername(String username);
 
+    Optional<Account> selectOneByEmail(String email);
+
     Optional<Account> selectOneByPhone(String phone);
 
     /**

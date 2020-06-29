@@ -1,13 +1,15 @@
 package in.hocg.eagle.modules.lang.service.impl;
 
-import in.hocg.eagle.basic.ext.security.authentication.token.TokenUtility;
+import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.manager.sms.SmsManager;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.com.service.ShortUrlService;
 import in.hocg.eagle.modules.lang.pojo.SendSmsCodeRo;
 import in.hocg.eagle.modules.lang.service.IndexService;
+import in.hocg.eagle.modules.ums.entity.Account;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSignUpQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.ChangePasswordUseSmsCodeQo;
+import in.hocg.eagle.modules.ums.pojo.qo.account.ResetPasswordUseMailRo;
 import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +54,13 @@ public class IndexServiceImpl implements IndexService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String changePasswordUsePhone(ChangePasswordUseSmsCodeQo qo) {
-        final String token = accountService.changePasswordUseSmsCode(qo);
-        return TokenUtility.encode(token);
+        return accountService.changePasswordUseSmsCode(qo);
+    }
+
+    @Override
+    public void sendResetPasswordUseMail(ResetPasswordUseMailRo ro) {
+        final String email = ro.getEmail();
+        final Account account = accountService.selectOneByEmail(email).orElseThrow(() -> ServiceException.wrap("邮箱地址错误"));
+        accountService.resetPassword(account.getId());
     }
 }

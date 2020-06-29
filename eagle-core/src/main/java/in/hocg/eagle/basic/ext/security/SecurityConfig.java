@@ -70,10 +70,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 支付网关
                 "/payment/**",
                 "/api/order/async/*",
-                // 登录
+                // 变更密码:验证码
+                "/api/change-password:sms-code",
+                // 登录:密码
                 "/login/oauth2/code/*",
+                // 登录:验证码
+                "/api/account/authenticate:sms-code",
                 // 注册账号
-                "/sign-up",
+                "/api/sign-up",
                 // 发送验证码
                 "/api/sms-code",
                 "/captcha",

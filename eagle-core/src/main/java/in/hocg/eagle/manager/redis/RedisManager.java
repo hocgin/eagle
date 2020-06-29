@@ -140,7 +140,7 @@ public class RedisManager {
     public void setSmsCode(@NonNull String phone, @NonNull String smsCode) {
         ValueOperations<String, String> opsForValue = template.opsForValue();
         final String smsKey = RedisConstants.getSmsKey(phone);
-        opsForValue.set(smsKey, smsCode, 5, TimeUnit.MINUTES);
+        opsForValue.set(smsKey, smsCode, 1, TimeUnit.MINUTES);
         log.debug("验证码设置[手机号码: {}, Token: {}]", phone, smsCode);
     }
 }

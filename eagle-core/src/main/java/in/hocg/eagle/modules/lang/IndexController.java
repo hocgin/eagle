@@ -4,14 +4,15 @@ package in.hocg.eagle.modules.lang;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.ext.cache.CacheKeys;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.eagle.basic.ext.cache.CacheKeys;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.com.entity.ShortUrl;
 import in.hocg.eagle.modules.lang.pojo.SendSmsCodeRo;
 import in.hocg.eagle.modules.lang.service.IndexService;
 import in.hocg.eagle.modules.ums.pojo.qo.account.AccountSignUpQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.ChangePasswordUseSmsCodeQo;
+import in.hocg.eagle.modules.ums.pojo.qo.account.ResetPasswordUseMailRo;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +60,14 @@ public class IndexController {
     public Result<String> changePasswordUseSmsCode(@Validated @RequestBody ChangePasswordUseSmsCodeQo qo) {
         ValidUtils.isTrue(LangUtils.equals(qo.getPassword(), qo.getConfirmPassword()), "确认密码不一致");
         return Result.success(service.changePasswordUsePhone(qo));
+    }
+
+    @UseLogger("重置密码:邮件")
+    @PostMapping("/api/reset-password:mail")
+    @ResponseBody
+   public Result<String> sendResetPasswordUseMail(@Validated @RequestBody ResetPasswordUseMailRo ro) {
+        service.sendResetPasswordUseMail(ro);
+        return Result.success();
     }
 
     @UseLogger("发送验证码")
