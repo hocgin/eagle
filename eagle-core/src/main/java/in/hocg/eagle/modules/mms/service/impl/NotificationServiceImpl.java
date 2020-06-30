@@ -62,8 +62,8 @@ public class NotificationServiceImpl extends AbstractServiceImpl<NotificationMap
         final Long receiverId = notification.getReceiverId();
         final Notify notify = notifyService.getById(notifyId);
         final Long actorId = notify.getActorId();
-        final AccountComplexVo receiver = accountService.selectOneComplex(receiverId);
-        final AccountComplexVo actor = accountService.selectOneComplex(actorId);
+        final AccountComplexVo receiver = accountService.selectOne(receiverId);
+        final AccountComplexVo actor = accountService.selectOne(actorId);
         return mapping.asSearchNotifyVo(notification, notify, receiver, actor);
     }
 

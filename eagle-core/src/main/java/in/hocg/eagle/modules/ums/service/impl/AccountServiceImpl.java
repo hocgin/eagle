@@ -93,7 +93,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public AccountComplexVo selectOneComplex(Long id) {
+    public AccountComplexVo selectOne(Long id) {
         final Account entity = baseMapper.selectById(id);
         ValidUtils.notNull(entity, "账号不存在");
         return convertComplex(entity);

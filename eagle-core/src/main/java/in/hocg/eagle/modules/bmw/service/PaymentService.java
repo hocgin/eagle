@@ -1,5 +1,10 @@
 package in.hocg.eagle.modules.bmw.service;
 
+import in.hocg.eagle.modules.bmw.api.ro.CreateTradeRo;
+import in.hocg.eagle.modules.bmw.api.ro.GoPayRo;
+import in.hocg.eagle.modules.bmw.api.vo.QueryAsyncVo;
+import in.hocg.eagle.modules.bmw.api.vo.RefundStatusSync;
+import in.hocg.eagle.modules.bmw.api.vo.TradeStatusSync;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
 import in.hocg.eagle.modules.bmw.pojo.ro.*;
 import in.hocg.eagle.modules.bmw.pojo.vo.*;

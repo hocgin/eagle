@@ -38,7 +38,7 @@ public interface AccountService extends AbstractService<Account> {
      * @param id
      * @return
      */
-    AccountComplexVo selectOneComplex(Long id);
+    AccountComplexVo selectOne(Long id);
 
     /**
      * 根据 username 查找账号

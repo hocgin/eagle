@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.bmw.pojo.vo;
+package in.hocg.eagle.modules.bmw.api.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,27 +16,20 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel("退费状态同步")
-public class RefundStatusSync {
+@ApiModel("交易状态同步")
+public class TradeStatusSync {
+    @ApiModelProperty("支付方式")
+    private Integer paymentWay;
     @ApiModelProperty("交易单号")
     private String tradeSn;
     @ApiModelProperty("商户单号")
     private String outTradeSn;
+    @ApiModelProperty("交易状态")
+    private Integer tradeStatus;
     @ApiModelProperty("交易金额")
     private BigDecimal totalFee;
-
-    @ApiModelProperty("退费单号")
-    private String refundSn;
-    @ApiModelProperty("商户退费单号")
-    private String outRefundSn;
-    @ApiModelProperty("退费状态")
-    private Integer refundStatus;
-    @ApiModelProperty("退款时间")
-    private LocalDateTime refundAt;
+    @ApiModelProperty("付款时间")
+    private LocalDateTime paymentAt;
     @ApiModelProperty("(微信用户OPEN-ID)仅微信")
     private String openid;
-    @ApiModelProperty("申请退款金额")
-    private BigDecimal refundFee;
-    @ApiModelProperty("实际退款金额")
-    private BigDecimal settlementRefundFee;
 }

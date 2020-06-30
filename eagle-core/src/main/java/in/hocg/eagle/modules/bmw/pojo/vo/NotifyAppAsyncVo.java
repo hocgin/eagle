@@ -1,7 +1,9 @@
 package in.hocg.eagle.modules.bmw.pojo.vo;
 
+import in.hocg.eagle.modules.bmw.api.vo.QueryAsyncVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 public class NotifyAppAsyncVo<T> extends QueryAsyncVo<T> {
     @ApiModelProperty("通知ID")
     private Long notifyId;

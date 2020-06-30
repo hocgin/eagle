@@ -3,7 +3,7 @@ package in.hocg.eagle.modules.bmw.controller;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
-import in.hocg.eagle.modules.bmw.pojo.ro.GoPayRo;
+import in.hocg.eagle.modules.bmw.api.ro.GoPayRo;
 import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.bmw.service.PaymentService;
 import lombok.RequiredArgsConstructor;

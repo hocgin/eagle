@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.bmw.pojo.ro;
+package in.hocg.eagle.modules.bmw.api.ro;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

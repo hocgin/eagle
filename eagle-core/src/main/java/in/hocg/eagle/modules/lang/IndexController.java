@@ -47,6 +47,13 @@ import java.util.Optional;
 public class IndexController {
     private final IndexService service;
 
+    @UseLogger("退出登录")
+    @PostMapping("/api/logout")
+    @ResponseBody
+    public Result<String> logout() {
+        return Result.success();
+    }
+
     @UseLogger("注册账号")
     @PostMapping("/api/sign-up")
     @ResponseBody

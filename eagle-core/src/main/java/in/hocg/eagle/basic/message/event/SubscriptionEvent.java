@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.mms.message.event;
+package in.hocg.eagle.basic.message.event;
 
 import in.hocg.eagle.basic.constant.datadict.NotifyType;
 import in.hocg.eagle.basic.constant.datadict.SubjectType;
