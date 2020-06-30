@@ -22,7 +22,7 @@ import in.hocg.eagle.modules.oms.service.OrderItemService;
 import in.hocg.eagle.modules.oms.service.OrderRefundApplyService;
 import in.hocg.eagle.modules.oms.service.OrderService;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressPageQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressSaveQo;

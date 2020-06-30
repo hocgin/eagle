@@ -7,7 +7,7 @@ import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -8,7 +8,7 @@ import in.hocg.eagle.basic.constant.datadict.CouponType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.experimental.UtilityClass;
 

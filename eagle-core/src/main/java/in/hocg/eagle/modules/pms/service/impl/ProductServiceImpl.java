@@ -13,7 +13,7 @@ import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductCompleteQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.pms.service.SkuService;

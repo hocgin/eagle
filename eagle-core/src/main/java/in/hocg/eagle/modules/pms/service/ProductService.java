@@ -6,7 +6,7 @@ import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductCompleteQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 
 import java.util.List;
 

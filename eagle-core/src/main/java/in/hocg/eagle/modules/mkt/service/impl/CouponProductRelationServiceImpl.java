@@ -5,7 +5,7 @@ import in.hocg.eagle.modules.mkt.entity.CouponProductRelation;
 import in.hocg.eagle.modules.mkt.mapper.CouponProductRelationMapper;
 import in.hocg.eagle.modules.mkt.service.CouponProductRelationService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;

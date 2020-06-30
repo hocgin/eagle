@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.pms.pojo.vo.product;
+package in.hocg.eagle.modules.pms.api.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
@@ -8,7 +8,6 @@ import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
 import in.hocg.eagle.basic.ext.jackson.LocalDateTimeSerializer;
 import in.hocg.eagle.modules.com.api.vo.FileVo;
-import in.hocg.eagle.modules.pms.api.vo.SkuComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -41,6 +40,8 @@ public class ProductComplexVo {
     private String procurement;
     @ApiModelProperty("上架状态")
     private Integer publishStatus;
+    @ApiModelProperty("删除状态")
+    private Integer deleteStatus;
     @ApiModelProperty("单位")
     private String unit;
     @ApiModelProperty("商品重量(克)")
