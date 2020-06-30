@@ -1,12 +1,13 @@
-package in.hocg.eagle.modules.com.pojo.qo.file;
+package in.hocg.eagle.modules.com.api.ro;
 
-import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.constant.datadict.FileRelType;
+import in.hocg.eagle.basic.valid.EnumRange;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,14 +18,15 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-public class UploadFileDto implements Serializable {
+public class UploadFileRo implements Serializable {
 
     @ApiModelProperty("引用类型(必须)")
-    private FileRelType relType;
+    @EnumRange(enumClass = FileRelType.class)
+    private Integer relType;
     @ApiModelProperty("引用ID(必须)")
     private Long relId;
     @ApiModelProperty("文件列表")
-    private List<FileDto> files = Lists.newArrayList();
+    private List<FileDto> files = Collections.emptyList();
     @ApiModelProperty("创建人ID(可选)")
     private Long creator;
 

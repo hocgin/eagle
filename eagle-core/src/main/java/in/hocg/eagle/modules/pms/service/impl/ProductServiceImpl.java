@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.DeleteStatus;
 import in.hocg.eagle.basic.constant.datadict.FileRelType;
-import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
+import in.hocg.eagle.modules.com.api.ro.UploadFileRo;
 import in.hocg.eagle.modules.com.service.FileService;
 import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.mapper.ProductMapper;
@@ -73,10 +73,10 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
         }
 
         // 设置图片
-        final List<UploadFileDto.FileDto> photos = qo.getPhotos();
+        final List<UploadFileRo.FileDto> photos = qo.getPhotos();
         if (Objects.nonNull(photos)) {
-            fileService.upload(new UploadFileDto()
-                .setRelType(FileRelType.Product)
+            fileService.upload(new UploadFileRo()
+                .setRelType(FileRelType.Product.getCode())
                 .setCreator(userId)
                 .setRelId(productId)
                 .setFiles(photos));
@@ -112,7 +112,7 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     private ProductComplexVo convertComplex(Product entity) {
         final Long productId = entity.getId();
         ProductComplexVo result = mapping.asProductComplex(entity);
-        result.setPhotos(fileService.selectListByRelTypeAndRelId2(FileRelType.Product, productId));
+        result.setPhotos(fileService.selectListByRelTypeAndRelId2(FileRelType.Product.getCode(), productId));
         result.setSku(skuService.selectListByProductId(productId));
         return result;
     }

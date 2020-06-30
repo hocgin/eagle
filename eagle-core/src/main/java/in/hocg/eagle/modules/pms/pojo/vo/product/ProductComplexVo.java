@@ -7,7 +7,7 @@ import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
 import in.hocg.eagle.basic.ext.jackson.LocalDateTimeSerializer;
-import in.hocg.eagle.modules.com.pojo.vo.file.FileVo;
+import in.hocg.eagle.modules.com.api.vo.FileVo;
 import in.hocg.eagle.modules.pms.pojo.vo.sku.SkuComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

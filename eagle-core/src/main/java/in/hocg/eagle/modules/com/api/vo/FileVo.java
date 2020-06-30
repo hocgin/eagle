@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.com.pojo.vo.file;
+package in.hocg.eagle.modules.com.api.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
