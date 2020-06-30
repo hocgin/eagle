@@ -1,6 +1,5 @@
 package in.hocg.eagle.modules.pms.api.vo;
 
-import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.pojo.ro.Insert;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -8,6 +7,7 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,7 +33,7 @@ public class SkuComplexVo {
     @ApiModelProperty("规格图片")
     private String imageUrl;
     @ApiModelProperty("规格")
-    private List<Spec> spec = Lists.newArrayList();
+    private List<Spec> spec = Collections.emptyList();
     private String specData;
 
     @Data

@@ -16,8 +16,8 @@ import in.hocg.eagle.modules.bmw.api.ro.CreateTradeRo;
 import in.hocg.eagle.modules.bmw.api.ro.GoPayRo;
 import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.com.service.ChangeLogService;
+import in.hocg.eagle.modules.mkt.api.CouponAccountAPI;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
-import in.hocg.eagle.modules.mkt.service.CouponAccountService;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.helper.order.GeneralOrder;
@@ -32,10 +32,10 @@ import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
 import in.hocg.eagle.modules.oms.service.OrderService;
+import in.hocg.eagle.modules.pms.api.ProductAPI;
 import in.hocg.eagle.modules.pms.api.SkuAPI;
-import in.hocg.eagle.modules.pms.entity.Product;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import in.hocg.eagle.modules.pms.api.vo.SkuComplexVo;
-import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.compare.EntityCompare;
@@ -68,10 +68,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     implements OrderService {
-    private final ProductService productService;
+    private final ProductAPI productService;
     private final OrderItemService orderItemService;
     private final PaymentAPI paymentApi;
-    private final CouponAccountService couponAccountService;
+    private final CouponAccountAPI couponAccountService;
     private final SkuAPI skuService;
     private final OrderMapping mapping;
     private final ChangeLogService changeLogService;
@@ -88,8 +88,9 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
                 final SkuComplexVo sku = skuService.selectOne(item.getSkuId());
                 ValidUtils.notNull(sku, "商品规格错误");
                 final Long productId = sku.getProductId();
-                final Product product = productService.selectOneByIdAndNotDeleted(productId);
+                final ProductComplexVo product = productService.selectOne(productId);
                 ValidUtils.notNull(product, "未找到商品");
+                ValidUtils.isTrue(DeleteStatus.Off.eq(product.getDeleteStatus()), "未找到商品");
                 ValidUtils.isFalse(LangUtils.equals(product.getPublishStatus(), ProductPublishStatus.SoldOut.getCode()), "商品已下架");
                 return new GeneralProduct(sku.getPrice(), item.getQuantity())
                     .setProductSpecData(sku.getSpecData())

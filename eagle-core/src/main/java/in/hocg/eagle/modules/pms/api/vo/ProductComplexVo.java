@@ -1,7 +1,6 @@
 package in.hocg.eagle.modules.pms.api.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
@@ -13,6 +12,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -50,10 +50,10 @@ public class ProductComplexVo {
     private String publishStatusName;
 
     @ApiModelProperty("SKU")
-    private List<SkuComplexVo> sku = Lists.newArrayList();
+    private List<SkuComplexVo> sku = Collections.emptyList();
 
     @ApiModelProperty("图片列表")
-    private List<FileVo> photos = Lists.newArrayList();
+    private List<FileVo> photos = Collections.emptyList();
 
     @ApiModelProperty("创建时间")
     @JsonSerialize(using = LocalDateTimeSerializer.class)

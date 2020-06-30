@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.pms.pojo.vo.category;
+package in.hocg.eagle.modules.pms.api.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class ProductCategoryComplexVo {
     @ApiModelProperty
     private String imageUrl;
     @ApiModelProperty
-    private List<String> keywords;
+    private List<String> keywords = Collections.emptyList();
     @ApiModelProperty("开启状态")
     private Integer enabled;
     @Named(idFor = "enabled", type = NamedType.DataDict, args = {Enabled.KEY})
