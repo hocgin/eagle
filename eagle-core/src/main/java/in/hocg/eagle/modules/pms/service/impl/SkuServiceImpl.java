@@ -5,7 +5,7 @@ import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.modules.pms.entity.Sku;
 import in.hocg.eagle.modules.pms.mapper.SkuMapper;
 import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
-import in.hocg.eagle.modules.pms.pojo.vo.sku.SkuComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.SkuComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.pms.service.SkuService;
 import in.hocg.eagle.utils.LangUtils;
@@ -39,14 +39,22 @@ public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implemen
     private final ProductService productService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public SkuComplexVo selectOne(Long id) {
+        return this.convertComplex(getById(id));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteAllByProductId(Long productId) {
         baseMapper.deleteAllByProductId(productId);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<SkuComplexVo> selectListByProductId(Long productId) {
         final List<Sku> entities = selectListByProductId2(productId);
-        return entities.stream().map(this::convertSkuComplex)
+        return entities.stream().map(this::convertComplex)
             .collect(Collectors.toList());
     }
 
@@ -109,7 +117,7 @@ public class SkuServiceImpl extends AbstractServiceImpl<SkuMapper, Sku> implemen
         return sku;
     }
 
-    private SkuComplexVo convertSkuComplex(Sku entity) {
+    private SkuComplexVo convertComplex(Sku entity) {
         if (Objects.isNull(entity)) {
             return null;
         }

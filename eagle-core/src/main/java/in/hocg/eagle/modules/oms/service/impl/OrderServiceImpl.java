@@ -32,10 +32,10 @@ import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
 import in.hocg.eagle.modules.oms.service.OrderService;
+import in.hocg.eagle.modules.pms.api.SkuAPI;
 import in.hocg.eagle.modules.pms.entity.Product;
-import in.hocg.eagle.modules.pms.entity.Sku;
+import in.hocg.eagle.modules.pms.api.vo.SkuComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductService;
-import in.hocg.eagle.modules.pms.service.SkuService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.compare.EntityCompare;
@@ -72,7 +72,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     private final OrderItemService orderItemService;
     private final PaymentAPI paymentApi;
     private final CouponAccountService couponAccountService;
-    private final SkuService skuService;
+    private final SkuAPI skuService;
     private final OrderMapping mapping;
     private final ChangeLogService changeLogService;
     private final SNCode snCode;
@@ -85,7 +85,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         // 1. 检查商品 和 检查库存
         final List<GeneralProduct> products = qo.getItems().stream()
             .map(item -> {
-                final Sku sku = skuService.getById(item.getSkuId());
+                final SkuComplexVo sku = skuService.selectOne(item.getSkuId());
                 ValidUtils.notNull(sku, "商品规格错误");
                 final Long productId = sku.getProductId();
                 final Product product = productService.selectOneByIdAndNotDeleted(productId);

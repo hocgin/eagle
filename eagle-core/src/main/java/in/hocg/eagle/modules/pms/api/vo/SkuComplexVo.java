@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.pms.pojo.vo.sku;
+package in.hocg.eagle.modules.pms.api.vo;
 
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.pojo.ro.Insert;
@@ -20,7 +20,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class SkuComplexVo {
     @ApiModelProperty("SKU ID")
-    private Integer id;
+    private Long id;
+    private Long productId;
     @ApiModelProperty("SKU编码")
     private String skuCode;
     @ApiModelProperty("价格")
@@ -33,6 +34,7 @@ public class SkuComplexVo {
     private String imageUrl;
     @ApiModelProperty("规格")
     private List<Spec> spec = Lists.newArrayList();
+    private String specData;
 
     @Data
     public static class Spec {

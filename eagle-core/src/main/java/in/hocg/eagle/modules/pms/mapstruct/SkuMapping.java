@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.pms.mapstruct;
 
 import in.hocg.eagle.modules.pms.entity.Sku;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
-import in.hocg.eagle.modules.pms.pojo.vo.sku.SkuComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.SkuComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
