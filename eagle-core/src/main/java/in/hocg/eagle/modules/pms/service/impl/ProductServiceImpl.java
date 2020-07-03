@@ -5,7 +5,9 @@ import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.DeleteStatus;
 import in.hocg.eagle.basic.constant.datadict.FileRelType;
 import in.hocg.eagle.modules.com.api.ro.UploadFileRo;
+import in.hocg.eagle.modules.com.api.vo.FileVo;
 import in.hocg.eagle.modules.com.service.FileService;
+import in.hocg.eagle.modules.pms.api.vo.SkuComplexVo;
 import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.mapper.ProductMapper;
 import in.hocg.eagle.modules.pms.mapstruct.ProductMapping;
@@ -23,7 +25,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -112,8 +117,22 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     private ProductComplexVo convertComplex(Product entity) {
         final Long productId = entity.getId();
         ProductComplexVo result = mapping.asProductComplex(entity);
-        result.setPhotos(fileService.selectListByRelTypeAndRelId2(FileRelType.Product.getCode(), productId));
-        result.setSku(skuService.selectListByProductId(productId));
+        final List<FileVo> photos = fileService.selectListByRelTypeAndRelId2(FileRelType.Product.getCode(), productId);
+        result.setPhotos(photos);
+        final List<SkuComplexVo> sku = skuService.selectListByProductId(productId);
+        result.setSku(sku);
+
+        if (!CollectionUtils.isEmpty(photos)) {
+            result.setMainPhotoUrl(photos.get(0).getUrl());
+        }
+
+        if (!CollectionUtils.isEmpty(sku)) {
+            final BigDecimal minPrice = sku.parallelStream().min(Comparator.comparing(SkuComplexVo::getPrice)).map(SkuComplexVo::getPrice).orElse(null);
+            final BigDecimal maxPrice = sku.parallelStream().max(Comparator.comparing(SkuComplexVo::getPrice)).map(SkuComplexVo::getPrice).orElse(null);
+            result.setMinPrice(minPrice);
+            result.setMaxPrice(maxPrice);
+        }
+
         return result;
     }
 

@@ -1,15 +1,25 @@
 package in.hocg.eagle.basic.result;
 
+import com.sun.webkit.network.URLs;
+import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.utils.LangUtils;
+import in.hocg.eagle.utils.UrlUtils;
 import in.hocg.eagle.utils.string.JsonUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Objects;
 
 /**
  * @author hocgin
@@ -80,7 +90,15 @@ public class Result<T> implements Serializable {
         return JsonUtils.toJSONString(this);
     }
 
+    public static ResponseEntity notFound() {
+        return ResponseEntity.notFound().build();
+    }
+
     public static ResponseEntity<InputStreamResource> stream(InputStream is) {
+        if (Objects.isNull(is)) {
+            return Result.notFound();
+        }
+
         return ResponseEntity
             .ok()
             .headers(new HttpHeaders() {{
@@ -90,5 +108,41 @@ public class Result<T> implements Serializable {
             }})
             .contentType(MediaType.parseMediaType("application/octet-stream"))
             .body(new InputStreamResource(is));
+    }
+
+    public static ResponseEntity<FileSystemResource> file(File file) {
+        if (Objects.isNull(file) || !file.exists()) {
+            return Result.notFound();
+        }
+
+        return ResponseEntity
+            .ok()
+            .headers(new HttpHeaders() {{
+                add(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName=" + LangUtils.getOrDefault(file.getName(), "Unknown"));
+                add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
+                add(HttpHeaders.PRAGMA, "no-cache");
+                add(HttpHeaders.EXPIRES, "0");
+            }})
+            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .body(new FileSystemResource(file));
+    }
+
+    public static ResponseEntity<InputStreamResource> url(String url) {
+        try {
+            return Result.url(URLs.newURL(url));
+        } catch (MalformedURLException e) {
+            throw ServiceException.wrap("非法链接");
+        }
+    }
+
+    public static ResponseEntity<InputStreamResource> url(URL url) {
+        if (Objects.isNull(url)) {
+            return Result.notFound();
+        }
+        try {
+            return stream(UrlUtils.toInputStream(url));
+        } catch (IOException e) {
+            throw ServiceException.wrap("读取链接异常");
+        }
     }
 }

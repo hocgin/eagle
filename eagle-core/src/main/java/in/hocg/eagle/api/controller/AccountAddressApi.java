@@ -54,7 +54,7 @@ public class AccountAddressApi {
     @DeleteMapping
     @UseLogger("删除 - 收货地址")
     public Result deleteOne(@Validated @RequestBody IdRo qo) {
-        appService.deleteOneWithAccountAddress(qo);
+        appService.deleteAccountAddress(qo);
         return Result.success();
     }
 

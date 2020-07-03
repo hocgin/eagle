@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/api-mini/cart-item")
+@RequestMapping("/api-mini/shop-cart")
 public class CartItemApi {
     private final AppService service;
 

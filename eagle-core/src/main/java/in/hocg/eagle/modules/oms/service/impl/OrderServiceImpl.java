@@ -3,6 +3,7 @@ package in.hocg.eagle.modules.oms.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.env.Env;
 import in.hocg.eagle.basic.env.EnvConfigs;
@@ -47,6 +48,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -113,10 +115,14 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
             ValidUtils.isTrue(LangUtils.equals(couponVo.getAccountId(), accountId), "无法使用该优惠券");
             Coupon coupon = DiscountHelper.createCoupon(couponVo);
             generalOrder.use(coupon);
-            result.setCoupon(new CalcOrderVo.Coupon()
+
+            List<CalcOrderVo.DiscountInfo> discounts = Lists.newArrayList();
+            discounts.add(new CalcOrderVo.DiscountInfo()
                 .setId((Long) coupon.id())
                 .setTitle(coupon.title())
-                .setCouponAmount(coupon.getDiscountTotalAmount()));
+                .setType(DiscountType.Coupon.getCode())
+                .setDiscountAmount(coupon.getDiscountTotalAmount()));
+            result.setDiscounts(discounts);
         }
         final BigDecimal totalAmount = generalOrder.getPreDiscountTotalAmount();
         final BigDecimal payAmount = generalOrder.getPreferentialAmount();
@@ -151,7 +157,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     public void createOrder(CreateOrderQo qo) {
         final Long currentUserId = qo.getUserId();
         final CalcOrderVo calcResult = calcOrder(qo);
-        final CalcOrderVo.Coupon coupon = calcResult.getCoupon();
+        final List<CalcOrderVo.DiscountInfo> discounts = calcResult.getDiscounts();
 
         final CreateOrderQo.Receiver receiver = qo.getReceiver();
         final Order order = new Order()
@@ -177,14 +183,24 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
             .setCreatedAt(qo.getCreatedAt())
             .setCreator(currentUserId);
 
-        // 如果使用了优惠券
-        if (Objects.nonNull(coupon)) {
-            final Long userCouponId = coupon.getId();
-            order.setCouponAccountId(userCouponId);
-            order.setCouponAmount(coupon.getCouponAmount());
-            final BigDecimal couponAmount = coupon.getCouponAmount();
-            if (!couponAccountService.updateUsedStatus(userCouponId, couponAmount)) {
-                throw ServiceException.wrap("优惠券已被使用");
+        // 处理优惠信息
+        if (!CollectionUtils.isEmpty(discounts)) {
+            for (CalcOrderVo.DiscountInfo discount : discounts) {
+                final DiscountType discountType = CodeEnum.ofThrow(discount.getType(), DiscountType.class);
+                switch (discountType) {
+                    case Coupon:{
+                        final Long userCouponId = discount.getId();
+                        final BigDecimal discountAmount = discount.getDiscountAmount();
+                        order.setCouponAccountId(userCouponId);
+                        order.setCouponAmount(discountAmount);
+                        if (!couponAccountService.updateUsedStatus(userCouponId, discountAmount)) {
+                            throw ServiceException.wrap("优惠券已被使用");
+                        }
+                        break;
+                    }
+                    default:
+                        throw ServiceException.wrap("系统繁忙，请稍后");
+                }
             }
         }
         validInsert(order);

@@ -4,13 +4,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.api.pojo.qo.ProductPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * @author hocgin
  */
 @RestController
-@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
+//@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api-mini/product")
 public class ProductApi {

@@ -35,6 +35,7 @@ import in.hocg.eagle.modules.ums.service.RoleAuthorityService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.web.RequestUtils;
+import jdk.internal.joptsimple.internal.Strings;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -75,6 +76,15 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     private final PasswordEncoder passwordEncoder;
     private final OssManager ossManager;
     private final SmsManager smsManager;
+
+    @Override
+    public Optional<String> getAvatarUrlByUsername(String username) {
+        if (Strings.isNullOrEmpty(username)) {
+            return Optional.empty();
+        }
+        final Optional<Account> accountOpt = this.selectOneByUsername(username);
+        return accountOpt.map(Account::getAvatar);
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

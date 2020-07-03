@@ -1,12 +1,16 @@
 package in.hocg.eagle.modules.oms.pojo.vo.order;
 
 import com.google.common.collect.Lists;
+import in.hocg.eagle.basic.aspect.named.Named;
+import in.hocg.eagle.basic.aspect.named.NamedType;
+import in.hocg.eagle.basic.constant.datadict.DiscountType;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,8 +27,9 @@ public class CalcOrderVo {
     private BigDecimal totalAmount;
     @ApiModelProperty("应付金额")
     private BigDecimal payAmount;
-    @ApiModelProperty("优惠券")
-    private Coupon coupon;
+
+    @ApiModelProperty("优惠明细")
+    private List<DiscountInfo> discounts = Collections.emptyList();
 
     @Data
     @Accessors(chain = true)
@@ -55,12 +60,17 @@ public class CalcOrderVo {
 
     @Data
     @Accessors(chain = true)
-    public static class Coupon {
-        @ApiModelProperty("优惠券 ID")
+    public static class DiscountInfo {
+        @ApiModelProperty("优惠信息ID")
         private Long id;
+        @ApiModelProperty("优惠信息类型")
+        private Integer type;
+        @Named(idFor = "type", type = NamedType.DataDict, args = {DiscountType.KEY})
+        private String typeName;
         @ApiModelProperty("优惠金额")
-        private BigDecimal couponAmount;
+        private BigDecimal discountAmount;
         @ApiModelProperty("优惠名称")
         private String title;
     }
+
 }

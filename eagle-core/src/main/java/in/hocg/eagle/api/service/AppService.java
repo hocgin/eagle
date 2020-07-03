@@ -24,16 +24,20 @@ import in.hocg.eagle.modules.oms.service.OrderService;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductService;
+import in.hocg.eagle.modules.ums.entity.AccountAddress;
 import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressPageQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressSaveQo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.address.AccountAddressComplexVo;
 import in.hocg.eagle.modules.ums.service.AccountAddressService;
+import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /**
  * Created by hocgin on 2020/3/14.
@@ -52,13 +56,14 @@ public class AppService {
     private final AppMapping mapping;
     private final ProductService productService;
     private final AccountAddressService accountAddressService;
+    private final AccountService accountService;
 
-    public void signUp(SignUpApiQo qo) {
-
+    public Optional<String> getAvatarUrlByUsername(String username) {
+        return accountService.getAvatarUrlByUsername(username);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public OrderComplexVo getSelfOrderById(IdRo qo) {
+    public OrderComplexVo getMyOrderById(IdRo qo) {
         final Long orderId = qo.getId();
         final Long userId = qo.getUserId();
         final OrderComplexVo result = orderService.selectOne(orderId);
@@ -67,7 +72,7 @@ public class AppService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public IPage<OrderComplexVo> pagingSelfOrder(SelfOrderPagingApiQo qo) {
+    public IPage<OrderComplexVo> pagingMyOrder(SelfOrderPagingApiQo qo) {
         OrderPagingQo newQo = mapping.asOrderPagingQo(qo);
         newQo.setAccountId(qo.getUserId());
         return orderService.paging(newQo);
@@ -165,7 +170,11 @@ public class AppService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void deleteOneWithAccountAddress(IdRo qo) {
+    public void deleteAccountAddress(IdRo qo) {
+        final Long id = qo.getId();
+        final AccountAddress accountAddress = accountAddressService.getById(id);
+        ValidUtils.notNull(accountAddress, "未找到收获地址");
+        ValidUtils.isTrue(LangUtils.equals(accountAddress.getAccountId(), qo.getUserId()), "非所有人，操作失败");
         accountAddressService.deleteOne(qo);
     }
 }

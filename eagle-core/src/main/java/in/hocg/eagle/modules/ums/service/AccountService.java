@@ -24,6 +24,8 @@ import java.util.Optional;
  */
 public interface AccountService extends AbstractService<Account> {
 
+    Optional<String> getAvatarUrlByUsername(String username);
+
     /**
      * 获取账号详情和角色列表
      *

@@ -52,8 +52,16 @@ public class ProductComplexVo {
     @ApiModelProperty("SKU")
     private List<SkuComplexVo> sku = Collections.emptyList();
 
+    @ApiModelProperty("最低售卖金额")
+    private BigDecimal minPrice;
+    @ApiModelProperty("最高售卖金额")
+    private BigDecimal maxPrice;
+
     @ApiModelProperty("图片列表")
     private List<FileVo> photos = Collections.emptyList();
+
+    @ApiModelProperty("主图")
+    private String mainPhotoUrl;
 
     @ApiModelProperty("创建时间")
     @JsonSerialize(using = LocalDateTimeSerializer.class)

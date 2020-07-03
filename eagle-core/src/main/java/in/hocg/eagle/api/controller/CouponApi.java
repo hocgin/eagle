@@ -3,11 +3,9 @@ package in.hocg.eagle.api.controller;
 import in.hocg.eagle.api.pojo.qo.SelfCouponPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.result.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hocgin
  */
 @RestController
-@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
+//@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api-mini/coupon")
 public class CouponApi {

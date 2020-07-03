@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.api.pojo.qo.SelfOrderPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
@@ -12,7 +11,6 @@ import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * @author hocgin
  */
 @RestController
-@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
+//@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api-mini/order")
 public class OrderApi {
@@ -76,12 +74,12 @@ public class OrderApi {
     public Result<OrderComplexVo> selectOne(@PathVariable("id") Long id) {
         final IdRo qo = new IdRo();
         qo.setId(id);
-        return Result.success(appService.getSelfOrderById(qo));
+        return Result.success(appService.getMyOrderById(qo));
     }
 
     @UseLogger("搜索个人订单")
     @PostMapping("/_paging")
     public Result<IPage<OrderComplexVo>> paging(@Validated @RequestBody SelfOrderPagingApiQo qo) {
-        return Result.success(appService.pagingSelfOrder(qo));
+        return Result.success(appService.pagingMyOrder(qo));
     }
 }
