@@ -1,8 +1,8 @@
 package in.hocg.eagle.basic.aspect.logger;
 
-import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.ext.security.SecurityContext;
 import in.hocg.eagle.basic.ext.security.User;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.modules.com.service.RequestLogService;
 import in.hocg.eagle.utils.DateUtils;
 import in.hocg.eagle.utils.string.JsonUtils;
@@ -42,14 +42,19 @@ public class DefaultLoggerService implements LoggerService {
             .add("║ {}")
             .add("╚═[总耗时:{} ms]══════════════════════════════════════════════════════════════════════")
             .add("");
+        final String retStr = logger.getRetStr();
+        final String argStr = JsonUtils.toJSONString(logger.getArgs(), true)
+            .replaceAll("\n", "\n║ ");
+
+
         log.info(stringJoiner.toString(),
             DateUtils.format(LocalDateTime.now(), DateUtils.SIMPLE_FORMATTER),
             getUserStringThrow(logger.getCurrentUser()),
             String.format("%s %s", logger.getMethod(), logger.getUri()),
             logger.getEnterRemark(),
             logger.getMapping(),
-            JsonUtils.toJSONString(logger.getArgs(), true).replaceAll("\n", "\n║ "),
-            JsonUtils.toJSONString(logger.getRet(), true).replaceAll("\n", "\n║ "),
+            argStr,
+            retStr,
             logger.getTotalTimeMillis());
     }
 

@@ -1,12 +1,14 @@
 package in.hocg.eagle.modules.pms.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.DeleteStatus;
 import in.hocg.eagle.basic.constant.datadict.FileRelType;
+import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.modules.com.api.ro.UploadFileRo;
 import in.hocg.eagle.modules.com.api.vo.FileVo;
 import in.hocg.eagle.modules.com.service.FileService;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import in.hocg.eagle.modules.pms.api.vo.SkuComplexVo;
 import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.mapper.ProductMapper;
@@ -15,12 +17,13 @@ import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductCompleteQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
-import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.pms.service.SkuService;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.string.JsonUtils;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -51,6 +54,23 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     private final ProductMapping mapping;
     private final SkuMapping skuMapping;
 
+    @Override
+    @ApiOperation("查询正在销售的商品详情 - 商品")
+    @Transactional(rollbackFor = Exception.class)
+    public ProductComplexVo getByShoppingAndId(Long id) {
+        final ProductComplexVo result = this.selectOne(id);
+        ValidUtils.isTrue(LangUtils.equals(result.getPublishStatus(), ProductPublishStatus.Shelves.getCode()), "商品已下架");
+        return result;
+    }
+
+    @Override
+    @ApiOperation("查询正在销售的商品 - 商品列表")
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<ProductComplexVo> pagingByShopping(ProductPagingQo qo) {
+        qo.setPublishStatus(ProductPublishStatus.Shelves.getCode());
+        IPage<Product> result = baseMapper.paging(qo, qo.page());
+        return result.convert(this::convertComplex);
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

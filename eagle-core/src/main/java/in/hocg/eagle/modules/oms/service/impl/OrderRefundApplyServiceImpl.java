@@ -2,17 +2,17 @@ package in.hocg.eagle.modules.oms.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.OrderRefundApplyStatus;
 import in.hocg.eagle.basic.constant.datadict.OrderStatus;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.ext.lang.SNCode;
-import in.hocg.eagle.modules.oms.mapstruct.OrderRefundApplyMapping;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.entity.OrderRefundApply;
 import in.hocg.eagle.modules.oms.mapper.OrderRefundApplyMapper;
+import in.hocg.eagle.modules.oms.mapstruct.OrderRefundApplyMapping;
 import in.hocg.eagle.modules.oms.pojo.qo.order.RefundApplyQo;
 import in.hocg.eagle.modules.oms.pojo.qo.refund.HandleQo;
 import in.hocg.eagle.modules.oms.pojo.qo.refund.OrderRefundApplyPagingQo;
@@ -20,7 +20,9 @@ import in.hocg.eagle.modules.oms.pojo.vo.refund.OrderRefundApplyComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
 import in.hocg.eagle.modules.oms.service.OrderRefundApplyService;
 import in.hocg.eagle.modules.oms.service.OrderService;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -51,15 +53,16 @@ public class OrderRefundApplyServiceImpl extends AbstractServiceImpl<OrderRefund
         return lambdaQuery().eq(OrderRefundApply::getOrderItemId, orderItemId).oneOpt();
     }
 
-
     @Override
+    @ApiOperation("发起退款申请 - 我的退款申请")
     @Transactional(rollbackFor = Exception.class)
-    public void applyRefund(RefundApplyQo qo) {
+    public void createMyApplyRefund(RefundApplyQo qo) {
         final Long orderItemId = qo.getOrderItemId();
         final OrderItem orderItem = orderItemService.getById(orderItemId);
         ValidUtils.notNull(orderItem, "订单商品不存在");
         final Long orderId = orderItem.getOrderId();
         final Order order = orderService.getById(orderId);
+        ValidUtils.isTrue(LangUtils.equals(order.getAccountId(), qo.getUserId()), "操作失败");
         if (!Lists.newArrayList(OrderStatus.Shipped.getCode(),
             OrderStatus.Completed.getCode()).contains(order.getOrderStatus())) {
             throw ServiceException.wrap("订单当前状态无法进行退款操作");

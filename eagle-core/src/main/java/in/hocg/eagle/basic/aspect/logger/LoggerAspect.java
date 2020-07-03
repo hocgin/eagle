@@ -1,8 +1,8 @@
 package in.hocg.eagle.basic.aspect.logger;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.ext.security.SecurityContext;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.utils.web.RequestUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,12 +11,15 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
-import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -64,10 +67,12 @@ public class LoggerAspect {
             Method method = target.getClass().getMethod(methodName, parameterTypes);
             UseLogger annotation = method.getAnnotation(UseLogger.class);
             List<Object> args = Lists.newArrayList(point.getArgs())
-                .stream()
-                .filter(arg -> (!(arg instanceof HttpServletRequest)
-                    && !(arg instanceof HttpServletResponse)
-                    && !(arg instanceof MultipartFile)))
+                .parallelStream()
+                .filter(arg -> (!(arg instanceof ServletRequest)
+                    && !(arg instanceof ServletResponse)
+                    && !(arg instanceof InputStreamSource)
+                    && !(arg instanceof InputStream))
+                    && !(arg instanceof OutputStream))
                 .collect(Collectors.toList());
 
             Optional<HttpServletRequest> requestOpt = SpringContext.getRequest();

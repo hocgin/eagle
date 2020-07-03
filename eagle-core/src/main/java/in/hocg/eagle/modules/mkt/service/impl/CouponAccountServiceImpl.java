@@ -16,6 +16,7 @@ import in.hocg.eagle.modules.mkt.service.CouponAccountService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
 import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.utils.ValidUtils;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,14 @@ public class CouponAccountServiceImpl extends AbstractServiceImpl<CouponAccountM
     private final CouponMapping couponMapping;
     private final CouponAccountMapping mapping;
     private final SNCode snCode;
+
+    @Override
+    @ApiOperation("查询我的优惠券 - 用户优惠券")
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<CouponAccountComplexVo> pagingMyCoupon(CouponAccountPagingQo qo) {
+        qo.setAccountId(qo.getUserId());
+        return this.paging(qo);
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

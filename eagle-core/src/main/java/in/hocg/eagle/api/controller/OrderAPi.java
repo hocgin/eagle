@@ -1,9 +1,10 @@
 package in.hocg.eagle.api.controller;
 
-import in.hocg.eagle.api.pojo.qo.SelfCouponPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.modules.oms.pojo.qo.order.CalcOrderQo;
+import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
@@ -19,15 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hocgin
  */
 @RestController
-//@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/api-mini/coupon")
-public class CouponApi {
-    private final AppService service;
+@RequestMapping("/api-mini/order")
+public class OrderAPi {
+    private final AppService appService;
 
-    @UseLogger("搜索个人优惠券")
-    @PostMapping("/_paging")
-    public Result paging(@Validated @RequestBody SelfCouponPagingApiQo qo) {
-        return Result.success(service.pagingSelfCoupon(qo));
+    @UseLogger("计算订单价格")
+    @PostMapping("/calc")
+    public Result<CalcOrderVo> calcOrder(@Validated @RequestBody CalcOrderQo qo) {
+        return Result.success(appService.calcOrder(qo));
     }
 }

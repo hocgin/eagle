@@ -12,6 +12,6 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SelfOrderPagingApiQo extends PageRo {
+public class MyOrderPagingApiQo extends PageRo {
 
 }

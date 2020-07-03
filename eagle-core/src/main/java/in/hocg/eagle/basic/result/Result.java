@@ -1,25 +1,20 @@
 package in.hocg.eagle.basic.result;
 
-import com.sun.webkit.network.URLs;
 import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.UrlUtils;
 import in.hocg.eagle.utils.string.JsonUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.Resource;
+import org.springframework.http.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Objects;
+import java.net.URI;
 
 /**
  * @author hocgin
@@ -94,55 +89,67 @@ public class Result<T> implements Serializable {
         return ResponseEntity.notFound().build();
     }
 
-    public static ResponseEntity<InputStreamResource> stream(InputStream is) {
-        if (Objects.isNull(is)) {
-            return Result.notFound();
-        }
+    public static <T> ResponseEntity download(T t, String filename) {
+        Resource resource = Result.asResource(t);
 
         return ResponseEntity
             .ok()
             .headers(new HttpHeaders() {{
-                add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
-                add(HttpHeaders.PRAGMA, "no-cache");
-                add(HttpHeaders.EXPIRES, "0");
-            }})
-            .contentType(MediaType.parseMediaType("application/octet-stream"))
-            .body(new InputStreamResource(is));
-    }
-
-    public static ResponseEntity<FileSystemResource> file(File file) {
-        if (Objects.isNull(file) || !file.exists()) {
-            return Result.notFound();
-        }
-
-        return ResponseEntity
-            .ok()
-            .headers(new HttpHeaders() {{
-                add(HttpHeaders.CONTENT_DISPOSITION, "attachment;fileName=" + LangUtils.getOrDefault(file.getName(), "Unknown"));
-                add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
-                add(HttpHeaders.PRAGMA, "no-cache");
-                add(HttpHeaders.EXPIRES, "0");
+                setContentDisposition(ContentDisposition.builder("attachment").filename(filename).build());
+                setCacheControl(CacheControl.noCache());
+                setPragma("no-cache");
+                setExpires(0L);
             }})
             .contentType(MediaType.APPLICATION_OCTET_STREAM)
-            .body(new FileSystemResource(file));
+            .body(resource);
     }
 
-    public static ResponseEntity<InputStreamResource> url(String url) {
-        try {
-            return Result.url(URLs.newURL(url));
-        } catch (MalformedURLException e) {
-            throw ServiceException.wrap("非法链接");
-        }
+    public static <T> ResponseEntity download(T t) {
+        return Result.download(t, null);
     }
 
-    public static ResponseEntity<InputStreamResource> url(URL url) {
-        if (Objects.isNull(url)) {
-            return Result.notFound();
+    public static <T> ResponseEntity preview(T t) {
+        return Result.preview(t, null);
+    }
+
+    public static <T> ResponseEntity preview(T t, MediaType mediaType) {
+        Resource resource = Result.asResource(t);
+
+        return ResponseEntity
+            .ok()
+            .headers(new HttpHeaders() {{
+                setContentDisposition(ContentDisposition.builder("inline").build());
+                setCacheControl(CacheControl.noCache());
+                setPragma("no-cache");
+                setExpires(0L);
+            }})
+            .contentType(mediaType)
+            .body(resource);
+    }
+
+    private static <T> Resource asResource(T t) {
+        Resource resource;
+        if (t instanceof InputStream) {
+            resource = new InputStreamResource((InputStream) t);
+        } else if (t instanceof Resource) {
+            resource = (Resource) t;
+        } else if (t instanceof File) {
+            resource = new FileSystemResource((File) t);
+        } else if (t instanceof URI || t instanceof String) {
+            URI uri;
+            if (t instanceof String) {
+                uri = URI.create(((String) t));
+            } else {
+                uri = (URI) t;
+            }
+            try {
+                resource = new InputStreamResource(UrlUtils.toInputStream(uri));
+            } catch (IOException e) {
+                throw ServiceException.wrap("读取链接异常");
+            }
+        } else {
+            throw new UnsupportedOperationException();
         }
-        try {
-            return stream(UrlUtils.toInputStream(url));
-        } catch (IOException e) {
-            throw ServiceException.wrap("读取链接异常");
-        }
+        return resource;
     }
 }

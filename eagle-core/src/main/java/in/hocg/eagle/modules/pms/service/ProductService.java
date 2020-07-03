@@ -7,6 +7,8 @@ import in.hocg.eagle.modules.pms.pojo.qo.ProductCompleteQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
 import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +21,14 @@ import java.util.List;
  * @since 2020-03-10
  */
 public interface ProductService extends AbstractService<Product> {
+
+    @ApiOperation("查询正在销售的商品详情 - 商品")
+    @Transactional(rollbackFor = Exception.class)
+    ProductComplexVo getByShoppingAndId(Long id);
+
+    @ApiOperation("查询正在销售的商品 - 商品列表")
+    @Transactional(rollbackFor = Exception.class)
+    IPage<ProductComplexVo> pagingByShopping(ProductPagingQo qo);
 
     /**
      * 新增商品

@@ -5,12 +5,12 @@ import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by hocgin on 2020/3/14.
@@ -19,16 +19,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author hocgin
  */
 @Controller
-//@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api-mini")
-public class IndexApi {
+public class IndexAPi {
     private final AppService service;
 
     @UseLogger("获取用户头像")
-    @GetMapping("/account/{username}/avatar")
-    public ResponseEntity<InputStreamResource> getAvatarUrl(@PathVariable String username) {
-        return Result.url(service.getAvatarUrlByUsername(username).orElse(null));
+    @ResponseBody
+    @GetMapping("/account/{username}.avatar")
+    public ResponseEntity getAvatarUrl(@PathVariable String username) {
+        return Result.download(service.getAvatarUrlByUsername(username).orElse(null));
     }
 
 }

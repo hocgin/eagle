@@ -1,10 +1,9 @@
 package in.hocg.eagle.api.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.api.pojo.qo.ProductPagingApiQo;
+import in.hocg.eagle.api.pojo.qo.ShoppingProductPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
-import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import lombok.RequiredArgsConstructor;
@@ -19,24 +18,21 @@ import org.springframework.web.bind.annotation.*;
  * @author hocgin
  */
 @RestController
-//@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api-mini/product")
-public class ProductApi {
+public class ProductAPi {
     private final AppService appService;
 
     @UseLogger("搜索商品")
     @PostMapping("/_paging")
-    public Result<IPage<ProductComplexVo>> paging(@Validated @RequestBody ProductPagingApiQo qo) {
-        return Result.success(appService.pagingProduct(qo));
+    public Result<IPage<ProductComplexVo>> pagingByShopping(@Validated @RequestBody ShoppingProductPagingApiQo qo) {
+        return Result.success(appService.pagingByShopping(qo));
     }
 
     @UseLogger("商品详情")
     @GetMapping("/{id:\\d+}")
-    public Result<ProductComplexVo> selectOne(@PathVariable Long id) {
-        final IdRo qo = new IdRo();
-        qo.setId(id);
-        return Result.success(appService.getProductById(qo));
+    public Result<ProductComplexVo> getByShoppingAndId(@PathVariable Long id) {
+        return Result.success(appService.getByShoppingAndId(id));
     }
 
 }

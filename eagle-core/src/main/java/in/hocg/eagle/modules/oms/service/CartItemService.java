@@ -7,6 +7,8 @@ import in.hocg.eagle.modules.oms.entity.CartItem;
 import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemPagingQo;
 import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemSaveQo;
 import in.hocg.eagle.modules.oms.pojo.vo.cart.CartItemComplexVo;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -20,7 +22,17 @@ public interface CartItemService extends AbstractService<CartItem> {
 
     void saveOne(CartItemSaveQo qo);
 
-    void deleteOne(IdRo qo);
+    @ApiOperation("删除我的购物车项 - 购物车")
+    @Transactional(rollbackFor = Exception.class)
+    void deleteMyCartItem(IdRo qo);
+
+    @ApiOperation("查询我的购物车 - 购物车")
+    @Transactional(rollbackFor = Exception.class)
+    IPage<CartItemComplexVo> pagingMyCartItem(CartItemPagingQo qo);
 
     IPage<CartItemComplexVo> paging(CartItemPagingQo qo);
+
+    void insertMyCartItem(CartItemSaveQo qo);
+
+    void updateMyCartItem(CartItemSaveQo qo);
 }

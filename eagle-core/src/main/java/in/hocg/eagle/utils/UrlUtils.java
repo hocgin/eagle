@@ -4,6 +4,7 @@ import lombok.experimental.UtilityClass;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 
 /**
@@ -14,6 +15,10 @@ import java.net.URL;
  */
 @UtilityClass
 public class UrlUtils {
+
+    public InputStream toInputStream(URI uri) throws IOException {
+        return UrlUtils.toInputStream(uri.toURL());
+    }
 
     public InputStream toInputStream(URL url) throws IOException {
         return url.openStream();

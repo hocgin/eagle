@@ -41,6 +41,7 @@ import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.compare.EntityCompare;
 import in.hocg.eagle.utils.compare.FieldChangeDto;
+import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -78,6 +79,46 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     private final OrderMapping mapping;
     private final ChangeLogService changeLogService;
     private final SNCode snCode;
+
+    @Override
+    @ApiOperation("取消订单 - 我的订单")
+    @Transactional(rollbackFor = Exception.class)
+    public void cancelMyOrder(CancelOrderQo qo) {
+        final Long id = qo.getId();
+        ValidUtils.notNull(id, "订单信息不存在");
+        final Order order = this.getById(id);
+        ValidUtils.isTrue(LangUtils.equals(order.getAccountId(), qo.getUserId()), "非订单所有人，操作失败");
+        this.cancelOrder(qo);
+    }
+
+    @Override
+    @ApiOperation("订单详情 - 我的订单")
+    @Transactional(rollbackFor = Exception.class)
+    public OrderComplexVo getMyOrderById(IdRo qo) {
+        final Long orderId = qo.getId();
+        final Long userId = qo.getUserId();
+        final OrderComplexVo result = this.selectOne(orderId);
+        ValidUtils.isTrue(LangUtils.equals(result.getAccountId(), userId), "非订单拥有人");
+        return result;
+    }
+
+    @Override
+    @ApiOperation("确认收货 - 我的订单")
+    @Transactional(rollbackFor = Exception.class)
+    public void confirmMyOrder(ConfirmOrderQo qo) {
+        final Order order = this.getById(qo.getId());
+        ValidUtils.notNull(order, "未找到订单");
+        ValidUtils.isTrue(LangUtils.equals(order.getAccountId(), qo.getUserId()), "非订单所有人，操作失败");
+        this.confirmOrder(qo);
+    }
+
+    @Override
+    @ApiOperation("分页查询 - 我的订单")
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<OrderComplexVo> pagingMyOrder(OrderPagingQo qo) {
+        qo.setAccountId(qo.getUserId());
+        return this.paging(qo);
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -154,7 +195,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createOrder(CreateOrderQo qo) {
+    public void createMyOrder(CreateOrderQo qo) {
         final Long currentUserId = qo.getUserId();
         final CalcOrderVo calcResult = calcOrder(qo);
         final List<CalcOrderVo.DiscountInfo> discounts = calcResult.getDiscounts();

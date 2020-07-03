@@ -15,11 +15,12 @@ import in.hocg.eagle.modules.oms.pojo.vo.cart.CartItemComplexVo;
 import in.hocg.eagle.modules.oms.service.CartItemService;
 import in.hocg.eagle.modules.pms.api.ProductAPI;
 import in.hocg.eagle.modules.pms.api.SkuAPI;
-import in.hocg.eagle.modules.pms.api.vo.SkuComplexVo;
 import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.SkuComplexVo;
 import in.hocg.eagle.modules.ums.api.AccountAPI;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -83,9 +84,34 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteOne(IdRo qo) {
+    public void deleteMyCartItem(IdRo qo) {
         final Long id = qo.getId();
+        final CartItem item = getById(id);
+        ValidUtils.isTrue(LangUtils.equals(item.getAccountId(), qo.getUserId()), "操作失败");
         this.removeById(id);
+    }
+
+    @Override
+    @ApiOperation("查询我的购物车 - 购物车")
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<CartItemComplexVo> pagingMyCartItem(CartItemPagingQo qo) {
+        qo.setAccountId(qo.getUserId());
+        return this.paging(qo);
+    }
+
+    @Override
+    @ApiOperation("新增我的购物车项 - 购物车")
+    @Transactional(rollbackFor = Exception.class)
+    public void insertMyCartItem(CartItemSaveQo qo) {
+        this.saveOne(qo);
+
+    }
+
+    @Override
+    @ApiOperation("更新我的购物车项 - 购物车")
+    @Transactional(rollbackFor = Exception.class)
+    public void updateMyCartItem(CartItemSaveQo qo) {
+        this.saveOne(qo);
     }
 
     @Override

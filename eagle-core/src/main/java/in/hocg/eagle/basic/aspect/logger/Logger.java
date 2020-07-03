@@ -2,13 +2,18 @@ package in.hocg.eagle.basic.aspect.logger;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.ext.security.User;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.modules.com.entity.RequestLog;
+import in.hocg.eagle.utils.string.JsonUtils;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -74,7 +79,7 @@ public class Logger {
     public RequestLog asRequestLog() {
         final RequestLog entity = new RequestLog();
         entity.setArgs(JSON.toJSONString(args));
-        entity.setRet(JSON.toJSONString(ret));
+        entity.setRet(this.getRetStr());
         entity.setSource(source);
         entity.setClientIp(clientIp);
         entity.setCreatedAt(createdAt);
@@ -91,5 +96,18 @@ public class Logger {
             entity.setCreator(currentUser.getId());
         }
         return entity;
+    }
+
+    public String getRetStr() {
+        String retStr;
+        if ((ret instanceof InputStream) || (ret instanceof OutputStream)) {
+            retStr = "File Stream";
+        } else if (ret instanceof ResponseEntity && ((ResponseEntity)ret).getBody() instanceof Resource) {
+            retStr = "Resource Stream";
+        }else {
+            retStr = JsonUtils.toJSONString(ret, true)
+                .replaceAll("\n", "\n║ ");
+        }
+        return retStr;
     }
 }

@@ -27,7 +27,7 @@ public interface OrderRefundApplyService extends AbstractService<OrderRefundAppl
      *
      * @param qo
      */
-    void applyRefund(RefundApplyQo qo);
+    void createMyApplyRefund(RefundApplyQo qo);
 
     IPage<OrderRefundApplyComplexVo> paging(OrderRefundApplyPagingQo qo);
 

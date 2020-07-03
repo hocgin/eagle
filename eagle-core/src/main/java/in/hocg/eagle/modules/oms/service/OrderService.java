@@ -8,6 +8,8 @@ import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -18,6 +20,22 @@ import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
  * @since 2020-03-14
  */
 public interface OrderService extends AbstractService<Order> {
+
+    @ApiOperation("取消订单 - 我的订单")
+    @Transactional(rollbackFor = Exception.class)
+    void cancelMyOrder(CancelOrderQo qo);
+
+    @ApiOperation("订单详情 - 我的订单")
+    @Transactional(rollbackFor = Exception.class)
+    OrderComplexVo getMyOrderById(IdRo qo);
+
+    @ApiOperation("确认收货 - 我的订单")
+    @Transactional(rollbackFor = Exception.class)
+    void confirmMyOrder(ConfirmOrderQo qo);
+
+    @ApiOperation("分页查询 - 我的订单")
+    @Transactional(rollbackFor = Exception.class)
+    IPage<OrderComplexVo> pagingMyOrder(OrderPagingQo qo);
 
     /**
      * 计算订单
@@ -32,7 +50,7 @@ public interface OrderService extends AbstractService<Order> {
      *
      * @param qo
      */
-    void createOrder(CreateOrderQo qo);
+    void createMyOrder(CreateOrderQo qo);
 
     /**
      * 取消订单

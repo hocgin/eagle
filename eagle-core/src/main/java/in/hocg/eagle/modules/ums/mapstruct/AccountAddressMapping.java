@@ -16,6 +16,7 @@ import org.mapstruct.Mapping;
 public interface AccountAddressMapping {
 
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "accountId", ignore = true)
     AccountAddress asAccountAddress(AccountAddressSaveQo qo);
 

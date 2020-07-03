@@ -22,7 +22,6 @@ import javax.validation.constraints.NotBlank;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class AccountAddressSaveQo extends BaseRo {
-    private Long id;
     @NotBlank(groups = {Insert.class}, message = "收件人姓名不能为空")
     @ApiModelProperty("收件人姓名")
     private String name;

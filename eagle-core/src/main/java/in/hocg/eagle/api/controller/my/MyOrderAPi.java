@@ -1,13 +1,12 @@
-package in.hocg.eagle.api.controller;
+package in.hocg.eagle.api.controller.my;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.api.pojo.qo.SelfOrderPagingApiQo;
+import in.hocg.eagle.api.pojo.qo.MyOrderPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
-import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -16,35 +15,29 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by hocgin on 2020/3/14.
+ * Created by hocgin on 2020/7/3.
  * email: hocgin@gmail.com
  *
  * @author hocgin
  */
 @RestController
-//@PreAuthorize(AuthorizeConstant.IS_MINI_EAGLE)
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/api-mini/order")
-public class OrderApi {
-    private final AppService appService;
+@RequestMapping("/api-mini/my/order")
+public class MyOrderAPi {
+    private final AppService service;
 
-    @UseLogger("计算订单价格")
-    @PostMapping("/calc")
-    public Result<CalcOrderVo> calcOrder(@Validated @RequestBody CalcOrderQo qo) {
-        return Result.success(appService.calcOrder(qo));
-    }
 
     @UseLogger("创建订单")
     @PostMapping("/create")
     public Result<Void> createOrder(@Validated @RequestBody CreateOrderQo qo) {
-        appService.createOrder(qo);
+        service.createMyOrder(qo);
         return Result.success();
     }
 
     @UseLogger("申请退款")
     @PostMapping("/refund")
     public Result<Void> applyRefund(@Validated @RequestBody RefundApplyQo qo) {
-        appService.applyRefund(qo);
+        service.createMyApplyRefund(qo);
         return Result.success();
     }
 
@@ -52,21 +45,21 @@ public class OrderApi {
     @PostMapping("/cancel")
     @Transactional(rollbackFor = Exception.class)
     public Result<Void> cancelOrder(@Validated @RequestBody CancelOrderQo qo) {
-        appService.cancelOrder(qo);
+        service.cancelMyOrder(qo);
         return Result.success();
     }
 
     @UseLogger("确认订单")
     @PostMapping("/confirm")
     public Result<Void> confirmOrder(@Validated @RequestBody ConfirmOrderQo qo) {
-        appService.confirmOrder(qo);
+        service.confirmMyOrder(qo);
         return Result.success();
     }
 
     @UseLogger("支付订单")
     @PostMapping("/pay")
-    public Result payOrder(@Validated @RequestBody PayOrderQo qo) throws Throwable {
-        return Result.success(appService.payOrder(qo));
+    public Result payOrder(@Validated @RequestBody PayOrderQo qo) {
+        return Result.success(service.payOrder(qo));
     }
 
     @UseLogger("订单详情")
@@ -74,12 +67,12 @@ public class OrderApi {
     public Result<OrderComplexVo> selectOne(@PathVariable("id") Long id) {
         final IdRo qo = new IdRo();
         qo.setId(id);
-        return Result.success(appService.getMyOrderById(qo));
+        return Result.success(service.getMyOrderById(qo));
     }
 
     @UseLogger("搜索个人订单")
     @PostMapping("/_paging")
-    public Result<IPage<OrderComplexVo>> paging(@Validated @RequestBody SelfOrderPagingApiQo qo) {
-        return Result.success(appService.pagingMyOrder(qo));
+    public Result<IPage<OrderComplexVo>> paging(@Validated @RequestBody MyOrderPagingApiQo qo) {
+        return Result.success(service.pagingMyOrder(qo));
     }
 }
