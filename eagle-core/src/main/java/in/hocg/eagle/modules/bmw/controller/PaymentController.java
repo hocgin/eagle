@@ -2,8 +2,8 @@ package in.hocg.eagle.modules.bmw.controller;
 
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
-import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
 import in.hocg.eagle.modules.bmw.api.ro.GoPayRo;
+import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
 import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.bmw.service.PaymentService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-@RequestMapping("/payment")
+@RequestMapping("/api/payment")
 public class PaymentController {
     private final PaymentService paymentService;
 
