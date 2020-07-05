@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * <p>
@@ -83,6 +84,13 @@ public class AccountAddressServiceImpl extends AbstractServiceImpl<AccountAddres
         ValidUtils.notNull(accountAddress, "未找到收货地址");
         ValidUtils.isTrue(LangUtils.equals(accountAddress.getAccountId(), qo.getUserId()), "操作失败");
         this.deleteOne(qo);
+    }
+
+    @Override
+    @ApiOperation("获取默认收货地址 - 收货地址")
+    @Transactional(rollbackFor = Exception.class)
+    public Optional<AccountAddressComplexVo> getDefaultByUserId(Long userId) {
+        return baseMapper.getDefaultByUserId(userId).map(this::convertComplex);
     }
 
     @Override

@@ -8,6 +8,14 @@
     WHERE account_id = #{accountId}
   </update>
   <select id="paging" resultType="in.hocg.eagle.modules.ums.entity.AccountAddress">
-    SELECT uaa.* FROM ums_account_address uaa
+    SELECT uaa.*
+    FROM ums_account_address uaa
+  </select>
+  <select id="getDefaultByUserId" resultType="in.hocg.eagle.modules.ums.entity.AccountAddress">
+    SELECT uaa.*
+    FROM ums_account_address uaa
+    WHERE uaa.account_id = #{userId}
+    AND uaa.is_default = 1
+    LIMIT 1
   </select>
 </mapper>

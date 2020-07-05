@@ -28,7 +28,7 @@ public class IndexAPi {
     @ResponseBody
     @GetMapping("/account/{username}.avatar")
     public ResponseEntity getAvatarUrl(@PathVariable String username) {
-        return Result.download(service.getAvatarUrlByUsername(username).orElse(null));
+        return Result.preview(service.getAvatarUrlByUsername(username).orElse(null));
     }
 
 }

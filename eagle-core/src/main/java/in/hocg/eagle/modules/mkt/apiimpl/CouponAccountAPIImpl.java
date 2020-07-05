@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by hocgin on 2020/6/30.
@@ -21,8 +22,8 @@ public class CouponAccountAPIImpl implements CouponAccountAPI {
     private final CouponAccountService service;
 
     @Override
-    public CouponAccountComplexVo selectOne(Long userCouponId) {
-        return service.selectOne(userCouponId);
+    public CouponAccountComplexVo selectOne(Long userId) {
+        return service.selectOne(userId);
     }
 
     @Override
@@ -33,5 +34,10 @@ public class CouponAccountAPIImpl implements CouponAccountAPI {
     @Override
     public void updateUnusedStatus(Long accountCouponId) {
         service.updateUnusedStatus(accountCouponId);
+    }
+
+    @Override
+    public List<CouponAccountComplexVo> selectListByAccountId(Long userId) {
+        return service.selectListByAccountId(userId);
     }
 }

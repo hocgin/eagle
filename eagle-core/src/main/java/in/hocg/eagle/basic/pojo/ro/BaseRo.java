@@ -2,12 +2,12 @@ package in.hocg.eagle.basic.pojo.ro;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import in.hocg.eagle.basic.exception.ServiceException;
-import in.hocg.eagle.basic.result.ResultCode;
 import in.hocg.eagle.basic.ext.security.SecurityContext;
 import in.hocg.eagle.basic.ext.security.User;
+import in.hocg.eagle.basic.result.ResultCode;
 import in.hocg.eagle.utils.DateUtils;
 import lombok.Getter;
+import org.springframework.security.authentication.AuthenticationServiceException;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -43,7 +43,7 @@ public abstract class BaseRo implements Serializable {
         if (userOptional.isPresent()) {
             return (T) userOptional.get().getId();
         } else {
-            throw ServiceException.wrap(ResultCode.AUTHENTICATION_ERROR.getMessage());
+            throw new AuthenticationServiceException(ResultCode.AUTHENTICATION_ERROR.getMessage());
         }
     }
 

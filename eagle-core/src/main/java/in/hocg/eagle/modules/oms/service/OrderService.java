@@ -6,6 +6,7 @@ import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
+import in.hocg.eagle.modules.oms.pojo.vo.order.AvailableDiscountVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import io.swagger.annotations.ApiOperation;
@@ -50,7 +51,7 @@ public interface OrderService extends AbstractService<Order> {
      *
      * @param qo
      */
-    void createMyOrder(CreateOrderQo qo);
+    String createMyOrder(CreateOrderQo qo);
 
     /**
      * 取消订单
@@ -120,4 +121,6 @@ public interface OrderService extends AbstractService<Order> {
      */
     @Deprecated
     GoPayVo goPay(PayOrderQo qo);
+
+    AvailableDiscountVo listAvailableCouponsByOrder(CalcOrderQo qo);
 }

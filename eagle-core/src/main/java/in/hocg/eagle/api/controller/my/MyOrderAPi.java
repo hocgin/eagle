@@ -27,11 +27,16 @@ public class MyOrderAPi {
     private final AppService service;
 
 
+    @UseLogger("根据订单获取优惠券信息 - 个人优惠券")
+    @PostMapping("/coupon")
+    public Result listAvailableCouponsByOrder(@Validated @RequestBody CalcOrderQo qo) {
+        return Result.success(service.listAvailableCouponsByOrder(qo));
+    }
+
     @UseLogger("创建订单")
     @PostMapping("/create")
-    public Result<Void> createOrder(@Validated @RequestBody CreateOrderQo qo) {
-        service.createMyOrder(qo);
-        return Result.success();
+    public Result<String> createOrder(@Validated @RequestBody CreateOrderQo qo) {
+        return Result.success(service.createMyOrder(qo));
     }
 
     @UseLogger("申请退款")
@@ -64,15 +69,15 @@ public class MyOrderAPi {
 
     @UseLogger("订单详情")
     @GetMapping("/{id}")
-    public Result<OrderComplexVo> selectOne(@PathVariable("id") Long id) {
+    public Result<OrderComplexVo> getMyOrder(@PathVariable("id") Long id) {
         final IdRo qo = new IdRo();
         qo.setId(id);
-        return Result.success(service.getMyOrderById(qo));
+        return Result.success(service.getMyOrder(qo));
     }
 
     @UseLogger("搜索个人订单")
     @PostMapping("/_paging")
-    public Result<IPage<OrderComplexVo>> paging(@Validated @RequestBody MyOrderPagingApiQo qo) {
+    public Result<IPage<OrderComplexVo>> pagingMyOrder(@Validated @RequestBody MyOrderPagingApiQo qo) {
         return Result.success(service.pagingMyOrder(qo));
     }
 }

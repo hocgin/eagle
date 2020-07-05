@@ -15,6 +15,7 @@ import in.hocg.eagle.modules.mkt.pojo.vo.CouponComplexVo;
 import in.hocg.eagle.modules.mkt.service.CouponAccountService;
 import in.hocg.eagle.modules.mkt.service.CouponService;
 import in.hocg.eagle.modules.ums.service.AccountService;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -97,6 +99,12 @@ public class CouponAccountServiceImpl extends AbstractServiceImpl<CouponAccountM
         final CouponAccount updated = new CouponAccount();
         updated.setId(accountCouponId);
         updated.setUseStatus(CouponUseStatus.Unused.getCode());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<CouponAccountComplexVo> selectListByAccountId(Long userId) {
+        return LangUtils.toList(this.lambdaQuery().eq(CouponAccount::getAccountId, userId).list(), this::convertComplex);
     }
 
     private CouponAccountComplexVo convertComplex(CouponAccount entity) {

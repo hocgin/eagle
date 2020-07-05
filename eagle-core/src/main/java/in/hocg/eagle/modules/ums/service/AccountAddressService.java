@@ -9,6 +9,8 @@ import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressSaveQo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.address.AccountAddressComplexVo;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 /**
  * <p>
  * [用户模块] 收货地址表 服务类
@@ -34,4 +36,6 @@ public interface AccountAddressService extends AbstractService<AccountAddress> {
     IPage<AccountAddressComplexVo> pagingMyAddress(AccountAddressPageQo qo);
 
     void deleteMyAddress(IdRo qo);
+
+    Optional<AccountAddressComplexVo> getDefaultByUserId(Long userId);
 }

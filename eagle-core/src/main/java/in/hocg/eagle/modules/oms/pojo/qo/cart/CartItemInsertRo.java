@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CartItemSaveQo extends BaseRo {
+public class CartItemInsertRo extends BaseRo {
     @NotNull(groups = {Insert.class, Update.class}, message = "请选择商品")
     @ApiModelProperty("SKU ID")
     private Long skuId;

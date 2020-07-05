@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * <p>
@@ -34,4 +35,6 @@ public interface CouponAccountService extends AbstractService<CouponAccount> {
     IPage<CouponAccountComplexVo> paging(CouponAccountPagingQo qo);
 
     void updateUnusedStatus(Long accountCouponId);
+
+    List<CouponAccountComplexVo> selectListByAccountId(Long userId);
 }

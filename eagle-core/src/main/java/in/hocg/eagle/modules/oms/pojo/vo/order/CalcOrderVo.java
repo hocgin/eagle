@@ -5,6 +5,7 @@ import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.constant.datadict.DiscountType;
 import in.hocg.eagle.basic.pojo.KeyValue;
+import in.hocg.eagle.modules.ums.pojo.vo.account.address.AccountAddressComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -22,14 +23,17 @@ import java.util.List;
 @Data
 public class CalcOrderVo {
     @ApiModelProperty("商品项")
-    private List<OrderItem> orderItems = Lists.newArrayList();
+    private List<OrderItem> items = Collections.emptyList();
     @ApiModelProperty("订单总价")
     private BigDecimal totalAmount;
     @ApiModelProperty("应付金额")
     private BigDecimal payAmount;
+    @ApiModelProperty("默认收货地址")
+    private AccountAddressComplexVo defaultAddress;
 
     @ApiModelProperty("优惠明细")
     private List<DiscountInfo> discounts = Collections.emptyList();
+
 
     @Data
     @Accessors(chain = true)
@@ -54,6 +58,8 @@ public class CalcOrderVo {
         private BigDecimal price;
         @ApiModelProperty("优惠券分解优惠的金额")
         private BigDecimal couponAmount;
+        @ApiModelProperty("原总金额")
+        private BigDecimal totalAmount;
         @ApiModelProperty("优惠后的金额")
         private BigDecimal realAmount;
     }

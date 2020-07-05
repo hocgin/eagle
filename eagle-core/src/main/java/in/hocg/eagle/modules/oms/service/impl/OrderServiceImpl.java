@@ -25,10 +25,12 @@ import in.hocg.eagle.modules.oms.helper.order.GeneralOrder;
 import in.hocg.eagle.modules.oms.helper.order.GeneralProduct;
 import in.hocg.eagle.modules.oms.helper.order.discount.DiscountHelper;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.Coupon;
+import in.hocg.eagle.modules.oms.helper.order.modal.Discount;
 import in.hocg.eagle.modules.oms.mapper.OrderMapper;
 import in.hocg.eagle.modules.oms.mapstruct.OrderMapping;
 import in.hocg.eagle.modules.oms.pojo.dto.order.OrderItemDto;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
+import in.hocg.eagle.modules.oms.pojo.vo.order.AvailableDiscountVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import in.hocg.eagle.modules.oms.service.OrderItemService;
@@ -37,6 +39,7 @@ import in.hocg.eagle.modules.pms.api.ProductAPI;
 import in.hocg.eagle.modules.pms.api.SkuAPI;
 import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import in.hocg.eagle.modules.pms.api.vo.SkuComplexVo;
+import in.hocg.eagle.modules.ums.api.AccountAddressAPI;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.compare.EntityCompare;
@@ -56,6 +59,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 /**
@@ -75,6 +79,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     private final OrderItemService orderItemService;
     private final PaymentAPI paymentApi;
     private final CouponAccountAPI couponAccountService;
+    private final AccountAddressAPI accountAddressAPI;
     private final SkuAPI skuService;
     private final OrderMapping mapping;
     private final ChangeLogService changeLogService;
@@ -124,32 +129,10 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     @Transactional(rollbackFor = Exception.class)
     public CalcOrderVo calcOrder(CalcOrderQo qo) {
         final CalcOrderVo result = new CalcOrderVo();
-
-        // 1. 检查商品 和 检查库存
-        final List<GeneralProduct> products = qo.getItems().stream()
-            .map(item -> {
-                final SkuComplexVo sku = skuService.selectOne(item.getSkuId());
-                ValidUtils.notNull(sku, "商品规格错误");
-                final Long productId = sku.getProductId();
-                final ProductComplexVo product = productService.selectOne(productId);
-                ValidUtils.notNull(product, "未找到商品");
-                ValidUtils.isTrue(DeleteStatus.Off.eq(product.getDeleteStatus()), "未找到商品");
-                ValidUtils.isFalse(LangUtils.equals(product.getPublishStatus(), ProductPublishStatus.SoldOut.getCode()), "商品已下架");
-                return new GeneralProduct(sku.getPrice(), item.getQuantity())
-                    .setProductSpecData(sku.getSpecData())
-                    .setProductCategoryId(product.getProductCategoryId())
-                    .setProductPic(sku.getImageUrl())
-                    .setProductSkuId(sku.getId())
-                    .setProductSkuCode(sku.getSkuCode())
-                    .setProductName(product.getTitle())
-                    .setProductId(product.getId());
-            })
-            .collect(Collectors.toList());
-
-        @NonNull final Long accountId = qo.getUserId();
-        final LocalDateTime createdAt = qo.getCreatedAt();
+        final Long accountId = qo.getUserId();
         final Long userCouponId = qo.getUserCouponId();
-        final GeneralOrder generalOrder = new GeneralOrder(products, accountId, OrderSourceType.APP, createdAt);
+
+        final GeneralOrder generalOrder = this.createOrder(qo);
 
         if (Objects.nonNull(userCouponId)) {
             CouponAccountComplexVo couponVo = couponAccountService.selectOne(userCouponId);
@@ -165,6 +148,8 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
                 .setDiscountAmount(coupon.getDiscountTotalAmount()));
             result.setDiscounts(discounts);
         }
+        result.setDefaultAddress(accountAddressAPI.getDefaultByUserId(accountId).orElse(null));
+
         final BigDecimal totalAmount = generalOrder.getPreDiscountTotalAmount();
         final BigDecimal payAmount = generalOrder.getPreferentialAmount();
 
@@ -181,10 +166,11 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
             .setCouponAmount(item.getDiscountPrice())
             .setRealAmount(item.getPreferentialPrice()));
 
-        result.setOrderItems(orderItems.parallelStream()
+        result.setItems(orderItems.parallelStream()
             .map((item) -> {
                 final String specData = item.getProductSpecData();
-                return mapping.asCalcOrderVoOrderItem(item)
+                final CalcOrderVo.OrderItem itemResult = mapping.asCalcOrderVoOrderItem(item);
+                return itemResult.setTotalAmount(itemResult.getPrice().multiply(new BigDecimal(itemResult.getQuantity())))
                     .setSpec(JSON.parseArray(specData, KeyValue.class));
             })
             .collect(Collectors.toList()));
@@ -195,9 +181,9 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createMyOrder(CreateOrderQo qo) {
+    public String createMyOrder(CreateOrderQo qo) {
         final Long currentUserId = qo.getUserId();
-        final CalcOrderVo calcResult = calcOrder(qo);
+        final CalcOrderVo calcResult = this.calcOrder(qo);
         final List<CalcOrderVo.DiscountInfo> discounts = calcResult.getDiscounts();
 
         final CreateOrderQo.Receiver receiver = qo.getReceiver();
@@ -229,7 +215,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
             for (CalcOrderVo.DiscountInfo discount : discounts) {
                 final DiscountType discountType = CodeEnum.ofThrow(discount.getType(), DiscountType.class);
                 switch (discountType) {
-                    case Coupon:{
+                    case Coupon: {
                         final Long userCouponId = discount.getId();
                         final BigDecimal discountAmount = discount.getDiscountAmount();
                         order.setCouponAccountId(userCouponId);
@@ -247,7 +233,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         validInsert(order);
         final Long orderId = order.getId();
 
-        final List<CalcOrderVo.OrderItem> orderItems = calcResult.getOrderItems();
+        final List<CalcOrderVo.OrderItem> orderItems = calcResult.getItems();
         final List<OrderItem> orderItemList = orderItems.parallelStream().map(item -> new OrderItem()
             .setRealAmount(item.getRealAmount())
             .setProductSpecData(item.getSpecData())
@@ -278,6 +264,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         String notifyUrl = String.format("%s/api/order/async", configs.getHostname());
         final String tradeSn = paymentApi.createTrade(new CreateTradeRo(paymentAppSn, orderSn, totalAmount).setNotifyUrl(notifyUrl));
         this.updateById(new Order().setId(orderId).setTradeSn(tradeSn));
+        return tradeSn;
     }
 
     @Override
@@ -488,6 +475,33 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     }
 
     @Override
+    @ApiOperation("获取可用优惠券")
+    @Transactional(rollbackFor = Exception.class)
+    public AvailableDiscountVo listAvailableCouponsByOrder(CalcOrderQo qo) {
+        final Long userId = qo.getUserId();
+        final GeneralOrder generalOrder = this.createOrder(qo);
+        final List<CouponAccountComplexVo> couponComplexs = couponAccountService.selectListByAccountId(userId);
+        final List<Discount> allCoupon = couponComplexs.parallelStream().map(DiscountHelper::createCoupon).collect(Collectors.toList());
+
+        // 可用优惠信息
+        final List<Discount> usableDiscount = generalOrder.getUsableDiscount(allCoupon);
+        final BiFunction<Discount, Discount, Boolean> isSame = (coupon, discount) -> {
+            if (discount instanceof Coupon && coupon.id() == discount.id()) {
+                return true;
+            }
+            return false;
+        };
+
+        // 不可用优惠信息
+        final List<Discount> unusableDiscount = LangUtils.getMixed(allCoupon, usableDiscount, isSame);
+
+        final AvailableDiscountVo result = new AvailableDiscountVo();
+        result.setAvailableCoupon(usableDiscount.parallelStream().map(DiscountHelper::convertComplex).collect(Collectors.toList()));
+        result.setUnavailableCoupon(unusableDiscount.parallelStream().map(DiscountHelper::convertComplex).collect(Collectors.toList()));
+        return result;
+    }
+
+    @Override
     public boolean validUpdateById(Order entity) {
         final Long orderId = entity.getId();
         final Order oldOrder = getById(orderId);
@@ -496,5 +510,34 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
             Order::getId, Order::getCreatedAt, Order::getCreator, Order::getLastUpdatedAt, Order::getLastUpdater);
         changeLogService.updateLog(ChangeLogRefType.OrderLog, entity.getId(), changes);
         return super.validUpdateById(entity);
+    }
+
+    private GeneralOrder createOrder(CalcOrderQo qo) {
+        final Long accountId = qo.getUserId();
+        final LocalDateTime createdAt = qo.getCreatedAt();
+        final List<CalcOrderQo.Item> items = qo.getItems();
+
+        // 1. 检查商品
+        final List<GeneralProduct> products = items.stream()
+            .map(item -> {
+                final SkuComplexVo sku = skuService.selectOne(item.getSkuId());
+                ValidUtils.notNull(sku, "商品规格错误");
+                final Long productId = sku.getProductId();
+                final ProductComplexVo product = productService.selectOne(productId);
+                ValidUtils.notNull(product, "未找到商品");
+                ValidUtils.isTrue(DeleteStatus.Off.eq(product.getDeleteStatus()), "未找到商品");
+                ValidUtils.isFalse(LangUtils.equals(product.getPublishStatus(), ProductPublishStatus.SoldOut.getCode()), "商品已下架");
+                return new GeneralProduct(sku.getPrice(), item.getQuantity())
+                    .setProductSpecData(sku.getSpecData())
+                    .setProductCategoryId(product.getProductCategoryId())
+                    .setProductPic(sku.getImageUrl())
+                    .setProductSkuId(sku.getId())
+                    .setProductSkuCode(sku.getSkuCode())
+                    .setProductName(product.getTitle())
+                    .setProductId(product.getId());
+            })
+            .collect(Collectors.toList());
+
+        return new GeneralOrder(products, accountId, OrderSourceType.APP, createdAt);
     }
 }

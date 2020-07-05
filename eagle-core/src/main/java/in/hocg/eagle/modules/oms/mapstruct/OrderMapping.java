@@ -27,6 +27,7 @@ public interface OrderMapping {
     @Mapping(target = "orderItems", ignore = true)
     OrderComplexVo asOrderComplexVo(Order entity);
 
+    @Mapping(target = "totalAmount", ignore = true)
     @Mapping(target = "spec", ignore = true)
     @Mapping(target = "title", source = "dto.productName")
     @Mapping(target = "specData", source = "dto.productSpecData")
@@ -37,6 +38,7 @@ public interface OrderMapping {
     @Mapping(target = "imageUrl", source = "dto.productPic")
     CalcOrderVo.OrderItem asCalcOrderVoOrderItem(OrderItemDto dto);
 
+    @Mapping(target = "tradeSn", ignore = true)
     @Mapping(target = "lastUpdater", source = "")
     @Mapping(target = "orderStatus", source = "")
     @Mapping(target = "couponAccountId", ignore = true)
@@ -59,4 +61,5 @@ public interface OrderMapping {
     @Mapping(target = "autoConfirmDay", ignore = true)
     @Mapping(target = "accountId", ignore = true)
     Order asOrder(UpdateOrderQo qo);
+
 }

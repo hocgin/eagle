@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MyCouponAPi {
     private final AppService service;
 
-    @UseLogger("搜索个人优惠券")
+    @UseLogger("搜索个人优惠券 - 个人优惠券")
     @PostMapping("/_paging")
     public Result paging(@Validated @RequestBody MyCouponPagingApiQo qo) {
         return Result.success(service.pagingMyCoupon(qo));

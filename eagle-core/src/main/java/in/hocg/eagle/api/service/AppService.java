@@ -7,9 +7,11 @@ import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import in.hocg.eagle.modules.mkt.service.CouponAccountService;
-import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemSaveQo;
+import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemInsertRo;
+import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemUpdateRo;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.cart.CartItemComplexVo;
+import in.hocg.eagle.modules.oms.pojo.vo.order.AvailableDiscountVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import in.hocg.eagle.modules.oms.service.CartItemService;
@@ -54,7 +56,7 @@ public class AppService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public OrderComplexVo getMyOrderById(IdRo qo) {
+    public OrderComplexVo getMyOrder(IdRo qo) {
         return orderService.getMyOrderById(qo);
     }
 
@@ -99,8 +101,8 @@ public class AppService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void createMyOrder(CreateOrderQo qo) {
-        orderService.createMyOrder(qo);
+    public String createMyOrder(CreateOrderQo qo) {
+        return orderService.createMyOrder(qo);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -119,12 +121,12 @@ public class AppService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void insertMyCartItem(CartItemSaveQo qo) {
-        cartItemService.insertMyCartItem(qo);
+    public void insertMyCartItem(CartItemInsertRo ro) {
+        cartItemService.insertMyCartItem(ro);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void updateMyCartItem(CartItemSaveQo qo) {
+    public void updateMyCartItem(CartItemUpdateRo qo) {
         cartItemService.updateMyCartItem(qo);
     }
 
@@ -146,5 +148,9 @@ public class AppService {
     @Transactional(rollbackFor = Exception.class)
     public void deleteMyAddress(IdRo qo) {
         accountAddressService.deleteMyAddress(qo);
+    }
+
+    public AvailableDiscountVo listAvailableCouponsByOrder(CalcOrderQo qo) {
+        return orderService.listAvailableCouponsByOrder(qo);
     }
 }

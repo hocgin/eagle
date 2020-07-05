@@ -1,7 +1,6 @@
 package in.hocg.eagle.modules.oms.pojo.vo.order;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
@@ -15,6 +14,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -106,5 +106,5 @@ public class OrderComplexVo {
     private LocalDateTime createdAt;
 
     @ApiModelProperty("订单项")
-    private List<OrderItemComplexVo> orderItems = Lists.newArrayList();
+    private List<OrderItemComplexVo> orderItems = Collections.emptyList();
 }

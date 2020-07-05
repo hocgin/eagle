@@ -9,8 +9,10 @@ import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.modules.oms.entity.CartItem;
 import in.hocg.eagle.modules.oms.mapper.CartItemMapper;
 import in.hocg.eagle.modules.oms.mapstruct.CartItemMapping;
+import in.hocg.eagle.modules.oms.pojo.dto.cart.CartItemSaveDto;
+import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemInsertRo;
 import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemPagingQo;
-import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemSaveQo;
+import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemUpdateRo;
 import in.hocg.eagle.modules.oms.pojo.vo.cart.CartItemComplexVo;
 import in.hocg.eagle.modules.oms.service.CartItemService;
 import in.hocg.eagle.modules.pms.api.ProductAPI;
@@ -51,15 +53,21 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
             .eq(CartItem::getAccountId, accountId).oneOpt();
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void saveOne(CartItemSaveQo qo) {
-        final LocalDateTime createdAt = qo.getCreatedAt();
-        final Long userId = qo.getUserId();
-        final Long skuId = qo.getSkuId();
-        final Optional<CartItem> entityOpt = selectOneBySkuIdAndAccountId(skuId, userId);
+    /**
+     * 新增或更新购物车项
+     *
+     * @param dto
+     */
+    private void insertOrUpdate(CartItemSaveDto dto) {
+        final LocalDateTime createdAt = dto.getOperationAt();
+        final Long userId = dto.getOperatorId();
+        final Long skuId = dto.getSkuId();
+        final Integer quantity = dto.getQuantity();
+
+        final Optional<CartItem> entityOpt = this.selectOneBySkuIdAndAccountId(skuId, userId);
+
         CartItem entity = new CartItem();
-        entity.setQuantity(qo.getQuantity());
+        entity.setQuantity(quantity);
         if (entityOpt.isPresent()) {
             entity.setId(entityOpt.get().getId());
             entity.setLastUpdatedAt(createdAt);
@@ -100,18 +108,38 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
     }
 
     @Override
-    @ApiOperation("新增我的购物车项 - 购物车")
+    @ApiOperation("追加我的购物车项 - 购物车")
     @Transactional(rollbackFor = Exception.class)
-    public void insertMyCartItem(CartItemSaveQo qo) {
-        this.saveOne(qo);
+    public void insertMyCartItem(CartItemInsertRo qo) {
+        final LocalDateTime createdAt = qo.getCreatedAt();
+        final Long userId = qo.getUserId();
+        final Long skuId = qo.getSkuId();
+        final Integer quantity = qo.getQuantity();
 
+        final Optional<CartItem> entityOpt = this.selectOneBySkuIdAndAccountId(skuId, userId);
+        final CartItemSaveDto dto = new CartItemSaveDto()
+            .setSkuId(skuId)
+            .setQuantity(entityOpt.map(CartItem::getQuantity).orElse(0) + quantity)
+            .setOperatorId(userId)
+            .setOperationAt(createdAt);
+        this.insertOrUpdate(dto);
     }
 
     @Override
     @ApiOperation("更新我的购物车项 - 购物车")
     @Transactional(rollbackFor = Exception.class)
-    public void updateMyCartItem(CartItemSaveQo qo) {
-        this.saveOne(qo);
+    public void updateMyCartItem(CartItemUpdateRo qo) {
+        final LocalDateTime createdAt = qo.getCreatedAt();
+        final Long userId = qo.getUserId();
+        final Long skuId = qo.getSkuId();
+        final Integer quantity = qo.getQuantity();
+
+        final CartItemSaveDto dto = new CartItemSaveDto()
+            .setSkuId(skuId)
+            .setQuantity(quantity)
+            .setOperatorId(userId)
+            .setOperationAt(createdAt);
+        this.insertOrUpdate(dto);
     }
 
     @Override

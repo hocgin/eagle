@@ -1,12 +1,15 @@
 package in.hocg.eagle.modules.oms.helper.order.discount;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.modules.oms.helper.order.discount.coupon.Coupon;
-import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedAmountCoupon;
-import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedScaleCoupon;
 import in.hocg.eagle.basic.constant.datadict.CouponType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
+import in.hocg.eagle.modules.oms.helper.order.AbsFixedAmountDiscount;
+import in.hocg.eagle.modules.oms.helper.order.AbsFixedScaleDiscount;
+import in.hocg.eagle.modules.oms.helper.order.discount.coupon.Coupon;
+import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedAmountCoupon;
+import in.hocg.eagle.modules.oms.helper.order.discount.coupon.FixedScaleCoupon;
+import in.hocg.eagle.modules.oms.helper.order.modal.Discount;
 import in.hocg.eagle.modules.pms.api.vo.ProductCategoryComplexVo;
 import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import in.hocg.eagle.utils.LangUtils;
@@ -82,4 +85,19 @@ public class DiscountHelper {
             .setId(vo.getId());
     }
 
+    public DiscountComplex convertComplex(Discount discount) {
+        final DiscountComplex result = new DiscountComplex();
+        if (discount instanceof AbsFixedAmountDiscount) {
+            final AbsFixedAmountDiscount info = (AbsFixedAmountDiscount) discount;
+            result.setVal(info.getVal());
+            result.setType(DiscountComplex.Type.Discount);
+        } else if (discount instanceof AbsFixedScaleDiscount) {
+            final AbsFixedScaleDiscount info = (AbsFixedScaleDiscount) discount;
+            result.setVal(info.getScale());
+            result.setType(DiscountComplex.Type.Reduction);
+        }
+        result.setId((Long) discount.id());
+        result.setTitle(discount.title());
+        return result;
+    }
 }
