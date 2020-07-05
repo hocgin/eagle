@@ -94,4 +94,6 @@ public interface PaymentService {
      * @param notifyAppId 通知编号
      */
     void sendAsyncNotifyApp(Long notifyAppId);
+
+    WaitPaymentTradeVo getWaitPaymentTrade(String tradeSn);
 }

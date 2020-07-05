@@ -3,6 +3,8 @@ package in.hocg.eagle.basic.exception;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.basic.result.ResultCode;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageConversionException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -47,5 +49,19 @@ public class EagleExceptionHandle extends DefaultExceptionHandler {
     public Result<Void> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
         final ResultCode resultCode = ResultCode.SERVICE_ERROR;
         return Result.error(resultCode.getCode(), "上传文件过大");
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public Result<Void> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        final ResultCode resultCode = ResultCode.SERVICE_ERROR;
+        return Result.error(resultCode.getCode(), "缺少必要参数");
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = HttpMessageConversionException.class)
+    public Result<Void> handleHttpMessageConversionException(HttpMessageConversionException e) {
+        final ResultCode resultCode = ResultCode.SERVICE_ERROR;
+        return Result.error(resultCode.getCode(), "参数类型错误");
     }
 }

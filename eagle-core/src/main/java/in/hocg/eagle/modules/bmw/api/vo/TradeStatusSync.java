@@ -30,6 +30,10 @@ public class TradeStatusSync {
     private BigDecimal totalFee;
     @ApiModelProperty("付款时间")
     private LocalDateTime paymentAt;
+    @ApiModelProperty("创建时间")
+    private LocalDateTime createdAt;
+    @ApiModelProperty("过期时间")
+    private LocalDateTime expireAt;
     @ApiModelProperty("(微信用户OPEN-ID)仅微信")
     private String openid;
 }

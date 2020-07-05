@@ -3,8 +3,9 @@ package in.hocg.eagle.modules.bmw.api.ro;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.NonNull;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by hocgin on 2020/6/7.
@@ -16,10 +17,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @ApiModel("支付请求")
 public class GoPayRo {
-    @NonNull
+    @NotNull(message = "交易单号不能为空")
     @ApiModelProperty(value = "交易单号", required = true)
     private String tradeSn;
-    @NonNull
+    @NotNull(message = "支付方式不能为空")
     @ApiModelProperty(value = "支付方式", required = true)
     private Integer paymentWay;
     @ApiModelProperty(value = "[可选]微信支付")

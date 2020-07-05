@@ -1,10 +1,10 @@
 package in.hocg.eagle.modules.bmw.service.impl;
 
-import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.ext.lang.SNCode;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.modules.bmw.api.ro.CreateTradeRo;
 import in.hocg.eagle.modules.bmw.api.ro.GoPayRo;
 import in.hocg.eagle.modules.bmw.api.vo.QueryAsyncVo;
@@ -22,8 +22,13 @@ import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoPaymentResponse;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoRefundResponse;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.AllInMessageResolve;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
-import in.hocg.eagle.modules.bmw.pojo.ro.*;
-import in.hocg.eagle.modules.bmw.pojo.vo.*;
+import in.hocg.eagle.modules.bmw.pojo.ro.GoRefundRo;
+import in.hocg.eagle.modules.bmw.pojo.ro.PaymentMessageRo;
+import in.hocg.eagle.modules.bmw.pojo.ro.RefundMessageRo;
+import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
+import in.hocg.eagle.modules.bmw.pojo.vo.GoRefundVo;
+import in.hocg.eagle.modules.bmw.pojo.vo.NotifyAppAsyncVo;
+import in.hocg.eagle.modules.bmw.pojo.vo.WaitPaymentTradeVo;
 import in.hocg.eagle.modules.bmw.service.*;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
@@ -311,23 +316,38 @@ public class PaymentServiceImpl implements PaymentService {
         final Long appId = trade.getAppId();
         final PaymentApp paymentApp = paymentAppService.getById(appId);
         ValidUtils.notNull(paymentApp, "未找到接入应用");
-        final Long paymentPlatformId = trade.getPaymentPlatformId();
-        final PaymentPlatform paymentPlatform = paymentPlatformService.getById(paymentPlatformId);
-        if (Objects.isNull(paymentPlatform)) {
-            log.info("交易单:[{}]上的支付平台[id={}]未找到", trade.getTradeSn(), paymentPlatformId);
-            ValidUtils.fail("交易单支付平台未找到");
+        final Long platformId = trade.getPaymentPlatformId();
+        log.info("交易单:[{}]上的支付平台[id={}]", trade.getTradeSn(), platformId);
+
+        Integer platformType = null;
+        if (Objects.nonNull(platformId)) {
+            platformType = LangUtils.callIfNotNull(platformId, paymentPlatformService::getById)
+                .map(PaymentPlatform::getPlatformType).orElse(null);
         }
 
         return new QueryAsyncVo<TradeStatusSync>()
-            .setPlatformType(paymentPlatform.getPlatformType())
+            .setPlatformType(platformType)
             .setData(new TradeStatusSync()
                 .setOpenid(trade.getWxOpenid())
                 .setOutTradeSn(trade.getOutTradeSn())
                 .setTradeSn(trade.getTradeSn())
                 .setTotalFee(trade.getTotalFee())
                 .setTradeStatus(trade.getTradeStatus())
+                .setCreatedAt(trade.getCreatedAt())
+                .setExpireAt(trade.getExpireAt())
                 .setPaymentWay(trade.getPaymentWay())
                 .setPaymentAt(trade.getPaymentAt()));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public WaitPaymentTradeVo getWaitPaymentTrade(String tradeSn) {
+        final PaymentTrade trade = paymentTradeService.selectOneByTradeSn(tradeSn)
+            .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
+        return new WaitPaymentTradeVo()
+            .setTotalFee(trade.getTotalFee())
+            .setExpireAt(trade.getExpireAt())
+            .setCreatedAt(trade.getCreatedAt());
     }
 
     @Override
@@ -360,8 +380,8 @@ public class PaymentServiceImpl implements PaymentService {
                 .setRefundAt(refund.getRefundAt()));
     }
 
-    @Override
     @Async
+    @Override
     @Transactional(propagation = Propagation.NESTED, rollbackFor = Exception.class)
     public void sendAsyncNotifyApp(Long notifyAppId) {
         // 最大通知次数

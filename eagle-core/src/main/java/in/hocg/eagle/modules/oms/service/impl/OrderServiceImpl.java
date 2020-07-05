@@ -470,7 +470,9 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
             throw ServiceException.wrap("操作失败，请检查订单的支付状态");
         }
 
-        final GoPayRo ro = new GoPayRo(orderComplex.getTradeSn(), paymentWay);
+        final GoPayRo ro = new GoPayRo()
+            .setTradeSn(orderComplex.getTradeSn())
+            .setPaymentWay(paymentWay);
         return paymentApi.goPay(ro);
     }
 

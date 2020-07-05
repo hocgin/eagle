@@ -51,11 +51,19 @@ public class PaymentController {
         return ResponseEntity.ok(paymentService.handleMessage(messageContext, data));
     }
 
-    @UseLogger("生成支付信息")
+    @UseLogger("发起去支付")
     @ResponseBody
     @PostMapping("/pay")
     @Transactional(rollbackFor = Exception.class)
     public Result<GoPayVo> goPay(@Validated @RequestBody GoPayRo ro) {
         return Result.success(paymentService.goPay(ro));
+    }
+
+    @UseLogger("查询待支付交易单")
+    @ResponseBody
+    @GetMapping("/trade")
+    @Transactional(rollbackFor = Exception.class)
+    public Result getWaitPaymentTrade(@RequestParam("tradeSn") String tradeSn) {
+        return Result.success(paymentService.getWaitPaymentTrade(tradeSn));
     }
 }
