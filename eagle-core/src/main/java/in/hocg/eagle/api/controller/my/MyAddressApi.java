@@ -42,6 +42,14 @@ public class MyAddressApi {
         return Result.success();
     }
 
+    @GetMapping("/{id:\\d+}")
+    @UseLogger("查询我的收货地址 - 收货地址")
+    public Result getMyAddress(@PathVariable Long id) {
+        final IdRo ro = new IdRo();
+        ro.setId(id);
+        return Result.success(service.getMyAddress(ro));
+    }
+
     @UseLogger("分页查询我的收货地址 - 收货地址")
     @PostMapping({"/_paging"})
     public Result<IPage<AccountAddressComplexVo>> pagingMyAddress(@Validated @RequestBody MyAddressPagingApiQo qo) {

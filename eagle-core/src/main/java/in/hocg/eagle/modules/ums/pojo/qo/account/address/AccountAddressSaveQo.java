@@ -40,6 +40,8 @@ public class AccountAddressSaveQo extends BaseRo {
     @NotBlank(groups = {Insert.class}, message = "区不能为空")
     @ApiModelProperty("区")
     private String region;
+    @ApiModelProperty("区域编码")
+    private String adCode;
     @ApiModelProperty("详细地址(街道)")
     private String detailAddress;
     @EnumRange(groups = {Insert.class, Update.class}, enumClass = IsDefault.class)

@@ -41,14 +41,18 @@ public class OrderComplexVo {
     private Long couponId;
     @ApiModelProperty("优惠券抵扣金额")
     private BigDecimal couponAmount;
-    @ApiModelProperty("运费金额")
-    private BigDecimal freightAmount;
     @ApiModelProperty("管理员后台调整订单使用的折扣金额")
     private BigDecimal discountAmount;
+
+    @ApiModelProperty("运费金额")
+    private BigDecimal freightAmount;
+    @ApiModelProperty("优惠总金额")
+    private BigDecimal discountTotalAmount;
     @ApiModelProperty("订单总金额")
     private BigDecimal totalAmount;
     @ApiModelProperty("实际支付金额")
     private BigDecimal payAmount;
+
     @ApiModelProperty("支付方式")
     private Integer payType;
     @Named(idFor = "payType",

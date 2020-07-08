@@ -137,6 +137,8 @@ CREATE TABLE `ums_account_address`
         COMMENT '区',
     `detail_address` VARCHAR(128)
         COMMENT '详细地址(街道)',
+    `ad_code`        VARCHAR(32)  NOT NULL
+        COMMENT '区域编码',
     `is_default`     TINYINT(1)   NOT NULL
         DEFAULT 0,
     --

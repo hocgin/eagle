@@ -24,4 +24,10 @@ public interface DistrictMapper extends BaseMapper<District> {
     List<District> search(@Param("qo") DistrictSearchQo qo);
 
     List<District> selectChildrenByAdcode(@Param("adcode") String adcode);
+
+    List<District> getProvince();
+
+    List<District> getCity();
+
+    List<District> getCounty();
 }

@@ -36,5 +36,20 @@ public class DistrictController {
     public Result selectChildrenByAdcode(@RequestParam(value = "adcode", required = false, defaultValue = "100000") String adcode) {
         return Result.success(service.selectChildrenByAdcode(adcode));
     }
+
+    @GetMapping("/province")
+    public Result getProvince() {
+        return Result.success(service.getProvince());
+    }
+
+    @GetMapping("/city")
+    public Result getCity() {
+        return Result.success(service.getCity());
+    }
+
+    @GetMapping("/county")
+    public Result getCounty() {
+        return Result.success(service.getCounty());
+    }
 }
 

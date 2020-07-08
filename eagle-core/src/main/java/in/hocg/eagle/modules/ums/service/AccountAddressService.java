@@ -38,4 +38,6 @@ public interface AccountAddressService extends AbstractService<AccountAddress> {
     void deleteMyAddress(IdRo qo);
 
     Optional<AccountAddressComplexVo> getDefaultByUserId(Long userId);
+
+    AccountAddressComplexVo getMyAddress(IdRo ro);
 }

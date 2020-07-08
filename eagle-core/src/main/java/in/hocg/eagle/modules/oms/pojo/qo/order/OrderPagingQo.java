@@ -14,4 +14,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class OrderPagingQo extends PageRo {
     private Long accountId;
+    private Integer orderStatus;
 }

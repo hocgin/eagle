@@ -29,4 +29,11 @@ public class MyCouponAPi {
     public Result paging(@Validated @RequestBody MyCouponPagingApiQo qo) {
         return Result.success(service.pagingMyCoupon(qo));
     }
+
+
+    @UseLogger("领取优惠券 - 个人优惠券")
+    @PostMapping("/get")
+    public Result getCoupon() {
+        return Result.success();
+    }
 }

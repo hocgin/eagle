@@ -146,6 +146,11 @@ public class AppService {
     }
 
     @Transactional(rollbackFor = Exception.class)
+    public AccountAddressComplexVo getMyAddress(IdRo ro) {
+        return accountAddressService.getMyAddress(ro);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
     public void deleteMyAddress(IdRo qo) {
         accountAddressService.deleteMyAddress(qo);
     }

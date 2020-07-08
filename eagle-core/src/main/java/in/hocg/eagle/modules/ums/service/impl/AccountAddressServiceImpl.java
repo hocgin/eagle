@@ -94,6 +94,17 @@ public class AccountAddressServiceImpl extends AbstractServiceImpl<AccountAddres
     }
 
     @Override
+    @ApiOperation("获取我的收货地址 - 收货地址")
+    @Transactional(rollbackFor = Exception.class)
+    public AccountAddressComplexVo getMyAddress(IdRo ro) {
+        final Long id = ro.getId();
+        final AccountAddress entity = getById(id);
+        ValidUtils.notNull(entity, "未找到收货地址");
+        ValidUtils.isTrue(LangUtils.equals(entity.getAccountId(), ro.getUserId()), "操作失败");
+        return convertComplex(entity);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<AccountAddressComplexVo> paging(AccountAddressPageQo qo) {
         return baseMapper.paging(qo, qo.page())

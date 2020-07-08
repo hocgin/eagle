@@ -387,6 +387,9 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
 
     private OrderComplexVo convertOrderComplex(Order entity) {
         final OrderComplexVo result = mapping.asOrderComplexVo(entity);
+
+        final BigDecimal discountTotalAmount = LangUtils.getOrDefault(result.getDiscountAmount(), BigDecimal.ZERO).add(LangUtils.getOrDefault(result.getCouponAmount(), BigDecimal.ZERO));
+        result.setDiscountTotalAmount(discountTotalAmount);
         result.setOrderItems(orderItemService.selectListByOrderId(entity.getId()));
         return result;
     }
@@ -470,10 +473,9 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
             throw ServiceException.wrap("操作失败，请检查订单的支付状态");
         }
 
-        final GoPayRo ro = new GoPayRo()
+        return paymentApi.goPay(new GoPayRo()
             .setTradeSn(orderComplex.getTradeSn())
-            .setPaymentWay(paymentWay);
-        return paymentApi.goPay(ro);
+            .setPaymentWay(paymentWay));
     }
 
     @Override

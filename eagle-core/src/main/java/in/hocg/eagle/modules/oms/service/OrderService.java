@@ -119,7 +119,6 @@ public interface OrderService extends AbstractService<Order> {
      * @param qo
      * @return
      */
-    @Deprecated
     GoPayVo goPay(PayOrderQo qo);
 
     AvailableDiscountVo listAvailableCouponsByOrder(CalcOrderQo qo);

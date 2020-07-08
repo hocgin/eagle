@@ -16,7 +16,22 @@
   <select id="selectChildrenByAdcode" resultType="in.hocg.eagle.modules.com.entity.District">
     SELECT cd.*
     FROM com_district cd
-        LEFT JOIN com_district cd2 ON cd.parent_id = cd2.id
+           LEFT JOIN com_district cd2 ON cd.parent_id = cd2.id
     WHERE cd2.ad_code = #{adcode}
+  </select>
+  <select id="getProvince" resultType="in.hocg.eagle.modules.com.entity.District">
+    SELECT cd.*
+    FROM com_district cd
+    WHERE length(cd.tree_path) - length(replace(cd.tree_path, '/', '')) = 2
+  </select>
+  <select id="getCity" resultType="in.hocg.eagle.modules.com.entity.District">
+    SELECT cd.*
+    FROM com_district cd
+    WHERE length(cd.tree_path) - length(replace(cd.tree_path, '/', '')) = 3
+  </select>
+  <select id="getCounty" resultType="in.hocg.eagle.modules.com.entity.District">
+    SELECT cd.*
+    FROM com_district cd
+    WHERE length(cd.tree_path) - length(replace(cd.tree_path, '/', '')) = 4
   </select>
 </mapper>

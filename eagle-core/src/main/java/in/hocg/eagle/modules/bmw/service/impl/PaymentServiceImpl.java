@@ -7,6 +7,8 @@ import in.hocg.eagle.basic.ext.lang.SNCode;
 import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.modules.bmw.api.ro.CreateTradeRo;
 import in.hocg.eagle.modules.bmw.api.ro.GoPayRo;
+import in.hocg.eagle.modules.bmw.api.ro.QueryPaymentWayRo;
+import in.hocg.eagle.modules.bmw.api.vo.PaymentWayVo;
 import in.hocg.eagle.modules.bmw.api.vo.QueryAsyncVo;
 import in.hocg.eagle.modules.bmw.api.vo.RefundStatusSync;
 import in.hocg.eagle.modules.bmw.api.vo.TradeStatusSync;
@@ -49,9 +51,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Created by hocgin on 2020/6/7.
@@ -348,6 +352,16 @@ public class PaymentServiceImpl implements PaymentService {
             .setTotalFee(trade.getTotalFee())
             .setExpireAt(trade.getExpireAt())
             .setCreatedAt(trade.getCreatedAt());
+    }
+
+    @Override
+    public List<PaymentWayVo> queryPaymentWay(QueryPaymentWayRo ro) {
+        // todo: 后续抽成数据库配置方式。(支付方式条件表 + 条件x支付方式表)
+        return Arrays.stream(PaymentWay.values())
+            .map(paymentWay -> new PaymentWayVo()
+                .setName(paymentWay.getName())
+                .setCode(paymentWay.getCode()))
+            .collect(Collectors.toList());
     }
 
     @Override

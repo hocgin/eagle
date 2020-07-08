@@ -11,6 +11,7 @@ import in.hocg.eagle.modules.com.pojo.qo.district.DistrictSearchQo;
 import in.hocg.eagle.modules.com.pojo.vo.district.DistrictComplexVo;
 import in.hocg.eagle.modules.com.pojo.vo.district.DistrictTreeVo;
 import in.hocg.eagle.modules.com.service.DistrictService;
+import in.hocg.eagle.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,21 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
         return baseMapper.selectChildrenByAdcode(adCode)
             .stream().map(this::convertComplex)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DistrictComplexVo> getProvince() {
+        return LangUtils.toList(baseMapper.getProvince(), this::convertComplex);
+    }
+
+    @Override
+    public List<DistrictComplexVo> getCity() {
+        return LangUtils.toList(baseMapper.getCity(), this::convertComplex);
+    }
+
+    @Override
+    public List<DistrictComplexVo> getCounty() {
+        return LangUtils.toList(baseMapper.getCounty(), this::convertComplex);
     }
 
 

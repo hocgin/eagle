@@ -13,5 +13,5 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class MyOrderPagingApiQo extends PageRo {
-
+    private Integer orderStatus;
 }
