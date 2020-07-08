@@ -91,6 +91,14 @@ public class PaymentServiceImpl implements PaymentService {
             .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
         final Long tradeId = trade.getId();
 
+        // 如果是初始化状态可直接关闭
+        if (TradeStatus.Init.eq(trade.getTradeStatus())) {
+            PaymentTrade update = new PaymentTrade().setFinishAt(now).setTradeStatus(TradeStatus.Closed.getCode()).setUpdatedAt(now).setUpdatedIp(clientIp);
+            boolean isOk = paymentTradeService.updateOneByIdAndTradeStatus(update, tradeId, TradeStatus.Init.getCode());
+            ValidUtils.isTrue(isOk, "系统繁忙");
+            return;
+        }
+
         PaymentTrade update = new PaymentTrade().setFinishAt(now).setTradeStatus(TradeStatus.Closed.getCode()).setUpdatedAt(now).setUpdatedIp(clientIp);
         boolean isOk = paymentTradeService.updateOneByIdAndTradeStatus(update, tradeId, TradeStatus.Wait.getCode());
         ValidUtils.isTrue(isOk, "系统繁忙");

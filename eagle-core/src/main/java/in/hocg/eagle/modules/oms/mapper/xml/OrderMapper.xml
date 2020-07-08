@@ -13,5 +13,6 @@
         AND oo.order_status = #{qo.orderStatus}
       </if>
     </where>
+    ORDER BY oo.payment_time DESC, oo.created_at DESC
   </select>
 </mapper>
