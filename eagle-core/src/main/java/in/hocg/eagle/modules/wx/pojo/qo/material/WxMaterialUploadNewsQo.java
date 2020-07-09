@@ -1,14 +1,15 @@
 package in.hocg.eagle.modules.wx.pojo.qo.material;
 
+import in.hocg.eagle.basic.constant.PatternConstant;
 import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class WxMaterialUploadNewsQo extends BaseRo {
     public static class NewsItem {
         @NotBlank(message = "标题不能为空")
         private String title;
-        @URL(message = "图片地址错误")
+        @Pattern(regexp = PatternConstant.URL, message = "图片地址错误")
         private String originalUrl;
         private String thumbMediaId;
         private String author;
@@ -40,7 +41,7 @@ public class WxMaterialUploadNewsQo extends BaseRo {
         @NotBlank(message = "图文消息正文不能为空")
         private String content;
         @NotBlank(message = "原文地址不能为空")
-        @URL(message = "原文地址错误")
+        @Pattern(regexp = PatternConstant.URL,message = "原文地址错误")
         private String contentSourceUrl;
         private Boolean needOpenComment;
         private Boolean onlyFansCanComment;

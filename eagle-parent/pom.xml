@@ -27,7 +27,7 @@
     <mybatis-plus.version>3.3.2</mybatis-plus.version>
     <lombok.version>1.18.10</lombok.version>
     <easypoi.version>3.2.0</easypoi.version>
-    <spring-boot.version>2.2.2.RELEASE</spring-boot.version>
+    <spring-boot.version>2.3.0.RELEASE</spring-boot.version>
   </properties>
 
   <dependencies>

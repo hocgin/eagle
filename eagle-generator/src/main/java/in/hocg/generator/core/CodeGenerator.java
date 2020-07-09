@@ -54,9 +54,9 @@ public class CodeGenerator {
             .setControllerMappingHyphenStyle(true)
             .setRestControllerStyle(true)
             .setTablePrefix(module.getIgnoreTablePrefix().toArray(new String[]{}))
-            .setSuperEntityClass(AbstractEntity.class.getName())
-            .setSuperServiceClass(AbstractService.class.getName())
-            .setSuperServiceImplClass(AbstractServiceImpl.class.getName())
+            .setSuperEntityClass(AbstractEntity.class)
+            .setSuperServiceClass(AbstractService.class)
+            .setSuperServiceImplClass(AbstractServiceImpl.class)
             .setNaming(NamingStrategy.underline_to_camel)
             .setInclude(tables);
         config.setOpen(false)
