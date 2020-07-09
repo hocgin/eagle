@@ -1,9 +1,9 @@
-version: "2"
+version: "3"
 services:
   redis:
-    image: redis
-    restart: always
+    image: redis:latest
     container_name: redis
+    restart: always
     ports:
       - "6379:6379"
 
@@ -17,20 +17,29 @@ services:
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
       - ./conf/mysql:/etc/mysql/conf.d
+      - dbdata
     environment:
       TZ: Asia/Shanghai
       MYSQL_ROOT_PASSWORD: hocgin
     depends_on:
       - dbdata
-    volumes_from:
-      - dbdata
 
-#  eagle:
-#    build:
-#      dockerfile: ../Dockerfile
-#      args:
-#        JAR_FILE: ../
-
+  eagle:
+    image: eagle:latest
+    container_name: eagle
+    restart: always
+    ports:
+      - "8080:8080"
+    env_file:
+      - ../.env.local
+    environment:
+      TZ: Asia/Shanghai
+    depends_on:
+      - mysql
+      - redis
+    links:
+      - "mysql:mysql.localhost"
+      - "redis:redis.localhost"
   dbdata:
     image: alpine:latest
     container_name: dbdata

@@ -242,7 +242,9 @@ public class ClassUtils {
     private List<String> listPackages(String basePackage) {
         List<String> classPaths = Lists.newArrayList();
         URL url = ClassUtils.class.getClassLoader().getResource("./" + basePackage.replaceAll("\\.", "/"));
-        assert url != null;
+        if (Objects.isNull(url)) {
+            return Collections.emptyList();
+        }
         File directory = new File(url.getFile());
         final File[] files = directory.listFiles();
         assert files != null;
