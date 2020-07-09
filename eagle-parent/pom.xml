@@ -87,6 +87,11 @@
       </dependency>
       <!--三方库-->
       <dependency>
+        <groupId>cn.hutool</groupId>
+        <artifactId>hutool-all</artifactId>
+        <version>5.3.8</version>
+      </dependency>
+      <dependency>
         <groupId>com.github.binarywang</groupId>
         <artifactId>weixin-java-mp</artifactId>
         <version>3.7.0</version>
