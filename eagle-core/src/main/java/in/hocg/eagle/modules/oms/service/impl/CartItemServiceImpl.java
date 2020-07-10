@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.oms.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.constant.datadict.CartItemStatus;
 import in.hocg.eagle.basic.constant.datadict.DeleteStatus;
@@ -177,6 +178,7 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
         }
 
         result.setCartItemStatus(CartItemStatus.Normal.getCode());
+        result.setSpecData(JSON.parseArray(entity.getSkuSpecData(), CartItemComplexVo.Spec.class));
         return result;
     }
 

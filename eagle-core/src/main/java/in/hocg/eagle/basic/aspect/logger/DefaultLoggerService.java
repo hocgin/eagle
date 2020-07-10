@@ -5,7 +5,6 @@ import in.hocg.eagle.basic.ext.security.User;
 import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.modules.com.service.RequestLogService;
 import in.hocg.eagle.utils.DateUtils;
-import in.hocg.eagle.utils.string.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -43,8 +42,7 @@ public class DefaultLoggerService implements LoggerService {
             .add("╚═[总耗时:{} ms]══════════════════════════════════════════════════════════════════════")
             .add("");
         final String retStr = logger.getRetStr();
-        final String argStr = JsonUtils.toJSONString(logger.getArgs(), true)
-            .replaceAll("\n", "\n║ ");
+        final String argStr = logger.getArgsStr();
 
 
         log.info(stringJoiner.toString(),
@@ -53,8 +51,8 @@ public class DefaultLoggerService implements LoggerService {
             String.format("%s %s", logger.getMethod(), logger.getUri()),
             logger.getEnterRemark(),
             logger.getMapping(),
-            argStr,
-            retStr,
+            argStr.replaceAll("\n", "\n║ "),
+            retStr.replaceAll("\n", "\n║ "),
             logger.getTotalTimeMillis());
     }
 

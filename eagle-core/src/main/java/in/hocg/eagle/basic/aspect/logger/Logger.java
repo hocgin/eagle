@@ -98,15 +98,18 @@ public class Logger {
         return entity;
     }
 
+    public String getArgsStr() {
+        return JsonUtils.toJSONString(args, true);
+    }
+
     public String getRetStr() {
         String retStr;
         if ((ret instanceof InputStream) || (ret instanceof OutputStream)) {
-            retStr = "File Stream";
-        } else if (ret instanceof ResponseEntity && ((ResponseEntity)ret).getBody() instanceof Resource) {
-            retStr = "Resource Stream";
-        }else {
-            retStr = JsonUtils.toJSONString(ret, true)
-                .replaceAll("\n", "\n║ ");
+            retStr = "[\"File Stream\"]";
+        } else if (ret instanceof ResponseEntity && ((ResponseEntity) ret).getBody() instanceof Resource) {
+            retStr = "[\"Resource Stream\"]";
+        } else {
+            retStr = JsonUtils.toJSONString(ret, true);
         }
         return retStr;
     }
