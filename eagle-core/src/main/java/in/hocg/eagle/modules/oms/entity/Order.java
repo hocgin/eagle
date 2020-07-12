@@ -136,6 +136,9 @@ public class Order extends AbstractEntity<Order> {
      */
     @TableField("receiver_region")
     private String receiverRegion;
+    @ApiModelProperty("区域编码")
+    @TableField("receiver_ad_code")
+    private String receiverAdCode;
     /**
      * 详细地址
      */

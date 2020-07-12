@@ -38,5 +38,7 @@ public class CreateOrderQo extends CalcOrderQo {
         private String region;
         @ApiModelProperty("详细地址")
         private String detailAddress;
+        @ApiModelProperty("区域编码")
+        private String adCode;
     }
 }

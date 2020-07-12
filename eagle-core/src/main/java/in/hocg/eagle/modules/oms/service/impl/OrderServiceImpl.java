@@ -206,6 +206,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
             .setReceiverCity(receiver.getCity())
             .setReceiverRegion(receiver.getRegion())
             .setReceiverDetailAddress(receiver.getDetailAddress())
+            .setReceiverAdCode(receiver.getAdCode())
             // 创建信息
             .setCreatedAt(qo.getCreatedAt())
             .setCreator(currentUserId);
