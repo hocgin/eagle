@@ -59,6 +59,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -564,24 +565,28 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     public AvailableDiscountVo listAvailableCouponsByOrder(CalcOrderQo qo) {
         final Long userId = qo.getUserId();
         final GeneralOrder generalOrder = this.createOrder(qo);
-        final List<CouponAccountComplexVo> couponComplexs = couponAccountService.selectListByAccountId(userId);
-        final List<Discount> allCoupon = couponComplexs.parallelStream().map(DiscountHelper::createCoupon).collect(Collectors.toList());
+        final List<CouponAccountComplexVo> couponComplexes = couponAccountService.selectListByAccountId(userId);
+        final List<Discount> allCoupon = couponComplexes.parallelStream()
+            .map(DiscountHelper::createCoupon).collect(Collectors.toList());
+
+        final BiFunction<Discount, Discount, Boolean> isSame = (coupon, discount) -> coupon.id() == discount.id();
 
         // 可用优惠信息
         final List<Discount> usableDiscount = generalOrder.getUsableDiscount(allCoupon);
-        final BiFunction<Discount, Discount, Boolean> isSame = (coupon, discount) -> {
-            if (discount instanceof Coupon && coupon.id() == discount.id()) {
-                return true;
-            }
-            return false;
-        };
-
         // 不可用优惠信息
-        final List<Discount> unusableDiscount = LangUtils.getMixed(allCoupon, usableDiscount, isSame);
+        final List<Discount> unusableDiscount = LangUtils.removeIfExits(allCoupon, usableDiscount, isSame);
+
+        final Map<Long, CouponAccountComplexVo> map = LangUtils.toMap(couponComplexes, CouponAccountComplexVo::getId);
 
         final AvailableDiscountVo result = new AvailableDiscountVo();
-        result.setAvailableCoupon(usableDiscount.parallelStream().map(DiscountHelper::convertComplex).collect(Collectors.toList()));
-        result.setUnavailableCoupon(unusableDiscount.parallelStream().map(DiscountHelper::convertComplex).collect(Collectors.toList()));
+        result.setAvailableCoupon(usableDiscount.parallelStream()
+            .map(Discount::id)
+            .map(serializable -> ((Long) serializable)).map(map::get)
+            .filter(Objects::nonNull).collect(Collectors.toList()));
+        result.setUnavailableCoupon(unusableDiscount.parallelStream()
+            .map(Discount::id)
+            .map(serializable -> ((Long) serializable)).map(map::get)
+            .filter(Objects::nonNull).collect(Collectors.toList()));
         return result;
     }
 
