@@ -63,7 +63,7 @@ public class FixedAmountCoupon extends AbsFixedAmountDiscount
         final List<GeneralProduct> products = order.getProducts();
 
         // 满足使用平台
-        final boolean isPlatform = Objects.isNull(platform) || LangUtils.equals(sourceType.getCode(), platform);
+        final boolean isPlatform = Objects.isNull(platform) || LangUtils.equals(platform, 0) || LangUtils.equals(sourceType.getCode(), platform);
 
         // 满足未使用
         final boolean isUnused = LangUtils.equals(CouponUseStatus.Unused.getCode(), useStatus);

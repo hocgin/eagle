@@ -10,7 +10,6 @@ import in.hocg.eagle.modules.oms.pojo.vo.order.AvailableDiscountVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -124,6 +123,5 @@ public interface OrderService extends AbstractService<Order> {
 
     AvailableDiscountVo listAvailableCouponsByOrder(CalcOrderQo qo);
 
-    @Async
     void log(Order newOrder);
 }

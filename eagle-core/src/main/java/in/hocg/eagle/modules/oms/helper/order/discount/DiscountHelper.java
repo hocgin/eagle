@@ -53,8 +53,8 @@ public class DiscountHelper {
         final List<Long> canUseProductId = ((List<ProductComplexVo>) LangUtils.getOrDefault(vo.getCanUseProduct(), Lists.newArrayList())).parallelStream().map(ProductComplexVo::getId).collect(Collectors.toList());
         final List<Long> canUseProductCategoryId = ((List<ProductCategoryComplexVo>) LangUtils.getOrDefault(vo.getCanUseProductCategory(), Lists.newArrayList())).parallelStream().map(ProductCategoryComplexVo::getId).collect(Collectors.toList());
         return new FixedAmountCoupon(vo.getCredit())
-            .setCanUseProductCategoryId(canUseProductCategoryId)
-            .setCanUseProductId(canUseProductId)
+            .setCanUseProductCategoryId(canUseProductCategoryId.isEmpty() ? null : canUseProductCategoryId)
+            .setCanUseProductId(canUseProductId.isEmpty() ? null : canUseProductId)
             .setMinPoint(vo.getMinPoint())
             .setStartAt(vo.getStartAt())
             .setEndAt(vo.getEndAt())
@@ -74,8 +74,8 @@ public class DiscountHelper {
         final List<Long> canUseProductId = ((List<ProductComplexVo>) LangUtils.getOrDefault(vo.getCanUseProduct(), Lists.newArrayList())).parallelStream().map(ProductComplexVo::getId).collect(Collectors.toList());
         final List<Long> canUseProductCategoryId = ((List<ProductCategoryComplexVo>) LangUtils.getOrDefault(vo.getCanUseProductCategory(), Lists.newArrayList())).parallelStream().map(ProductCategoryComplexVo::getId).collect(Collectors.toList());
         return new FixedScaleCoupon(vo.getCredit(), vo.getCeiling())
-            .setCanUseProductCategoryId(canUseProductCategoryId)
-            .setCanUseProductId(canUseProductId)
+            .setCanUseProductCategoryId(canUseProductCategoryId.isEmpty() ? null : canUseProductCategoryId)
+            .setCanUseProductId(canUseProductId.isEmpty() ? null : canUseProductId)
             .setMinPoint(vo.getMinPoint())
             .setStartAt(vo.getStartAt())
             .setEndAt(vo.getEndAt())
