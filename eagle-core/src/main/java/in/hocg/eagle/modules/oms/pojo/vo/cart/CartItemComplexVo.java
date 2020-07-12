@@ -39,7 +39,7 @@ public class CartItemComplexVo {
     @ApiModelProperty("规格属性")
     private String skuSpecData;
     @ApiModelProperty("规格")
-    private List<CartItemComplexVo.Spec> specData = Collections.emptyList();
+    private List<CartItemComplexVo.Spec> skuSpec = Collections.emptyList();
     @ApiModelProperty("加入的数量")
     private Integer quantity;
     @JsonSerialize(using = LocalDateTimeSerializer.class)

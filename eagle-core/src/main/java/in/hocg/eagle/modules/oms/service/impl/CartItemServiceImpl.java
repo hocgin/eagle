@@ -178,7 +178,7 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
         }
 
         result.setCartItemStatus(CartItemStatus.Normal.getCode());
-        result.setSpecData(JSON.parseArray(entity.getSkuSpecData(), CartItemComplexVo.Spec.class));
+        result.setSkuSpec(JSON.parseArray(entity.getSkuSpecData(), CartItemComplexVo.Spec.class));
         return result;
     }
 
