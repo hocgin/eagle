@@ -8,6 +8,8 @@ import in.hocg.eagle.modules.oms.pojo.qo.order.OrderPagingQo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
+
 /**
  * <p>
  * [订单模块] 订单主表 Mapper 接口
@@ -21,4 +23,5 @@ public interface OrderMapper extends BaseMapper<Order> {
 
     IPage<Order> paging(@Param("qo") OrderPagingQo qo, @Param("page") Page page);
 
+    Integer updateAdjustmentDiscountAmountIf(@Param("updated") Order updated, @Param("ifAdjustmentDiscountAmount") BigDecimal ifAdjustmentDiscountAmount);
 }

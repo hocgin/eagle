@@ -39,13 +39,15 @@ public class OrderComplexVo {
     private String tradeSn;
     @ApiModelProperty("优惠券ID")
     private Long couponId;
-    @ApiModelProperty("优惠券抵扣金额")
-    private BigDecimal couponAmount;
-    @ApiModelProperty("管理员后台调整订单使用的折扣金额")
-    private BigDecimal discountAmount;
 
     @ApiModelProperty("运费金额")
     private BigDecimal freightAmount;
+    @ApiModelProperty("优惠券抵扣金额")
+    private BigDecimal couponDiscountAmount;
+    @ApiModelProperty("后台调整优惠")
+    private BigDecimal adjustmentDiscountAmount;
+    @ApiModelProperty("[计算型]优惠总金额(不含后台调整优惠)")
+    private BigDecimal discountAmount;
     @ApiModelProperty("优惠总金额")
     private BigDecimal discountTotalAmount;
     @ApiModelProperty("订单总金额")

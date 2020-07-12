@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.eagle.modules.oms.mapper.OrderItemMapper">
 
+  <update id="updateAdjustmentDiscountAmountIf">
+      UPDATE oms_order_item ooi
+      SET ooi.adjustment_discount_amount = #{updated.adjustmentDiscountAmount,jdbcType=DECIMAL},
+        ooi.real_amount = #{updated.realAmount,jdbcType=DECIMAL}
+      WHERE ooi.id = #{updated.id,jdbcType=BIGINT} AND ooi.adjustment_discount_amount = #{ifAdjustmentDiscountAmount,jdbcType=DECIMAL}
+  </update>
 </mapper>

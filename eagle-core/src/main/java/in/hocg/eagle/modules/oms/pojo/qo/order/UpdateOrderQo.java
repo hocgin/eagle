@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.math.BigDecimal;
-
 /**
  * Created by hocgin on 2020/3/24.
  * email: hocgin@gmail.com
@@ -30,7 +28,7 @@ public class UpdateOrderQo extends IdRo {
     private String receiverRegion;
     @ApiModelProperty("详细地址")
     private String receiverDetailAddress;
-    @ApiModelProperty("管理员优惠")
-    private BigDecimal discountAmount;
+    @ApiModelProperty("收货人区域编码")
+    private String receiverAdCode;
 
 }

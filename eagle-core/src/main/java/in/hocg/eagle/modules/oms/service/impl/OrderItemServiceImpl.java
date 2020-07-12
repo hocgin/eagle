@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,9 +53,16 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
         return lambdaQuery().eq(OrderItem::getOrderId, orderId).list();
     }
 
+    @Override
+    public Integer updateAdjustmentDiscountAmountIf(OrderItem updated, BigDecimal ifAdjustmentDiscountAmount) {
+        return baseMapper.updateAdjustmentDiscountAmountIf(updated, ifAdjustmentDiscountAmount);
+    }
+
     private OrderItemComplexVo convertComplex(OrderItem entity) {
-        final OrderItemComplexVo result = mapping.asOrderItemComplexVo(entity);
+        final BigDecimal discountTotalAmount = entity.getDiscountAmount().add(entity.getAdjustmentDiscountAmount());
         final Long id = entity.getId();
+
+        final OrderItemComplexVo result = mapping.asOrderItemComplexVo(entity);
         final Optional<OrderRefundApply> orderRefundApply = orderRefundApplyService.selectOneByOrderItemId(id);
         if (orderRefundApply.isPresent()) {
             final OrderRefundApply apply = orderRefundApply.get();
@@ -62,6 +70,7 @@ public class OrderItemServiceImpl extends AbstractServiceImpl<OrderItemMapper, O
             result.setRefundApplyId(apply.getId());
             result.setRefundStatus(apply.getApplyStatus());
         }
+        result.setDiscountTotalAmount(discountTotalAmount);
         result.setSpec(JSON.parseArray(entity.getProductSpecData(), KeyValue.class));
         return result;
     }

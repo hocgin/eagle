@@ -22,13 +22,13 @@ import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import in.hocg.eagle.modules.oms.entity.Order;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.helper.order.GeneralOrder;
+import in.hocg.eagle.modules.oms.helper.order.GeneralOrderHelper;
 import in.hocg.eagle.modules.oms.helper.order.GeneralProduct;
 import in.hocg.eagle.modules.oms.helper.order.discount.DiscountHelper;
 import in.hocg.eagle.modules.oms.helper.order.discount.coupon.Coupon;
 import in.hocg.eagle.modules.oms.helper.order.modal.Discount;
 import in.hocg.eagle.modules.oms.mapper.OrderMapper;
 import in.hocg.eagle.modules.oms.mapstruct.OrderMapping;
-import in.hocg.eagle.modules.oms.pojo.dto.order.OrderItemDto;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.order.AvailableDiscountVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
@@ -54,7 +54,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -132,50 +134,71 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         final Long accountId = qo.getUserId();
         final Long userCouponId = qo.getUserCouponId();
 
-        final GeneralOrder generalOrder = this.createOrder(qo);
+        final GeneralOrderHelper orderHelper = new GeneralOrderHelper();
 
+        List<Discount> useDiscounts = Lists.newArrayList();
+
+        // 优惠券信息
         if (Objects.nonNull(userCouponId)) {
             CouponAccountComplexVo couponVo = couponAccountService.selectOne(userCouponId);
             ValidUtils.isTrue(LangUtils.equals(couponVo.getAccountId(), accountId), "无法使用该优惠券");
-            Coupon coupon = DiscountHelper.createCoupon(couponVo);
-            generalOrder.use(coupon);
-
-            List<CalcOrderVo.DiscountInfo> discounts = Lists.newArrayList();
-            discounts.add(new CalcOrderVo.DiscountInfo()
-                .setId((Long) coupon.id())
-                .setTitle(coupon.title())
-                .setType(DiscountType.Coupon.getCode())
-                .setDiscountAmount(coupon.getDiscountTotalAmount()));
-            result.setDiscounts(discounts);
+            useDiscounts.add(DiscountHelper.createCoupon(couponVo));
         }
-        result.setDefaultAddress(accountAddressAPI.getDefaultByUserId(accountId).orElse(null));
+        final GeneralOrder generalOrder = orderHelper.useDiscounts(this.createOrder(qo), useDiscounts);
 
         final BigDecimal totalAmount = generalOrder.getPreDiscountTotalAmount();
         final BigDecimal payAmount = generalOrder.getPreferentialAmount();
+        final BigDecimal discountTotalAmount = generalOrder.getDiscountTotalAmount();
 
-        List<OrderItemDto> orderItems = generalOrder.mapProduct(item -> new OrderItemDto()
-            .setProductSpecData(item.getProductSpecData())
-            .setProductCategoryId(item.getProductCategoryId())
-            .setProductPic(item.getProductPic())
-            .setProductSkuId(item.getProductSkuId())
-            .setProductSkuCode(item.getProductSkuCode())
-            .setProductQuantity(item.getProductQuantity())
-            .setProductPrice(item.getProductPrice())
-            .setProductName(item.getProductName())
-            .setProductId(item.getProductId())
-            .setCouponAmount(item.getDiscountPrice())
-            .setRealAmount(item.getPreferentialPrice()));
+        // 1. 获取订单项信息
+        List<CalcOrderVo.OrderItem> orderItems = generalOrder.mapProduct(item -> {
+            final CalcOrderVo.OrderItem productItem = new CalcOrderVo.OrderItem()
+                .setSpecData(item.getProductSpecData())
+                .setImageUrl(item.getProductPic())
+                .setSkuId(item.getProductSkuId())
+                .setSkuCode(item.getProductSkuCode())
+                .setQuantity(item.getProductQuantity())
+                .setPrice(item.getProductPrice())
+                .setTitle(item.getProductName())
+                .setProductId(item.getProductId())
+                .setDiscountAmount(item.getDiscountPrice())
+                .setRealAmount(item.getPreferentialPrice())
+                .setSpec(JSON.parseArray(item.getProductSpecData(), KeyValue.class))
+                .setTotalAmount(item.getProductPrice().multiply(new BigDecimal(item.getProductQuantity())));
 
-        result.setItems(orderItems.parallelStream()
-            .map((item) -> {
-                final String specData = item.getProductSpecData();
-                final CalcOrderVo.OrderItem itemResult = mapping.asCalcOrderVoOrderItem(item);
-                return itemResult.setTotalAmount(itemResult.getPrice().multiply(new BigDecimal(itemResult.getQuantity())))
-                    .setSpec(JSON.parseArray(specData, KeyValue.class));
-            })
-            .collect(Collectors.toList()));
+            return productItem;
+        });
+        result.setItems(orderItems);
+
+        // 2. 优惠信息
+        List<CalcOrderVo.DiscountInfo> discounts = Lists.newArrayList();
+        for (Discount discount : generalOrder.getUseDiscount()) {
+            final BigDecimal discountAmount = discount.getDiscountTotalAmount();
+            final Serializable id = discount.id();
+            final String title = discount.title();
+
+            CalcOrderVo.DiscountInfo discountInfo;
+            if (discount instanceof Coupon) {
+                discountInfo = new CalcOrderVo.DiscountInfo()
+                    .setId((Long) id)
+                    .setTitle(title)
+                    .setType(DiscountType.Coupon.getCode())
+                    .setDiscountAmount(discountAmount);
+            } else {
+                throw new UnsupportedOperationException("未知的优惠信息");
+            }
+            discounts.add(discountInfo);
+        }
+        final BigDecimal couponDiscountAmount = discounts.parallelStream().filter(item -> DiscountType.Coupon.eq(item.getType()))
+            .map(CalcOrderVo.DiscountInfo::getDiscountAmount)
+            .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+
+        result.setDiscounts(discounts);
         result.setTotalAmount(totalAmount);
+        result.setCouponDiscountAmount(couponDiscountAmount);
+        result.setDiscountTotalAmount(discountTotalAmount);
         result.setPayAmount(payAmount);
+        result.setDefaultAddress(accountAddressAPI.getDefaultByUserId(accountId).orElse(null));
         return result;
     }
 
@@ -183,21 +206,30 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     @Transactional(rollbackFor = Exception.class)
     public String createMyOrder(CreateOrderQo qo) {
         final Long currentUserId = qo.getUserId();
+        final CreateOrderQo.Receiver receiver = qo.getReceiver();
+        final String remark = qo.getRemark();
+
         final CalcOrderVo calcResult = this.calcOrder(qo);
         final List<CalcOrderVo.DiscountInfo> discounts = calcResult.getDiscounts();
+        final BigDecimal discountTotalAmount = calcResult.getDiscountTotalAmount();
+        final BigDecimal totalAmount = calcResult.getTotalAmount();
+        final BigDecimal payAmount = calcResult.getPayAmount();
+        final BigDecimal couponDiscountAmount = calcResult.getCouponDiscountAmount();
 
-        final CreateOrderQo.Receiver receiver = qo.getReceiver();
         final Order order = new Order()
             .setOrderSn(snCode.getOrderSNCode())
             .setCouponAccountId(qo.getUserCouponId())
             .setSourceType(qo.getSourceType())
             .setAccountId(currentUserId)
-            .setFreightAmount(BigDecimal.ZERO)
-            .setTotalAmount(calcResult.getTotalAmount())
-            .setPayAmount(calcResult.getPayAmount())
             .setOrderStatus(OrderStatus.PendingPayment.getCode())
             .setAutoConfirmDay(15)
-            .setRemark(qo.getRemark())
+            .setRemark(remark)
+            // 金额相关
+            .setCouponDiscountAmount(couponDiscountAmount)
+            .setFreightAmount(BigDecimal.ZERO)
+            .setTotalAmount(totalAmount)
+            .setDiscountAmount(discountTotalAmount)
+            .setPayAmount(payAmount)
             // 收货人信息
             .setReceiverName(receiver.getName())
             .setReceiverPhone(receiver.getPhone())
@@ -215,19 +247,14 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         if (!CollectionUtils.isEmpty(discounts)) {
             for (CalcOrderVo.DiscountInfo discount : discounts) {
                 final DiscountType discountType = CodeEnum.ofThrow(discount.getType(), DiscountType.class);
-                switch (discountType) {
-                    case Coupon: {
-                        final Long userCouponId = discount.getId();
-                        final BigDecimal discountAmount = discount.getDiscountAmount();
-                        order.setCouponAccountId(userCouponId);
-                        order.setCouponAmount(discountAmount);
-                        if (!couponAccountService.updateUsedStatus(userCouponId, discountAmount)) {
-                            throw ServiceException.wrap("优惠券已被使用");
-                        }
-                        break;
+                if (discountType == DiscountType.Coupon) {
+                    final Long userCouponId = discount.getId();
+                    final BigDecimal discountAmount = discount.getDiscountAmount();
+                    if (!couponAccountService.updateUsedStatus(userCouponId, discountAmount)) {
+                        throw ServiceException.wrap("优惠券已被使用");
                     }
-                    default:
-                        throw ServiceException.wrap("系统繁忙，请稍后");
+                } else {
+                    throw ServiceException.wrap("系统繁忙，请稍后");
                 }
             }
         }
@@ -239,7 +266,8 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
             .setRealAmount(item.getRealAmount())
             .setProductSpecData(item.getSpecData())
             .setProductSkuCode(item.getSkuCode())
-            .setCouponAmount(item.getCouponAmount())
+            .setDiscountAmount(item.getDiscountAmount())
+            .setTotalAmount(item.getTotalAmount())
             .setProductName(item.getTitle())
             .setProductQuantity(item.getQuantity())
             .setProductPic(item.getImageUrl())
@@ -261,9 +289,8 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         final EnvConfigs configs = Env.getConfigs();
         final Long paymentAppSn = configs.getPaymentAppSn();
         final String orderSn = order.getOrderSn();
-        final BigDecimal totalAmount = order.getTotalAmount();
         String notifyUrl = String.format("%s/api/order/async", configs.getHostname());
-        final String tradeSn = paymentApi.createTrade(new CreateTradeRo(paymentAppSn, orderSn, totalAmount).setNotifyUrl(notifyUrl));
+        final String tradeSn = paymentApi.createTrade(new CreateTradeRo(paymentAppSn, orderSn, payAmount).setNotifyUrl(notifyUrl));
         this.updateById(new Order().setId(orderId).setTradeSn(tradeSn));
         return tradeSn;
     }
@@ -341,14 +368,14 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
     public OrderComplexVo selectOne(Long id) {
         final Order entity = getById(id);
         ValidUtils.notNull(entity, "未找到订单");
-        return this.convertOrderComplex(entity);
+        return this.convertComplex(entity);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public IPage<OrderComplexVo> paging(OrderPagingQo qo) {
         return baseMapper.paging(qo, qo.page())
-            .convert(this::convertOrderComplex);
+            .convert(this::convertComplex);
     }
 
     @Async
@@ -386,10 +413,11 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         return lambdaQuery().eq(Order::getOrderSn, orderSn).oneOpt();
     }
 
-    private OrderComplexVo convertOrderComplex(Order entity) {
+    private OrderComplexVo convertComplex(Order entity) {
         final OrderComplexVo result = mapping.asOrderComplexVo(entity);
 
-        final BigDecimal discountTotalAmount = LangUtils.getOrDefault(result.getDiscountAmount(), BigDecimal.ZERO).add(LangUtils.getOrDefault(result.getCouponAmount(), BigDecimal.ZERO));
+        final BigDecimal discountTotalAmount = LangUtils.getOrDefault(result.getDiscountAmount(), BigDecimal.ZERO)
+            .add(LangUtils.getOrDefault(result.getAdjustmentDiscountAmount(), BigDecimal.ZERO));
         result.setDiscountTotalAmount(discountTotalAmount);
         result.setOrderItems(orderItemService.selectListByOrderId(entity.getId()));
         return result;
@@ -445,24 +473,75 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
         updated.setLastUpdatedAt(qo.getCreatedAt());
         updated.setLastUpdater(qo.getUserId());
 
-        final BigDecimal discountAmount = updated.getDiscountAmount();
+        final BigDecimal adjustmentDiscountAmount = updated.getAdjustmentDiscountAmount();
 
         // 如果需要重新计算价格
-        if (Objects.nonNull(discountAmount) && !discountAmount.equals(entity.getDiscountAmount())) {
-            if (!LangUtils.equals(OrderStatus.PendingPayment.getCode(), entity.getOrderStatus())) {
-                throw ServiceException.wrap("订单非待付款状态, 无法调整价格");
-            }
+        if (Objects.nonNull(adjustmentDiscountAmount) && !adjustmentDiscountAmount.equals(entity.getAdjustmentDiscountAmount())) {
+            this.updateAdjustmentDiscountAmount(id, new AdjustmentDiscountQo().setAdjustmentDiscountAmount(adjustmentDiscountAmount));
+        }
+        updated.setAdjustmentDiscountAmount(null);
+        this.validUpdateById(updated);
+    }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void updateAdjustmentDiscountAmount(Long orderId, AdjustmentDiscountQo qo) {
+        final BigDecimal adjustmentDiscountAmount = qo.getAdjustmentDiscountAmount();
+
+        final Order entity = getById(orderId);
+        ValidUtils.notNull(entity, "订单不存在");
+        if (!LangUtils.equals(OrderStatus.PendingPayment.getCode(), entity.getOrderStatus())) {
+            throw ServiceException.wrap("订单非待付款状态, 无法调整价格");
+        }
+
+        // 1. 调整订单价格
+        {
+            final BigDecimal oldAdjustmentDiscountAmount = entity.getAdjustmentDiscountAmount();
             final BigDecimal payAmount = entity.getPayAmount()
-                .add(entity.getDiscountAmount())
-                .subtract(discountAmount);
+                .add(oldAdjustmentDiscountAmount)
+                .subtract(adjustmentDiscountAmount);
             if (payAmount.compareTo(BigDecimal.ZERO) < 0) {
                 throw ServiceException.wrap("应付价格不能为负数，价格调整失败");
             }
+            final Order updated = new Order();
+            updated.setId(orderId);
+            updated.setAdjustmentDiscountAmount(adjustmentDiscountAmount);
             updated.setPayAmount(payAmount);
+            final Integer changeRow = baseMapper.updateAdjustmentDiscountAmountIf(updated, oldAdjustmentDiscountAmount);
+            ValidUtils.isTrue(changeRow == 1, "价格调整失败");
+            this.log(updated);
         }
 
-        this.validUpdateById(updated);
+        // 2. 重新分解商品价格
+        {
+            BigDecimal totalAdjustmentDiscountAmount = adjustmentDiscountAmount;
+            final List<OrderItem> orderItems = orderItemService.selectListByOrderId2(orderId);
+            final int itemsCount = orderItems.size();
+            final BigDecimal itemAdjustmentDiscountAmount = totalAdjustmentDiscountAmount.divide(new BigDecimal(itemsCount), 2, RoundingMode.DOWN);
+            OrderItem updated;
+            OrderItem orderItem;
+            for (int i = 0; i < itemsCount; i++) {
+                orderItem = orderItems.get(0);
+                final BigDecimal oldAdjustmentDiscountAmount = orderItem.getAdjustmentDiscountAmount();
+                updated = new OrderItem();
+                updated.setId(orderItem.getId());
+                // 如果是最后一项
+                if (i == (itemsCount - 1)) {
+                    updated.setAdjustmentDiscountAmount(totalAdjustmentDiscountAmount);
+                } else {
+                    updated.setAdjustmentDiscountAmount(itemAdjustmentDiscountAmount);
+                }
+                final BigDecimal realAmount = orderItem.getRealAmount()
+                    .add(oldAdjustmentDiscountAmount)
+                    .subtract(updated.getAdjustmentDiscountAmount());
+                updated.setRealAmount(realAmount);
+
+                totalAdjustmentDiscountAmount = totalAdjustmentDiscountAmount.subtract(itemAdjustmentDiscountAmount);
+                final Integer changeRow = orderItemService.updateAdjustmentDiscountAmountIf(updated, oldAdjustmentDiscountAmount);
+                ValidUtils.isTrue(changeRow == 1, "价格调整失败");
+            }
+        }
+
+
     }
 
     @Override
@@ -508,13 +587,17 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
 
     @Override
     public boolean validUpdateById(Order entity) {
-        final Long orderId = entity.getId();
-        final Order oldOrder = getById(orderId);
-        final EntityCompare<Order> compare = new EntityCompare<>();
-        final List<FieldChangeDto> changes = compare.diffUseLambda(oldOrder, entity, true,
-            Order::getId, Order::getCreatedAt, Order::getCreator, Order::getLastUpdatedAt, Order::getLastUpdater);
-        changeLogService.updateLog(ChangeLogRefType.OrderLog, entity.getId(), changes);
+        this.log(entity);
         return super.validUpdateById(entity);
+    }
+
+    @Override
+    public void log(Order newOrder) {
+        final Long id = newOrder.getId();
+        final Order oldOrder = getById(id);
+        final List<FieldChangeDto> changes = new EntityCompare<Order>().diffUseLambda(oldOrder, newOrder, true,
+            Order::getId, Order::getCreatedAt, Order::getCreator, Order::getLastUpdatedAt, Order::getLastUpdater);
+        changeLogService.updateLog(ChangeLogRefType.OrderLog, id, changes);
     }
 
     private GeneralOrder createOrder(CalcOrderQo qo) {

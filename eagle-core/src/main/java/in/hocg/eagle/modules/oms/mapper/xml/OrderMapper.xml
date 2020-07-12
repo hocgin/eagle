@@ -15,4 +15,10 @@
     </where>
     ORDER BY oo.payment_time DESC, oo.created_at DESC
   </select>
+  <update id="updateAdjustmentDiscountAmountIf">
+      UPDATE oms_order oo
+      SET oo.adjustment_discount_amount = #{updated.adjustmentDiscountAmount,jdbcType=DECIMAL},
+          oo.pay_amount = #{updated.payAmount,jdbcType=DECIMAL}
+      WHERE oo.id = #{updated.id} AND oo.adjustment_discount_amount = #{ifAdjustmentDiscountAmount}
+  </update>
 </mapper>

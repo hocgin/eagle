@@ -3,6 +3,9 @@ package in.hocg.eagle.modules.oms.mapper;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -15,4 +18,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface OrderItemMapper extends BaseMapper<OrderItem> {
 
+    Integer updateAdjustmentDiscountAmountIf(@Param("updated") OrderItem updated, @Param("ifAdjustmentDiscountAmount") BigDecimal ifAdjustmentDiscountAmount);
 }
