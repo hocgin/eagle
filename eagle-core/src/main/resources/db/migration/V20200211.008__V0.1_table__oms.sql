@@ -41,14 +41,16 @@ CREATE TABLE `oms_order`
         COMMENT '收货人电话',
     receiver_post_code      VARCHAR(32)    NULL
         COMMENT '收货人邮编',
+    receiver_ad_code      VARCHAR(32)    NULL
+        COMMENT '收货人区域编码',
     receiver_province       VARCHAR(32)    NULL
-        COMMENT '省份/直辖市',
+        COMMENT '收货人省份/直辖市',
     receiver_city           VARCHAR(32)    NULL
-        COMMENT '城市',
+        COMMENT '收货人城市',
     receiver_region         VARCHAR(32)    NULL
-        COMMENT '区',
+        COMMENT '收货人区',
     receiver_detail_address VARCHAR(200)   NULL
-        COMMENT '详细地址',
+        COMMENT '收货人详细地址',
     remark                  VARCHAR(500)   NULL
         COMMENT '订单备注',
     payment_time            DATETIME(6)    NULL COMMENT '支付时间',
