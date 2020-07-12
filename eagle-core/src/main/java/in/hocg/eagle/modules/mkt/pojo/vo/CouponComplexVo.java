@@ -9,8 +9,8 @@ import in.hocg.eagle.basic.constant.datadict.CouponPlatformType;
 import in.hocg.eagle.basic.constant.datadict.CouponType;
 import in.hocg.eagle.basic.constant.datadict.CouponUseType;
 import in.hocg.eagle.basic.ext.jackson.LocalDateTimeSerializer;
-import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.ProductCategoryComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

@@ -1,14 +1,13 @@
 package in.hocg.eagle.utils.clazz;
 
+import cn.hutool.core.lang.ClassScanner;
 import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -209,53 +208,8 @@ public class ClassUtils {
      * @return
      */
     public <T> List<Class<T>> getClassAllImpl(Class<T> clazz) {
-        final ClassLoader classLoader = clazz.getClassLoader();
-        final String basePackage = classLoader.getResource("").getPath();
-        File[] files = new File(basePackage).listFiles();
-        assert files != null;
-
-        List<String> classPaths = Lists.newArrayList();
-
-        for (File file : files) {
-            if (file.isDirectory()) {
-                classPaths.addAll(listPackages(file.getName()));
-            }
-        }
-
-        return classPaths.parallelStream()
-            .map(classpath -> {
-                Class<T> clazz1 = null;
-                try {
-                    clazz1 = (Class<T>) Class.forName(classpath, false, classLoader);
-                } catch (Exception e) {
-                    log.warn("未找到类:" + classpath, e);
-                }
-                return clazz1;
-            }).filter(Objects::nonNull).filter(aClass -> {
-                if (aClass.getSuperclass() == null) {
-                    return false;
-                }
-                return Arrays.asList(aClass.getInterfaces()).contains(clazz);
-            }).collect(Collectors.toList());
+        return ClassScanner.scanPackageBySuper("", clazz).parallelStream()
+            .map(aClass -> (Class<T>) aClass).collect(Collectors.toList());
     }
 
-    private List<String> listPackages(String basePackage) {
-        List<String> classPaths = Lists.newArrayList();
-        URL url = ClassUtils.class.getClassLoader().getResource("./" + basePackage.replaceAll("\\.", "/"));
-        assert url != null;
-        File directory = new File(url.getFile());
-        final File[] files = directory.listFiles();
-        assert files != null;
-        for (File file : files) {
-            if (file.isDirectory()) {
-                classPaths.addAll(listPackages(basePackage + "." + file.getName()));
-            } else {
-                String classpath = file.getName();
-                if (".class".equals(classpath.substring(classpath.length() - ".class".length()))) {
-                    classPaths.add(basePackage + "." + classpath.replaceAll(".class", ""));
-                }
-            }
-        }
-        return classPaths;
-    }
 }

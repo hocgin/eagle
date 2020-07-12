@@ -1,25 +1,29 @@
 package in.hocg.eagle.modules.oms.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.CartItemStatus;
 import in.hocg.eagle.basic.constant.datadict.DeleteStatus;
 import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.pojo.ro.IdRo;
-import in.hocg.eagle.modules.oms.mapstruct.CartItemMapping;
 import in.hocg.eagle.modules.oms.entity.CartItem;
 import in.hocg.eagle.modules.oms.mapper.CartItemMapper;
+import in.hocg.eagle.modules.oms.mapstruct.CartItemMapping;
+import in.hocg.eagle.modules.oms.pojo.dto.cart.CartItemSaveDto;
+import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemInsertRo;
 import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemPagingQo;
-import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemSaveQo;
+import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemUpdateRo;
 import in.hocg.eagle.modules.oms.pojo.vo.cart.CartItemComplexVo;
 import in.hocg.eagle.modules.oms.service.CartItemService;
-import in.hocg.eagle.modules.pms.entity.Product;
-import in.hocg.eagle.modules.pms.entity.Sku;
-import in.hocg.eagle.modules.pms.service.ProductService;
-import in.hocg.eagle.modules.pms.service.SkuService;
-import in.hocg.eagle.modules.ums.service.AccountService;
+import in.hocg.eagle.modules.pms.api.ProductAPI;
+import in.hocg.eagle.modules.pms.api.SkuAPI;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.SkuComplexVo;
+import in.hocg.eagle.modules.ums.api.AccountAPI;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -41,32 +45,38 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, CartItem> implements CartItemService {
     private final CartItemMapping mapping;
-    private final AccountService accountService;
-    private final SkuService skuService;
-    private final ProductService productService;
+    private final AccountAPI accountService;
+    private final SkuAPI skuService;
+    private final ProductAPI productService;
 
     private Optional<CartItem> selectOneBySkuIdAndAccountId(Long skuId, Long accountId) {
         return this.lambdaQuery().eq(CartItem::getSkuId, skuId)
             .eq(CartItem::getAccountId, accountId).oneOpt();
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void saveOne(CartItemSaveQo qo) {
-        final LocalDateTime createdAt = qo.getCreatedAt();
-        final Long userId = qo.getUserId();
-        final Long skuId = qo.getSkuId();
-        final Optional<CartItem> entityOpt = selectOneBySkuIdAndAccountId(skuId, userId);
+    /**
+     * 新增或更新购物车项
+     *
+     * @param dto
+     */
+    private void insertOrUpdate(CartItemSaveDto dto) {
+        final LocalDateTime createdAt = dto.getOperationAt();
+        final Long userId = dto.getOperatorId();
+        final Long skuId = dto.getSkuId();
+        final Integer quantity = dto.getQuantity();
+
+        final Optional<CartItem> entityOpt = this.selectOneBySkuIdAndAccountId(skuId, userId);
+
         CartItem entity = new CartItem();
-        entity.setQuantity(qo.getQuantity());
+        entity.setQuantity(quantity);
         if (entityOpt.isPresent()) {
             entity.setId(entityOpt.get().getId());
             entity.setLastUpdatedAt(createdAt);
             entity.setLastUpdater(userId);
         } else {
-            final Sku sku = skuService.getById(skuId);
+            final SkuComplexVo sku = skuService.selectOne(skuId);
             ValidUtils.notNull(sku, "商品规格错误");
-            final Product product = productService.getById(skuId);
+            final ProductComplexVo product = productService.selectOne(sku.getProductId());
             ValidUtils.notNull(sku, "商品错误");
             entity.setSkuId(skuId);
             entity.setProductId(product.getId());
@@ -83,9 +93,54 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteOne(IdRo qo) {
+    public void deleteMyCartItem(IdRo qo) {
         final Long id = qo.getId();
+        final CartItem item = getById(id);
+        ValidUtils.isTrue(LangUtils.equals(item.getAccountId(), qo.getUserId()), "操作失败");
         this.removeById(id);
+    }
+
+    @Override
+    @ApiOperation("查询我的购物车 - 购物车")
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<CartItemComplexVo> pagingMyCartItem(CartItemPagingQo qo) {
+        qo.setAccountId(qo.getUserId());
+        return this.paging(qo);
+    }
+
+    @Override
+    @ApiOperation("追加我的购物车项 - 购物车")
+    @Transactional(rollbackFor = Exception.class)
+    public void insertMyCartItem(CartItemInsertRo qo) {
+        final LocalDateTime createdAt = qo.getCreatedAt();
+        final Long userId = qo.getUserId();
+        final Long skuId = qo.getSkuId();
+        final Integer quantity = qo.getQuantity();
+
+        final Optional<CartItem> entityOpt = this.selectOneBySkuIdAndAccountId(skuId, userId);
+        final CartItemSaveDto dto = new CartItemSaveDto()
+            .setSkuId(skuId)
+            .setQuantity(entityOpt.map(CartItem::getQuantity).orElse(0) + quantity)
+            .setOperatorId(userId)
+            .setOperationAt(createdAt);
+        this.insertOrUpdate(dto);
+    }
+
+    @Override
+    @ApiOperation("更新我的购物车项 - 购物车")
+    @Transactional(rollbackFor = Exception.class)
+    public void updateMyCartItem(CartItemUpdateRo qo) {
+        final LocalDateTime createdAt = qo.getCreatedAt();
+        final Long userId = qo.getUserId();
+        final Long skuId = qo.getSkuId();
+        final Integer quantity = qo.getQuantity();
+
+        final CartItemSaveDto dto = new CartItemSaveDto()
+            .setSkuId(skuId)
+            .setQuantity(quantity)
+            .setOperatorId(userId)
+            .setOperationAt(createdAt);
+        this.insertOrUpdate(dto);
     }
 
     @Override
@@ -98,13 +153,13 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
     private CartItemComplexVo convertComplex(CartItem entity) {
         CartItemComplexVo result = mapping.asCartItemComplexVo(entity);
         final Long skuId = result.getSkuId();
-        final Sku sku = skuService.getById(skuId);
+        final SkuComplexVo sku = skuService.selectOne(skuId);
         if (Objects.isNull(sku)) {
             result.setCartItemStatus(CartItemStatus.Expired.getCode());
             return result;
         }
 
-        final Product product = productService.getById(sku.getProductId());
+        final ProductComplexVo product = productService.selectOne(sku.getProductId());
         if (Objects.isNull(product)
             || LangUtils.equals(product.getPublishStatus(), ProductPublishStatus.SoldOut.getCode())
             || LangUtils.equals(product.getDeleteStatus(), DeleteStatus.On.getCode())) {
@@ -123,6 +178,7 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
         }
 
         result.setCartItemStatus(CartItemStatus.Normal.getCode());
+        result.setSkuSpec(JSON.parseArray(entity.getSkuSpecData(), CartItemComplexVo.Spec.class));
         return result;
     }
 
@@ -130,17 +186,17 @@ public class CartItemServiceImpl extends AbstractServiceImpl<CartItemMapper, Car
     public void validEntity(CartItem entity) {
         final Long accountId = entity.getAccountId();
         if (Objects.nonNull(accountId)) {
-            ValidUtils.notNull(accountService.getById(accountId), "账号错误");
+            ValidUtils.notNull(accountService.selectOne(accountId), "账号错误");
         }
 
         final Long productId = entity.getProductId();
         if (Objects.nonNull(productId)) {
-            ValidUtils.notNull(productService.getById(productId), "商品错误");
+            ValidUtils.notNull(productService.selectOne(productId), "商品错误");
         }
 
         final Long skuId = entity.getSkuId();
         if (Objects.nonNull(skuId)) {
-            ValidUtils.notNull(productService.getById(skuId), "商品规格错误");
+            ValidUtils.notNull(skuService.selectOne(skuId), "商品规格错误");
         }
 
     }

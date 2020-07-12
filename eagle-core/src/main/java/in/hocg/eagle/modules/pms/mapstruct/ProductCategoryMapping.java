@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.pms.mapstruct;
 
 import in.hocg.eagle.modules.pms.entity.ProductCategory;
 import in.hocg.eagle.modules.pms.pojo.qo.category.ProductCategorySaveQo;
-import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.ProductCategoryComplexVo;
 import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryTreeVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

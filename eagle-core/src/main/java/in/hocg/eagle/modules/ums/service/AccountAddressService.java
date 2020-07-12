@@ -7,6 +7,9 @@ import in.hocg.eagle.modules.ums.entity.AccountAddress;
 import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressPageQo;
 import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressSaveQo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.address.AccountAddressComplexVo;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /**
  * <p>
@@ -18,9 +21,23 @@ import in.hocg.eagle.modules.ums.pojo.vo.account.address.AccountAddressComplexVo
  */
 public interface AccountAddressService extends AbstractService<AccountAddress> {
 
-    void saveOne(AccountAddressSaveQo qo);
+
+    @Transactional(rollbackFor = Exception.class)
+    void saveOne(Long id, AccountAddressSaveQo qo);
 
     IPage<AccountAddressComplexVo> paging(AccountAddressPageQo qo);
 
     void deleteOne(IdRo qo);
+
+    void insertMyAddress(AccountAddressSaveQo qo);
+
+    void updateMyAddress(Long id, AccountAddressSaveQo qo);
+
+    IPage<AccountAddressComplexVo> pagingMyAddress(AccountAddressPageQo qo);
+
+    void deleteMyAddress(IdRo qo);
+
+    Optional<AccountAddressComplexVo> getDefaultByUserId(Long userId);
+
+    AccountAddressComplexVo getMyAddress(IdRo ro);
 }

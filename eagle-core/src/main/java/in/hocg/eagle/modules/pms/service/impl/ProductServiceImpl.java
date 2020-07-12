@@ -1,11 +1,15 @@
 package in.hocg.eagle.modules.pms.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.DeleteStatus;
 import in.hocg.eagle.basic.constant.datadict.FileRelType;
-import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
+import in.hocg.eagle.basic.constant.datadict.ProductPublishStatus;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
+import in.hocg.eagle.modules.com.api.ro.UploadFileRo;
+import in.hocg.eagle.modules.com.api.vo.FileVo;
 import in.hocg.eagle.modules.com.service.FileService;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.SkuComplexVo;
 import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.mapper.ProductMapper;
 import in.hocg.eagle.modules.pms.mapstruct.ProductMapping;
@@ -13,17 +17,21 @@ import in.hocg.eagle.modules.pms.mapstruct.SkuMapping;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductCompleteQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductPagingQo;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
 import in.hocg.eagle.modules.pms.service.ProductCategoryService;
 import in.hocg.eagle.modules.pms.service.ProductService;
 import in.hocg.eagle.modules.pms.service.SkuService;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.string.JsonUtils;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -46,6 +54,23 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     private final ProductMapping mapping;
     private final SkuMapping skuMapping;
 
+    @Override
+    @ApiOperation("查询正在销售的商品详情 - 商品")
+    @Transactional(rollbackFor = Exception.class)
+    public ProductComplexVo getByShoppingAndId(Long id) {
+        final ProductComplexVo result = this.selectOne(id);
+        ValidUtils.isTrue(LangUtils.equals(result.getPublishStatus(), ProductPublishStatus.Shelves.getCode()), "商品已下架");
+        return result;
+    }
+
+    @Override
+    @ApiOperation("查询正在销售的商品 - 商品列表")
+    @Transactional(rollbackFor = Exception.class)
+    public IPage<ProductComplexVo> pagingByShopping(ProductPagingQo qo) {
+        qo.setPublishStatus(ProductPublishStatus.Shelves.getCode());
+        IPage<Product> result = baseMapper.paging(qo, qo.page());
+        return result.convert(this::convertComplex);
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -73,10 +98,10 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
         }
 
         // 设置图片
-        final List<UploadFileDto.FileDto> photos = qo.getPhotos();
+        final List<UploadFileRo.FileDto> photos = qo.getPhotos();
         if (Objects.nonNull(photos)) {
-            fileService.upload(new UploadFileDto()
-                .setRelType(FileRelType.Product)
+            fileService.upload(new UploadFileRo()
+                .setRelType(FileRelType.Product.getCode())
                 .setCreator(userId)
                 .setRelId(productId)
                 .setFiles(photos));
@@ -112,8 +137,22 @@ public class ProductServiceImpl extends AbstractServiceImpl<ProductMapper, Produ
     private ProductComplexVo convertComplex(Product entity) {
         final Long productId = entity.getId();
         ProductComplexVo result = mapping.asProductComplex(entity);
-        result.setPhotos(fileService.selectListByRelTypeAndRelId2(FileRelType.Product, productId));
-        result.setSku(skuService.selectListByProductId(productId));
+        final List<FileVo> photos = fileService.selectListByRelTypeAndRelId2(FileRelType.Product.getCode(), productId);
+        result.setPhotos(photos);
+        final List<SkuComplexVo> sku = skuService.selectListByProductId(productId);
+        result.setSku(sku);
+
+        if (!CollectionUtils.isEmpty(photos)) {
+            result.setMainPhotoUrl(photos.get(0).getUrl());
+        }
+
+        if (!CollectionUtils.isEmpty(sku)) {
+            final BigDecimal minPrice = sku.parallelStream().min(Comparator.comparing(SkuComplexVo::getPrice)).map(SkuComplexVo::getPrice).orElse(null);
+            final BigDecimal maxPrice = sku.parallelStream().max(Comparator.comparing(SkuComplexVo::getPrice)).map(SkuComplexVo::getPrice).orElse(null);
+            result.setMinPrice(minPrice);
+            result.setMaxPrice(maxPrice);
+        }
+
         return result;
     }
 

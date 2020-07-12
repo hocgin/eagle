@@ -5,7 +5,7 @@ import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.pojo.ro.Insert;
 import in.hocg.eagle.basic.pojo.ro.Update;
 import in.hocg.eagle.basic.valid.EnumRange;
-import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
+import in.hocg.eagle.modules.com.api.ro.UploadFileRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -42,7 +42,7 @@ public class ProductSaveQo extends IdRo {
     @ApiModelProperty("图片")
     @NotNull(groups = {Insert.class}, message = "图片不能为空")
     @Size(min = 1, groups = {Insert.class, Update.class}, message = "图片不能为空")
-    private List<UploadFileDto.FileDto> photos;
+    private List<UploadFileRo.FileDto> photos;
     @ApiModelProperty("主视频")
     private String videoUrl;
     @ApiModelProperty("品类ID")

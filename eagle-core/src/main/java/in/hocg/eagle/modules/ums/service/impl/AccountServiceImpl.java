@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.ums.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
@@ -77,6 +78,15 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
     private final SmsManager smsManager;
 
     @Override
+    public Optional<String> getAvatarUrlByUsername(String username) {
+        if (Strings.isNullOrEmpty(username)) {
+            return Optional.empty();
+        }
+        final Optional<Account> accountOpt = this.selectOneByUsername(username);
+        return accountOpt.map(Account::getAvatar);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public IdAccountComplexVo selectOneComplexAndRole(Long id) {
         final Account account = baseMapper.selectById(id);
@@ -93,7 +103,7 @@ public class AccountServiceImpl extends AbstractServiceImpl<AccountMapper, Accou
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public AccountComplexVo selectOneComplex(Long id) {
+    public AccountComplexVo selectOne(Long id) {
         final Account entity = baseMapper.selectById(id);
         ValidUtils.notNull(entity, "账号不存在");
         return convertComplex(entity);

@@ -1,14 +1,18 @@
 package in.hocg.eagle.modules.crm.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.message.MessageContext;
 import in.hocg.eagle.basic.constant.CodeEnum;
-import in.hocg.eagle.basic.constant.datadict.*;
+import in.hocg.eagle.basic.constant.datadict.CommentTargetType;
+import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.eagle.basic.constant.datadict.NotifyType;
+import in.hocg.eagle.basic.constant.datadict.SubjectType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.ext.mybatis.tree.TreeServiceImpl;
-import in.hocg.eagle.modules.crm.mapstruct.CommentMapping;
+import in.hocg.eagle.basic.message.MessageContext;
+import in.hocg.eagle.basic.message.event.SubscriptionEvent;
 import in.hocg.eagle.modules.crm.entity.Comment;
 import in.hocg.eagle.modules.crm.mapper.CommentMapper;
+import in.hocg.eagle.modules.crm.mapstruct.CommentMapping;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.ChildCommentPagingQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPostQo;
 import in.hocg.eagle.modules.crm.pojo.qo.comment.CommentPutQo;
@@ -17,8 +21,7 @@ import in.hocg.eagle.modules.crm.pojo.vo.comment.CommentComplexVo;
 import in.hocg.eagle.modules.crm.pojo.vo.comment.RootCommentComplexVo;
 import in.hocg.eagle.modules.crm.service.CommentService;
 import in.hocg.eagle.modules.crm.service.CommentTargetService;
-import in.hocg.eagle.modules.mms.message.event.SubscriptionEvent;
-import in.hocg.eagle.modules.ums.service.AccountService;
+import in.hocg.eagle.modules.ums.api.AccountAPI;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.web.ResultUtils;
@@ -44,7 +47,7 @@ import java.util.function.Supplier;
 public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> implements CommentService {
 
     private final CommentTargetService commentTargetService;
-    private final AccountService accountService;
+    private final AccountAPI accountService;
     private final CommentMapping mapping;
 
     @Override
@@ -130,12 +133,12 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
             : "已删除";
         result.setContent(content);
         final Long parentId = entity.getParentId();
-        result.setCommenter(accountService.selectOneComplex(result.getCommenterId()));
+        result.setCommenter(accountService.selectOne(result.getCommenterId()));
         if (Objects.nonNull(parentId)) {
             final Comment pComment = baseMapper.selectById(parentId);
             final Long pCommentCreatorId = pComment.getCreator();
             result.setPCommenterId(pCommentCreatorId);
-            result.setPCommenter(accountService.selectOneComplex(pCommentCreatorId));
+            result.setPCommenter(accountService.selectOne(pCommentCreatorId));
         }
         return result;
     }

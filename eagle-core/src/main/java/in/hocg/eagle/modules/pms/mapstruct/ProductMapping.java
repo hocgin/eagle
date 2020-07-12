@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.pms.mapstruct;
 
 import in.hocg.eagle.modules.pms.entity.Product;
 import in.hocg.eagle.modules.pms.pojo.qo.ProductSaveQo;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

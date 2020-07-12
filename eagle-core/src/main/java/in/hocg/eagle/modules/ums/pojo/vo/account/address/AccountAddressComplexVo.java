@@ -32,6 +32,8 @@ public class AccountAddressComplexVo {
     private String region;
     @ApiModelProperty("详细地址(街道)")
     private String detailAddress;
+    @ApiModelProperty("区域编码")
+    private String adCode;
     @ApiModelProperty("是否默认")
     private Integer isDefault;
     @Named(idFor = "isDefault", type = NamedType.DataDict, args = {IsDefault.KEY})

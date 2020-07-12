@@ -6,11 +6,15 @@ import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.constant.datadict.CartItemStatus;
 import in.hocg.eagle.basic.ext.jackson.LocalDateTimeSerializer;
+import in.hocg.eagle.basic.pojo.ro.Insert;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by hocgin on 2020/4/18.
@@ -34,6 +38,8 @@ public class CartItemComplexVo {
     private Long skuId;
     @ApiModelProperty("规格属性")
     private String skuSpecData;
+    @ApiModelProperty("规格")
+    private List<CartItemComplexVo.Spec> skuSpec = Collections.emptyList();
     @ApiModelProperty("加入的数量")
     private Integer quantity;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -46,4 +52,14 @@ public class CartItemComplexVo {
     @Named(idFor = "cartItemStatus",
         type = NamedType.DataDict, args = {CartItemStatus.KEY})
     private String cartItemStatusName;
+
+    @Data
+    public static class Spec {
+        @NotNull(groups = {Insert.class})
+        @ApiModelProperty("规格属性")
+        private String key;
+        @NotNull(groups = {Insert.class})
+        @ApiModelProperty("规格值")
+        private String value;
+    }
 }

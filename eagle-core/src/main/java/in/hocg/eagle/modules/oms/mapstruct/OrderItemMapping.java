@@ -15,6 +15,7 @@ import org.mapstruct.Mapping;
 public interface OrderItemMapping {
 
 
+    @Mapping(target = "discountTotalAmount", ignore = true)
     @Mapping(target = "refundApplySn", ignore = true)
     @Mapping(target = "refundApplyId", ignore = true)
     @Mapping(target = "spec", ignore = true)

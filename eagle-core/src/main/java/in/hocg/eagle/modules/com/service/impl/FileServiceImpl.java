@@ -1,12 +1,14 @@
 package in.hocg.eagle.modules.com.service.impl;
 
+import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.constant.datadict.FileRelType;
 import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
+import in.hocg.eagle.basic.valid.EnumRange;
+import in.hocg.eagle.modules.com.api.ro.UploadFileRo;
 import in.hocg.eagle.modules.com.entity.File;
 import in.hocg.eagle.modules.com.mapper.FileMapper;
-import in.hocg.eagle.modules.com.pojo.qo.file.UploadFileDto;
-import in.hocg.eagle.modules.com.pojo.vo.file.FileVo;
+import in.hocg.eagle.modules.com.api.vo.FileVo;
 import in.hocg.eagle.modules.com.service.FileService;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
@@ -36,12 +38,11 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void upload(UploadFileDto dto) {
+    public void upload(UploadFileRo dto) {
         final Long relId = dto.getRelId();
         ValidUtils.notNull(relId, "上传失败，ID 错误");
-        final FileRelType relType = dto.getRelType();
-        ValidUtils.notNull(relType, "上传失败，类型错误");
-        final List<UploadFileDto.FileDto> files = dto.getFiles();
+        final FileRelType relType = CodeEnum.ofThrow(dto.getRelType(), FileRelType.class);
+        final List<UploadFileRo.FileDto> files = dto.getFiles();
         deleteAllByRelTypeAndRelId(relType, relId);
         final LocalDateTime now = LocalDateTime.now();
         final Long creator = LangUtils.getOrDefault(dto.getCreator(), GlobalConstant.SUPPER_ADMIN_USER_ID);
@@ -62,8 +63,9 @@ public class FileServiceImpl extends AbstractServiceImpl<FileMapper, File>
     }
 
     @Override
-    public List<FileVo> selectListByRelTypeAndRelId2(@NotNull FileRelType relType,
+    public List<FileVo> selectListByRelTypeAndRelId2(@EnumRange(enumClass = FileRelType.class) @NotNull Integer fileRelTypeCode,
                                                      @NotNull Long relId) {
+        final FileRelType relType = CodeEnum.ofThrow(fileRelTypeCode, FileRelType.class);
         return selectListByRelTypeAndRelIdOrderBySortDescAndCreatedAtDesc(relType, relId)
             .parallelStream()
             .map(item -> new FileVo().setFilename(item.getFilename()).setUrl(item.getFileUrl()))

@@ -1,10 +1,17 @@
 package in.hocg.eagle.modules.bmw.service.impl;
 
-import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.ext.lang.SNCode;
+import in.hocg.eagle.basic.ext.web.SpringContext;
+import in.hocg.eagle.modules.bmw.api.ro.CreateTradeRo;
+import in.hocg.eagle.modules.bmw.api.ro.GoPayRo;
+import in.hocg.eagle.modules.bmw.api.ro.QueryPaymentWayRo;
+import in.hocg.eagle.modules.bmw.api.vo.PaymentWayVo;
+import in.hocg.eagle.modules.bmw.api.vo.QueryAsyncVo;
+import in.hocg.eagle.modules.bmw.api.vo.RefundStatusSync;
+import in.hocg.eagle.modules.bmw.api.vo.TradeStatusSync;
 import in.hocg.eagle.modules.bmw.datastruct.PaymentMapping;
 import in.hocg.eagle.modules.bmw.datastruct.PaymentTradeMapping;
 import in.hocg.eagle.modules.bmw.datastruct.RefundRecordMapping;
@@ -17,8 +24,13 @@ import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoPaymentResponse;
 import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoRefundResponse;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.AllInMessageResolve;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
-import in.hocg.eagle.modules.bmw.pojo.ro.*;
-import in.hocg.eagle.modules.bmw.pojo.vo.*;
+import in.hocg.eagle.modules.bmw.pojo.ro.GoRefundRo;
+import in.hocg.eagle.modules.bmw.pojo.ro.PaymentMessageRo;
+import in.hocg.eagle.modules.bmw.pojo.ro.RefundMessageRo;
+import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
+import in.hocg.eagle.modules.bmw.pojo.vo.GoRefundVo;
+import in.hocg.eagle.modules.bmw.pojo.vo.NotifyAppAsyncVo;
+import in.hocg.eagle.modules.bmw.pojo.vo.WaitPaymentTradeVo;
 import in.hocg.eagle.modules.bmw.service.*;
 import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
@@ -39,9 +51,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Created by hocgin on 2020/6/7.
@@ -76,6 +90,14 @@ public class PaymentServiceImpl implements PaymentService {
         final PaymentTrade trade = paymentTradeService.selectOneByTradeSn(tradeSn)
             .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
         final Long tradeId = trade.getId();
+
+        // 如果是初始化状态可直接关闭
+        if (TradeStatus.Init.eq(trade.getTradeStatus())) {
+            PaymentTrade update = new PaymentTrade().setFinishAt(now).setTradeStatus(TradeStatus.Closed.getCode()).setUpdatedAt(now).setUpdatedIp(clientIp);
+            boolean isOk = paymentTradeService.updateOneByIdAndTradeStatus(update, tradeId, TradeStatus.Init.getCode());
+            ValidUtils.isTrue(isOk, "系统繁忙");
+            return;
+        }
 
         PaymentTrade update = new PaymentTrade().setFinishAt(now).setTradeStatus(TradeStatus.Closed.getCode()).setUpdatedAt(now).setUpdatedIp(clientIp);
         boolean isOk = paymentTradeService.updateOneByIdAndTradeStatus(update, tradeId, TradeStatus.Wait.getCode());
@@ -306,23 +328,48 @@ public class PaymentServiceImpl implements PaymentService {
         final Long appId = trade.getAppId();
         final PaymentApp paymentApp = paymentAppService.getById(appId);
         ValidUtils.notNull(paymentApp, "未找到接入应用");
-        final Long paymentPlatformId = trade.getPaymentPlatformId();
-        final PaymentPlatform paymentPlatform = paymentPlatformService.getById(paymentPlatformId);
-        if (Objects.isNull(paymentPlatform)) {
-            log.info("交易单:[{}]上的支付平台[id={}]未找到", trade.getTradeSn(), paymentPlatformId);
-            ValidUtils.fail("交易单支付平台未找到");
+        final Long platformId = trade.getPaymentPlatformId();
+        log.info("交易单:[{}]上的支付平台[id={}]", trade.getTradeSn(), platformId);
+
+        Integer platformType = null;
+        if (Objects.nonNull(platformId)) {
+            platformType = LangUtils.callIfNotNull(platformId, paymentPlatformService::getById)
+                .map(PaymentPlatform::getPlatformType).orElse(null);
         }
 
         return new QueryAsyncVo<TradeStatusSync>()
-            .setPlatformType(paymentPlatform.getPlatformType())
+            .setPlatformType(platformType)
             .setData(new TradeStatusSync()
                 .setOpenid(trade.getWxOpenid())
                 .setOutTradeSn(trade.getOutTradeSn())
                 .setTradeSn(trade.getTradeSn())
                 .setTotalFee(trade.getTotalFee())
                 .setTradeStatus(trade.getTradeStatus())
+                .setCreatedAt(trade.getCreatedAt())
+                .setExpireAt(trade.getExpireAt())
                 .setPaymentWay(trade.getPaymentWay())
                 .setPaymentAt(trade.getPaymentAt()));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public WaitPaymentTradeVo getWaitPaymentTrade(String tradeSn) {
+        final PaymentTrade trade = paymentTradeService.selectOneByTradeSn(tradeSn)
+            .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
+        return new WaitPaymentTradeVo()
+            .setTotalFee(trade.getTotalFee())
+            .setExpireAt(trade.getExpireAt())
+            .setCreatedAt(trade.getCreatedAt());
+    }
+
+    @Override
+    public List<PaymentWayVo> queryPaymentWay(QueryPaymentWayRo ro) {
+        // todo: 后续抽成数据库配置方式。(支付方式条件表 + 条件x支付方式表)
+        return Arrays.stream(PaymentWay.values())
+            .map(paymentWay -> new PaymentWayVo()
+                .setName(paymentWay.getName())
+                .setCode(paymentWay.getCode()))
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -355,8 +402,8 @@ public class PaymentServiceImpl implements PaymentService {
                 .setRefundAt(refund.getRefundAt()));
     }
 
-    @Override
     @Async
+    @Override
     @Transactional(propagation = Propagation.NESTED, rollbackFor = Exception.class)
     public void sendAsyncNotifyApp(Long notifyAppId) {
         // 最大通知次数

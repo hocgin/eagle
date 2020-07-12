@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.oms.mapstruct;
 
 import in.hocg.eagle.modules.oms.entity.CartItem;
-import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemSaveQo;
+import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemUpdateRo;
 import in.hocg.eagle.modules.oms.pojo.vo.cart.CartItemComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -26,7 +26,7 @@ public interface CartItemMapping {
     @Mapping(target = "lastUpdater", ignore = true)
     @Mapping(target = "productId", ignore = true)
     @Mapping(target = "skuSpecData", ignore = true)
-    CartItem asCartItem(CartItemSaveQo qo);
+    CartItem asCartItem(CartItemUpdateRo qo);
 
     @Mapping(target = "cartItemStatusName", ignore = true)
     @Mapping(target = "cartItemStatus", ignore = true)

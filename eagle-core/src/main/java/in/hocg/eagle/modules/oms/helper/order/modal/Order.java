@@ -81,5 +81,5 @@ public interface Order<T extends Product> {
      * @param allDiscounts
      * @return
      */
-    List<Discount> getUsableDiscount(List<Discount> allDiscounts);
+    List<Discount> getUsableDiscount(List<? extends Discount> allDiscounts);
 }

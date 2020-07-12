@@ -83,7 +83,7 @@ public abstract class AbsOrder<T extends Product>
     }
 
     @Override
-    public List<Discount> getUsableDiscount(List<Discount> allDiscounts) {
+    public List<Discount> getUsableDiscount(List<? extends Discount> allDiscounts) {
         List<Discount> usableDiscounts = Lists.newArrayList();
         for (Discount discount : allDiscounts) {
             List<Product> products = discount.match(this);

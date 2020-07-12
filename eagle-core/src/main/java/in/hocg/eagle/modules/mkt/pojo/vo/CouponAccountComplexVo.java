@@ -1,7 +1,6 @@
 package in.hocg.eagle.modules.mkt.pojo.vo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.aspect.named.InjectNamed;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
@@ -10,13 +9,14 @@ import in.hocg.eagle.basic.constant.datadict.CouponType;
 import in.hocg.eagle.basic.constant.datadict.CouponUseStatus;
 import in.hocg.eagle.basic.constant.datadict.CouponUseType;
 import in.hocg.eagle.basic.ext.jackson.LocalDateTimeSerializer;
-import in.hocg.eagle.modules.pms.pojo.vo.category.ProductCategoryComplexVo;
-import in.hocg.eagle.modules.pms.pojo.vo.product.ProductComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.ProductCategoryComplexVo;
+import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -88,7 +88,7 @@ public class CouponAccountComplexVo {
     private String useTypeName;
 
     @ApiModelProperty("可用商品品类")
-    private List<ProductCategoryComplexVo> canUseProductCategory = Lists.newArrayList();
+    private List<ProductCategoryComplexVo> canUseProductCategory = Collections.emptyList();
     @ApiModelProperty("可用商品")
-    private List<ProductComplexVo> canUseProduct = Lists.newArrayList();
+    private List<ProductComplexVo> canUseProduct = Collections.emptyList();
 }

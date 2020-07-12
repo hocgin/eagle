@@ -1,15 +1,20 @@
 package in.hocg.eagle.basic.result;
 
+import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.utils.UrlUtils;
 import in.hocg.eagle.utils.string.JsonUtils;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.Resource;
+import org.springframework.http.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.net.URI;
 
 /**
  * @author hocgin
@@ -80,15 +85,71 @@ public class Result<T> implements Serializable {
         return JsonUtils.toJSONString(this);
     }
 
-    public static ResponseEntity<InputStreamResource> stream(InputStream is) {
+    public static ResponseEntity notFound() {
+        return ResponseEntity.notFound().build();
+    }
+
+    public static <T> ResponseEntity download(T t, String filename) {
+        Resource resource = Result.asResource(t);
+
         return ResponseEntity
             .ok()
             .headers(new HttpHeaders() {{
-                add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
-                add(HttpHeaders.PRAGMA, "no-cache");
-                add(HttpHeaders.EXPIRES, "0");
+                setContentDisposition(ContentDisposition.builder("attachment").filename(filename).build());
+                setCacheControl(CacheControl.noCache());
+                setPragma("no-cache");
+                setExpires(0L);
             }})
-            .contentType(MediaType.parseMediaType("application/octet-stream"))
-            .body(new InputStreamResource(is));
+            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+            .body(resource);
+    }
+
+    public static <T> ResponseEntity download(T t) {
+        return Result.download(t, null);
+    }
+
+    public static <T> ResponseEntity preview(T t) {
+        return Result.preview(t, null);
+    }
+
+    public static <T> ResponseEntity preview(T t, MediaType mediaType) {
+        Resource resource = Result.asResource(t);
+
+        return ResponseEntity
+            .ok()
+            .headers(new HttpHeaders() {{
+                setContentDisposition(ContentDisposition.builder("inline").build());
+                setCacheControl(CacheControl.noCache());
+                setPragma("no-cache");
+                setExpires(0L);
+            }})
+            .contentType(mediaType)
+            .body(resource);
+    }
+
+    private static <T> Resource asResource(T t) {
+        Resource resource;
+        if (t instanceof InputStream) {
+            resource = new InputStreamResource((InputStream) t);
+        } else if (t instanceof Resource) {
+            resource = (Resource) t;
+        } else if (t instanceof File) {
+            resource = new FileSystemResource((File) t);
+        } else if (t instanceof URI || t instanceof String) {
+            URI uri;
+            if (t instanceof String) {
+                uri = URI.create(((String) t));
+            } else {
+                uri = (URI) t;
+            }
+            try {
+                resource = new InputStreamResource(UrlUtils.toInputStream(uri));
+            } catch (IOException e) {
+                throw ServiceException.wrap("读取链接异常");
+            }
+        } else {
+            throw new UnsupportedOperationException();
+        }
+        return resource;
     }
 }

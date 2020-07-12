@@ -39,8 +39,11 @@ public class OrderItemComplexVo {
     private List<KeyValue> spec;
     @ApiModelProperty("商品购买规格")
     private String productSpecData;
+
+    @ApiModelProperty("[计算型]原总价=销售价格x购买数量")
+    private BigDecimal totalAmount;
     @ApiModelProperty("优惠券均摊金额")
-    private BigDecimal couponAmount;
+    private BigDecimal discountTotalAmount;
     @ApiModelProperty("优惠后金额")
     private BigDecimal realAmount;
 

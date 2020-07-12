@@ -9,11 +9,16 @@
     <relativePath>../eagle-parent/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
+  <packaging>pom</packaging>
 
   <name>Eagle :: Generator</name>
   <artifactId>eagle-generator</artifactId>
 
   <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>eagle-core</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.baomidou</groupId>
       <artifactId>mybatis-plus-generator</artifactId>
@@ -25,10 +30,6 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>in.hocg</groupId>
-      <artifactId>eagle-core</artifactId>
     </dependency>
   </dependencies>
 </project>

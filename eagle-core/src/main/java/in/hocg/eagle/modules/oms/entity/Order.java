@@ -32,138 +32,95 @@ public class Order extends AbstractEntity<Order> {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
-    /**
-     * 账号ID
-     */
+    @ApiModelProperty("账号ID")
     @TableField("account_id")
     private Long accountId;
-    /**
-     * 订单编号
-     */
+    @ApiModelProperty("订单编号")
     @TableField("order_sn")
     private String orderSn;
     @ApiModelProperty("交易单号")
     @TableField("trade_sn")
     private String tradeSn;
-    /**
-     * 优惠券ID
-     * Coupon Account ID
-     */
+    @ApiModelProperty("优惠券ID")
     @TableField("coupon_account_id")
     private Long couponAccountId;
-    /**
-     * 优惠券抵扣金额
-     */
-    @TableField("coupon_amount")
-    private BigDecimal couponAmount;
-    /**
-     * 运费金额
-     */
+
+    @TableField("coupon_discount_amount")
+    @ApiModelProperty("优惠券抵扣金额")
+    private BigDecimal couponDiscountAmount;
+    @TableField("adjustment_discount_amount")
+    @ApiModelProperty("后台调整优惠")
+    private BigDecimal adjustmentDiscountAmount;
     @TableField("freight_amount")
+    @ApiModelProperty("运费金额")
     private BigDecimal freightAmount;
-    /**
-     * 管理员后台调整订单使用的折扣金额
-     */
-    @TableField("discount_amount")
-    private BigDecimal discountAmount;
-    /**
-     * [计算型]订单总金额
-     */
     @TableField("total_amount")
+    @ApiModelProperty("[计算型]订单原总金额")
     private BigDecimal totalAmount;
-    /**
-     * [计算型]应付金额（实际支付金额）
-     */
+    @TableField("discount_amount")
+    @ApiModelProperty("[计算型]优惠总金额(不含后台调整优惠)")
+    private BigDecimal discountAmount;
     @TableField("pay_amount")
+    @ApiModelProperty("[计算型]应付金额(实际支付金额)=订单原总金额-优惠总金额-后台调整优惠+运费金额")
     private BigDecimal payAmount;
-    /**
-     * 自动确认时间（天）
-     */
+
+    @ApiModelProperty("自动确认时间（天）")
     @TableField("auto_confirm_day")
     private Integer autoConfirmDay;
-    /**
-     * 支付方式：[0:未支付；1:支付宝；2:微信]
-     */
+    @ApiModelProperty("支付方式：[0:未支付；1:支付宝；2:微信]")
     @TableField("pay_type")
     private Integer payType;
-    /**
-     * 订单来源：[0:PC订单；1:APP订单]
-     */
+    @ApiModelProperty("订单来源：[0:PC订单；1:APP订单]")
     @TableField("source_type")
     private Integer sourceType;
-    /**
-     * 订单状态：[0:待付款；1:待发货；2:已发货；3:已完成；4:已关闭；5:无效订单]
-     */
+    @ApiModelProperty("订单状态：[0:待付款；1:待发货；2:已发货；3:已完成；4:已关闭；5:无效订单]")
     @TableField("order_status")
     private Integer orderStatus;
-    /**
-     * 确认收货状态：[0:未确认；1:已确认]
-     */
+    @ApiModelProperty("确认收货状态：[0:未确认；1:已确认]")
     @TableField("confirm_status")
     private Integer confirmStatus;
-    /**
-     * 删除状态：[0:未删除；1:已删除]
-     */
+    @ApiModelProperty("删除状态：[0:未删除；1:已删除]")
     @TableField("delete_status")
     private Integer deleteStatus;
-    /**
-     * 收货人姓名
-     */
+
+    @ApiModelProperty("收货人姓名")
     @TableField("receiver_name")
     private String receiverName;
-    /**
-     * 收货人电话
-     */
+    @ApiModelProperty("收货人电话")
     @TableField("receiver_phone")
     private String receiverPhone;
-    /**
-     * 收货人邮编
-     */
+    @ApiModelProperty("收货人邮编")
     @TableField("receiver_post_code")
     private String receiverPostCode;
-    /**
-     * 省份/直辖市
-     */
+    @ApiModelProperty("收货人省份/直辖市")
     @TableField("receiver_province")
     private String receiverProvince;
-    /**
-     * 城市
-     */
+    @ApiModelProperty("收货人城市")
     @TableField("receiver_city")
     private String receiverCity;
-    /**
-     * 区
-     */
+    @ApiModelProperty("收货人区")
     @TableField("receiver_region")
     private String receiverRegion;
-    /**
-     * 详细地址
-     */
+    @TableField("receiver_ad_code")
+    @ApiModelProperty("收货人区域编码")
+    private String receiverAdCode;
+    @ApiModelProperty("收货人详细地址")
     @TableField("receiver_detail_address")
     private String receiverDetailAddress;
-    /**
-     * 订单备注
-     */
+
+    @ApiModelProperty("订单备注")
     @TableField("remark")
     private String remark;
-    /**
-     * 支付时间
-     */
+    @ApiModelProperty("支付时间")
     @TableField("payment_time")
     private LocalDateTime paymentTime;
-    /**
-     * 发货时间
-     */
+    @ApiModelProperty("发货时间")
     @TableField("delivery_time")
     private LocalDateTime deliveryTime;
-    /**
-     * 确认收货时间
-     */
+    @ApiModelProperty("确认收货时间")
     @TableField("receive_time")
     private LocalDateTime receiveTime;
-    /**
-     * 评价时间
-     */
+    @ApiModelProperty("评价时间")
     @TableField("comment_time")
     private LocalDateTime commentTime;
     @TableField("creator")

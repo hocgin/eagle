@@ -49,6 +49,9 @@ public class AccountAddress extends AbstractEntity<AccountAddress> {
     @ApiModelProperty("城市")
     @TableField("city")
     private String city;
+    @ApiModelProperty("区域编码")
+    @TableField("ad_code")
+    private String adCode;
     @ApiModelProperty("区")
     @TableField("region")
     private String region;

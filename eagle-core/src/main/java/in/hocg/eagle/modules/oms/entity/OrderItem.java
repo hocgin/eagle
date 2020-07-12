@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import in.hocg.eagle.basic.ext.mybatis.core.AbstractEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -30,66 +30,45 @@ public class OrderItem extends AbstractEntity<OrderItem> {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
-    /**
-     * 订单ID
-     */
     @TableField("order_id")
+    @ApiModelProperty("订单ID")
     private Long orderId;
-    /**
-     * 商品ID
-     */
     @TableField("product_id")
+    @ApiModelProperty("商品ID")
     private Long productId;
-    /**
-     * 商品主图
-     */
     @TableField("product_pic")
+    @ApiModelProperty("商品主图")
     private String productPic;
-    /**
-     * 商品名称
-     */
     @TableField("product_name")
+    @ApiModelProperty("商品名称")
     private String productName;
-    /**
-     * 销售价格
-     */
     @TableField("product_price")
+    @ApiModelProperty("销售价格")
     private BigDecimal productPrice;
-    /**
-     * 购买数量
-     */
     @TableField("product_quantity")
+    @ApiModelProperty("购买数量")
     private Integer productQuantity;
-    /**
-     * 商品SKU ID
-     */
     @TableField("product_sku_id")
+    @ApiModelProperty("商品SKU ID")
     private Long productSkuId;
-    /**
-     * 商品SKU条码
-     */
     @TableField("product_sku_code")
+    @ApiModelProperty("商品SKU条码")
     private String productSkuCode;
-    /**
-     * 优惠券优惠分解金额
-     */
-    @TableField("coupon_amount")
-    private BigDecimal couponAmount;
-    /**
-     * [计算型]该商品经过优惠后的分解金额(总价)
-     */
-    @TableField("real_amount")
-    private BigDecimal realAmount;
-    /**
-     * 商品规格:[{"key":"颜色","value":"颜色"},{"key":"容量","value":"4G"}]
-     */
     @TableField("product_spec_data")
+    @ApiModelProperty("商品规格:[{\"key\":\"颜色\",\"value\":\"颜色\"},{\"key\":\"容量\",\"value\":\"4G\"}]")
     private String productSpecData;
 
-
-    @Override
-    public Serializable pkVal() {
-        return this.id;
-    }
+    @TableField("total_amount")
+    @ApiModelProperty("[计算型]原总价=销售价格x购买数量")
+    private BigDecimal totalAmount;
+    @ApiModelProperty("后台调整优惠")
+    @TableField("adjustment_discount_amount")
+    private BigDecimal adjustmentDiscountAmount;
+    @TableField("discount_amount")
+    @ApiModelProperty("优惠分解金额(不含后台调整优惠)")
+    private BigDecimal discountAmount;
+    @TableField("real_amount")
+    @ApiModelProperty("[计算型]该商品经过优惠后的分解金额(实际支付金额)=原总价-后台调整优惠-优惠分解金额")
+    private BigDecimal realAmount;
 
 }

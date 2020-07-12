@@ -14,4 +14,5 @@ import lombok.Data;
 public class ProductPagingQo extends PageRo {
     @ApiModelProperty("发布状态")
     private Integer publishStatus;
+    private String keyword;
 }

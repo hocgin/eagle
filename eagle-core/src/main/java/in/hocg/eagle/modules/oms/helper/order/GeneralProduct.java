@@ -1,13 +1,19 @@
 package in.hocg.eagle.modules.oms.helper.order;
 
 
+import com.google.common.collect.Maps;
 import in.hocg.eagle.modules.oms.helper.order.modal.AbsProduct;
+import in.hocg.eagle.modules.oms.helper.order.modal.Discount;
+import in.hocg.eagle.utils.LangUtils;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Map;
+import java.util.Optional;
 import java.util.StringJoiner;
 
 /**
@@ -39,11 +45,44 @@ public class GeneralProduct extends AbsProduct {
 
     @ApiModelProperty("购买数量")
     private Integer productQuantity;
+    /**
+     * 保存每个优惠券在这个商品上优惠到金额
+     * <优惠券类型:id, 优惠金额>
+     */
+    private final Map<Serializable, BigDecimal> useDiscountPriceMaps = Maps.newHashMap();
 
     public GeneralProduct(BigDecimal productPrice, Integer productQuantity) {
         super(productPrice.multiply(new BigDecimal(productQuantity)));
         this.productPrice = productPrice;
         this.productQuantity = productQuantity;
+    }
+
+    /**
+     * [保存每种优惠优惠的金额] 禁止外部调用
+     * @param discount
+     * @param useDiscountPrice
+     */
+    protected void keepUseDiscountPrice(Discount discount, BigDecimal useDiscountPrice) {
+        final String key = discount.getClass().getName() + ":" + discount.id();
+        this.useDiscountPriceMaps.put(key, useDiscountPrice);
+    }
+
+    public Optional<BigDecimal> getUseDiscountPrice(Discount discount) {
+        final String key = discount.getClass().getName() + ":" + discount.id();
+        return Optional.ofNullable(this.useDiscountPriceMaps.get(key));
+    }
+
+    public Optional<BigDecimal> getUseDiscountPrice(Class<Discount> discountClass) {
+        final String prefixKey = discountClass.getName() + ":";
+        BigDecimal total = null;
+        for (Map.Entry<Serializable, BigDecimal> entry : this.useDiscountPriceMaps.entrySet()) {
+            final String key = (String) entry.getKey();
+            final BigDecimal value = entry.getValue();
+            if (key.startsWith(prefixKey)) {
+                total = LangUtils.getOrDefault(total, BigDecimal.ZERO).add(LangUtils.getOrDefault(value, BigDecimal.ZERO));
+            }
+        }
+        return Optional.ofNullable(total);
     }
 
     public String toStrings() {

@@ -70,6 +70,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 支付网关
                 "/payment/**",
                 "/api/order/async/*",
+
+                // = APP
+                "/api-mini/**",
+
                 // 变更密码:验证码
                 "/api/change-password:sms-code",
                 // 登录:密码

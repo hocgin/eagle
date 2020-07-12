@@ -1,9 +1,7 @@
 package in.hocg.eagle.modules.oms.mapstruct;
 
 import in.hocg.eagle.modules.oms.entity.Order;
-import in.hocg.eagle.modules.oms.pojo.dto.order.OrderItemDto;
 import in.hocg.eagle.modules.oms.pojo.qo.order.UpdateOrderQo;
-import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -18,6 +16,7 @@ import org.mapstruct.Mapping;
 public interface OrderMapping {
 
 
+    @Mapping(target = "discountTotalAmount", ignore = true)
     @Mapping(target = "couponId", ignore = true)
     @Mapping(target = "orderStatusName", ignore = true)
     @Mapping(target = "sourceTypeName", ignore = true)
@@ -27,19 +26,13 @@ public interface OrderMapping {
     @Mapping(target = "orderItems", ignore = true)
     OrderComplexVo asOrderComplexVo(Order entity);
 
-    @Mapping(target = "spec", ignore = true)
-    @Mapping(target = "title", source = "dto.productName")
-    @Mapping(target = "specData", source = "dto.productSpecData")
-    @Mapping(target = "skuId", source = "dto.productSkuId")
-    @Mapping(target = "skuCode", source = "dto.productSkuCode")
-    @Mapping(target = "quantity", source = "dto.productQuantity")
-    @Mapping(target = "price", source = "dto.productPrice")
-    @Mapping(target = "imageUrl", source = "dto.productPic")
-    CalcOrderVo.OrderItem asCalcOrderVoOrderItem(OrderItemDto dto);
-
+    @Mapping(target = "discountAmount", ignore = true)
+    @Mapping(target = "couponAccountId", ignore = true)
+    @Mapping(target = "couponDiscountAmount", ignore = true)
+    @Mapping(target = "adjustmentDiscountAmount", ignore = true)
+    @Mapping(target = "tradeSn", ignore = true)
     @Mapping(target = "lastUpdater", source = "")
     @Mapping(target = "orderStatus", source = "")
-    @Mapping(target = "couponAccountId", ignore = true)
     @Mapping(target = "orderSn", ignore = true)
     @Mapping(target = "receiveTime", ignore = true)
     @Mapping(target = "remark", ignore = true)
@@ -53,10 +46,10 @@ public interface OrderMapping {
     @Mapping(target = "deliveryTime", ignore = true)
     @Mapping(target = "deleteStatus", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    @Mapping(target = "couponAmount", ignore = true)
     @Mapping(target = "confirmStatus", ignore = true)
     @Mapping(target = "commentTime", ignore = true)
     @Mapping(target = "autoConfirmDay", ignore = true)
     @Mapping(target = "accountId", ignore = true)
     Order asOrder(UpdateOrderQo qo);
+
 }

@@ -1,6 +1,5 @@
 package in.hocg.eagle.modules.bmw.pojo.vo;
 
-import in.hocg.eagle.modules.bmw.helper.payment.pojo.response.GoPaymentResponse;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -26,6 +25,6 @@ public class GoPayVo {
     @ApiModelProperty("二维码")
     private String qrCode;
     @ApiModelProperty("微信 - JSAPI")
-    private GoPaymentResponse.WxJSAPI wxJSApi;
+    private Object wxJSApi;
     private String wxNative;
 }

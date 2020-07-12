@@ -10,6 +10,11 @@
       <if test="qo.publishStatus != null ">
         AND pp.publish_status = #{qo.publishStatus}
       </if>
+      <if test="qo.keyword != null ">
+        <bind name="keyword" value="'%'+qo.keyword+'%'"/>
+        AND (pp.title LIKE #{keyword}
+        OR pp.attrs LIKE #{keyword})
+      </if>
     </where>
   </select>
 

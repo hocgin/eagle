@@ -31,13 +31,15 @@ public class OrderItemDto {
     private String productSpecData;
     @ApiModelProperty("商品品类ID")
     private Long productCategoryId;
-
-
     @ApiModelProperty("购买数量")
     private Integer productQuantity;
 
     @ApiModelProperty("优惠券优惠分解金额")
-    private BigDecimal couponAmount;
+    private BigDecimal couponDiscountAmount;
+    @ApiModelProperty("优惠分解金额")
+    private BigDecimal discountAmount;
+    @ApiModelProperty("原总价=销售价格x购买数量")
+    private BigDecimal totalAmount;
     @ApiModelProperty("商品经过优惠后的金额")
     private BigDecimal realAmount;
 

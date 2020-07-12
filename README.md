@@ -13,6 +13,7 @@
 
 **内网穿透**请参考 `scripts/proxy.sh` 内网穿透(`仅支持MacOS`)
 
+Or `sh scripts/docker-compose.sh`
 ### Eagle UI
 1. 基础环境，Node
 2. `npm install`

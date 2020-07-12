@@ -1,16 +1,20 @@
 package in.hocg.eagle.modules.bmw.apiimpl;
 
 import in.hocg.eagle.modules.bmw.api.PaymentAPI;
-import in.hocg.eagle.modules.bmw.pojo.ro.CreateTradeRo;
-import in.hocg.eagle.modules.bmw.pojo.ro.GoPayRo;
+import in.hocg.eagle.modules.bmw.api.ro.CreateTradeRo;
+import in.hocg.eagle.modules.bmw.api.ro.GoPayRo;
+import in.hocg.eagle.modules.bmw.api.ro.QueryPaymentWayRo;
+import in.hocg.eagle.modules.bmw.api.vo.PaymentWayVo;
+import in.hocg.eagle.modules.bmw.api.vo.QueryAsyncVo;
+import in.hocg.eagle.modules.bmw.api.vo.RefundStatusSync;
+import in.hocg.eagle.modules.bmw.api.vo.TradeStatusSync;
 import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
-import in.hocg.eagle.modules.bmw.pojo.vo.QueryAsyncVo;
-import in.hocg.eagle.modules.bmw.pojo.vo.RefundStatusSync;
-import in.hocg.eagle.modules.bmw.pojo.vo.TradeStatusSync;
 import in.hocg.eagle.modules.bmw.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by hocgin on 2020/6/7.
@@ -31,6 +35,11 @@ public class PaymentAPIImpl implements PaymentAPI {
     @Override
     public String createTrade(CreateTradeRo ro) {
         return paymentService.createTrade(ro);
+    }
+
+    @Override
+    public List<PaymentWayVo> queryPaymentWay(QueryPaymentWayRo ro) {
+        return paymentService.queryPaymentWay(ro);
     }
 
     @Override

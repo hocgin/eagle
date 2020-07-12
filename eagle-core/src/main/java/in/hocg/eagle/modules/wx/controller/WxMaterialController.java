@@ -28,17 +28,17 @@ public class WxMaterialController {
 
     @GetMapping("/video/{appid}/{mediaId}")
     public ResponseEntity video(@PathVariable("appid") String appid, @PathVariable String mediaId) {
-        return Result.stream(service.getVideoStream(appid, mediaId));
+        return Result.download(service.getVideoStream(appid, mediaId));
     }
 
     @GetMapping("/voice/{appid}/{mediaId}")
     public ResponseEntity voice(@PathVariable("appid") String appid, @PathVariable String mediaId) {
-        return Result.stream(service.getVoiceStream(appid, mediaId));
+        return Result.download(service.getVoiceStream(appid, mediaId));
     }
 
     @GetMapping("/image/{appid}/{mediaId}")
     public ResponseEntity image(@PathVariable("appid") String appid, @PathVariable String mediaId) {
-        return Result.stream(service.getImageStream(appid, mediaId));
+        return Result.download(service.getImageStream(appid, mediaId));
     }
 
     @UseLogger("上传音频 - 微信素材")

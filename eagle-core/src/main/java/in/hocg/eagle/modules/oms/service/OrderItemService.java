@@ -4,6 +4,7 @@ import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 import in.hocg.eagle.modules.oms.entity.OrderItem;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderItemComplexVo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -27,4 +28,6 @@ public interface OrderItemService extends AbstractService<OrderItem> {
     OrderItemComplexVo selectOne(Long id);
 
     List<OrderItem> selectListByOrderId2(Long orderId);
+
+    Integer updateAdjustmentDiscountAmountIf(OrderItem updated, BigDecimal ifAdjustmentDiscountAmount);
 }

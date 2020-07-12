@@ -2,13 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="in.hocg.eagle.modules.oms.mapper.OrderMapper">
 
-    <select id="paging" resultType="in.hocg.eagle.modules.oms.entity.Order">
-        SELECT oo.* FROM oms_order oo
-        <where>
-            oo.delete_status = 0
-            <if test="qo.accountId != null">
-                AND oo.account_id = #{qo.accountId}
-            </if>
-        </where>
-    </select>
+  <select id="paging" resultType="in.hocg.eagle.modules.oms.entity.Order">
+    SELECT oo.* FROM oms_order oo
+    <where>
+      oo.delete_status = 0
+      <if test="qo.accountId != null">
+        AND oo.account_id = #{qo.accountId}
+      </if>
+      <if test="qo.orderStatus != null">
+        AND oo.order_status = #{qo.orderStatus}
+      </if>
+    </where>
+    ORDER BY oo.payment_time DESC, oo.created_at DESC
+  </select>
+  <update id="updateAdjustmentDiscountAmountIf">
+      UPDATE oms_order oo
+      SET oo.adjustment_discount_amount = #{updated.adjustmentDiscountAmount,jdbcType=DECIMAL},
+          oo.pay_amount = #{updated.payAmount,jdbcType=DECIMAL}
+      WHERE oo.id = #{updated.id} AND oo.adjustment_discount_amount = #{ifAdjustmentDiscountAmount}
+  </update>
 </mapper>

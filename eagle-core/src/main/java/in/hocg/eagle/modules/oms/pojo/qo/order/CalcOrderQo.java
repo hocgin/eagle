@@ -1,6 +1,5 @@
 package in.hocg.eagle.modules.oms.pojo.qo.order;
 
-import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.pojo.ro.BaseRo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -9,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,7 +23,7 @@ public class CalcOrderQo extends BaseRo {
     @NotNull
     @Size(min = 1)
     @ApiModelProperty("订单项")
-    private List<Item> items = Lists.newArrayList();
+    private List<Item> items = Collections.emptyList();
     @ApiModelProperty("优惠券ID")
     private Long userCouponId;
     /**
