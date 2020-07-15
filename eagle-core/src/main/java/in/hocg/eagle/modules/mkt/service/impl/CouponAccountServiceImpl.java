@@ -107,6 +107,11 @@ public class CouponAccountServiceImpl extends AbstractServiceImpl<CouponAccountM
         return LangUtils.toList(this.lambdaQuery().eq(CouponAccount::getAccountId, userId).list(), this::convertComplex);
     }
 
+    @Override
+    public List<CouponAccountComplexVo> selectListByAccountIdAndUsable(Long userId) {
+        return LangUtils.toList(baseMapper.selectListByAccountIdAndUsable(userId), this::convertComplex);
+    }
+
     private CouponAccountComplexVo convertComplex(CouponAccount entity) {
         final Long couponId = entity.getCouponId();
         final CouponComplexVo coupon = couponService.selectOne(couponId);

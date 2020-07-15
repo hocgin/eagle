@@ -37,4 +37,6 @@ public interface CouponAccountService extends AbstractService<CouponAccount> {
     void updateUnusedStatus(Long accountCouponId);
 
     List<CouponAccountComplexVo> selectListByAccountId(Long userId);
+
+    List<CouponAccountComplexVo> selectListByAccountIdAndUsable(Long userId);
 }

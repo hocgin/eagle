@@ -11,7 +11,6 @@ import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemInsertRo;
 import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemUpdateRo;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.cart.CartItemComplexVo;
-import in.hocg.eagle.modules.oms.pojo.vo.order.AvailableDiscountVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import in.hocg.eagle.modules.oms.service.CartItemService;
@@ -155,7 +154,4 @@ public class AppService {
         accountAddressService.deleteMyAddress(qo);
     }
 
-    public AvailableDiscountVo listAvailableCouponsByOrder(CalcOrderQo qo) {
-        return orderService.listAvailableCouponsByOrder(qo);
-    }
 }

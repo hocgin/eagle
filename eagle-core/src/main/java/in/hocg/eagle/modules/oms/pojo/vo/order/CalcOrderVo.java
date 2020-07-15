@@ -1,8 +1,10 @@
 package in.hocg.eagle.modules.oms.pojo.vo.order;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import in.hocg.eagle.basic.aspect.named.Named;
 import in.hocg.eagle.basic.aspect.named.NamedType;
 import in.hocg.eagle.basic.constant.datadict.DiscountType;
+import in.hocg.eagle.basic.ext.jackson.LocalDateTimeSerializer;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.modules.ums.pojo.vo.account.address.AccountAddressComplexVo;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,6 +12,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,6 +39,8 @@ public class CalcOrderVo {
 
     @ApiModelProperty("优惠明细")
     private List<DiscountInfo> discounts = Collections.emptyList();
+    @ApiModelProperty("优惠券列表")
+    private List<CouponVo> coupons = Collections.emptyList();
 
 
     @Data
@@ -78,8 +83,39 @@ public class CalcOrderVo {
         private String typeName;
         @ApiModelProperty("优惠金额")
         private BigDecimal discountAmount;
-        @ApiModelProperty("优惠名称")
+    }
+
+    @Data
+    @Accessors(chain = true)
+    public static class CouponVo {
+        @ApiModelProperty("用户优惠券ID")
+        private Long id;
+        @ApiModelProperty("优惠券编号")
+        private String couponSn;
+        @ApiModelProperty("优惠券标题")
         private String title;
+        @ApiModelProperty("优惠券使用说明(优惠券可用时展示)")
+        private String instructions;
+        @ApiModelProperty("优惠券生效时间")
+        @JsonSerialize(using = LocalDateTimeSerializer.class)
+        private LocalDateTime startAt;
+        @ApiModelProperty("优惠券失效时间")
+        @JsonSerialize(using = LocalDateTimeSerializer.class)
+        private LocalDateTime endAt;
+        @ApiModelProperty("满减条件")
+        private String condition;
+        @ApiModelProperty("不可用原因，优惠券不可用时展示")
+        private String reason;
+        @ApiModelProperty("优惠金额文案(85或10)")
+        private String valueDesc;
+        @ApiModelProperty("单位文案")
+        private String unitDesc;
+        @ApiModelProperty("是否可用")
+        private Boolean usable = Boolean.FALSE;
+        @ApiModelProperty("是否选中")
+        private Boolean selected = Boolean.FALSE;
+        @ApiModelProperty("实际优惠金额(当选中时有效)")
+        private BigDecimal useAmount;
     }
 
 }
