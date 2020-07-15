@@ -19,4 +19,6 @@ public interface CouponAccountAPI {
     void updateUnusedStatus(Long accountCouponId);
 
     List<CouponAccountComplexVo> selectListByAccountId(Long userId);
+
+    List<CouponAccountComplexVo> selectListByAccountIdAndUsable(Long userId);
 }

@@ -26,13 +26,6 @@ import org.springframework.web.bind.annotation.*;
 public class MyOrderAPi {
     private final AppService service;
 
-
-    @UseLogger("根据订单获取优惠券信息 - 个人优惠券")
-    @PostMapping("/coupon")
-    public Result getAvailableCouponsByOrder(@Validated @RequestBody CalcOrderQo qo) {
-        return Result.success(service.listAvailableCouponsByOrder(qo));
-    }
-
     @UseLogger("创建订单")
     @PostMapping("/create")
     public Result<String> createOrder(@Validated @RequestBody CreateOrderQo qo) {

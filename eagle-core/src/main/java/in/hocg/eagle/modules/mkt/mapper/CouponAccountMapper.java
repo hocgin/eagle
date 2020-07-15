@@ -8,6 +8,8 @@ import in.hocg.eagle.modules.mkt.pojo.qo.CouponAccountPagingQo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  * 优惠券账号拥有人表 Mapper 接口
@@ -20,4 +22,6 @@ import org.apache.ibatis.annotations.Param;
 public interface CouponAccountMapper extends BaseMapper<CouponAccount> {
 
     IPage<CouponAccount> paging(@Param("qo") CouponAccountPagingQo qo, @Param("page") Page page);
+
+    List<CouponAccount> selectListByAccountIdAndUsable(@Param("userId") Long userId);
 }

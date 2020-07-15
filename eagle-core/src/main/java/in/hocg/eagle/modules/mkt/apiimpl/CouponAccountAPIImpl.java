@@ -40,4 +40,9 @@ public class CouponAccountAPIImpl implements CouponAccountAPI {
     public List<CouponAccountComplexVo> selectListByAccountId(Long userId) {
         return service.selectListByAccountId(userId);
     }
+
+    @Override
+    public List<CouponAccountComplexVo> selectListByAccountIdAndUsable(Long userId) {
+        return service.selectListByAccountIdAndUsable(userId);
+    }
 }

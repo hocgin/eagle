@@ -3,15 +3,24 @@
 <mapper namespace="in.hocg.eagle.modules.mkt.mapper.CouponAccountMapper">
 
   <select id="paging" resultType="in.hocg.eagle.modules.mkt.entity.CouponAccount">
-    SELECT * FROM mkt_coupon_account mca
+    SELECT mca.* FROM mkt_coupon_account mca
     <where>
       <if test="qo.accountId != null ">
-        mca.account_id = #{qo.accountId}
+        AND mca.account_id = #{qo.accountId}
       </if>
       <if test="qo.couponId != null ">
         AND mca.coupon_id = #{qo.couponId}
       </if>
     </where>
     ORDER BY mca.created_at DESC
+  </select>
+  <select id="selectListByAccountIdAndUsable" resultType="in.hocg.eagle.modules.mkt.entity.CouponAccount">
+    SELECT mca.* FROM mkt_coupon_account mca
+    <where>
+      mca.use_status = 0
+      <if test="qo.accountId != null ">
+        AND mca.account_id = #{userId}
+      </if>
+    </where>
   </select>
 </mapper>

@@ -1,4 +1,4 @@
-package in.hocg.eagle.modules.oms.helper.order;
+package in.hocg.eagle.modules.oms.helper.order2;
 
 import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
@@ -19,7 +19,7 @@ import java.util.StringJoiner;
 @Slf4j
 @UtilityClass
 public class GLog {
-    ThreadLocal<List<String>> localLines = new ThreadLocal<>();
+    private ThreadLocal<List<String>> localLines = new ThreadLocal<>();
     private final int MIN_STACK_OFFSET = 3;
     private final int METHOD_OFFSET = 0;
 
