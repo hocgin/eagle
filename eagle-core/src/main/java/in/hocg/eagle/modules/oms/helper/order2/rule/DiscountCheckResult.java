@@ -5,7 +5,6 @@ import lombok.Getter;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -33,10 +32,10 @@ public class DiscountCheckResult {
         return results.parallelStream().map(CheckResult::getReason).collect(Collectors.toList());
     }
 
-    public Optional<String> getFirstErrorMessage() {
+    public String getFirstErrorMessage() {
         return results.parallelStream().filter(checkResult -> !checkResult.getIsOk())
             .map(CheckResult::getReason)
-            .filter(Objects::nonNull).findFirst();
+            .filter(Objects::nonNull).findFirst().orElse(null);
     }
 
 }

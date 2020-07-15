@@ -45,6 +45,7 @@ import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.compare.EntityCompare;
 import in.hocg.eagle.utils.compare.FieldChangeDto;
+import in.hocg.eagle.utils.string.TextBlock;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -130,7 +131,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public CalcOrderVo calcOrder(CalcOrderQo qo) {
+    public CalcOrderVo  calcOrder(CalcOrderQo qo) {
         final CalcOrderVo result = new CalcOrderVo();
         final Long accountId = qo.getUserId();
         final Long selectedCouponId = qo.getSelectedCouponId();
@@ -209,7 +210,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
                 final LocalDateTime startAt = complexVo.getStartAt();
                 final LocalDateTime endAt = complexVo.getEndAt();
                 final String instructions = complexVo.getInstructions();
-                String condition = "";
+                String condition = TextBlock.format("满¥{}可用", complexVo.getMinPoint());
                 return new CalcOrderVo.CouponVo().setId(id)
                     .setCondition(condition)
                     .setTitle(complexVo.getTitle())
@@ -220,8 +221,8 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
                     .setEndAt(endAt)
                     .setStartAt(startAt)
                     .setCouponSn(couponSn)
-                    .setReason(dcr.getFirstErrorMessage().orElse("未知错误"))
-                    .setDisabled(!dcr.isOk())
+                    .setReason(dcr.getFirstErrorMessage())
+                    .setUsable(dcr.isOk())
                     .setSelected(LangUtils.equals(id, selectedCouponId));
             }).collect(Collectors.toList());
 

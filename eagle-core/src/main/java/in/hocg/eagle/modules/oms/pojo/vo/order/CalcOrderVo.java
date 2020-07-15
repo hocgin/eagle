@@ -111,7 +111,7 @@ public class CalcOrderVo {
         @ApiModelProperty("单位文案")
         private String unitDesc;
         @ApiModelProperty("是否可用")
-        private Boolean disabled = Boolean.FALSE;
+        private Boolean usable = Boolean.FALSE;
         @ApiModelProperty("是否选中")
         private Boolean selected = Boolean.FALSE;
         @ApiModelProperty("实际优惠金额(当选中时有效)")

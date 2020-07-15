@@ -10,10 +10,7 @@ import in.hocg.eagle.modules.oms.helper.order2.discount.Discount;
 import in.hocg.eagle.modules.oms.helper.order2.discount.coupon.FixedAmountCoupon;
 import in.hocg.eagle.modules.oms.helper.order2.discount.coupon.FixedScaleCoupon;
 import in.hocg.eagle.modules.oms.helper.order2.rule.Rule;
-import in.hocg.eagle.modules.oms.helper.order2.rule.rule.OrderMinPointRule;
-import in.hocg.eagle.modules.oms.helper.order2.rule.rule.UsableDatetimeRangeRule;
-import in.hocg.eagle.modules.oms.helper.order2.rule.rule.UsablePlatformRule;
-import in.hocg.eagle.modules.oms.helper.order2.rule.rule.UsableProductRule;
+import in.hocg.eagle.modules.oms.helper.order2.rule.rule.*;
 import in.hocg.eagle.modules.pms.api.vo.ProductCategoryComplexVo;
 import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
 import in.hocg.eagle.utils.LangUtils;
@@ -48,6 +45,7 @@ public class DiscountHelper {
     private List<Rule> getCouponRules(CouponAccountComplexVo vo) {
         final List<Rule> rules = Lists.newArrayList();
         rules.add(new UsableDatetimeRangeRule(vo.getStartAt(), vo.getEndAt()));
+        rules.add(new UsableStatusRule(vo.getUseStatus()));
         rules.add(new OrderMinPointRule(vo.getMinPoint()));
         final Integer useType = vo.getUseType();
         if (CouponUseType.DesignatedProduct.eq(useType)) {

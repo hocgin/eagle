@@ -18,7 +18,7 @@
     SELECT mca.* FROM mkt_coupon_account mca
     <where>
       mca.use_status = 0
-      <if test="qo.accountId != null ">
+      <if test="userId != null ">
         AND mca.account_id = #{userId}
       </if>
     </where>
