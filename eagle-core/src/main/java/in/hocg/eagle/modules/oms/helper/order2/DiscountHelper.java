@@ -44,8 +44,8 @@ public class DiscountHelper {
 
     private List<Rule> getCouponRules(CouponAccountComplexVo vo) {
         final List<Rule> rules = Lists.newArrayList();
-        rules.add(new UsableDatetimeRangeRule(vo.getStartAt(), vo.getEndAt()));
         rules.add(new UsableStatusRule(vo.getUseStatus()));
+        rules.add(new UsableDatetimeRangeRule(vo.getStartAt(), vo.getEndAt()));
         rules.add(new OrderMinPointRule(vo.getMinPoint()));
         final Integer useType = vo.getUseType();
         if (CouponUseType.DesignatedProduct.eq(useType)) {
