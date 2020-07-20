@@ -1,5 +1,8 @@
 package in.hocg.eagle.basic.message.core.transactional;
 
+import in.hocg.eagle.modules.com.entity.PersistenceMessage;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -15,4 +18,7 @@ public interface TransactionalMessageRepository {
     boolean save(List<TransactionalMessage> messages);
 
     boolean complete(Long messageId);
+
+    List<PersistenceMessage> selectListByUnCompleteAndAfter(LocalDateTime startAt, Integer limit);
+
 }

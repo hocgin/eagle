@@ -1,8 +1,12 @@
 package in.hocg.eagle.modules.com.mapper;
 
-import in.hocg.eagle.modules.com.entity.PersistenceMessage;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import in.hocg.eagle.modules.com.entity.PersistenceMessage;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +19,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface PersistenceMessageMapper extends BaseMapper<PersistenceMessage> {
 
+    List<PersistenceMessage> selectListByUnCompleteAndAfter(@Param("startAt") LocalDateTime startAt,
+                                                            @Param("limit") Integer limit);
 }

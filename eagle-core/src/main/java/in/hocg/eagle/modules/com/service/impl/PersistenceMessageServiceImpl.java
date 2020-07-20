@@ -65,4 +65,11 @@ public class PersistenceMessageServiceImpl extends AbstractServiceImpl<Persisten
             .update(update);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<PersistenceMessage> selectListByUnCompleteAndAfter(LocalDateTime startAt, Integer limit) {
+        return baseMapper.selectListByUnCompleteAndAfter(startAt, limit);
+    }
+
+
 }
