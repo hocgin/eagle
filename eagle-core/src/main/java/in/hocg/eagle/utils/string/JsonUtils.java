@@ -1,5 +1,6 @@
 package in.hocg.eagle.utils.string;
 
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import lombok.experimental.UtilityClass;
 
@@ -25,12 +26,16 @@ public class JsonUtils {
     }
 
     public String toJSONString(Object object, boolean pretty) {
-        return JSON.toJSONString(object, pretty);
+        if (pretty) {
+            return JSONUtil.toJsonPrettyStr(object);
+        }
+        return JSONUtil.toJsonStr(object);
     }
 
     public <T> List<T> parseArray(String text, Class<T> clazz) {
         return JSON.parseArray(text, clazz);
     }
+
     public <T> T parseObject(String text, Class<T> clazz) {
         return JSON.parseObject(text, clazz);
     }

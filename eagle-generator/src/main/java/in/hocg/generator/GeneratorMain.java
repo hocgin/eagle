@@ -14,9 +14,8 @@ import in.hocg.generator.core.Module;
 public class GeneratorMain {
 
     public static void main(String[] args) {
-        CodeGenerator.generateByTables(DataSource.DEFAULT, Module.BMW,
-            "bmw_payment_way_rule",
-            "bmw_payment_way_rule_item",
+        CodeGenerator.generateByTables(DataSource.DEFAULT, Module.COM,true,
+            "com_persistence_message",
             "");
     }
 

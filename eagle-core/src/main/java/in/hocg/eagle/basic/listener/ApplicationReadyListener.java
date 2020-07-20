@@ -1,9 +1,9 @@
 package in.hocg.eagle.basic.listener;
 
 import com.google.common.collect.Lists;
-import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.constant.datadict.DataDictEnum;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
+import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.modules.com.pojo.dto.DataDictInitDto;
 import in.hocg.eagle.modules.com.service.DataDictService;
 import in.hocg.eagle.utils.clazz.ClassUtils;
@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by hocgin on 2020/6/14.
@@ -23,6 +24,7 @@ import java.util.List;
  */
 @Component
 public class ApplicationReadyListener implements ApplicationListener<ApplicationReadyEvent> {
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         this.loadDataDict();
@@ -36,7 +38,10 @@ public class ApplicationReadyListener implements ApplicationListener<Application
             try {
                 final String key = (String) aClass.getField(DataDictEnum.KEY_FIELD_NAME).get(null);
                 final ApiModel apiModel = aClass.getAnnotation(ApiModel.class);
-                final String enumTitle = apiModel.value();
+                String enumTitle = aClass.getSimpleName() + "未使用@ApiModel";
+                if (Objects.nonNull(apiModel)) {
+                    enumTitle = apiModel.value();
+                }
                 final DataDictInitDto item = new DataDictInitDto().setCode(key)
                     .setEnabled(Enabled.valueOf(!aClass.isAnnotationPresent(Deprecated.class)).getCode())
                     .setTitle(enumTitle);

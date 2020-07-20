@@ -8,7 +8,7 @@ import in.hocg.eagle.basic.constant.datadict.NotifyType;
 import in.hocg.eagle.basic.constant.datadict.SubjectType;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.ext.mybatis.tree.TreeServiceImpl;
-import in.hocg.eagle.basic.message.MessageContext;
+import in.hocg.eagle.basic.message.MessageFactory;
 import in.hocg.eagle.basic.message.event.SubscriptionEvent;
 import in.hocg.eagle.modules.crm.entity.Comment;
 import in.hocg.eagle.modules.crm.mapper.CommentMapper;
@@ -77,16 +77,17 @@ public class CommentServiceImpl extends TreeServiceImpl<CommentMapper, Comment> 
         validInsert(entity);
 
         // 触发消息
-        MessageContext.publish(new SubscriptionEvent()
+        final SubscriptionEvent message = new SubscriptionEvent()
             .setActorId(creatorId)
             .setSubjectId(entity.getId())
             .setSubjectType(SubjectType.Comment)
-            .setNotifyType(NotifyType.SubscriptionComment));
+            .setNotifyType(NotifyType.SubscriptionComment);
+        MessageFactory.local().publish(message);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public IPage<RootCommentComplexVo> pagingRootComment(RootCommentPagingQo qo) throws Throwable {
+    public IPage<RootCommentComplexVo> pagingRootComment(RootCommentPagingQo qo) {
         final Integer targetTypeCode = qo.getRefType();
         final Long refId = qo.getRefId();
         final Optional<CommentTargetType> targetTypeOpt = CodeEnum.of(targetTypeCode, CommentTargetType.class);
