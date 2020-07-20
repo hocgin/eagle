@@ -3,8 +3,11 @@ package in.hocg.eagle.modules.bmw.controller;
 import in.hocg.eagle.basic.aspect.logger.UseLogger;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.bmw.api.ro.GoPayRo;
+import in.hocg.eagle.modules.bmw.api.ro.QueryPaymentWayRo;
+import in.hocg.eagle.modules.bmw.api.vo.PaymentWayVo;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
 import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
+import in.hocg.eagle.modules.bmw.pojo.vo.WaitPaymentTradeVo;
 import in.hocg.eagle.modules.bmw.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -12,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by hocgin on 2020/5/31.
@@ -54,7 +59,6 @@ public class PaymentController {
     @UseLogger("发起去支付")
     @ResponseBody
     @PostMapping("/pay")
-    @Transactional(rollbackFor = Exception.class)
     public Result<GoPayVo> goPay(@Validated @RequestBody GoPayRo ro) {
         return Result.success(paymentService.goPay(ro));
     }
@@ -62,8 +66,14 @@ public class PaymentController {
     @UseLogger("查询待支付交易单")
     @ResponseBody
     @GetMapping("/trade")
-    @Transactional(rollbackFor = Exception.class)
-    public Result getWaitPaymentTrade(@RequestParam("tradeSn") String tradeSn) {
+    public Result<WaitPaymentTradeVo> getWaitPaymentTrade(@RequestParam("tradeSn") String tradeSn) {
         return Result.success(paymentService.getWaitPaymentTrade(tradeSn));
+    }
+
+    @UseLogger("查询交易渠道")
+    @ResponseBody
+    @GetMapping("/payment-way")
+    public Result<List<PaymentWayVo>> getPaymentWay(@Validated @RequestBody QueryPaymentWayRo ro) {
+        return Result.success(paymentService.queryPaymentWay(ro));
     }
 }

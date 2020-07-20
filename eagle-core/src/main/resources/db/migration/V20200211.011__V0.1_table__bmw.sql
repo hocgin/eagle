@@ -238,3 +238,48 @@ CREATE TABLE `bmw_notify_app_log`
 ) ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8mb4
     COMMENT = '[支付网关] 所有通知应用方日志表';
+
+DROP TABLE IF EXISTS `bmw_payment_way_rule`;
+CREATE TABLE `bmw_payment_way_rule`
+(
+    id         BIGINT AUTO_INCREMENT,
+    app_id     BIGINT            NOT NULL
+        COMMENT '接入方应用',
+    title      VARCHAR(64)       NOT NULL
+        COMMENT '规则名称',
+    scene_code VARCHAR(32)       NOT NULL
+        COMMENT '场景码',
+    enabled    TINYINT DEFAULT 1 NOT NULL
+        COMMENT '启用状态[0:为禁用状态;1:为正常状态]',
+    created_at DATETIME(6)       NOT NULL,
+    updated_at DATETIME(6)       NULL,
+    UNIQUE KEY (scene_code),
+    PRIMARY KEY (id)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COMMENT '[支付网关] 支付渠道规则表';
+
+DROP TABLE IF EXISTS `bmw_payment_way_rule_item`;
+CREATE TABLE `bmw_payment_way_rule_item`
+(
+    id               BIGINT AUTO_INCREMENT,
+    rule_id          BIGINT               NOT NULL
+        COMMENT '支付渠道规则',
+    title            VARCHAR(64)          NOT NULL
+        COMMENT '支付渠道名称',
+    payment_way_code VARCHAR(32)          NOT NULL
+        COMMENT '支付渠道码',
+    enabled          TINYINT DEFAULT 1    NOT NULL
+        COMMENT '启用状态[0:为禁用状态;1:为正常状态]',
+    sort             INT     DEFAULT 1000 NOT NULL
+        COMMENT '排序, 从大到小降序',
+    created_at       datetime(6)          not null,
+    updated_at       datetime(6)          null,
+    UNIQUE KEY (rule_id, payment_way_code),
+    PRIMARY KEY (id)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COMMENT '[支付网关] 支付渠道规则对应的支付渠道表';
+

@@ -51,11 +51,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Created by hocgin on 2020/6/7.
@@ -74,6 +72,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final RefundRecordService refundRecordService;
     private final NotifyAppService notifyAppService;
     private final NotifyAppLogService notifyAppLogService;
+    private final PaymentWayRuleService paymentWayRuleService;
 
     private final RefundRecordMapping refundRecordMapping;
     private final PaymentTradeMapping paymentTradeMapping;
@@ -363,13 +362,13 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<PaymentWayVo> queryPaymentWay(QueryPaymentWayRo ro) {
-        // todo: 后续抽成数据库配置方式。(支付方式条件表 + 条件x支付方式表)
-        return Arrays.stream(PaymentWay.values())
-            .map(paymentWay -> new PaymentWayVo()
-                .setName(paymentWay.getName())
-                .setCode(paymentWay.getCode()))
-            .collect(Collectors.toList());
+        ValidUtils.validThrow(ro);
+        final Long appId = paymentAppService.selectOneByAppSn(ro.getAppSn())
+            .orElseThrow(() -> ServiceException.wrap("未授权接入方")).getId();
+        final String sceneCode = ro.getSceneCode();
+        return paymentWayRuleService.queryPaymentWay(appId, sceneCode);
     }
 
     @Override

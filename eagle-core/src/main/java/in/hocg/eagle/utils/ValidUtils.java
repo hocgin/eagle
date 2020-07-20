@@ -2,6 +2,7 @@ package in.hocg.eagle.utils;
 
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.result.ResultCode;
+import in.hocg.eagle.basic.valid.ValidatorUtils;
 import io.jsonwebtoken.lang.Assert;
 import lombok.experimental.UtilityClass;
 
@@ -68,5 +69,9 @@ public class ValidUtils {
 
     public void fail(Exception e) {
         fail(e.getMessage());
+    }
+
+    public <T> void validThrow(T object, Class<?>... groups) {
+        ValidatorUtils.validThrow(object, groups);
     }
 }

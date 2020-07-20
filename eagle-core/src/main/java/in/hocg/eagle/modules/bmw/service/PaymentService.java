@@ -8,8 +8,12 @@ import in.hocg.eagle.modules.bmw.api.vo.QueryAsyncVo;
 import in.hocg.eagle.modules.bmw.api.vo.RefundStatusSync;
 import in.hocg.eagle.modules.bmw.api.vo.TradeStatusSync;
 import in.hocg.eagle.modules.bmw.helper.payment.resolve.message.MessageContext;
-import in.hocg.eagle.modules.bmw.pojo.ro.*;
-import in.hocg.eagle.modules.bmw.pojo.vo.*;
+import in.hocg.eagle.modules.bmw.pojo.ro.GoRefundRo;
+import in.hocg.eagle.modules.bmw.pojo.ro.PaymentMessageRo;
+import in.hocg.eagle.modules.bmw.pojo.ro.RefundMessageRo;
+import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
+import in.hocg.eagle.modules.bmw.pojo.vo.GoRefundVo;
+import in.hocg.eagle.modules.bmw.pojo.vo.WaitPaymentTradeVo;
 
 import java.util.List;
 
@@ -99,7 +103,19 @@ public interface PaymentService {
      */
     void sendAsyncNotifyApp(Long notifyAppId);
 
+    /**
+     * 查询等待支付单据
+     *
+     * @param tradeSn
+     * @return
+     */
     WaitPaymentTradeVo getWaitPaymentTrade(String tradeSn);
 
+    /**
+     * 查询支付渠道
+     *
+     * @param ro
+     * @return
+     */
     List<PaymentWayVo> queryPaymentWay(QueryPaymentWayRo ro);
 }

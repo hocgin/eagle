@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="in.hocg.eagle.modules.bmw.mapper.PaymentWayRuleMapper">
+
+    <select id="selectListByAppIdAndSceneCode"
+            resultType="in.hocg.eagle.modules.bmw.entity.PaymentWayRuleItem">
+      SELECT bpwri.* FROM bmw_payment_way_rule_item bpwri
+            LEFT JOIN bmw_payment_way_rule bpwr ON bpwr.id = bpwri.rule_id
+      WHERE bpwri.enabled = 1
+        AND bpwr.enabled = 1
+        AND bpwr.scene_code = #{sceneCode}
+        AND bpwr.app_id = #{appId}
+      ORDER BY bpwri.sort DESC
+    </select>
+</mapper>
