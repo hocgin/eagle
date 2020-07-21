@@ -3,8 +3,8 @@ package in.hocg.eagle.utils;
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.result.ResultCode;
 import in.hocg.eagle.basic.valid.ValidatorUtils;
-import io.jsonwebtoken.lang.Assert;
 import lombok.experimental.UtilityClass;
+import org.springframework.util.Assert;
 
 /**
  * Created by hocgin on 2020/2/15.
