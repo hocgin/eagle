@@ -21,11 +21,6 @@ spring:
             client-id: 7c8f6909e7226d490bdb
             client-secret: a8d3db4c25c9627e4bc5996f25c45f76a4b2214e
 
-mybatis-plus:
-  global-config:
-    banner: false
-  mapper-locations: classpath*:/**/xml/*.xml
-
 eagle:
   hostname: http://eagle.5gzvip.idcfengye.com
   amap: a17f4063f58d7fc70de9a205e22f2450
