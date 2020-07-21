@@ -1,9 +1,9 @@
 package in.hocg.eagle.modules.com.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.exception.ServiceException;
+import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.pojo.KeyValue;
 import in.hocg.eagle.modules.com.entity.DataDict;
 import in.hocg.eagle.modules.com.entity.DataDictItem;
@@ -26,7 +26,6 @@ import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -129,7 +128,7 @@ public class DataDictServiceImpl extends AbstractServiceImpl<DataDictMapper, Dat
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void initDataDict(List<DataDictInitDto> items) {
+    public void init(List<DataDictInitDto> items) {
         final LocalDateTime now = LocalDateTime.now();
 
         // 新增数据项
