@@ -101,6 +101,12 @@ public class CouponServiceImpl extends AbstractServiceImpl<CouponMapper, Coupon>
         handleCouponUseType(entity.getId(), useType, targetId);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void revoke(Long id) {
+        couponAccountService.revokeByCouponId(id);
+    }
+
     /**
      * 处理关联优惠券优惠
      *

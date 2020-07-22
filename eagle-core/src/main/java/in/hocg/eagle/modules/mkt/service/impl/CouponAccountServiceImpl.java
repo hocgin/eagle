@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.constant.datadict.CouponUseStatus;
 import in.hocg.eagle.basic.ext.lang.SNCode;
 import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
+import in.hocg.eagle.basic.ext.security.SecurityContext;
 import in.hocg.eagle.modules.mkt.entity.CouponAccount;
 import in.hocg.eagle.modules.mkt.mapper.CouponAccountMapper;
 import in.hocg.eagle.modules.mkt.mapstruct.CouponAccountMapping;
@@ -112,10 +113,32 @@ public class CouponAccountServiceImpl extends AbstractServiceImpl<CouponAccountM
         return LangUtils.toList(baseMapper.selectListByAccountIdAndUsable(userId), this::convertComplex);
     }
 
-    private CouponAccountComplexVo convertComplex(CouponAccount entity) {
-        final Long couponId = entity.getCouponId();
-        final CouponComplexVo coupon = couponService.selectOne(couponId);
-        return couponMapping.asCouponAccountComplexVo(entity, coupon);
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void revokeByCouponId(Long id) {
+        final Long currentUserId = SecurityContext.getCurrentUserId();
+        final LocalDateTime now = LocalDateTime.now();
+
+        final CouponAccount update = new CouponAccount();
+        update.setUseStatus(CouponUseStatus.Cancel.getCode());
+        update.setLastUpdatedAt(now);
+        update.setLastUpdater(currentUserId);
+        lambdaUpdate().eq(CouponAccount::getCouponId, id)
+            .eq(CouponAccount::getUseStatus, CouponUseStatus.Unused.getCode()).update(update);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void revokeById(Long id) {
+        final Long currentUserId = SecurityContext.getCurrentUserId();
+        final LocalDateTime now = LocalDateTime.now();
+
+        final CouponAccount update = new CouponAccount();
+        update.setUseStatus(CouponUseStatus.Cancel.getCode());
+        update.setLastUpdatedAt(now);
+        update.setLastUpdater(currentUserId);
+        lambdaUpdate().eq(CouponAccount::getId, id)
+            .eq(CouponAccount::getUseStatus, CouponUseStatus.Unused.getCode()).update(update);
     }
 
     @Override
@@ -128,5 +151,11 @@ public class CouponAccountServiceImpl extends AbstractServiceImpl<CouponAccountM
         if (Objects.nonNull(accountId)) {
             ValidUtils.notNull(accountService.getById(accountId), "未找到用户");
         }
+    }
+
+    private CouponAccountComplexVo convertComplex(CouponAccount entity) {
+        final Long couponId = entity.getCouponId();
+        final CouponComplexVo coupon = couponService.selectOne(couponId);
+        return couponMapping.asCouponAccountComplexVo(entity, coupon);
     }
 }

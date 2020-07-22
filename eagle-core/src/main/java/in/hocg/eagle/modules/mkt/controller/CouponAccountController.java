@@ -8,10 +8,7 @@ import in.hocg.eagle.modules.mkt.service.CouponAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -31,6 +28,13 @@ public class CouponAccountController {
     @PostMapping("/_paging")
     public Result paging(@Validated @RequestBody CouponAccountPagingQo qo) {
         return Result.success(service.paging(qo));
+    }
+
+    @UseLogger("撤回指定未使用优惠券 - 用户优惠券")
+    @PostMapping("/{id:\\d+}/revoke")
+    public Result revoke(@PathVariable Long id) {
+        service.revokeById(id);
+        return Result.success();
     }
 
 }
