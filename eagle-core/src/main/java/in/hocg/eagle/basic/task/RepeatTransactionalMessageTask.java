@@ -27,10 +27,10 @@ public class RepeatTransactionalMessageTask implements InitializingBean {
 
     private TransactionalMessageRepository repository;
 
-    @Scheduled(cron = "0/5 * * * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     @Transactional(rollbackFor = Exception.class)
     public void listener() {
-        final LocalDateTime after = LocalDateTime.now().plusMinutes(0);
+        final LocalDateTime after = LocalDateTime.now().minusDays(1);
         int limit = 100;
         final List<PersistenceMessage> messages = repository.selectListByUnCompleteAndAfter(after, limit);
 
@@ -41,7 +41,10 @@ public class RepeatTransactionalMessageTask implements InitializingBean {
 
     @Transactional(rollbackFor = Exception.class)
     public void syncSend(PersistenceMessage message) {
-        repository.complete(message.getId());
+        final boolean isOk = repository.complete(message.getId());
+        if (!isOk) {
+            return;
+        }
         SendResult sendResult = MessageFactory.normal().syncSend(message);
         if (!SendStatus.SEND_OK.equals(sendResult.getSendStatus())) {
             throw new RuntimeException("发送失败");

@@ -1,7 +1,8 @@
 package in.hocg.eagle.basic.message.core.transactional;
 
+import com.google.common.collect.Lists;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class TransactionalMessageContext {
     }
 
     public static List<TransactionalMessage> get() {
-        return Collections.unmodifiableList(MESSAGE_POOL.get());
+        return Lists.newArrayList(MESSAGE_POOL.get());
     }
 
     public static void clear() {

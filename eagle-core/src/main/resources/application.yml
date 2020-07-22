@@ -37,10 +37,10 @@ mybatis-plus:
   global-config:
     banner: false
   mapper-locations: classpath*:/**/xml/*.xml
-#rocketmq:
-#  name-server: rocketmq.localhost:9876
-#  producer:
-#    group: eagle
+rocketmq:
+  name-server: rocketmq.localhost:9876
+  producer:
+    group: eagle
 
 # EAGLE
 eagle:
