@@ -3,10 +3,12 @@ package in.hocg.eagle.modules.com.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.ext.mybatis.core.AbstractService;
 import in.hocg.eagle.modules.com.entity.SystemSettings;
+import in.hocg.eagle.modules.com.pojo.dto.SystemSettingInitDto;
 import in.hocg.eagle.modules.com.pojo.qo.systemsettings.SystemSettingsPagingQo;
 import in.hocg.eagle.modules.com.pojo.qo.systemsettings.SystemSettingsSaveQo;
 import in.hocg.eagle.modules.com.pojo.vo.systemsettings.SystemSettingsComplexVo;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,4 +28,6 @@ public interface SystemSettingsService extends AbstractService<SystemSettings> {
     void saveOne(SystemSettingsSaveQo qo);
 
     SystemSettingsComplexVo selectOne(Long id);
+
+    void init(List<SystemSettingInitDto> items);
 }

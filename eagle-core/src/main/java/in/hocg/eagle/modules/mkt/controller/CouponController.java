@@ -54,5 +54,12 @@ public class CouponController {
         service.giveToUsers(qo);
         return Result.success();
     }
+
+    @UseLogger("撤回所有未使用优惠券 - 优惠券")
+    @PostMapping("/{id:\\d+}/revoke")
+    public Result revoke(@PathVariable Long id) {
+        service.revoke(id);
+        return Result.success();
+    }
 }
 

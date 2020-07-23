@@ -21,5 +21,5 @@ public interface SystemSettingsMapper extends BaseMapper<SystemSettings> {
 
     IPage<SystemSettings> paging(@Param("qo") SystemSettingsPagingQo qo, @Param("page") Page page);
 
-    Integer countAndConfigCodeIgnoreId(@Param("code") String code, @Param("id") Long id);
+    Integer existByConfigCodeIgnoreId(@Param("code") String code, @Param("id") Long id);
 }

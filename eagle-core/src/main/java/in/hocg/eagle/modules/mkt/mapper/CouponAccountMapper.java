@@ -24,4 +24,5 @@ public interface CouponAccountMapper extends BaseMapper<CouponAccount> {
     IPage<CouponAccount> paging(@Param("qo") CouponAccountPagingQo qo, @Param("page") Page page);
 
     List<CouponAccount> selectListByAccountIdAndUsable(@Param("userId") Long userId);
+
 }

@@ -39,4 +39,8 @@ public interface CouponAccountService extends AbstractService<CouponAccount> {
     List<CouponAccountComplexVo> selectListByAccountId(Long userId);
 
     List<CouponAccountComplexVo> selectListByAccountIdAndUsable(Long userId);
+
+    void revokeByCouponId(Long id);
+
+    void revokeById(Long id);
 }

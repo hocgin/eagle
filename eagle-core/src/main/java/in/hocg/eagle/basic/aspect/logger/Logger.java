@@ -108,6 +108,8 @@ public class Logger {
             retStr = "[\"File Stream\"]";
         } else if (ret instanceof ResponseEntity && ((ResponseEntity) ret).getBody() instanceof Resource) {
             retStr = "[\"Resource Stream\"]";
+        } else if (Objects.isNull(ret)) {
+            retStr = "[\"void\"]";
         } else {
             retStr = JsonUtils.toJSONString(ret, true);
         }

@@ -1,5 +1,40 @@
 version: "3"
 services:
+  namesrv:
+    image: rocketmqinc/rocketmq:4.4.0
+    container_name: rmqnamesrv
+    restart: always
+    ports:
+      - 9876:9876
+    volumes:
+      - ./rocketmq/namesrv/logs:/opt/logs
+      - ./rocketmq/namesrv/store:/opt/store
+    command: sh mqnamesrv
+  broker:
+    image: rocketmqinc/rocketmq:4.4.0
+    container_name: rmqbroker
+    restart: always
+    ports:
+      - 10909:10909
+      - 10911:10911
+    volumes:
+      - ./rocketmq/broker/logs:/opt/logs
+      - ./rocketmq/broker/store:/opt/store
+      - ./rocketmq/broker/conf:/opt/conf
+    command: sh mqbroker -n namesrv:9876 -c /opt/conf/broker.properties autoCreateTopicEnable=true
+    depends_on:
+      - namesrv
+  console:
+    image: styletang/rocketmq-console-ng
+    container_name: rmqconsole
+    restart: always
+    ports:
+      - 18080:8080
+    environment:
+      - JAVA_OPTS=-Drocketmq.namesrv.addr=namesrv:9876
+    depends_on:
+      - namesrv
+
   redis:
     image: redis:latest
     container_name: redis
@@ -15,8 +50,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./sql:/docker-entrypoint-initdb.d
-      - ./conf/mysql:/etc/mysql/conf.d
+      - ./mysql/sql:/docker-entrypoint-initdb.d
+      - ./mysql/conf:/etc/mysql/conf.d
       - dbdata
     environment:
       TZ: Asia/Shanghai
@@ -37,7 +72,9 @@ services:
     depends_on:
       - mysql
       - redis
+      - namesrv
     links:
+      - "namesrv:rocketmq.localhost"
       - "mysql:mysql.localhost"
       - "redis:redis.localhost"
   dbdata:

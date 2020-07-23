@@ -1,14 +1,19 @@
 package in.hocg.eagle.modules.com.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import in.hocg.eagle.basic.constant.GlobalConstant;
+import in.hocg.eagle.basic.constant.config.ConfigEnum;
+import in.hocg.eagle.basic.constant.config.ConfigService;
 import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
-import in.hocg.eagle.modules.com.mapstruct.SystemSettingsMapping;
 import in.hocg.eagle.modules.com.entity.SystemSettings;
 import in.hocg.eagle.modules.com.mapper.SystemSettingsMapper;
+import in.hocg.eagle.modules.com.mapstruct.SystemSettingsMapping;
+import in.hocg.eagle.modules.com.pojo.dto.SystemSettingInitDto;
 import in.hocg.eagle.modules.com.pojo.qo.systemsettings.SystemSettingsPagingQo;
 import in.hocg.eagle.modules.com.pojo.qo.systemsettings.SystemSettingsSaveQo;
 import in.hocg.eagle.modules.com.pojo.vo.systemsettings.SystemSettingsComplexVo;
 import in.hocg.eagle.modules.com.service.SystemSettingsService;
+import in.hocg.eagle.utils.LangUtils;
 import in.hocg.eagle.utils.ValidUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
@@ -16,8 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -30,7 +35,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SystemSettingsServiceImpl extends AbstractServiceImpl<SystemSettingsMapper, SystemSettings>
-    implements SystemSettingsService {
+    implements SystemSettingsService, ConfigService {
 
     private final SystemSettingsMapping mapping;
 
@@ -39,6 +44,14 @@ public class SystemSettingsServiceImpl extends AbstractServiceImpl<SystemSetting
     public Optional<String> selectOneWithString(String configCode) {
         final Optional<SystemSettings> systemSettingsOpt = this.selectOneByConfigCode(configCode);
         return systemSettingsOpt.map(SystemSettings::getConfigCode);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public <T> T getValue(ConfigEnum configEnum) {
+        final String text = this.selectOneWithString(configEnum.name())
+            .orElse(configEnum.getDefaultValue());
+        return configEnum.eval(text);
     }
 
     public Optional<SystemSettings> selectOneByConfigCode(String configCode) {
@@ -78,6 +91,44 @@ public class SystemSettingsServiceImpl extends AbstractServiceImpl<SystemSetting
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void init(List<SystemSettingInitDto> items) {
+        final LocalDateTime now = LocalDateTime.now();
+        final Map<String, SystemSettingInitDto> newItems = LangUtils.toMap(items, SystemSettingInitDto::getCode);
+        List<SystemSettings> exitsItems = LangUtils.groupCallback(newItems.keySet(), this::selectListByConfigCode, 100);
+        final Map<String, SystemSettings> oldItems = LangUtils.toMap(exitsItems, SystemSettings::getConfigCode);
+        final List<SystemSettings> allItems = newItems.values().parallelStream()
+            .map(item -> {
+                final String itemCode = item.getCode();
+
+                String remark = item.getRemark();
+                if (item.getDeprecated()) {
+                    remark = "@废弃 " + remark;
+                }
+
+                final SystemSettings result = new SystemSettings()
+                    .setRemark(remark)
+                    .setTitle(item.getTitle());
+                if (oldItems.containsKey(itemCode)) {
+                    result.setId(oldItems.get(itemCode).getId())
+                        .setLastUpdater(GlobalConstant.SUPPER_ADMIN_USER_ID)
+                        .setLastUpdatedAt(now);
+                } else {
+                    result.setConfigCode(itemCode)
+                        .setValue(item.getDefaultValue())
+                        .setCreatedAt(now)
+                        .setCreator(GlobalConstant.SUPPER_ADMIN_USER_ID);
+                }
+                return result;
+            }).collect(Collectors.toList());
+        this.saveOrUpdateBatch(allItems);
+    }
+
+    public List<SystemSettings> selectListByConfigCode(Collection<String> configCodes) {
+        return lambdaQuery().in(SystemSettings::getConfigCode, configCodes).list();
+    }
+
+    @Override
     public void validEntity(SystemSettings entity) {
         super.validEntity(entity);
 
@@ -88,7 +139,7 @@ public class SystemSettingsServiceImpl extends AbstractServiceImpl<SystemSetting
     }
 
     private boolean hasConfigCodeIgnoreId(String code, Long ignoreId) {
-        return baseMapper.countAndConfigCodeIgnoreId(code, ignoreId) > 0;
+        return Objects.nonNull(baseMapper.existByConfigCodeIgnoreId(code, ignoreId));
     }
 
     private SystemSettingsComplexVo convertComplex(SystemSettings entity) {

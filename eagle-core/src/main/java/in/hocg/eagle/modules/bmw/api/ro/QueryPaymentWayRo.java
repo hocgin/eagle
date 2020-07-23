@@ -2,7 +2,8 @@ package in.hocg.eagle.modules.bmw.api.ro;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.NonNull;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by hocgin on 2020/7/7.
@@ -12,7 +13,10 @@ import lombok.NonNull;
  */
 @Data
 public class QueryPaymentWayRo {
-    @NonNull
+    @NotNull
     @ApiModelProperty(value = "接入应用编号", required = true)
     private Long appSn;
+    @NotNull
+    @ApiModelProperty(value = "场景码", required = true)
+    private String sceneCode;
 }

@@ -40,5 +40,5 @@ public interface DataDictService extends AbstractService<DataDict> {
 
     void batchDelete(DataDictDeleteQo qo);
 
-    void initDataDict(List<DataDictInitDto> items);
+    void init(List<DataDictInitDto> items);
 }

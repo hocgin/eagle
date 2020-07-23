@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class PaymentWayVo {
     @ApiModelProperty("支付渠道码")
-    private Integer code;
+    private Integer paymentWayCode;
     @ApiModelProperty("支付渠道名称")
-    private String name;
+    private String title;
 }

@@ -8,13 +8,14 @@
     FROM com_system_settings css
   </select>
 
-  <select id="countAndConfigCodeIgnoreId" resultType="java.lang.Integer">
-    SELECT COUNT(1) FROM com_system_settings css
+  <select id="existByConfigCodeIgnoreId" resultType="java.lang.Integer">
+    SELECT 1 FROM com_system_settings css
     <where>
       css.config_code = #{code}
       <if test="id != null">
         AND css.id != #{id}
       </if>
     </where>
+    LIMIT 1
   </select>
 </mapper>

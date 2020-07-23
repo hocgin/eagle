@@ -2,8 +2,9 @@ package in.hocg.eagle.utils;
 
 import in.hocg.eagle.basic.exception.ServiceException;
 import in.hocg.eagle.basic.result.ResultCode;
-import io.jsonwebtoken.lang.Assert;
+import in.hocg.eagle.basic.valid.ValidatorUtils;
 import lombok.experimental.UtilityClass;
+import org.springframework.util.Assert;
 
 /**
  * Created by hocgin on 2020/2/15.
@@ -68,5 +69,9 @@ public class ValidUtils {
 
     public void fail(Exception e) {
         fail(e.getMessage());
+    }
+
+    public <T> void validThrow(T object, Class<?>... groups) {
+        ValidatorUtils.validThrow(object, groups);
     }
 }

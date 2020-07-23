@@ -1,6 +1,7 @@
 package in.hocg.eagle.manager.redis;
 
 import com.alibaba.fastjson.JSON;
+import in.hocg.eagle.basic.ext.security.authentication.token.TokenManager;
 import in.hocg.eagle.manager.lang.dto.IpAndAddressDto;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.NonNull;
@@ -24,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Component
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
-public class RedisManager {
+public class RedisManager implements TokenManager {
     private final StringRedisTemplate template;
 
     /**
@@ -142,5 +143,20 @@ public class RedisManager {
         final String smsKey = RedisConstants.getSmsKey(phone);
         opsForValue.set(smsKey, smsCode, 1, TimeUnit.MINUTES);
         log.debug("验证码设置[手机号码: {}, Token: {}]", phone, smsCode);
+    }
+
+    @Override
+    public void putToken(String username, String token, long expireMillis) {
+        final String tokenKey = RedisConstants.getTokenKey(username);
+        ValueOperations<String, String> opsForValue = template.opsForValue();
+        opsForValue.set(tokenKey, token, expireMillis, TimeUnit.MINUTES);
+        log.debug("设置用户Token[Username: {}, Token: {}]", username, token);
+    }
+
+    @Override
+    public String getToken(String username) {
+        final String tokenKey = RedisConstants.getTokenKey(username);
+        ValueOperations<String, String> opsForValue = template.opsForValue();
+        return opsForValue.get(tokenKey);
     }
 }

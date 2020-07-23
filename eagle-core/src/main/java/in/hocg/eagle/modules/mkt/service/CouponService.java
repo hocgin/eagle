@@ -47,4 +47,6 @@ public interface CouponService extends AbstractService<Coupon> {
      * @param qo
      */
     void saveOne(CouponSaveQo qo);
+
+    void revoke(Long id);
 }

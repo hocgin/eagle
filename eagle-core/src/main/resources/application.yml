@@ -7,7 +7,7 @@ spring:
   swagger2:
     enabled: false
   mail:
-    personal: XX官方邮件
+    personal: Eagle 官方邮件
     host: smtp.163.com
     username: 13600747016@163.com
     # 此处 password 为授权码
@@ -33,6 +33,14 @@ aliyun:
     endpoint: http://oss-cn-beijing.aliyuncs.com
     secret-access: ENC(lRjG5ydrDnl5oRIGUaQNIdyut+mNoxvkVj2oekmbgN80i93FLfl+cA==)
     access-key: ENC(w1e6RkiL4tuTbasWXZL85UIVvXjfplXuTqV259ztRZ8=)
+mybatis-plus:
+  global-config:
+    banner: false
+  mapper-locations: classpath*:/**/xml/*.xml
+rocketmq:
+  name-server: rocketmq.localhost:9876
+  producer:
+    group: eagle
 
 # EAGLE
 eagle:

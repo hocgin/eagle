@@ -16,7 +16,8 @@ import lombok.RequiredArgsConstructor;
 public enum CouponUseStatus implements DataDictEnum {
     Unused(0, "未使用"),
     Used(1, "已使用"),
-    Expired(2, "已过期");
+    Expired(2, "已过期"),
+    Cancel(3, "已取消");
     private final Integer code;
     private final String name;
 

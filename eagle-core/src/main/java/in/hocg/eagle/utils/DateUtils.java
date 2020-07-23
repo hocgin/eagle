@@ -5,6 +5,7 @@ import lombok.experimental.UtilityClass;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Objects;
@@ -43,5 +44,12 @@ public class DateUtils {
 
     public ZoneId getDefaultZoneId() {
         return ZoneId.systemDefault();
+    }
+
+    public Long getTimestamp(LocalDateTime localDateTime) {
+        if (Objects.isNull(localDateTime)) {
+            return null;
+        }
+        return localDateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
     }
 }

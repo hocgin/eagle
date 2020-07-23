@@ -228,9 +228,9 @@ CREATE TABLE `com_data_dict`
 (
     `id`              BIGINT AUTO_INCREMENT
         COMMENT 'ID',
-    `title`           VARCHAR(25) NOT NULL
+    `title`           VARCHAR(64) NOT NULL
         COMMENT '字典名称',
-    `code`            VARCHAR(25) NOT NULL UNIQUE
+    `code`            VARCHAR(64) NOT NULL UNIQUE
         COMMENT '字典标识',
     `remark`          VARCHAR(255)
         COMMENT '备注',
@@ -246,6 +246,7 @@ CREATE TABLE `com_data_dict`
     `last_updater`    BIGINT
         COMMENT '更新者',
     --
+    UNIQUE (`code`),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB
@@ -259,9 +260,9 @@ CREATE TABLE `com_data_dict_item`
         COMMENT 'ID',
     `dict_id`         BIGINT      NOT NULL
         COMMENT 'com_data_dict ID',
-    `title`           varchar(25) NOT NULL
+    `title`           varchar(64) NOT NULL
         COMMENT '字典项名称',
-    `code`            varchar(25) NOT NULL
+    `code`            varchar(64) NOT NULL
         COMMENT '字典标识',
     `remark`          varchar(255)
         COMMENT '备注',
@@ -280,9 +281,32 @@ CREATE TABLE `com_data_dict_item`
         COMMENT '更新者',
     --
     UNIQUE (`dict_id`, `code`),
-    FOREIGN KEY (`dict_id`) REFERENCES com_data_dict (`id`),
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB
     DEFAULT CHARSET = utf8mb4
     COMMENT = '[基础模块] 数据字典项表';
+
+DROP TABLE IF EXISTS `com_persistence_message`;
+CREATE TABLE `com_persistence_message`
+(
+    id          BIGINT AUTO_INCREMENT,
+    group_sn    VARCHAR(64)       NOT NULL
+        COMMENT '消息组编号',
+    destination VARCHAR(64)       NOT NULL
+        COMMENT '消息目的地',
+    payload     TEXT
+        COMMENT '消息体',
+    headers     TEXT
+        COMMENT '消息头',
+    published   TINYINT DEFAULT 0 NOT NULL
+        COMMENT '消息状态[0=>为准备状态;1=>已发布]',
+    prepared_at DATETIME(6)       NOT NULL,
+    created_at  DATETIME(6)       NOT NULL,
+    updated_at  DATETIME(6)       NULL,
+    PRIMARY KEY (id)
+)
+    ENGINE = InnoDB
+    DEFAULT CHARSET = utf8mb4
+    COMMENT '[基础模块] 持久化消息表';
+

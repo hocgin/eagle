@@ -17,7 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public enum Module {
     TEST(Lists.newArrayList("T_"), "in.hocg.eagle.modules", "test", "eagle-core"),
-    BMW2(Lists.newArrayList("BMW_", "T_"), "in.hocg.eagle.modules", "bmw2", "eagle-core");
+    BMW(Lists.newArrayList("BMW_", "T_"), "in.hocg.eagle.modules", "bmw", "eagle-core"),
+    COM(Lists.newArrayList("COM_", "T_"), "in.hocg.eagle.modules", "com", "eagle-core");
 
     /**
      * 生成的 Entity 名称会忽略前缀

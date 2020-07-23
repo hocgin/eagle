@@ -1,2 +1,3 @@
 127.0.0.1   mysql.localhost
 127.0.0.1   redis.localhost
+127.0.0.1   rocketmq.localhost
