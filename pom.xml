@@ -26,6 +26,11 @@
 
   <repositories>
     <repository>
+      <id>self</id>
+      <name>self</name>
+      <url>https://oss.sonatype.org/content/groups/public</url>
+    </repository>
+    <repository>
       <id>Alibaba</id>
       <name>Alibaba</name>
       <url>http://maven.aliyun.com/nexus/content/groups/public</url>
@@ -34,11 +39,6 @@
       <id>github</id>
       <name>GitHub OWNER Apache Maven Packages</name>
       <url>https://maven.pkg.github.com/hocgin</url>
-    </repository>
-    <repository>
-      <id>self</id>
-      <name>self</name>
-      <url>https://oss.sonatype.org/content/groups/public</url>
     </repository>
   </repositories>
 

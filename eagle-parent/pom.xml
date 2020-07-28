@@ -73,12 +73,12 @@
       <dependency>
         <groupId>in.hocg.payment</groupId>
         <artifactId>payment-module-alipay</artifactId>
-        <version>0.1.1-SNAPSHOT</version>
+        <version>0.1.2-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>in.hocg.payment</groupId>
         <artifactId>payment-module-wxpay</artifactId>
-        <version>0.1.1-SNAPSHOT</version>
+        <version>0.1.2-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
