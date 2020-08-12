@@ -67,10 +67,12 @@ public class ApplicationReadyListener implements ApplicationListener<Application
                     .setTitle(enumTitle);
                 final List<DataDictInitDto.Item> children = Lists.newArrayList();
                 for (DataDictEnum itemEnum : aClass.getEnumConstants()) {
-                    final Class<? extends DataDictEnum> itemEnumClass = itemEnum.getClass();
+                    boolean isDeprecated = ClassUtils.getField(aClass, ((Enum<?>) itemEnum).name())
+                        .orElseThrow(IllegalArgumentException::new)
+                        .isAnnotationPresent(Deprecated.class);
                     children.add(new DataDictInitDto.Item()
                         .setTitle(itemEnum.getName())
-                        .setEnabled(Enabled.valueOf(!itemEnumClass.isAnnotationPresent(Deprecated.class)).getCode())
+                        .setEnabled(Enabled.valueOf(!isDeprecated).getCode())
                         .setCode(String.valueOf(itemEnum.getCode())));
                 }
                 item.setChildren(children);
