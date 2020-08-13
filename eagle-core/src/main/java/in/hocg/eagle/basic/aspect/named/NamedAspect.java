@@ -16,7 +16,13 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.WeakHashMap;
+import java.util.stream.Stream;
 
 /**
  * @author hocgin
@@ -76,19 +82,25 @@ public class NamedAspect {
         if (!aClass.isAnnotationPresent(InjectNamed.class)) {
             return;
         }
+        InjectNamed injectNamed = aClass.getAnnotation(InjectNamed.class);
 
         Map<String, Field> fieldMap = LangUtils.toMap(ClassUtils.getAllField(aClass), Field::getName);
-        fieldMap.values().stream()
-            .peek(field -> {
-                final Object object = ClassUtils.getObjectValue(result, field, null);
-                handleResult(object);
-            })
-            .filter(field -> field.isAnnotationPresent(Named.class))
-            .filter(field -> {
-                final Object value = ClassUtils.getObjectValue(result, field, null);
-                return Objects.isNull(value);
-            })
-            .forEach(field -> injectValue(result, fieldMap, field));
+
+        Stream<Field> fieldStream;
+        if (injectNamed.parallel()) {
+            fieldStream = fieldMap.values().parallelStream();
+        } else {
+            fieldStream = fieldMap.values().stream();
+        }
+        fieldStream.peek(field -> {
+            final Object object = ClassUtils.getObjectValue(result, field, null);
+            handleResult(object);
+        }).filter(
+            field -> field.isAnnotationPresent(Named.class)
+        ).filter(field -> {
+            final Object value = ClassUtils.getObjectValue(result, field, null);
+            return Objects.isNull(value);
+        }).forEach(field -> injectValue(result, fieldMap, field));
     }
 
     private void injectValue(Object result, Map<String, Field> fieldMap, Field field) {
