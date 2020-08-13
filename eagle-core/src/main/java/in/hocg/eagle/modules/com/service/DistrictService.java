@@ -28,4 +28,6 @@ public interface DistrictService extends AbstractService<District> {
     List<DistrictComplexVo> getCity();
 
     List<DistrictComplexVo> getCounty();
+
+    List<DistrictComplexVo> getDistrict();
 }

@@ -1,17 +1,19 @@
 package in.hocg.eagle.modules.com.service.impl;
 
+import in.hocg.eagle.basic.constant.datadict.DistrictLevel;
 import in.hocg.eagle.basic.datastruct.tree.Tree;
 import in.hocg.eagle.basic.ext.mybatis.tree.TreeServiceImpl;
 import in.hocg.eagle.manager.lang.LangManager;
-import in.hocg.eagle.modules.com.mapstruct.DistrictMapping;
 import in.hocg.eagle.modules.com.entity.District;
 import in.hocg.eagle.modules.com.mapper.DistrictMapper;
+import in.hocg.eagle.modules.com.mapstruct.DistrictMapping;
 import in.hocg.eagle.modules.com.pojo.qo.district.AMapDistrictDto;
 import in.hocg.eagle.modules.com.pojo.qo.district.DistrictSearchQo;
 import in.hocg.eagle.modules.com.pojo.vo.district.DistrictComplexVo;
 import in.hocg.eagle.modules.com.pojo.vo.district.DistrictTreeVo;
 import in.hocg.eagle.modules.com.service.DistrictService;
 import in.hocg.eagle.utils.LangUtils;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -60,22 +62,33 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
             .stream().map(this::convertComplex)
             .collect(Collectors.toList());
     }
-
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<DistrictComplexVo> getProvince() {
-        return LangUtils.toList(baseMapper.getProvince(), this::convertComplex);
+        return LangUtils.toList(selectListByLevel(DistrictLevel.Province), this::convertComplex);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<DistrictComplexVo> getCity() {
-        return LangUtils.toList(baseMapper.getCity(), this::convertComplex);
+        return LangUtils.toList(selectListByLevel(DistrictLevel.City), this::convertComplex);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public List<DistrictComplexVo> getCounty() {
-        return LangUtils.toList(baseMapper.getCounty(), this::convertComplex);
+        return LangUtils.toList(selectListByLevel(DistrictLevel.Country), this::convertComplex);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<DistrictComplexVo> getDistrict() {
+        return LangUtils.toList(selectListByLevel(DistrictLevel.District), this::convertComplex);
+    }
+
+    private List<District> selectListByLevel(@NonNull DistrictLevel level) {
+        return lambdaQuery().eq(District::getLevel, level.getCode()).list();
+    }
 
     private DistrictComplexVo convertComplex(District entity) {
         return mapping.asDistrictComplexVo(entity);
@@ -90,6 +103,7 @@ public class DistrictServiceImpl extends TreeServiceImpl<DistrictMapper, Distric
             entity.setParentId(parentId);
             entity.setCityCode(dto.getCitycode());
             entity.setAdCode(dto.getAdcode());
+            entity.setLevel(dto.getDistrictLevel().getCode());
             entity.setTitle(dto.getName());
             entity.setLat(dto.getLat());
             entity.setLng(dto.setLng());

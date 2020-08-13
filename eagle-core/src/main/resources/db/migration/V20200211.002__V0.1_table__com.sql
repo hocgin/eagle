@@ -43,6 +43,8 @@ CREATE TABLE `com_district`
         COMMENT '区域编码',
     city_code VARCHAR(32)
         COMMENT '城市编码',
+    level     VARCHAR(32)         NOT NULL
+        COMMENT '城市规划级别',
     lat       decimal(10, 6)
         COMMENT '中心(纬度)',
     lng       decimal(10, 6)

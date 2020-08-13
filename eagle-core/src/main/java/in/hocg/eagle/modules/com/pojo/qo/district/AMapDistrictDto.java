@@ -1,6 +1,7 @@
 package in.hocg.eagle.modules.com.pojo.qo.district;
 
 import com.google.common.collect.Lists;
+import in.hocg.eagle.basic.constant.datadict.DistrictLevel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -21,10 +22,29 @@ public class AMapDistrictDto {
     private String adcode;
     @ApiModelProperty("名称")
     private String name;
+    @ApiModelProperty("级别")
+    private String level;
     @ApiModelProperty("中心经纬度")
     private String center;
     @ApiModelProperty("子节点")
     private List<AMapDistrictDto> districts;
+
+    public DistrictLevel getDistrictLevel() {
+        switch (getLevel()) {
+            case "country":
+                return DistrictLevel.Country;
+            case "province":
+                return DistrictLevel.Province;
+            case "city":
+                return DistrictLevel.City;
+            case "district":
+                return DistrictLevel.District;
+            case "street":
+                return DistrictLevel.Street;
+            default:
+                throw new UnsupportedOperationException("未知的级别" + getLevel());
+        }
+    }
 
     public String getCitycode() {
         return "[]".equals(citycode) ? null : citycode;

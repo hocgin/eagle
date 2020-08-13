@@ -37,6 +37,9 @@ public class District extends TreeEntity<District> {
     @ApiModelProperty("城市编码")
     @TableField("city_code")
     private String cityCode;
+    @ApiModelProperty("城市规划级别")
+    @TableField("level")
+    private Integer level;
     @ApiModelProperty("中心(纬度)")
     @TableField("lat")
     private BigDecimal lat;
