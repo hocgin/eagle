@@ -1,0 +1,41 @@
+name: 发布通用模块
+# 发布通用模块(目前为 chaos/rabbit-basic)
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+    paths-ignore:
+      - 'docs/**'
+      - 'scripts/**'
+      - '*.md'
+      - '*.editorconfig'
+      - '*.gitignore'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+          server-id: sonatype
+
+      - name: Deploy to Sonatype Package Registry
+        run: |
+          mkdir -p ~/.m2
+          echo "<settings><servers><server><id>\${env.ID}</id><username>\${env.USERNAME}</username><password>\${env.PASSWORD}</password></server></servers></settings>" > ~/.m2/settings.xml
+          REPO="\${env.ID}::default::\${env.URL}"
+          mvn install --batch-mode -Dmaven.test.skip=true
+          mvn --batch-mode deploy -pl rabbit-service-bmw-api -Dmaven.test.skip=true -DaltReleaseDeploymentRepository="${REPO}" -DaltSnapshotDeploymentRepository="${REPO}"
+        env:
+          ID: sonatype-snapshots
+          URL: https://oss.sonatype.org/content/repositories/snapshots
+          USERNAME: hocgin
+          PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+

@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        contextPath: /nacos
+        server-addr: ${NACOS_HOST}
+        username: ${NACOS_USERNAME}
+        password: ${NACOS_PASSWORD}
+        namespace: ${NACOS_NAMESPACE}
+        file-extension: yml
+        shared-configs: application-shared.${spring.cloud.nacos.config.file-extension}
+      discovery:
+        server-addr: ${NACOS_HOST}
+        username: ${NACOS_USERNAME}
+        password: ${NACOS_PASSWORD}
+        namespace: ${NACOS_NAMESPACE}

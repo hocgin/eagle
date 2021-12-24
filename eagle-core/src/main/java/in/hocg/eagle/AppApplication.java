@@ -34,26 +34,6 @@ public class AppApplication {
 
     @GetMapping("/worked")
     public Result worked() {
-        MessageFactory.normal().syncSend(TopicConstant.Fields.TEST_TOPIC, MessageBuilder.withPayload("11").build());
-
-
-        final PersistenceMessage message = new PersistenceMessage();
-        message.setDestination(TopicConstant.Fields.TEST_TOPIC);
-        message.setPayload("6666");
-        MessageFactory.normal().syncSend(message);
-
-        final TransactionalMessage message1 = new TransactionalMessage();
-        message1.setDestination(TopicConstant.Fields.TEST_TOPIC);
-        message1.setPayload("XXX");
-        MessageFactory.transactional().prepare(message1);
-
-        final TransactionalMessage message2 = new TransactionalMessage();
-        message2.setDestination(TopicConstant.Fields.TEST_TOPIC2);
-        message2.setPayload(new TestBody2().setContent("XX"));
-        MessageFactory.transactional().prepare(message2);
-
-
-        MessageFactory.transactional().publish();
         return Result.success();
     }
 }

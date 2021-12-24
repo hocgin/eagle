@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.com.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.constant.config.ConfigEnum;
@@ -125,6 +126,9 @@ public class SystemSettingsServiceImpl extends AbstractServiceImpl<SystemSetting
     }
 
     public List<SystemSettings> selectListByConfigCode(Collection<String> configCodes) {
+        if (CollUtil.isEmpty(configCodes)) {
+            return Collections.emptyList();
+        }
         return lambdaQuery().in(SystemSettings::getConfigCode, configCodes).list();
     }
 

@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.listener;
 
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.constant.config.ConfigEnum;
 import in.hocg.eagle.basic.constant.datadict.DataDictEnum;
@@ -12,6 +13,7 @@ import in.hocg.eagle.modules.com.service.SystemSettingsService;
 import in.hocg.eagle.utils.clazz.ClassUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -28,6 +30,7 @@ import java.util.stream.Collectors;
  * @author hocgin
  */
 @Component
+@ConditionalOnBean(MybatisConfiguration.class)
 public class ApplicationReadyListener implements ApplicationListener<ApplicationReadyEvent> {
 
     @Override

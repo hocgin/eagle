@@ -14,11 +14,11 @@ import lombok.RequiredArgsConstructor;
 @ApiModel("城市规划级别")
 @RequiredArgsConstructor
 public enum DistrictLevel implements DataDictEnum {
-    Country(DistrictLevel.CountryCode, "国家"),
-    Province(DistrictLevel.ProvinceCode, "省份"),
-    City(DistrictLevel.CityCode, "城市"),
-    District(DistrictLevel.DistrictCode, "区域"),
-    Street(DistrictLevel.StreetCode, "街道");
+    Country(0, "国家"),
+    Province(1, "省份"),
+    City(2, "城市"),
+    District(3, "区域"),
+    Street(4, "街道");
     private final Integer code;
     private final String name;
 

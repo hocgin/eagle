@@ -7,6 +7,7 @@ import in.hocg.eagle.modules.com.pojo.dto.SystemSettingInitDto;
 import in.hocg.eagle.modules.com.pojo.qo.systemsettings.SystemSettingsPagingQo;
 import in.hocg.eagle.modules.com.pojo.qo.systemsettings.SystemSettingsSaveQo;
 import in.hocg.eagle.modules.com.pojo.vo.systemsettings.SystemSettingsComplexVo;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,5 +30,6 @@ public interface SystemSettingsService extends AbstractService<SystemSettings> {
 
     SystemSettingsComplexVo selectOne(Long id);
 
+    @Async
     void init(List<SystemSettingInitDto> items);
 }

@@ -1,11 +1,11 @@
 spring:
   datasource:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:mysql://mysql.hocgin.top:23306/db_eagle?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    url: jdbc:p6spy:mysql://sv-mysql.basic:3306/db_eagle?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
   redis:
-    host: redis.hocgin.top
-    port: 26379
-    database: 0
+    host: sv-redis.basic
+    port: 6379
+    database: 3
   flyway:
     baseline-on-migrate: true
     enabled: true
@@ -18,7 +18,7 @@ spring:
             client-secret: a8d3db4c25c9627e4bc5996f25c45f76a4b2214e
 
 eagle:
-  hostname: http://eagle.5gzvip.idcfengye.com
+  hostname: http://eagle.hocgin.top
   amap: a17f4063f58d7fc70de9a205e22f2450
   ip138: 34579df219c0eadf6c9f02f610c8169b
   #  微信支付

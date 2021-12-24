@@ -1,15 +1,11 @@
 spring:
   datasource:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:mysql://mysql.localhost:3306/db_eagle?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
-    username: root
-    password: hocgin
-    druid:
-      validation-query: SELECT 1
-      test-while-idle: true
+    url: jdbc:p6spy:mysql://mysql.hocgin.top:23306/db_eagle?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
   redis:
-    host: redis.localhost
-    port: 6379
+    host: redis.hocgin.top
+    port: 26379
+    database: 1
   flyway:
     baseline-on-migrate: true
     enabled: true

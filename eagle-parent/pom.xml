@@ -15,11 +15,11 @@
 
   <properties>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>1.8</java.version>
+    <java.version>11</java.version>
     <resource.delimiter>@</resource.delimiter>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.source>11</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.compiler.target>11</maven.compiler.target>
     <!-- Maven plugins -->
     <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
     <!--版本号-->
@@ -28,6 +28,7 @@
     <lombok.version>1.18.10</lombok.version>
     <easypoi.version>3.2.0</easypoi.version>
     <spring-boot.version>2.3.0.RELEASE</spring-boot.version>
+    <boot-dependencies.version>1.0.22</boot-dependencies.version>
   </properties>
 
   <dependencies>
@@ -217,9 +218,17 @@
         <version>1.2.61</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.rocketmq</groupId>
-        <artifactId>rocketmq-spring-boot-starter</artifactId>
-        <version>2.1.0</version>
+        <groupId>in.hocg</groupId>
+        <artifactId>boot-dependencies</artifactId>
+        <version>${boot-dependencies.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>in.hocg.boot</groupId>
+            <artifactId>spring-boot-utils</artifactId>
+          </exclusion>
+        </exclusions>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>

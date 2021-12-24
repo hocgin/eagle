@@ -12,6 +12,7 @@ import in.hocg.eagle.modules.com.pojo.vo.datadict.DataDictComplexVo;
 import in.hocg.eagle.modules.com.pojo.vo.datadict.DataDictSearchVo;
 import in.hocg.eagle.modules.com.entity.DataDict;
 import in.hocg.eagle.modules.com.entity.DataDictItem;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,5 +41,6 @@ public interface DataDictService extends AbstractService<DataDict> {
 
     void batchDelete(DataDictDeleteQo qo);
 
+    @Async
     void init(List<DataDictInitDto> items);
 }
