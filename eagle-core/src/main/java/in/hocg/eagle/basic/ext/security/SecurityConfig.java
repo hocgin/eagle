@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .authorizeRequests()
             .antMatchers(
+                "/actuator/**",
                 // 短链接
                 "/s/*",
                 "/wx-mp/*",
