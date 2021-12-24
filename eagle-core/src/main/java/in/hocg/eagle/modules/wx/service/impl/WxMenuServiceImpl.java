@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.wx.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
@@ -22,7 +23,6 @@ import in.hocg.eagle.utils.ValidUtils;
 import in.hocg.eagle.utils.string.JsonUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,7 +104,7 @@ public class WxMenuServiceImpl extends AbstractServiceImpl<WxMenuMapper, WxMenu>
     public void validEntity(WxMenu entity) {
         super.validEntity(entity);
         final String appid = entity.getAppid();
-        if (Strings.isNotBlank(appid)) {
+        if (StrUtil.isNotBlank(appid)) {
             ValidUtils.notNull(wxMpConfigService.getById(appid), "APPID 错误, 未找到该微信公众号");
         }
     }

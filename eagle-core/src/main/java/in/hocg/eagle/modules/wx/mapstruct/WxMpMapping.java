@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.wx.mapstruct;
 
+import cn.hutool.core.util.StrUtil;
 import in.hocg.eagle.basic.constant.datadict.WxMaterialType;
 import in.hocg.eagle.modules.wx.entity.WxMpConfig;
 import in.hocg.eagle.modules.wx.entity.WxMpMessageTemplate;
@@ -17,7 +18,6 @@ import me.chanjar.weixin.mp.bean.tag.WxUserTag;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
-import org.apache.logging.log4j.util.Strings;
 import org.mapstruct.Mapper;
 
 import java.util.Objects;
@@ -51,7 +51,7 @@ public interface WxMpMapping {
         final WxMpMaterialNews.WxMpMaterialNewsArticle result = new WxMpMaterialNews.WxMpMaterialNewsArticle();
         final String thumbUrl = item.getThumbUrl();
         final String thumbMediaId = item.getThumbMediaId();
-        if (Strings.isNotBlank(thumbUrl)) {
+        if (StrUtil.isNotBlank(thumbUrl)) {
             result.setThumbUrl(thumbUrl);
         } else if (Objects.nonNull(thumbMediaId)) {
             result.setThumbMediaId(thumbMediaId);

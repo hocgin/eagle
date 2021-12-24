@@ -1,5 +1,6 @@
 package in.hocg.eagle.manager.redis;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import in.hocg.eagle.basic.ext.security.authentication.token.TokenManager;
 import in.hocg.eagle.manager.lang.dto.IpAndAddressDto;
@@ -7,7 +8,6 @@ import in.hocg.eagle.utils.LangUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -84,7 +84,7 @@ public class RedisManager implements TokenManager {
     }
 
     private <T> Optional<T> serialize(String text, Class<T> clazz) {
-        if (Strings.isBlank(text)) {
+        if (StrUtil.isBlank(text)) {
             return Optional.empty();
         }
         return Optional.of(JSON.parseObject(text, clazz));
@@ -98,7 +98,7 @@ public class RedisManager implements TokenManager {
     public Optional<Long> getAndCleanUserId(String sessionId) {
         final ValueOperations<String, String> opsForValue = template.opsForValue();
         final String userId = opsForValue.get(sessionId);
-        if (Strings.isNotBlank(userId)) {
+        if (StrUtil.isNotBlank(userId)) {
             return Optional.of(Long.parseLong(userId));
         }
         return Optional.empty();

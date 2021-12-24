@@ -1,8 +1,8 @@
 package in.hocg.eagle.basic.ext.security.authentication.token;
 
+import cn.hutool.core.util.StrUtil;
 import in.hocg.eagle.basic.ext.web.SpringContext;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,7 +34,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         final String authorizationHeader = request.getHeader(TOKEN_HEADER);
 
-        if (Strings.isBlank(authorizationHeader) || !authorizationHeader.startsWith(BEARER)) {
+        if (StrUtil.isBlank(authorizationHeader) || !authorizationHeader.startsWith(BEARER)) {
             filterChain.doFilter(request, response);
             return;
         }

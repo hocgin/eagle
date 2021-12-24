@@ -1,10 +1,10 @@
 package in.hocg.eagle.basic.message.core.normal;
 
+import cn.hutool.core.util.StrUtil;
 import in.hocg.eagle.basic.ext.web.SpringContext;
 import in.hocg.eagle.basic.message.core.MessageFactory;
 import in.hocg.eagle.modules.com.entity.PersistenceMessage;
 import in.hocg.eagle.utils.string.JsonUtils;
-import org.apache.logging.log4j.util.Strings;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.messaging.Message;
@@ -31,7 +31,7 @@ public class NormalMessageFactory implements MessageFactory  {
         final String destination = message.getDestination();
         final String headersStr = message.getHeaders();
         final MessageBuilder<String> messageBuilder = MessageBuilder.withPayload(message.getPayload());
-        if (Strings.isNotBlank(headersStr)) {
+        if (StrUtil.isNotBlank(headersStr)) {
             messageBuilder.copyHeaders(JsonUtils.parseObject(headersStr, HashMap.class));
         }
         return syncSend(destination, messageBuilder.build());

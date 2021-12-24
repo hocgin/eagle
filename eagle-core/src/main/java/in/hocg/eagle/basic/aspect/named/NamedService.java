@@ -1,5 +1,6 @@
 package in.hocg.eagle.basic.aspect.named;
 
+import cn.hutool.core.util.StrUtil;
 import in.hocg.eagle.modules.com.entity.DataDictItem;
 import in.hocg.eagle.modules.com.service.DataDictService;
 import in.hocg.eagle.modules.pms.entity.ProductCategory;
@@ -10,7 +11,6 @@ import in.hocg.eagle.modules.ums.service.AccountService;
 import in.hocg.eagle.modules.ums.service.AuthorityService;
 import in.hocg.eagle.utils.LangUtils;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +38,7 @@ public class NamedService {
         }
         final String type = args[0];
         final String item = LangUtils.toString(id);
-        if (Strings.isBlank(type) || Strings.isBlank(item)) {
+        if (StrUtil.isBlank(type) || StrUtil.isBlank(item)) {
             return null;
         }
         final Optional<DataDictItem> dataDictItemOptional = service.selectOneByDictIdAndCode(type, item);

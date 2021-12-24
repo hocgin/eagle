@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.bmw.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import in.hocg.eagle.basic.constant.CodeEnum;
 import in.hocg.eagle.basic.constant.datadict.*;
 import in.hocg.eagle.basic.exception.ServiceException;
@@ -41,7 +42,6 @@ import in.hocg.payment.PaymentMessage;
 import io.netty.handler.timeout.TimeoutException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
@@ -426,7 +426,7 @@ public class PaymentServiceImpl implements PaymentService {
                 final PaymentTrade trade = paymentTradeService.selectOneByTradeSn(requestSn)
                     .orElseThrow(() -> ServiceException.wrap("未找到交易单据"));
                 notifyUrl = trade.getNotifyUrl();
-                if (Strings.isBlank(notifyUrl)) {
+                if (StrUtil.isBlank(notifyUrl)) {
                     log.info("交易单据:[{}]无需进行通知, 没有设置通知地址", requestSn);
                     return;
                 }
@@ -440,7 +440,7 @@ public class PaymentServiceImpl implements PaymentService {
                 final RefundRecord refund = refundRecordService.selectOneByRefundSn(requestSn)
                     .orElseThrow(() -> ServiceException.wrap("未找到退款单据"));
                 notifyUrl = refund.getNotifyUrl();
-                if (Strings.isBlank(notifyUrl)) {
+                if (StrUtil.isBlank(notifyUrl)) {
                     log.info("退款单据:[{}]无需进行通知, 没有设置通知地址", requestSn);
                     return;
                 }

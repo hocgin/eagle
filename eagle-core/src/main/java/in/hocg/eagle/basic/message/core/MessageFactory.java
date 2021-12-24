@@ -1,7 +1,7 @@
 package in.hocg.eagle.basic.message.core;
 
+import cn.hutool.core.util.StrUtil;
 import in.hocg.eagle.utils.ValidUtils;
-import org.apache.logging.log4j.util.Strings;
 
 import java.util.Collections;
 import java.util.Map;
@@ -21,7 +21,7 @@ public interface MessageFactory {
         final in.hocg.eagle.basic.message.annotation.MessageDestination destinationAnnotation = aClass.getAnnotation(in.hocg.eagle.basic.message.annotation.MessageDestination.class);
         if (Objects.nonNull(destinationAnnotation)) {
             String destinationVal = destinationAnnotation.value();
-            if (Strings.isNotBlank(destinationVal)) {
+            if (StrUtil.isNotBlank(destinationVal)) {
                 destination = destinationVal;
             }
         }

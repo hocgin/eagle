@@ -45,21 +45,6 @@
 
   <dependencyManagement>
     <dependencies>
-      <!--依赖集-->
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>${spring-boot.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>io.spring.platform</groupId>
-        <artifactId>platform-bom</artifactId>
-        <version>2.0.8.RELEASE</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
       <!--一方库-->
       <dependency>
         <groupId>in.hocg.swagger2</groupId>

@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.wx.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
 import in.hocg.eagle.basic.constant.CodeEnum;
@@ -18,7 +19,6 @@ import in.hocg.eagle.utils.file.FileUtils;
 import in.hocg.eagle.utils.string.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -160,7 +160,7 @@ public class WxMaterialServiceImpl extends AbstractServiceImpl<WxMaterialMapper,
     private WxMaterialType.News.NewsItem convertNewsItem(String appid, WxMaterialUploadNewsQo.NewsItem item) {
         final WxMaterialType.News.NewsItem result = mapping.asWxMaterialType0News0NewsItem(item);
         final String thumbMediaId = item.getThumbMediaId();
-        if (Strings.isNotBlank(thumbMediaId)) {
+        if (StrUtil.isNotBlank(thumbMediaId)) {
             result.setThumbMediaId(thumbMediaId);
         } else {
             final WxMaterialType materialType = WxMaterialType.Image;

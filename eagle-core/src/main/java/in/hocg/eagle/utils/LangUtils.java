@@ -1,12 +1,12 @@
 package in.hocg.eagle.utils;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.hash.Hashing;
 import in.hocg.eagle.utils.clazz.ClassUtils;
 import lombok.experimental.UtilityClass;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
@@ -239,7 +239,7 @@ public class LangUtils {
     }
 
     public <T> Optional<T> parse(String text, Class<T> clazz) {
-        if (Strings.isBlank(text)) {
+        if (StrUtil.isBlank(text)) {
             return Optional.empty();
         }
 

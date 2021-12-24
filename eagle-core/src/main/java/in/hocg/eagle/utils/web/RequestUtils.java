@@ -1,8 +1,8 @@
 package in.hocg.eagle.utils.web;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.util.Strings;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public class RequestUtils {
      */
     public String getClientIP(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
-        if (Strings.isNotBlank(ip)
+        if (StrUtil.isNotBlank(ip)
                 && !"unknown".equalsIgnoreCase(ip)) {
             int index = ip.indexOf(",");
             if (index != -1) {
@@ -34,7 +34,7 @@ public class RequestUtils {
             }
         }
         ip = request.getHeader("X-Real-IP");
-        if (Strings.isNotBlank(ip)
+        if (StrUtil.isNotBlank(ip)
                 && !"unKnown".equalsIgnoreCase(ip)) {
             return ip;
         }

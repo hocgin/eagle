@@ -14,6 +14,10 @@
   <artifactId>eagle-core</artifactId>
   <packaging>jar</packaging>
 
+  <properties>
+    <main-class>in.hocg.eagle.AppApplication</main-class>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -221,19 +225,21 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring-boot.version}</version>
+        <executions>
+          <execution>
+            <id>repackage</id>
+            <goals>
+              <goal>repackage</goal>
+              <goal>build-info</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
+          <mainClass>${main-class}</mainClass>
           <layers>
             <enabled>true</enabled>
           </layers>
         </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>repackage</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>

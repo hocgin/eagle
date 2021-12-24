@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.wx.manager;
 
+import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import in.hocg.eagle.basic.constant.datadict.WxMaterialType;
 import in.hocg.eagle.basic.exception.ServiceException;
@@ -29,7 +30,6 @@ import me.chanjar.weixin.mp.bean.tag.WxUserTag;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -246,7 +246,7 @@ public class WxMpManager {
                     data.getOpenidList().forEach(consumer);
                 }
                 tmpNextOpenId = result.getNextOpenid();
-            } while (Strings.isNotBlank(tmpNextOpenId));
+            } while (StrUtil.isNotBlank(tmpNextOpenId));
         } catch (WxErrorException e) {
             throw ServiceException.wrap(e.getError().getErrorMsg());
         }
@@ -268,7 +268,7 @@ public class WxMpManager {
                 WxMpUserList result = service.userList(tmpNextOpenId);
                 result.getOpenids().forEach(consumer);
                 tmpNextOpenId = result.getNextOpenid();
-            } while (Strings.isNotBlank(tmpNextOpenId));
+            } while (StrUtil.isNotBlank(tmpNextOpenId));
 
         } catch (WxErrorException e) {
             throw ServiceException.wrap(e.getError().getErrorMsg());
@@ -292,9 +292,9 @@ public class WxMpManager {
         final WxMpMassOpenIdsMessage message = new WxMpMassOpenIdsMessage();
         message.setToUsers(openId);
         message.setMsgType(msgType);
-        if (Strings.isNotBlank(content)) {
+        if (StrUtil.isNotBlank(content)) {
             message.setContent(content);
-        } else if (Strings.isNotBlank(mediaId)) {
+        } else if (StrUtil.isNotBlank(mediaId)) {
             message.setMediaId(mediaId);
         } else {
             ValidUtils.fail("发送内容错误");
@@ -325,9 +325,9 @@ public class WxMpManager {
         message.setSendAll(Objects.isNull(tagId));
         message.setTagId(tagId);
         message.setMsgType(msgType);
-        if (Strings.isNotBlank(content)) {
+        if (StrUtil.isNotBlank(content)) {
             message.setContent(content);
-        } else if (Strings.isNotBlank(mediaId)) {
+        } else if (StrUtil.isNotBlank(mediaId)) {
             message.setMediaId(mediaId);
         } else {
             ValidUtils.fail("发送内容错误");
@@ -357,9 +357,9 @@ public class WxMpManager {
             final WxMpMassPreviewMessage message = new WxMpMassPreviewMessage();
             message.setToWxUserOpenid(openId);
             message.setMsgType(msgType);
-            if (Strings.isNotBlank(content)) {
+            if (StrUtil.isNotBlank(content)) {
                 message.setContent(content);
-            } else if (Strings.isNotBlank(mediaId)) {
+            } else if (StrUtil.isNotBlank(mediaId)) {
                 message.setMediaId(mediaId);
             } else {
                 ValidUtils.fail("发送内容错误");

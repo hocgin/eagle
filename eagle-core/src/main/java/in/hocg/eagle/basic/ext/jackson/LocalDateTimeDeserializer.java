@@ -1,9 +1,9 @@
 package in.hocg.eagle.basic.ext.jackson;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import org.apache.logging.log4j.util.Strings;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -21,7 +21,7 @@ public class LocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
 
     @Override
     public LocalDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        if (Objects.nonNull(p) && Strings.isNotBlank(p.getText())) {
+        if (Objects.nonNull(p) && StrUtil.isNotBlank(p.getText())) {
             return LocalDateTime.ofInstant(Instant.ofEpochMilli(p.getLongValue()), ZoneOffset.of("+8"));
         }
         return null;
