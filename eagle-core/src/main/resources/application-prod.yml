@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://sv-mysql.basic:3306/db_eagle?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    url: jdbc:mysql://sv-mysql.basic:3306/db_eagle?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
   redis:
     database: 3
   security:
