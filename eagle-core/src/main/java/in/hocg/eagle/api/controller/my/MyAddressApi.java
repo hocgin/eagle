@@ -4,7 +4,7 @@ package in.hocg.eagle.api.controller.my;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.api.pojo.qo.MyAddressPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressSaveQo;

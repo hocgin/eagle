@@ -1,7 +1,5 @@
 package in.hocg.eagle.basic;
 
-import in.hocg.eagle.basic.aspect.logger.DefaultLoggerService;
-import in.hocg.eagle.basic.aspect.logger.LoggerService;
 import in.hocg.eagle.basic.ext.lang.SnowFlake;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -22,11 +20,6 @@ public class BeanStarter {
         return new SnowFlake(1, 1);
     }
 
-    @Bean
-    @ConditionalOnMissingBean(LoggerService.class)
-    public LoggerService loggerService() {
-        return new DefaultLoggerService();
-    }
 
     @Bean
     @ConditionalOnMissingBean(RestTemplate.class)

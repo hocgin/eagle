@@ -2,8 +2,8 @@ package in.hocg.eagle.modules.com.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
+import in.hocg.boot.logging.autoconfiguration.core.LoggerEvent;
 import in.hocg.eagle.basic.ext.mybatis.core.AbstractServiceImpl;
-import in.hocg.eagle.basic.aspect.logger.Logger;
 import in.hocg.eagle.manager.lang.LangManager;
 import in.hocg.eagle.manager.lang.dto.IpAndAddressDto;
 import in.hocg.eagle.modules.com.mapstruct.RequestLogMapping;
@@ -45,7 +45,7 @@ public class RequestLogServiceImpl extends AbstractServiceImpl<RequestLogMapper,
     @Async
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void asyncSave(Logger logger) {
+    public void asyncSave(LoggerEvent logger) {
         final String uri = logger.getUri();
 
         // 如果满足忽略的URI配置
@@ -53,7 +53,7 @@ public class RequestLogServiceImpl extends AbstractServiceImpl<RequestLogMapper,
             return;
         }
 
-        RequestLog entity = logger.asRequestLog();
+        RequestLog entity = new RequestLog();
         final UserAgent userAgent = new UserAgent(entity.getUserAgent());
         entity.setShell(userAgent.getShell().getName());
         entity.setShellVersion(userAgent.getShellVersion());

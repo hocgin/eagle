@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.com.controller;
 
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.pojo.ro.IdsRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.com.pojo.qo.datadict.item.DataDictItemUpdateQo;

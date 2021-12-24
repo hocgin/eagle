@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.com.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.pojo.ro.Insert;
 import in.hocg.eagle.basic.pojo.ro.Update;
 import in.hocg.eagle.basic.result.Result;

@@ -1,6 +1,6 @@
 package in.hocg.eagle.basic.ext.security.authentication.token;
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.constant.datadict.Enabled;
 import in.hocg.eagle.basic.constant.datadict.Expired;
 import in.hocg.eagle.basic.constant.datadict.Locked;

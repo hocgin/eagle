@@ -1,7 +1,7 @@
 package in.hocg.eagle.api.controller;
 
 import in.hocg.eagle.api.service.AppService;
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.oms.pojo.qo.order.CalcOrderQo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;

@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.mkt.controller;
 
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.pojo.ro.Insert;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.mkt.pojo.qo.CouponPagingQo;

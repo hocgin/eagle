@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.ums.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.ums.pojo.qo.authority.GrantAuthorityQo;
 import in.hocg.eagle.modules.ums.pojo.qo.role.RoleInsertQo;

@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.ums.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.constant.GlobalConstant;
 import in.hocg.eagle.basic.ext.security.SecurityContext;

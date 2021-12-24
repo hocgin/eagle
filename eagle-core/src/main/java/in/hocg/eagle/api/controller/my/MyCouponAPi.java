@@ -2,7 +2,7 @@ package in.hocg.eagle.api.controller.my;
 
 import in.hocg.eagle.api.pojo.qo.MyCouponPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.result.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;

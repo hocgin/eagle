@@ -1,6 +1,6 @@
 package in.hocg.eagle.modules.bmw.controller;
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.bmw.api.ro.GoPayRo;
 import in.hocg.eagle.modules.bmw.api.ro.QueryPaymentWayRo;

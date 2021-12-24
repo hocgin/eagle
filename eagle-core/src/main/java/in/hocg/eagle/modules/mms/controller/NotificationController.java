@@ -2,7 +2,7 @@ package in.hocg.eagle.modules.mms.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.basic.ext.security.SecurityContext;
 import in.hocg.eagle.modules.mms.pojo.qo.notify.PublishPrivateLetterQo;

@@ -1,7 +1,7 @@
 package in.hocg.eagle.modules.pms.controller;
 
 
-import in.hocg.eagle.basic.aspect.logger.UseLogger;
+import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.constant.AuthorizeConstant;
 import in.hocg.eagle.basic.pojo.ro.Insert;
 import in.hocg.eagle.basic.pojo.ro.Update;
