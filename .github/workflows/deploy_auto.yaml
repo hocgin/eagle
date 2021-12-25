@@ -134,7 +134,7 @@ jobs:
           username: ${{ env.IMAGES_HUB_USER_NAME }}
           password: ${{ env.IMAGES_HUB_PASSWORD }}
       # 编译和发布镜像 =>
-      - name: Build & Push Docker Image::Chaos
+      - name: Build & Push Docker Image
         uses: docker/build-push-action@v2
         with:
           context: ./eagle-core
