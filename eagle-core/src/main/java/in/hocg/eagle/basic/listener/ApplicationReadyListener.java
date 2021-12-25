@@ -13,6 +13,7 @@ import in.hocg.eagle.modules.com.service.SystemSettingsService;
 import in.hocg.eagle.utils.clazz.ClassUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -33,15 +34,15 @@ import java.util.stream.Collectors;
 @Component
 public class ApplicationReadyListener implements ApplicationListener<ApplicationReadyEvent> {
 
-    @Async
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        this.loadConfigs();
-        this.loadDataDict();
+        ((ApplicationReadyListener) AopContext.currentProxy()).loadConfigs();
+        ((ApplicationReadyListener) AopContext.currentProxy()).loadDataDict();
     }
 
+    @Async
     @ApiModelProperty("加载系统配置")
-    private void loadConfigs() {
+    public void loadConfigs() {
         List<SystemSettingInitDto> items = Arrays.stream(ConfigEnum.values()).parallel()
             .map(config -> new SystemSettingInitDto()
                 .setDeprecated(ClassUtils.getField(ConfigEnum.class, config.name())
@@ -54,8 +55,9 @@ public class ApplicationReadyListener implements ApplicationListener<Application
         SpringContext.getBean(SystemSettingsService.class).init(items);
     }
 
+    @Async
     @ApiModelProperty("加载数据字典")
-    private void loadDataDict() {
+    public void loadDataDict() {
         final List<Class<DataDictEnum>> classes = ClassUtils.getClassAllImpl(DataDictEnum.class);
         List<DataDictInitDto> items = Lists.newArrayList();
         for (Class<DataDictEnum> aClass : classes) {
