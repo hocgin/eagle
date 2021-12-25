@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -30,9 +31,9 @@ import java.util.stream.Collectors;
  * @author hocgin
  */
 @Component
-@ConditionalOnBean(MybatisConfiguration.class)
 public class ApplicationReadyListener implements ApplicationListener<ApplicationReadyEvent> {
 
+    @Async
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         this.loadConfigs();
