@@ -13,11 +13,4 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class MailTemplateTest extends AbstractSpringBootTest {
 
-    @Autowired
-    MailTemplate mailTemplate;
-
-    @Test
-    public void send() {
-        mailTemplate.send(Lists.newArrayList("hocgin@gmail.com"), "这是一个标题", "邮件内容📧");
-    }
 }

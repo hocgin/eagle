@@ -2,8 +2,8 @@ package in.hocg.eagle.manager.mail;
 
 import com.beust.jcommander.internal.Sets;
 import com.google.common.collect.Lists;
+import in.hocg.boot.mail.autoconfigure.core.MailBervice;
 import in.hocg.eagle.basic.ext.mail.Mail;
-import in.hocg.eagle.basic.ext.mail.MailTemplate;
 import in.hocg.eagle.utils.web.SpelParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ import java.util.Set;
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class MailManager implements InitializingBean {
     private static final String PREFIX = "[EAGLE]";
-    private final MailTemplate template;
+    private final MailBervice template;
     private SpringTemplateEngine templateEngine;
 
     /**
@@ -65,13 +65,13 @@ public class MailManager implements InitializingBean {
             context.setVariables(vars);
             SpelParser.parse(templateText, context);
         }
-        template.send(Lists.newArrayList(email), title(title), templateText);
+        template.sendText(Lists.newArrayList(email), title(title), templateText);
     }
 
 
     private void sendWithTemplate(@NotNull String email, @NotNull String title,
                                   @NotNull String templateName, Map<String, Object> vars) {
-        template.send(Lists.newArrayList(email), title(title), thymeleafTemplate(templateName, vars));
+        template.sendText(Lists.newArrayList(email), title(title), thymeleafTemplate(templateName, vars));
     }
 
     /**

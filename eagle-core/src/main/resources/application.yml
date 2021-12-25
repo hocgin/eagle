@@ -5,17 +5,6 @@ spring:
     name: eagle
   profiles:
     active: local
-  mail:
-    personal: Eagle 官方邮件
-    host: smtp.163.com
-    username: 13600747016@163.com
-    # 此处 password 为授权码
-    password: ENC(rtE5S5utfbprjLVoLfhAvtj53dqpzwjQGZhnxADtdlY=)
-    properties:
-      mail.smtp.auth: false
-      mail.smtp.starttls.enable: false
-      mail.smtp.starttls.required: false
-      mail.debug: false
   servlet:
     multipart:
       max-file-size: 10MB
