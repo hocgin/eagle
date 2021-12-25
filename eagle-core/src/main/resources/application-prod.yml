@@ -4,12 +4,8 @@ spring:
   redis:
     database: 3
   security:
-    oauth2:
-      client:
-        registration:
-          github:
-            client-id: 7c8f6909e7226d490bdb
-            client-secret: a8d3db4c25c9627e4bc5996f25c45f76a4b2214e
+    oauth2: null
+
 
 eagle:
   hostname: http://eagle.hocgin.top

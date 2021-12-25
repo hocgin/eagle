@@ -2,7 +2,6 @@ package in.hocg.eagle.basic.ext.security;
 
 import in.hocg.eagle.basic.ext.security.authentication.token.TokenAuthenticationEndpoint;
 import in.hocg.eagle.basic.ext.security.authentication.token.TokenAuthenticationFilter;
-import in.hocg.eagle.basic.ext.security.social.SocialUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 /**
  * Created by hocgin on 2020/1/6.
@@ -31,7 +31,6 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequest
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
-    private final SocialUserService socialUserService;
 
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -62,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers(
                 "/actuator/**",
+                "/v2/api-docs",
                 // 短链接
                 "/s/*",
                 "/wx-mp/*",
@@ -88,15 +88,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/captcha",
                 TokenAuthenticationEndpoint.ACCOUNT_TOKEN_URI).permitAll()
             .anyRequest().authenticated()
-            .and()
-            .oauth2Login()
 //            .authorizationEndpoint()
 //            .authorizationRequestRepository(new HttpSessionOAuth2AuthorizationRequestRepository())
 //            .and()
 //            .tokenEndpoint().accessTokenResponseClient()
 //            .and()
-            .userInfoEndpoint()
-            .userService(socialUserService)
         ;
 
         http.exceptionHandling()
@@ -105,7 +101,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // ==== Token 登录方式 ====
         {
-            http.addFilterBefore(new TokenAuthenticationFilter(), OAuth2AuthorizationRequestRedirectFilter.class);
+            http.addFilterBefore(new TokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         }
     }
 }
