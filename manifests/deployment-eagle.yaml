@@ -41,7 +41,7 @@ spec:
               httpGet:
                   path: "/actuator/health"
                   port: web-port
-              initialDelaySeconds: 60
+              initialDelaySeconds: 100
               timeoutSeconds: 3
 ---
 apiVersion: v1

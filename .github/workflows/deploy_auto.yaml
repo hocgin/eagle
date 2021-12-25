@@ -24,7 +24,7 @@ env:
   IMAGES_HUB_EMAIL: hocgin@gmail.com
   KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
 
-  IMAGE_BMW: ${{ secrets.IMAGES_HUB_REGISTRY_URL }}/${{ secrets.IMAGES_HUB_NAMESPACES }}/eagle
+  IMAGE_EAGLE: ${{ secrets.IMAGES_HUB_REGISTRY_URL }}/${{ secrets.IMAGES_HUB_NAMESPACES }}/eagle
 
 jobs:
   build-publish-deploy:
@@ -140,7 +140,7 @@ jobs:
           context: ./eagle-core
           file: ./eagle-core/Dockerfile
           push: true
-          tags: ${{ env.IMAGE_BMW }}:${{ steps.prep.outputs.version }}
+          tags: ${{ env.IMAGE_EAGLE }}:${{ steps.prep.outputs.version }}
           labels: |
             org.opencontainers.image.source=${{ github.repositoryUrl }}
             org.opencontainers.image.revision=${{ github.sha }}
@@ -168,6 +168,6 @@ jobs:
           manifests: |
             manifests/deployment-eagle.yaml
           images: |
-            ${{ env.IMAGE_BMW }}:${{ steps.prep.outputs.version }}
+            ${{ env.IMAGE_EAGLE }}:${{ steps.prep.outputs.version }}
           imagepullsecrets: |
             k8s-secret
