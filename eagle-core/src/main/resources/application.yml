@@ -27,6 +27,10 @@ spring:
           github:
             client-id: ${GITHUB_CLIENT_ID}
             client-secret: ${GITHUB_CLIENT_SECRET}
+management:
+  health:
+    mail:
+      enabled: false
 aliyun:
   oss:
     endpoint: http://oss-cn-beijing.aliyuncs.com
