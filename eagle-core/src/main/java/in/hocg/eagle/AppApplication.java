@@ -1,8 +1,6 @@
 package in.hocg.eagle;
 
 import in.hocg.eagle.basic.constant.message.TopicConstant;
-import in.hocg.eagle.basic.message.MessageFactory;
-import in.hocg.eagle.basic.message.core.transactional.TransactionalMessage;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.com.entity.PersistenceMessage;
 import in.hocg.eagle.modules.mms.message.body.TestBody2;
