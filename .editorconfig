@@ -1,4 +1,5 @@
 # http://editorconfig.org
+
 [*]
 indent_style = space
 indent_size = 4
@@ -16,6 +17,8 @@ indent_style = tab
 [*.yml]
 indent_size = 2
 
-[*.xml]
+[*.yaml]
 indent_size = 2
 
+[*.xml]
+indent_size = 2
