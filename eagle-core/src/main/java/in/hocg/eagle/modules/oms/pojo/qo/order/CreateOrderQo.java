@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CreateOrderQo extends CalcOrderQo {
-    @NotNull
+    @NotNull(message = "请选择收货地址")
     @ApiModelProperty("收货人信息")
     private Receiver receiver;
 

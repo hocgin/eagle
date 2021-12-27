@@ -1,5 +1,6 @@
 package in.hocg.eagle.modules.oms.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
@@ -315,7 +316,7 @@ public class OrderServiceImpl extends AbstractServiceImpl<OrderMapper, Order>
             .setDiscountAmount(discountTotalAmount)
             .setPayAmount(payAmount)
             // 收货人信息
-            .setReceiverName(receiver.getName())
+            .setReceiverName(Assert.notEmpty(receiver.getName(), "请选择收货地址"))
             .setReceiverPhone(receiver.getPhone())
             .setReceiverPostCode(receiver.getPostCode())
             .setReceiverProvince(receiver.getProvince())
