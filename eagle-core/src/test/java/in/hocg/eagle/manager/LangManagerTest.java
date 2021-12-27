@@ -5,6 +5,7 @@ import in.hocg.eagle.basic.constant.message.TopicConstant;
 import in.hocg.eagle.manager.lang.LangManager;
 import in.hocg.eagle.manager.lang.dto.IpAndAddressDto;
 import in.hocg.eagle.modules.com.entity.PersistenceMessage;
+import in.hocg.eagle.modules.com.service.DistrictService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class LangManagerTest extends AbstractSpringBootTest {
     @Autowired
     LangManager langManager;
+    @Autowired
+    DistrictService districtService;
 
     @Test
     public void getAddressByIp() {
@@ -26,8 +29,6 @@ public class LangManagerTest extends AbstractSpringBootTest {
 
     @Test
     public void test() {
-        final PersistenceMessage message = new PersistenceMessage();
-        message.setPayload("内容");
-        message.setDestination(TopicConstant.Fields.TEST_TOPIC);
+        districtService.importByAMapUrl();
     }
 }
