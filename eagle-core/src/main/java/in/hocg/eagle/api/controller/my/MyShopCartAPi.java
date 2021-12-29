@@ -1,6 +1,7 @@
 package in.hocg.eagle.api.controller.my;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.api.pojo.qo.MyCartItemPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
@@ -8,6 +9,7 @@ import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemInsertRo;
 import in.hocg.eagle.modules.oms.pojo.qo.cart.CartItemUpdateRo;
+import in.hocg.eagle.modules.oms.pojo.vo.cart.CartItemComplexVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -33,14 +35,14 @@ public class MyShopCartAPi {
     @UseLogger("分页查询 - 购物车")
     @ApiOperation("分页查询 - 购物车")
     @PostMapping("/_paging")
-    public Result pagingMyCartItem(@Validated @RequestBody MyCartItemPagingApiQo qo) {
+    public Result<IPage<CartItemComplexVo>> pagingMyCartItem(@Validated @RequestBody MyCartItemPagingApiQo qo) {
         return Result.success(service.pagingMyCartItem(qo));
     }
 
     @UseLogger("加入我的购物车 - 购物车")
     @ApiOperation("加入我的购物车 - 购物车")
     @PostMapping
-    public Result insertMyCartItem(@Validated @RequestBody CartItemInsertRo ro) {
+    public Result<Void> insertMyCartItem(@Validated @RequestBody CartItemInsertRo ro) {
         service.insertMyCartItem(ro);
         return Result.success();
     }
@@ -48,7 +50,7 @@ public class MyShopCartAPi {
     @UseLogger("更新我的购物车项 - 购物车")
     @ApiOperation("更新我的购物车项 - 购物车")
     @PutMapping
-    public Result updateMyCartItem(@Validated @RequestBody CartItemUpdateRo ro) {
+    public Result<Void> updateMyCartItem(@Validated @RequestBody CartItemUpdateRo ro) {
         service.updateMyCartItem(ro);
         return Result.success();
     }
@@ -56,7 +58,7 @@ public class MyShopCartAPi {
     @UseLogger("删除我的购物车项 - 购物车")
     @ApiOperation("删除我的购物车项 - 购物车")
     @DeleteMapping
-    public Result deleteMyCartItem(@Validated @RequestBody IdRo qo) {
+    public Result<Void> deleteMyCartItem(@Validated @RequestBody IdRo qo) {
         service.deleteMyCartItem(qo);
         return Result.success();
     }

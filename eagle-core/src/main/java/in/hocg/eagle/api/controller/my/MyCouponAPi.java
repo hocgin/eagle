@@ -1,9 +1,11 @@
 package in.hocg.eagle.api.controller.my;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import in.hocg.eagle.api.pojo.qo.MyCouponPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.modules.mkt.pojo.vo.CouponAccountComplexVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +32,7 @@ public class MyCouponAPi {
     @UseLogger("搜索个人优惠券 - 个人优惠券")
     @ApiOperation("搜索个人优惠券 - 个人优惠券")
     @PostMapping("/_paging")
-    public Result paging(@Validated @RequestBody MyCouponPagingApiQo qo) {
+    public Result<IPage<CouponAccountComplexVo>> paging(@Validated @RequestBody MyCouponPagingApiQo qo) {
         return Result.success(service.pagingMyCoupon(qo));
     }
 

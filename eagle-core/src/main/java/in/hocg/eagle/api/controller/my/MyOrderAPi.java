@@ -6,6 +6,7 @@ import in.hocg.eagle.api.service.AppService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
+import in.hocg.eagle.modules.bmw.pojo.vo.GoPayVo;
 import in.hocg.eagle.modules.oms.pojo.qo.order.*;
 import in.hocg.eagle.modules.oms.pojo.vo.order.OrderComplexVo;
 import io.swagger.annotations.Api;
@@ -64,7 +65,7 @@ public class MyOrderAPi {
     @UseLogger("支付订单")
     @ApiOperation("支付订单")
     @PostMapping("/pay")
-    public Result payOrder(@Validated @RequestBody PayOrderQo qo) {
+    public Result<GoPayVo> payOrder(@Validated @RequestBody PayOrderQo qo) {
         return Result.success(service.payOrder(qo));
     }
 

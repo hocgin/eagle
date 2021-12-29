@@ -50,7 +50,7 @@ public class MyAddressApi {
     @GetMapping("/{id:\\d+}")
     @UseLogger("查询我的收货地址 - 收货地址")
     @ApiOperation("查询我的收货地址 - 收货地址")
-    public Result getMyAddress(@PathVariable Long id) {
+    public Result<AccountAddressComplexVo> getMyAddress(@PathVariable Long id) {
         final IdRo ro = new IdRo();
         ro.setId(id);
         return Result.success(service.getMyAddress(ro));
@@ -66,7 +66,7 @@ public class MyAddressApi {
     @DeleteMapping
     @UseLogger("删除我的收货地址 - 收货地址")
     @ApiOperation("删除我的收货地址 - 收货地址")
-    public Result deleteMyAddress(@Validated @RequestBody IdRo qo) {
+    public Result<Void> deleteMyAddress(@Validated @RequestBody IdRo qo) {
         service.deleteMyAddress(qo);
         return Result.success();
     }

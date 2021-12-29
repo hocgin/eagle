@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Optional;
+
 /**
  * Created by hocgin on 2020/3/14.
  * email: hocgin@gmail.com
@@ -31,7 +33,7 @@ public class IndexAPi {
     @ApiOperation("获取用户头像")
     @ResponseBody
     @GetMapping("/account/{username}.avatar")
-    public ResponseEntity getAvatarUrl(@PathVariable String username) {
+    public ResponseEntity<Optional<String>> getAvatarUrl(@PathVariable String username) {
         return Result.preview(service.getAvatarUrlByUsername(username).orElse(null));
     }
 
