@@ -5,6 +5,8 @@ import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.oms.pojo.qo.order.CalcOrderQo;
 import in.hocg.eagle.modules.oms.pojo.vo.order.CalcOrderVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author hocgin
  */
+@Api(tags = "eagle::订单")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api-mini/order")
@@ -26,6 +29,7 @@ public class OrderAPi {
     private final AppService appService;
 
     @UseLogger("计算订单价格")
+    @ApiOperation("计算订单价格")
     @PostMapping("/calc")
     public Result<CalcOrderVo> calcOrder(@Validated @RequestBody CalcOrderQo qo) {
         return Result.success(appService.calcOrder(qo));

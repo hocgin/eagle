@@ -9,6 +9,8 @@ import in.hocg.eagle.basic.pojo.ro.IdRo;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.ums.pojo.qo.account.address.AccountAddressSaveQo;
 import in.hocg.eagle.modules.ums.pojo.vo.account.address.AccountAddressComplexVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
  * @author hocgin
  * @since 2020-04-18
  */
+@Api(tags = "eagle::地址管理")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api-mini/my/address")
@@ -30,6 +33,7 @@ public class MyAddressApi {
 
     @PostMapping
     @UseLogger("新增我的收货地址 - 收货地址")
+    @ApiOperation("新增我的收货地址 - 收货地址")
     public Result<Void> insertMyAddress(@Validated @RequestBody AccountAddressSaveQo qo) {
         service.insertMyAddress(qo);
         return Result.success();
@@ -37,6 +41,7 @@ public class MyAddressApi {
 
     @PutMapping("/{id:\\d+}")
     @UseLogger("修改我的收货地址 - 收货地址")
+    @ApiOperation("修改我的收货地址 - 收货地址")
     public Result<Void> updateOne(@PathVariable Long id, @Validated @RequestBody AccountAddressSaveQo qo) {
         service.updateMyAddress(id, qo);
         return Result.success();
@@ -44,6 +49,7 @@ public class MyAddressApi {
 
     @GetMapping("/{id:\\d+}")
     @UseLogger("查询我的收货地址 - 收货地址")
+    @ApiOperation("查询我的收货地址 - 收货地址")
     public Result getMyAddress(@PathVariable Long id) {
         final IdRo ro = new IdRo();
         ro.setId(id);
@@ -51,6 +57,7 @@ public class MyAddressApi {
     }
 
     @UseLogger("分页查询我的收货地址 - 收货地址")
+    @ApiOperation("分页查询我的收货地址 - 收货地址")
     @PostMapping({"/_paging"})
     public Result<IPage<AccountAddressComplexVo>> pagingMyAddress(@Validated @RequestBody MyAddressPagingApiQo qo) {
         return Result.success(service.pagingMyAddress(qo));
@@ -58,6 +65,7 @@ public class MyAddressApi {
 
     @DeleteMapping
     @UseLogger("删除我的收货地址 - 收货地址")
+    @ApiOperation("删除我的收货地址 - 收货地址")
     public Result deleteMyAddress(@Validated @RequestBody IdRo qo) {
         service.deleteMyAddress(qo);
         return Result.success();

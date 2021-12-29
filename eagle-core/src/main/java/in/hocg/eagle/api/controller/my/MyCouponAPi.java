@@ -4,6 +4,8 @@ import in.hocg.eagle.api.pojo.qo.MyCouponPagingApiQo;
 import in.hocg.eagle.api.service.AppService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.result.Result;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author hocgin
  */
+@Api(tags = "eagle::优惠券")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api-mini/my/coupon")
@@ -25,6 +28,7 @@ public class MyCouponAPi {
     private final AppService service;
 
     @UseLogger("搜索个人优惠券 - 个人优惠券")
+    @ApiOperation("搜索个人优惠券 - 个人优惠券")
     @PostMapping("/_paging")
     public Result paging(@Validated @RequestBody MyCouponPagingApiQo qo) {
         return Result.success(service.pagingMyCoupon(qo));
@@ -32,6 +36,7 @@ public class MyCouponAPi {
 
 
     @UseLogger("领取优惠券 - 个人优惠券")
+    @ApiOperation("领取优惠券 - 个人优惠券")
     @PostMapping("/get")
     public Result getCoupon() {
         return Result.success();

@@ -6,6 +6,8 @@ import in.hocg.eagle.api.service.AppService;
 import in.hocg.boot.logging.autoconfiguration.core.UseLogger;
 import in.hocg.eagle.basic.result.Result;
 import in.hocg.eagle.modules.pms.api.vo.ProductComplexVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author hocgin
  */
+@Api(tags = "eagle::产品")
 @RestController
 @RequiredArgsConstructor(onConstructor = @__(@Lazy))
 @RequestMapping("/api-mini/product")
@@ -24,12 +27,14 @@ public class ProductAPi {
     private final AppService appService;
 
     @UseLogger("搜索商品")
+    @ApiOperation("搜索商品")
     @PostMapping("/_paging")
     public Result<IPage<ProductComplexVo>> pagingByShopping(@Validated @RequestBody ShoppingProductPagingApiQo qo) {
         return Result.success(appService.pagingByShopping(qo));
     }
 
     @UseLogger("商品详情")
+    @ApiOperation("商品详情")
     @GetMapping("/{id:\\d+}")
     public Result<ProductComplexVo> getByShoppingAndId(@PathVariable Long id) {
         return Result.success(appService.getByShoppingAndId(id));
